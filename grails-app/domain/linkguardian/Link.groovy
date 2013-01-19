@@ -9,4 +9,5 @@ class Link {
   Note note
   Date creationDate
   String[] tags
+  Boolean archived
 }
