@@ -8,5 +8,5 @@ package linkguardian
  */
 enum Note
 {
-  Note_1, Note_2, Note_3, Note_4, Note_5
+  Note_Null, Note_1, Note_2, Note_3, Note_4, Note_5
 }

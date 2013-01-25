@@ -2,12 +2,26 @@ package linkguardian
 
 class Link {
 
-    static constraints = {
+  static constraints = {
     }
 
+  static transients = [ "tags" ]
+
+  static mapping = {
+    fusionedTags index:true
+    url index:true
+    archived index:true
+    creationDate index:true
+  }
+
   String url
-  Note note
+  String domain
+  Note note = Note.Note_Null
   Date creationDate
-  String[] tags
-  Boolean archived
+  String fusionedTags
+  Boolean archived = false
+  String title
+  String description
+
+  List<String> tags
 }

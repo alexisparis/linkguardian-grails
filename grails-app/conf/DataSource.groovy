@@ -1,3 +1,16 @@
+
+/*
+PostgreSQL 8.4 database added.  Please make note of these credentials:
+
+   Root User: admin
+   Root Password: ClWkVQ5B_Ay6
+   Database Name: linkguardian
+
+Connection URL: postgresql://$OPENSHIFT_POSTGRESQL_DB_HOST:$OPENSHIFT_POSTGRESQL_DB_PORT/
+ */
+
+
+
 dataSource {
     pooled = true
     driverClassName = "org.h2.Driver"
@@ -26,18 +39,11 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
-            pooled = true
-            properties {
-               maxActive = -1
-               minEvictableIdleTimeMillis=1800000
-               timeBetweenEvictionRunsMillis=1800000
-               numTestsPerEvictionRun=3
-               testOnBorrow=true
-               testWhileIdle=true
-               testOnReturn=true
-               validationQuery="SELECT 1"
-            }
+            url = "jdbc:postgresql://$OPENSHIFT_POSTGRESQL_DB_HOST:$OPENSHIFT_POSTGRESQL_DB_PORT/"
+            username = "admin"
+            password = "ClWkVQ5B_Ay6"
+            driverClassName = "org.postgresql.Driver"
+            dialect = org.hibernate.dialect.PostgreSQLDialect
         }
     }
 }
