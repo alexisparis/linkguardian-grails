@@ -5,8 +5,6 @@ class Link {
   static constraints = {
     }
 
-  static transients = [ "tags" ]
-
   static mapping = {
     fusionedTags index:true
     url index:true
@@ -22,6 +20,4 @@ class Link {
   Boolean archived = false
   String title
   String description
-
-  List<String> tags
 }

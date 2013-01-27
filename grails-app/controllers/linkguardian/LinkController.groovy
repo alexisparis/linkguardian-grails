@@ -9,27 +9,37 @@ import grails.util.GrailsUtil
  */
 class LinkController
 {
-    static defaultAction = "list"
+  static defaultAction = "list"
 
-    def linkBuilderService
+  def linkBuilderService
 
-    def list()
-    {
-      println("calling list from LinkController")
-    }
+  def list()
+  {
+    println("calling list from LinkController")
+  }
 
-    def addUrl()
-    {
-      println "calling addUrl"
+  def addUrl()
+  {
+    println "calling addUrl"
 
-      def newLink = new Link(url: params.url, fusionedTags: " " + params.tag.toUpperCase() + " ", creationDate: new Date())
+    def newLink = new Link(url: params.url, fusionedTags: " " + params.tag.toUpperCase() + " ", creationDate: new Date())
 
-      linkBuilderService.complete(newLink)
+    linkBuilderService.complete(newLink)
 
-      newLink.save( flush:  true)
-      println "new link saved"
-      render params.url + " saved !!"
-    }
+    newLink.save(flush: true)
+    println "new link saved"
+    render params.url + " saved !!"
+  }
+
+  def delete(String id)
+  {
+    println "trying to delete link with id : " + id;
+
+    Link link = Link.get(id);
+    link?.delete();
+
+    render "link " + id + " has been deleted"
+  }
 
   def filter(String token, Boolean archived)
   {
@@ -38,12 +48,18 @@ class LinkController
     def tokenConvey = { String _fusionedTags, String _token ->
       def result = true
 
+      println "a"
       if (_token?.length() > 0)
       {
+
+        println "b"
         _token.toUpperCase().tokenize(' ').each {
-          if ( result )
+          if (result)
           {
-            if ( ! _fusionedTags.contains(" " + it + " ") )
+            println "c"
+            println "   " + _fusionedTags
+            println "   " + it
+            if (!_fusionedTags.contains(" " + it + " "))
             {
               result = false
             }
@@ -56,8 +72,8 @@ class LinkController
 
     Collection<Link> queryLinks = Link.withCriteria {
       eq "archived", archived && tokenConvey("fusionedTags", token)
-    }.
-            sort {it.creationDate}.grep()
+    }                                 .
+            sort { it.creationDate }  .grep()
 
     response.contentType = "text/json"
     render queryLinks as JSON

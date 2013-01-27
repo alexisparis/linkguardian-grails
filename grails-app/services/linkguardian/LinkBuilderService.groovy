@@ -6,11 +6,6 @@ class LinkBuilderService {
 
     def complete(Link link) {
 
-      if ( link.fusionedTags != null )
-      {
-        link.tags = link.fusionedTags.tokenize(" ");
-      }
-
       // make an http request to get the header of the web site
 
       MicrosoftTagTypes.register()

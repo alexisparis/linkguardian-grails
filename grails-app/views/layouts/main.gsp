@@ -14,6 +14,7 @@
 		<link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
+        <!--link rel="stylesheet" href="${resource(dir: 'css', file: 'application.css')}" type="text/css"-->
 		<g:layoutHead/>
 		<r:layoutResources />
 	</head>
@@ -22,9 +23,9 @@
             <div class="span9">
                 <div id="guardianLogo" role="banner">
                     <a href="https://linkguardian-blackdog.rhcloud.com">
-                        <img src="${resource(dir: 'images', file: 'shield.png')}" alt="LinkGuardian"/>
-                        <h2 style="display: inline;">Link Guardian</h2>
+                        <img src="${resource(dir: 'images', file: 'shield_blue3.png')}" alt="LinkGuardian"/>
                     </a>
+                    <h2 style="display: inline;">Link Guardian</h2>
                 </div>
                 <g:layoutBody/>
                 <div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
