@@ -14,7 +14,7 @@ class Link {
 
   String url
   String domain
-  Note note = Note.Note_Null
+  Note note = Note.Note_0
   Date creationDate
   String fusionedTags
   Boolean archived = false

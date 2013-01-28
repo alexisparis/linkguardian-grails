@@ -1,12 +1,13 @@
 package linkguardian
+
 /**
  * Created with IntelliJ IDEA.
  * User: alexis
- * Date: 13/01/13
- * Time: 20:30
+ * Date: 27/01/13
+ * Time: 21:54
  * To change this template use File | Settings | File Templates.
  */
-enum Note
+enum Level
 {
-  Note_0, Note_1, Note_2, Note_3, Note_4, Note_5
+    INFO, WARNING, IMPORTANT, SUCCESS, DEFAULT;
 }

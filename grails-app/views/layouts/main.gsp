@@ -20,10 +20,10 @@
 	</head>
 	<body class="container">
         <div class="row">
-            <div class="span9">
+            <div class="span10">
                 <div id="guardianLogo" role="banner">
                     <a href="https://linkguardian-blackdog.rhcloud.com">
-                        <img src="${resource(dir: 'images', file: 'shield_blue3.png')}" alt="LinkGuardian"/>
+                        <img src="${resource(dir: 'images', file: 'shield_blue3.png')}" alt="LinkGuardian" width="50"/>
                     </a>
                     <h2 style="display: inline;">Link Guardian</h2>
                 </div>
