@@ -45,6 +45,8 @@
         margin-left: 1px;
         color: white;
         margin-bottom: 1px;
+        padding-right: 1px;
+        padding-left: 5px;
     }
     button.close
     {
@@ -56,18 +58,32 @@
     {
         visibility: hidden;
     }
-    div.linkpart:hover img.raty-cancel     ,
+    div.linkpart:hover img.raty-cancel,
     div.linkpart:hover .visible-on-hover
     {
         visibility: visible;
     }
-    span.tag button.deleteTagButton
+    button.deleteTagButton
+    {
+        margin-left: 1px;
+        margin-right: 1px;
+        margin-top: -3px;
+    }
+    div.linkpart:not(hover) .displayed-on-hover
     {
         display: none;
     }
+    div.linkpart:hover .displayed-on-hover
+    {
+        display: inline-block;
+    }
+    span.tag:not(hover) button.deleteTagButton
+    {
+        visibility: hidden;
+    }
     span.tag:hover button.deleteTagButton
     {
-        display: inherit;
+        visibility: visible;
     }
         </style>
 	</head>
@@ -119,13 +135,13 @@
                                         '<i class="icon-tags" style="margin-right: 3px; margin-left: 6px;"></i>' +
                                         '{{#tags}}' +
                                             '<span class="tag btn btn-primary btn-mini">' +
-                                                '<button class="close deleteTagButton with-tooltip visible-on-hover" ' +
-                                                    'rel="tooltip" data-placement="top" data-original-title="Delete tag"' +
+                                                '<button class="close deleteTagButton with-tooltip"' +
+                                                    ' rel="tooltip" data-placement="top" data-original-title="Delete tag"' +
                                                     ' style="color: #fff;">&times;</button>' +
                                                 '{{.}}' +
                                             '</span>' +
                                         '{{/tags}}' +
-                                        '<span class="tag btn btn-primary btn-mini add-tag visible-on-hover">' +
+                                        '<span class="tag-add btn btn-primary btn-mini add-tag displayed-on-hover">' +
                                             '<i class="icon-plus-sign with-tooltip" rel="tooltip" data-original-title="add new tag" data-placement="top"></i>' +
                                         '</span>' +
                                     '</div>' +

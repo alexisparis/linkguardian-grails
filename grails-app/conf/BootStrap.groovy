@@ -21,7 +21,7 @@ class BootStrap {
       linkBuilderService.complete(newLink)
       newLink.save(flush: true)
 
-      newLink = new Link(url: "http://www.laredoute.fr", fusionedTags: " shop marque ", creationDate: new Date())
+      newLink = new Link(url: "http://www.laredoute.fr", fusionedTags: " ", creationDate: new Date())
       newLink.note = Note.Note_5
       linkBuilderService.complete(newLink)
       newLink.save(flush: true)
