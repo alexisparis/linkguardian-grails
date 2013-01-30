@@ -389,8 +389,9 @@
                                       var linkId = $(event.target).parents('div.linkpart').eq(0).attr('data-id');
                                       if ( linkId )
                                       {
-                                          $('#deleteUrlId').val(linkId);
-                                          $('#deleteLinkDialog').modal();
+                                        var jForm = $('#deleteLinkForm');
+                                        jForm.find('input[name="id"]').val(linkId);
+                                        $('#deleteLinkDialog').modal();
                                       }
                                   });
 
@@ -444,6 +445,12 @@
                                         $('#newTagInput').focus();
                                     }, 1000);
                                   });
+
+                                  // key bindings on modal twitter bootstrap dialogs
+                                  $('div.modal').on('keydown', function(event)
+                                  {
+                                    $(this).find('button[data-key|=' + event.which + ']').trigger('click');
+                                  });
                               });
         </g:javascript>
 
@@ -488,7 +495,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
-                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="deleteLink();">Yes</button>
+                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="deleteLink();">Yes</button>
             </div>
         </div>
         <div id="deleteTagDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -501,7 +508,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
-                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="deleteTag();">Yes</button>
+                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="deleteTag();">Yes</button>
             </div>
         </div>
         <div id="addTagDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -514,7 +521,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
-                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="addTag();">Yes</button>
+                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="addTag();">Yes</button>
             </div>
         </div>
 
