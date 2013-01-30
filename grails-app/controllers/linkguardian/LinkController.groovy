@@ -58,6 +58,34 @@ class LinkController
     }
   }
 
+  def deleteTag(String id, String tag)
+  {
+    println "calling deleteTag for " + id + " for tag " + tag
+    def success = false
+
+    Link link = Link.get(id)
+    if ( link != null && tag != null )
+    {
+      def _tag = tag
+      List<String> tokens = link.fusionedTags.tokenize()
+      if ( tokens.remove(_tag) )
+      {
+        link.fusionedTags = " " + tokens.join(" ") + " "
+        link.save()
+        success = true
+      }
+    }
+
+    if ( success )
+    {
+      render new linkguardian.Message(message: "the tag has been deleted", level : linkguardian.Level.SUCCESS) as JSON
+    }
+    else
+    {
+      render new linkguardian.Message(message: "error while trying to delete the tag", level : linkguardian.Level.WARNING) as JSON
+    }
+  }
+
   def updateNote(String id, Integer oldScore, Integer newScore)
   {
     println "calling update note from " + oldScore + " to " + newScore

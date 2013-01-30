@@ -15,10 +15,10 @@
     div.linkpart
     {
         width: 307px;
+        float: left;
         margin-right: 10px;
         margin-bottom: 10px;
-        float: left;
-        background-color: #d2e1ff;/*#b2d1ff;*/
+        background-color: #d2e1ff;
         border-radius: 5px 5px 5px;
         border: 1px solid #0081c2;
         padding: 2px;
@@ -68,6 +68,7 @@
         margin-left: 1px;
         margin-right: 1px;
         margin-top: -3px;
+        opacity: 0.6;
     }
     div.linkpart:not(hover) .displayed-on-hover
     {
@@ -95,8 +96,12 @@
 
             function updateLinks(links)
             {
+                var $container = $('#listing-part');
+
                 //$('#listing-part').hide();
-                $('#listing-part').children().remove();
+                $container.children().remove();
+
+                $container.masonry('reload');
 
                 var model = {
                     'links' : links,
@@ -134,14 +139,14 @@
                                     '<div class="tags">' +
                                         '<i class="icon-tags" style="margin-right: 3px; margin-left: 6px;"></i>' +
                                         '{{#tags}}' +
-                                            '<span class="tag btn btn-primary btn-mini">' +
+                                            '<span class="tag btn btn-primary btn-mini" data-tag="{{.}}">' +
                                                 '<button class="close deleteTagButton with-tooltip"' +
                                                     ' rel="tooltip" data-placement="top" data-original-title="Delete tag"' +
                                                     ' style="color: #fff;">&times;</button>' +
                                                 '{{.}}' +
                                             '</span>' +
                                         '{{/tags}}' +
-                                        '<span class="tag-add btn btn-primary btn-mini add-tag displayed-on-hover">' +
+                                        '<span class="btn btn-primary btn-mini add-tag displayed-on-hover">' +
                                             '<i class="icon-plus-sign with-tooltip" rel="tooltip" data-original-title="add new tag" data-placement="top"></i>' +
                                         '</span>' +
                                     '</div>' +
@@ -151,7 +156,7 @@
 
                 var output = Mustache.render(template, model);
 
-                $('#listing-part').html(output);
+                $container.html(output);
 
                 $('span.rate').each(function(idx, value)
                                     {
@@ -176,16 +181,9 @@
                                                     });
                                     });
 
-                var $container = $('#listing-part');
-                $container.imagesLoaded(function(){
-                    $container.masonry({
-                                           itemSelector : 'a.link',
-                                           columnWidth : function( containerWidth ) {
-                                               return containerWidth / 3;
-                                           },
-                                           isAnimated: false
-                                       });
-                });
+                $container.masonry('appended', $(output), true);
+
+                //TODO
 
                 $('.with-tooltip').tooltip();
                 //$('#listing-part').fadeIn();
@@ -215,6 +213,12 @@
                     <g:hiddenField name="id"/>
                 </g:formRemote>
 
+                <!-- form used to delete a tag -->
+                <g:formRemote id="deleteTagForm" name="deleteTagForm" url="[controller: 'link', action: 'deleteTag']"
+                              method="POST" style="display: none;" onSuccess="TagDeletionConfirmed(data)" onFailure="displayStdError()">
+                    <g:hiddenField name="id"/>
+                    <g:hiddenField name="tag"/>
+                </g:formRemote>
 
                 <!-- form used to modify the rate a link -->
                 <g:formRemote id="changeNoteForm" name="changeNoteForm" url="[controller: 'link', action: 'updateNote']"
@@ -228,7 +232,7 @@
                               method="POST" style="display: inline;"
                               onSuccess="updateLinks(data)"> <!-- update="[success: 'message', failure: 'error']"  -->
                     <fieldset>
-                        <g:hiddenField name="archived" id="archived-input"/>
+                        <!--g:hiddenField name="archived" id="archived-input"/-->
                         <label class="checkbox" style="margin-right: 10px;">
                             <input type="checkbox" name="read" id="read" value="read"/>
                                 <i class="icon-eye-open"></i>&nbsp;read
@@ -241,12 +245,15 @@
                             <option value="date">sort by date</option>
                             <option value="rate">sort by rate</option>
                         </select-->
-                        <g:textField name="token" title="filter" placeholder="filter by tag" class="input-medium"/>
+                        <g:textField id="filterInput" name="token" title="filter" placeholder="filter by tag" class="input-medium"/>
                         <g:submitButton id="filter-input" name="Filter" class="btn btn-primary" style="background-image_old: url('${resource(dir: 'images', file: 'search.png')}')"/>
                     </fieldset>
                 </g:formRemote>
             </li>
         </ul>
+
+        <g:javascript src="jquery.raty.js"/>
+        <g:javascript src="jquery.masonry.min.js"/>
 
         <g:javascript>
 
@@ -256,7 +263,7 @@
                 $('#filterLinkForm').submit();
             };
 
-            function deletionLink()
+            function deleteLink()
             {
                 $('#deleteLinkForm').submit();
             };
@@ -271,9 +278,30 @@
                 var linkId = $('#deleteLinkForm input[name="id"]').val();
                 if ( linkId )
                 {
-                    $('div.linkpart[data-id=' + linkId + ']').remove();
+                    $('div.linkpart[data-id="' + linkId + '"]').remove();
                     displayMessage(data);
                 }
+            };
+
+            function deleteTag()
+            {
+                $('#deleteTagForm').submit();
+            };
+
+            function TagDeletionConfirmed(data)
+            {
+                var linkId = $('#deleteTagForm input[name="id"]').val();
+                var tag = $('#deleteTagForm input[name="tag"]').val();
+                if ( linkId )
+                {
+                    $('div.linkpart[data-id="' + linkId + '"] span.tag[data-tag="' + tag + '"]').remove();
+                    displayMessage(data);
+                }
+            };
+
+            function addTag()
+            {
+                console.log("new tag : " + $('#newTagInput').val());
             };
 
             function noteUpdatedConfirmed(data)
@@ -343,8 +371,6 @@
                                   $('#nav-home').click(callback(false));
                                   $('#nav-archive').click(callback(true));
 
-                                  submitFilterForm();
-
                                   $('#showTagInput').click(function(event)
                                                             {
                                                                $('#txtTag').fadeToggle({
@@ -364,11 +390,60 @@
                                       if ( linkId )
                                       {
                                           $('#deleteUrlId').val(linkId);
-                                          $('#deleteDialog').modal();
+                                          $('#deleteLinkDialog').modal();
                                       }
                                   });
 
                                   $('.with-tooltip').tooltip();
+
+                                  var $container = $('#listing-part');
+                                  $container.imagesLoaded(function(){
+
+                                      $container.masonry({
+                                                             itemSelector : 'a.link',
+                                                             columnWidth : function( containerWidth ) {
+                                                                 return (containerWidth) / 3;
+                                                             }
+                                                         });
+
+                                      submitFilterForm();
+                                  });
+
+                                  $('#listing-part').on('click', 'span.tag', function(event)
+                                  {
+                                    var jThis = $(this);
+                                    var tag = jThis.attr('data-tag');
+                                    $('#filterInput').val(tag);
+                                    submitFilterForm();
+                                  });
+
+
+                                  $('#listing-part').on('click', 'button.deleteTagButton', function(event)
+                                  {
+                                    event.stopPropagation();
+                                    var jTag = $(this).parents('span.tag').eq(0);
+
+                                    var jForm = $('#deleteTagForm');
+                                    jForm.find('input[name="id"]').val(jTag.parents('div.linkpart').eq(0).attr("data-id"));
+                                    jForm.find('input[name="tag"]').val(jTag.attr("data-tag"));
+
+                                    $('#deleteTagDialog').modal();
+                                  });
+
+                                  $('#listing-part').on('click', 'span.add-tag', function(event)
+                                  {
+                                     event.stopPropagation();
+
+                                    var jForm = $('#addTagForm');
+                                    jForm.find('input[name="id"]').val($(this).parents('div.linkpart').eq(0).attr("data-id"));
+
+                                    $('#newTagInput').val('');
+                                    $('#addTagDialog').modal();
+                                    setTimeout(function()
+                                    {
+                                        $('#newTagInput').focus();
+                                    }, 1000);
+                                  });
                               });
         </g:javascript>
 
@@ -402,21 +477,44 @@
 
         </div>
 
-        <g:javascript src="jquery.raty.js"/>
-        <g:javascript src="jquery.masonry.js"/>
-
         <!-- dialogs -->
-        <div id="deleteDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="deleteLinkDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">Confirmation</h3>
+                <h3>Confirmation</h3>
             </div>
             <div class="modal-body">
                 <p>Do you really want to delete this link?</p>
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
-                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="deletionLink();">Yes</button>
+                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="deleteLink();">Yes</button>
+            </div>
+        </div>
+        <div id="deleteTagDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3>Confirmation</h3>
+            </div>
+            <div class="modal-body">
+                <p>Do you really want to delete this tag?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
+                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="deleteTag();">Yes</button>
+            </div>
+        </div>
+        <div id="addTagDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3>Add a new tag</h3>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <g:textField id="newTagInput" name="name" class="input-xlarge"/>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
+                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" onclick="addTag();">Yes</button>
             </div>
         </div>
 
