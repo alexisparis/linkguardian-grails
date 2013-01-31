@@ -24,9 +24,18 @@
         padding: 2px;
         cursor: pointer;
     }
+    div.linkpart.selected
+    {
+        background-color: #b2c1df;
+        border: 1px solid #002a80;
+    }
+    div.linkpart.selected:hover
+    {
+        background-color: #b2c1df;
+        box-shadow: #b0c4de 5px 5px 5px;
+    }
     div.linkpart:hover
     {
-        /*background-color: #b2d1ff;*/
         background-color: #ccdbf9;
         box-shadow: #b0c4de 5px 5px 5px;
     }
@@ -78,11 +87,23 @@
     {
         display: inline-block;
     }
+    div.tags /* used to isplay tags with a scroll if a tag name is too long */
+    {
+        overflow:auto;
+    }
     span.tag:not(hover) button.deleteTagButton
     {
         visibility: hidden;
     }
     span.tag:hover button.deleteTagButton
+    {
+        visibility: visible;
+    }
+    div.linkpart[data-note=Note_0] span.rate
+    {
+        visibility: hidden;
+    }
+    div.linkpart:hover span.rate
     {
         visibility: visible;
     }
@@ -92,7 +113,17 @@
 
         <g:javascript>
 
-            var reg=new RegExp("[ ,;]+", "g");
+            var reg = new RegExp("[ ,;]+", "g");
+
+            function tagTemplate(tagNameRef)
+            {
+                return '<span class="tag btn btn-primary btn-mini" data-tag="{{' + tagNameRef + '}}">' +
+                        '<button class="close deleteTagButton with-tooltip"' +
+                            ' rel="tooltip" data-placement="top" data-original-title="Delete tag"' +
+                            ' style="color: #fff;">&times;</button>' +
+                            '{{' + tagNameRef + '}}' +
+                       '</span>';
+            };
 
             function updateLinks(links)
             {
@@ -123,7 +154,9 @@
                         '{{#links}}' +
                             '<div class="linkpart" data-url="{{url}}" data-id="{{id}}" data-note={{note.name}}>' +
                                 '<div>' +
-                                    '<img align="left" src="http://www.google.com/s2/favicons?domain={{domain}}" width="20px" height="20px" border="4px" style="margin-right: 2px; margin-bottom: 1px;"/>' +
+                                    '<img align="left" src="http://www.google.com/s2/favicons?domain={{domain}}" class="linkparticon with-tooltip"' +
+                                        'width="20px" height="20px" border="4px" style="margin-right: 2px; margin-bottom: 1px;" ' +
+                                        'rel="tooltip" data-placement="top" data-original-title="go to {{domain}}"/>' +
                                     '<div class="rateAndClose">' +
                                         '<span class="rate"></span>' +
                                         //'<button class="archiveLinkButton with-tooltip" rel="tooltip" data-placement="top" data-original-title="Archive link">' +
@@ -134,17 +167,14 @@
                                     '</div>' +
                                 '</div>' +
                                 '<div style="margin-top: 1px;word-wrap:break-word;">' +
-                                    '<b>{{title}}</b><br/>{{description}}<br/>' +
-                                    '<i class="domain" style="font-size: 11px;">{{domain}}</i><br/>' +
+                                    '<div class="content with-tooltip" rel="tooltip" data-placement="top" data-original-title="go to {{domain}}">' +
+                                        '<b>{{title}}</b><br/>{{description}}<br/>' +
+                                        '<i class="domain" style="font-size: 11px;">{{domain}}</i>' +
+                                    '</div>' +
                                     '<div class="tags">' +
                                         '<i class="icon-tags" style="margin-right: 3px; margin-left: 6px;"></i>' +
                                         '{{#tags}}' +
-                                            '<span class="tag btn btn-primary btn-mini" data-tag="{{.}}">' +
-                                                '<button class="close deleteTagButton with-tooltip"' +
-                                                    ' rel="tooltip" data-placement="top" data-original-title="Delete tag"' +
-                                                    ' style="color: #fff;">&times;</button>' +
-                                                '{{.}}' +
-                                            '</span>' +
+                                            tagTemplate('.') +
                                         '{{/tags}}' +
                                         '<span class="btn btn-primary btn-mini add-tag displayed-on-hover">' +
                                             '<i class="icon-plus-sign with-tooltip" rel="tooltip" data-original-title="add new tag" data-placement="top"></i>' +
@@ -153,6 +183,8 @@
                                 '</div>' +
                             '</div>' +
                         '{{/links}}';
+
+                console.log("template : " + template);
 
                 var output = Mustache.render(template, model);
 
@@ -199,7 +231,7 @@
             <li class="active">
                 <a id="nav-home">Home</a>
             </li>
-            <li>
+            <li style="visibility: hidden;">
                 <a id="nav-archive">Tools</a>
             </li>
             <li style="margin-left: 40px;">
@@ -209,20 +241,27 @@
 
                 <!-- form used to delete a link -->
                 <g:formRemote id="deleteLinkForm" name="deleteLinkForm" url="[controller: 'link', action: 'delete']"
-                              method="POST" style="display: none;" onSuccess="linkDeletionConfirmed(data)" onFailure="displayStdError()">
+                              method="POST" style="display: none;" onSuccess="linkDeletionConfirmed(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
                     <g:hiddenField name="id"/>
                 </g:formRemote>
 
                 <!-- form used to delete a tag -->
                 <g:formRemote id="deleteTagForm" name="deleteTagForm" url="[controller: 'link', action: 'deleteTag']"
-                              method="POST" style="display: none;" onSuccess="TagDeletionConfirmed(data)" onFailure="displayStdError()">
+                              method="POST" style="display: none;" onSuccess="tagDeletionConfirmed(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
+                    <g:hiddenField name="id"/>
+                    <g:hiddenField name="tag"/>
+                </g:formRemote>
+
+            <!-- form used to add a tag -->
+                <g:formRemote id="addTagForm" name="addTagForm" url="[controller: 'link', action: 'addTag']"
+                              method="POST" style="display: none;" onSuccess="tagAdded(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
                     <g:hiddenField name="id"/>
                     <g:hiddenField name="tag"/>
                 </g:formRemote>
 
                 <!-- form used to modify the rate a link -->
                 <g:formRemote id="changeNoteForm" name="changeNoteForm" url="[controller: 'link', action: 'updateNote']"
-                              method="POST" style="display: none;" onSuccess="noteUpdatedConfirmed(data)" onFailure="rollbackNoteUpdate()">
+                              method="POST" style="display: none;" onSuccess="noteUpdatedConfirmed(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
                     <g:hiddenField name="id"/>
                     <g:hiddenField name="oldScore"/>
                     <g:hiddenField name="newScore"/>
@@ -230,7 +269,7 @@
 
                 <g:formRemote id="filterLinkForm" class="form-inline" name="addUrlForm" url="[controller: 'link', action: 'filter']"
                               method="POST" style="display: inline;"
-                              onSuccess="updateLinks(data)"> <!-- update="[success: 'message', failure: 'error']"  -->
+                              onSuccess="updateLinks(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)"> <!-- update="[success: 'message', failure: 'error']"  -->
                     <fieldset>
                         <!--g:hiddenField name="archived" id="archived-input"/-->
                         <label class="checkbox" style="margin-right: 10px;">
@@ -288,7 +327,7 @@
                 $('#deleteTagForm').submit();
             };
 
-            function TagDeletionConfirmed(data)
+            function tagDeletionConfirmed(data)
             {
                 var linkId = $('#deleteTagForm input[name="id"]').val();
                 var tag = $('#deleteTagForm input[name="tag"]').val();
@@ -301,13 +340,38 @@
 
             function addTag()
             {
-                console.log("new tag : " + $('#newTagInput').val());
+                $('#addTagForm input[name="tag"]').val($('#newTagInput').val());
+                $('#addTagForm').submit();
+            };
+
+            function tagAdded(data)
+            {
+                var linkId = $('#addTagForm input[name="id"]').val();
+                var tag = $('#addTagForm input[name="tag"]').val();
+                if ( linkId )
+                {
+                    var jAddTagRef = $('div.linkpart[data-id="' + linkId + '"] div.tags span.add-tag');
+
+                    var output = Mustache.render(tagTemplate('name'), {
+                        name : tag
+                    });
+
+                    $(output).insertBefore(jAddTagRef);
+
+                    displayMessage(data);
+                }
             };
 
             function noteUpdatedConfirmed(data)
             {
                 var jForm = $('#changeNoteForm');
-                $('div.linkpart[data-id="' + jForm.find('input[name="id"]').val() + '"]').attr('data-note', jForm.find('input[name="newScore"]').val());
+                var note = jForm.find('input[name="newScore"]').val();
+                 if(!note)
+                 {
+                    note = 0;
+                 }
+                 note = "Note_" + note;
+                $('div.linkpart[data-id="' + jForm.find('input[name="id"]').val() + '"]').attr('data-note', note);
 
                 displayMessage(data);
             };
@@ -320,12 +384,25 @@
                 displayStdError();
             };
 
+            function displayFailure(XMLHttpRequest,textStatus,errorThrown)
+            {
+                if ( XMLHttpRequest && XMLHttpRequest.responseText && XMLHttpRequest.responseText.length )
+                {
+                    var message = JSON.parse(XMLHttpRequest.responseText);
+                    displayMessage(message);
+                }
+                else
+                {
+                    displayStdError();
+                }
+            };
+
             function displayStdError()
             {
                 displayMessage({
                    message : 'error',
                    level : {
-                        name : "WARNING"
+                        name : "ERROR"
                    }
                 });
             };
@@ -342,8 +419,8 @@
                 if( data )
                 {
                     jObj.html(data.message);
-                    jObj.addClass('label');
-                    jObj.addClass('label-' + data.level.name.toLowerCase());
+                    jObj.addClass('alert');
+                    jObj.addClass('alert-' + data.level.name.toLowerCase());
                     jObj.fadeIn({
                         duration: 0
                     });
@@ -386,6 +463,7 @@
 
                                   $('#listing-part').on('click', 'button.deleteLinkButton', function(event)
                                   {
+                                      event.stopPropagation();
                                       var linkId = $(event.target).parents('div.linkpart').eq(0).attr('data-id');
                                       if ( linkId )
                                       {
@@ -410,8 +488,9 @@
                                       submitFilterForm();
                                   });
 
-                                  $('#listing-part').on('click', 'span.tag', function(event)
+                                  $container.on('click', 'span.tag', function(event)
                                   {
+                                    event.stopPropagation();
                                     var jThis = $(this);
                                     var tag = jThis.attr('data-tag');
                                     $('#filterInput').val(tag);
@@ -419,7 +498,7 @@
                                   });
 
 
-                                  $('#listing-part').on('click', 'button.deleteTagButton', function(event)
+                                  $container.on('click', 'button.deleteTagButton', function(event)
                                   {
                                     event.stopPropagation();
                                     var jTag = $(this).parents('span.tag').eq(0);
@@ -431,7 +510,7 @@
                                     $('#deleteTagDialog').modal();
                                   });
 
-                                  $('#listing-part').on('click', 'span.add-tag', function(event)
+                                  $container.on('click', 'span.add-tag', function(event)
                                   {
                                      event.stopPropagation();
 
@@ -451,6 +530,18 @@
                                   {
                                     $(this).find('button[data-key|=' + event.which + ']').trigger('click');
                                   });
+
+                                  var goToLink = function(event)
+                                  {
+                                     event.stopPropagation();
+                                     $('div.linkpart').removeClass('selected');
+                                     var jThis = $(this).parents('div.linkpart').eq(0);
+                                     jThis.addClass('selected');
+                                     window.open(jThis.attr('data-url'),'_blank');
+                                  };
+
+                                  $container.on('click', 'div.content', goToLink);
+                                  $container.on('click', 'img.linkparticon', goToLink);
                               });
         </g:javascript>
 
@@ -476,7 +567,7 @@
             </g:formRemote>
         </div>
 
-        <div id="messageContainer" style="height: 18px; margin-top: 3px; margin-bottom: 3px;">
+        <div id="messageContainer" style="height: 38px; margin-top: 3px; margin-bottom: 3px;">
             <div id="message" ></div>
         </div>
 

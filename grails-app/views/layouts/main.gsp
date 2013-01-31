@@ -17,6 +17,7 @@
         <!--link rel="stylesheet" href="${resource(dir: 'css', file: 'application.css')}" type="text/css"-->
 		<g:layoutHead/>
 		<r:layoutResources />
+        <ga:trackPageview />
 	</head>
 	<body class="container">
         <div class="row">

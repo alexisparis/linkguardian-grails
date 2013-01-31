@@ -9,5 +9,5 @@ package linkguardian
  */
 enum Level
 {
-    INFO, WARNING, IMPORTANT, SUCCESS, DEFAULT;
+    INFO, SUCCESS, WARNING, ERROR;
 }

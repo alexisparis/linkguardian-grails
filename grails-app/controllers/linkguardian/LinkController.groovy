@@ -54,8 +54,39 @@ class LinkController
     }
     else
     {
-      render new linkguardian.Message(message: "error while trying to delete the link", level : linkguardian.Level.WARNING) as JSON
+      render new linkguardian.Message(message: "error while trying to delete the link", level : linkguardian.Level.ERROR) as JSON
     }
+  }
+
+  def addTag(String id, String tag)
+  {
+    println "calling addTag for " + id + " for tag " + tag
+    def msg
+
+    Link link = Link.get(id)
+    if ( link != null && tag != null )
+    {
+      def _tag = tag
+      Set<String> tokens = new LinkedHashSet<String>(link.fusionedTags.tokenize())
+      if ( tokens.add(_tag) )
+      {
+        link.fusionedTags = " " + tokens.join(" ") + " "
+        link.save()
+        msg = new linkguardian.Message(message: "the tag has been added", level : linkguardian.Level.SUCCESS)
+      }
+      else
+      {
+        response.setStatus(406)
+        msg = new linkguardian.Message(message: "the tag already exist", level : linkguardian.Level.ERROR)
+      }
+    }
+
+    if ( msg == null )
+    {
+      msg = new linkguardian.Message(message: "error while trying to add the new tag", level : linkguardian.Level.ERROR)
+    }
+
+    render msg as JSON
   }
 
   def deleteTag(String id, String tag)
@@ -82,7 +113,7 @@ class LinkController
     }
     else
     {
-      render new linkguardian.Message(message: "error while trying to delete the tag", level : linkguardian.Level.WARNING) as JSON
+      render new linkguardian.Message(message: "error while trying to delete the tag", level : linkguardian.Level.ERROR) as JSON
     }
   }
 
@@ -96,20 +127,27 @@ class LinkController
 
     if ( link != null )
     {
-      def _score = newScore
-      if ( _score == null )
-        _score = 0
+      try
+      {
+        def _score = newScore
+        if ( _score == null )
+          _score = 0
 
-      _score = Math.max(0, Math.min(_score, 5))
+        _score = Math.max(0, Math.min(_score, 5))
 
-      link.note = Note.valueOf(Note.class, "Note_" + _score)
-      link.save()
-      msg = new linkguardian.Message(message: "the note has been updated", level : linkguardian.Level.SUCCESS)
+        link.note = Note.valueOf(Note.class, "Note_" + newScore)//_score)
+        link.save()
+        msg = new linkguardian.Message(message: "the note has been updated", level : linkguardian.Level.SUCCESS)
+      }
+      catch(Exception e)
+      {
+        println e
+      }
     }
 
     if ( msg == null )
     {
-      msg = new linkguardian.Message(message: "error hile trying to update the note", level : linkguardian.Level.WARNING)
+      msg = new linkguardian.Message(message: "error while trying to update the note", level : linkguardian.Level.ERROR)
     }
 
     render msg as JSON
