@@ -11,183 +11,277 @@ import java.util.logging.Level
  */
 class LinkController
 {
-  static defaultAction = "list"
+    static defaultAction = "list"
 
-  def linkBuilderService
+    def linkBuilderService
 
-  def list()
-  {
-    println("calling list from LinkController")
-  }
-
-  def addUrl()
-  {
-    //TODO : check que l'url n'existe pas déjà pour l'utilisateur connecté
-    println "calling addUrl"
-
-    def newLink = new Link(url: params.url, fusionedTags: " " + params.tag.toUpperCase() + " ", creationDate: new Date())
-
-    linkBuilderService.complete(newLink)
-
-    newLink.save(flush: true)
-
-    render new linkguardian.Message(message: "the link has been created", level : linkguardian.Level.SUCCESS) as JSON
-  }
-
-  def delete(String id)
-  {
-    def success = false
-
-    // TODO : check if the link is linked ot he connected user
-    println "trying to delete link with id : " + id;
-
-    Link link = Link.get(id);
-    if ( link != null )
+    def success(String message)
     {
-      link.delete()
-      success = true
+        return new linkguardian.Message(message : message, level : linkguardian.Level.SUCCESS)
     }
 
-    if ( success )
+    def error(String message)
     {
-      render new linkguardian.Message(message: "the link has been deleted", level : linkguardian.Level.SUCCESS) as JSON
-    }
-    else
-    {
-      render new linkguardian.Message(message: "error while trying to delete the link", level : linkguardian.Level.ERROR) as JSON
-    }
-  }
-
-  def addTag(String id, String tag)
-  {
-    println "calling addTag for " + id + " for tag " + tag
-    def msg
-
-    Link link = Link.get(id)
-    if ( link != null && tag != null )
-    {
-      def _tag = tag
-      Set<String> tokens = new LinkedHashSet<String>(link.fusionedTags.tokenize())
-      if ( tokens.add(_tag) )
-      {
-        link.fusionedTags = " " + tokens.join(" ") + " "
-        link.save()
-        msg = new linkguardian.Message(message: "the tag has been added", level : linkguardian.Level.SUCCESS)
-      }
-      else
-      {
-        response.setStatus(406)
-        msg = new linkguardian.Message(message: "the tag already exist", level : linkguardian.Level.ERROR)
-      }
+        return new linkguardian.Message(message : message, level : linkguardian.Level.ERROR)
     }
 
-    if ( msg == null )
+    def warning(String message)
     {
-      msg = new linkguardian.Message(message: "error while trying to add the new tag", level : linkguardian.Level.ERROR)
+        return new linkguardian.Message(message : message, level : linkguardian.Level.WARNING)
     }
 
-    render msg as JSON
-  }
-
-  def deleteTag(String id, String tag)
-  {
-    println "calling deleteTag for " + id + " for tag " + tag
-    def success = false
-
-    Link link = Link.get(id)
-    if ( link != null && tag != null )
+    def list()
     {
-      def _tag = tag
-      List<String> tokens = link.fusionedTags.tokenize()
-      if ( tokens.remove(_tag) )
-      {
-        link.fusionedTags = " " + tokens.join(" ") + " "
-        link.save()
-        success = true
-      }
+        println("calling list from LinkController")
     }
 
-    if ( success )
+    /**
+     * filter the links and returns them as JSON result
+     * @param token
+     * @param sort
+     * @param read
+     * @param unread
+     * @return
+     */
+    def filter(String token, String sort, String read, String unread)
     {
-      render new linkguardian.Message(message: "the tag has been deleted", level : linkguardian.Level.SUCCESS) as JSON
-    }
-    else
-    {
-      render new linkguardian.Message(message: "error while trying to delete the tag", level : linkguardian.Level.ERROR) as JSON
-    }
-  }
+        println("calling filter from LinkController with filter equals to " + token + ", sort=" + sort + ", read=" + read + ", unread=" + unread)
 
-  def updateNote(String id, Integer oldScore, Integer newScore)
-  {
-    println "calling update note from " + oldScore + " to " + newScore
+        def tokenConvey = { String _fusionedTags, String _token ->
+            def result = true
 
-    def link = Link.get(id);
-
-    def msg = null
-
-    if ( link != null )
-    {
-      try
-      {
-        def _score = newScore
-        if ( _score == null )
-          _score = 0
-
-        _score = Math.max(0, Math.min(_score, 5))
-
-        link.note = Note.valueOf(Note.class, "Note_" + newScore)//_score)
-        link.save()
-        msg = new linkguardian.Message(message: "the note has been updated", level : linkguardian.Level.SUCCESS)
-      }
-      catch(Exception e)
-      {
-        println e
-      }
-    }
-
-    if ( msg == null )
-    {
-      msg = new linkguardian.Message(message: "error while trying to update the note", level : linkguardian.Level.ERROR)
-    }
-
-    render msg as JSON
-  }
-
-  def filter(String token, String sort, String read, String unread)
-  {
-    println("calling filter from LinkController with filter equals to " + token + ", sort=" + sort + ", read=" + read + ", unread=" + unread)
-
-    def tokenConvey = { String _fusionedTags, String _token ->
-      def result = true
-
-      println "a"
-      if (_token?.length() > 0)
-      {
-
-        println "b"
-        _token.toUpperCase().tokenize(' ').each {
-          if (result)
-          {
-            println "c"
-            println "   " + _fusionedTags + "#"
-            println "   " + it
-            if (!_fusionedTags.contains(" " + it + " "))
+            println "a"
+            if (_token?.length() > 0)
             {
-              result = false
-            }
-          }
-        }
-      }
 
-      result
+                println "b"
+                _token.toUpperCase().tokenize(' ').each {
+                    if (result)
+                    {
+                        println "c"
+                        println "   " + _fusionedTags + "#"
+                        println "   " + it
+                        if (!_fusionedTags.contains(" " + it + " "))
+                        {
+                            result = false
+                        }
+                    }
+                }
+            }
+
+            result
+        }
+
+        Collection<Link> queryLinks = Link.withCriteria {
+            tokenConvey("fusionedTags", token)
+        }                                 .
+                sort { it.creationDate }  .grep()
+
+        response.contentType = "text/json"
+        render queryLinks as JSON
     }
 
-    Collection<Link> queryLinks = Link.withCriteria {
-      tokenConvey("fusionedTags", token)
-    }                                 .
-            sort { it.creationDate }  .grep()
+    /**
+     * add a new link
+     * @return
+     */
+    def addUrl()
+    {
+        //TODO : check que l'url n'existe pas déjà pour l'utilisateur connecté
+        println "calling addUrl"
 
-    response.contentType = "text/json"
-    render queryLinks as JSON
-  }
+        def newLink = new Link(url: params.url, fusionedTags: " " + params.tag.toUpperCase() + " ", creationDate: new Date())
+
+        linkBuilderService.complete(newLink)
+
+        newLink.save(flush: true)
+
+        render success("the link has been created") as JSON
+    }
+
+    /**
+     * delete a link
+     * @param id
+     * @return
+     */
+    def delete(String id)
+    {
+        def success = false
+
+        // TODO : check if the link is linked ot he connected user
+        println "trying to delete link with id : " + id;
+
+        Link link = Link.get(id);
+        if (link != null)
+        {
+            link.delete()
+            success = true
+        }
+
+        if (success)
+        {
+            render success("the link has been deleted") as JSON
+        }
+        else
+        {
+            render error("error while trying to delete the link") as JSON
+        }
+    }
+
+    /**
+     * add a new tag to an existing link
+     * @param id
+     * @param tag
+     * @return
+     */
+    def addTag(String id, String tag)
+    {
+        println "calling addTag for " + id + " for tag " + tag
+        def msg
+
+        Link link = Link.get(id)
+        if (link != null && tag != null)
+        {
+            def _tag = tag
+            Set<String> tokens = new LinkedHashSet<String>(link.fusionedTags.tokenize())
+            if (tokens.add(_tag))
+            {
+                link.fusionedTags = " " + tokens.join(" ") + " "
+                link.save()
+                msg = success("the tag has been added")
+            }
+            else
+            {
+                response.setStatus(406)
+                msg = error("the tag already exist")
+            }
+        }
+
+        if (msg == null)
+        {
+            msg = error("error while trying to add the new tag")
+        }
+
+        render msg as JSON
+    }
+
+    /**
+     * delete a tag from a link
+     * @param id
+     * @param tag
+     * @return
+     */
+    def deleteTag(String id, String tag)
+    {
+        println "calling deleteTag for " + id + " for tag " + tag
+        def success = false
+
+        Link link = Link.get(id)
+        if (link != null && tag != null)
+        {
+            def _tag = tag
+            List<String> tokens = link.fusionedTags.tokenize()
+            if (tokens.remove(_tag))
+            {
+                link.fusionedTags = " " + tokens.join(" ") + " "
+                link.save()
+                success = true
+            }
+        }
+
+        if (success)
+        {
+            render success("the tag has been deleted") as JSON
+        }
+        else
+        {
+            render error("error while trying to delete the tag") as JSON
+        }
+    }
+
+    /**
+     * update the note of the link
+     * @param id the id of the link
+     * @param oldScore
+     * @param newScore
+     * @return
+     */
+    def updateNote(String id, Integer oldScore, Integer newScore)
+    {
+        println "calling update note from " + oldScore + " to " + newScore
+
+        def link = Link.get(id);
+
+        def msg = null
+
+        if (link != null)
+        {
+            try
+            {   def _score = newScore
+                if (_score == null)
+                {
+                    _score = 0
+                }
+
+                _score = Math.max(0, Math.min(_score, 5))
+
+                link.note = Note.valueOf(Note.class, "Note_" + _score)
+                link.save()
+                msg = success("the note has been updated")
+            }
+            catch (Exception e)
+            {
+                println e
+            }
+        }
+
+        if (msg == null)
+        {
+            msg = error("error while trying to update the note")
+        }
+
+        render msg as JSON
+    }
+
+    /**
+     * mark a link as read
+     * @param id
+     */
+    def markAsRead(String id)
+    {
+        changeReadAttribute(id, true)
+    }
+
+    /**
+     * mark a link as unread
+     * @param id
+     */
+    def markAsUnread(String id)
+    {
+        changeReadAttribute(id, false)
+    }
+
+    /**
+     * change the read attribute of a link
+     * @param id
+     * @param value
+     */
+    def changeReadAttribute(String id, boolean value)
+    {
+        def message = null
+        def link = Link.get(id)
+
+        if ( link != null )
+        {
+            link.read = value
+            link.save()
+            message = success("the link has been marked as " + (value ? "read" : "unread"))
+        }
+        if ( message == null )
+        {
+            message = error("error while trying to mark the link as " + (value ? "read" : "unread"))
+        }
+
+        render message as JSON
+    }
 }

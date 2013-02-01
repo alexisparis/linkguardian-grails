@@ -33,7 +33,7 @@ class BootStrap {
       //linkBuilderService.complete(newLink)
       //newLink.save(flush: true)
 
-      newLink = new Link(url: "http://blog.knoldus.com/2013/01/12/akka-futures-in-scala-with-a-simple-example/", fusionedTags: " scala akka ", creationDate: new Date())
+      newLink = new Link(url: "http://blog.knoldus.com/2013/01/12/akka-futures-in-scala-with-a-simple-example/", fusionedTags: " scala akka ", creationDate: new Date(), read: true)
       newLink.note = Note.Note_0
       linkBuilderService.complete(newLink)
       newLink.save(flush: true)
@@ -48,12 +48,12 @@ class BootStrap {
       linkBuilderService.complete(newLink)
       newLink.save(flush: true)
 
-      newLink = new Link(url: "http://www.house-fr.com/dossiers/Les_baskets_de_House", fusionedTags: " basket docteur house ", creationDate: new Date())
+      newLink = new Link(url: "http://www.house-fr.com/dossiers/Les_baskets_de_House", fusionedTags: " basket docteur house ", creationDate: new Date(), read: true)
       newLink.note = Note.Note_0
       linkBuilderService.complete(newLink)
       newLink.save(flush: true)
 
-      newLink = new Link(url: "http://arodrigues.developpez.com/tutoriels/java/presentation-apache-jmeter-partie1/", fusionedTags: " jmeter ", creationDate: new Date())
+      newLink = new Link(url: "http://arodrigues.developpez.com/tutoriels/java/presentation-apache-jmeter-partie1/", fusionedTags: " jmeter ", creationDate: new Date(), read: true)
       newLink.note = Note.Note_0
       linkBuilderService.complete(newLink)
       newLink.save(flush: true)

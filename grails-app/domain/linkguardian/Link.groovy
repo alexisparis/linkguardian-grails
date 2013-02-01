@@ -8,7 +8,7 @@ class Link {
   static mapping = {
     fusionedTags index:true
     url index:true
-    archived index:true
+    read index:true
     creationDate index:true
   }
 
@@ -17,7 +17,7 @@ class Link {
   Note note = Note.Note_0
   Date creationDate
   String fusionedTags
-  Boolean archived = false
+  Boolean read = false
   String title
   String description
 }

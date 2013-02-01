@@ -24,26 +24,36 @@
         padding: 2px;
         cursor: pointer;
     }
-    div.linkpart.selected
+    div.linkpart.read
     {
-        background-color: #b2c1df;
+        background-color: #ddd;
+        border-radius: 5px 5px 5px;
+        border: 1px solid #888;
+    }
+    div.linkpart.read:hover
+    {
+        box-shadow: #ccc 5px 5px 5px;
+    }
+    div.linkpart.selected:not(.read)
+    {
+        background-color: #accdf6;
         border: 1px solid #002a80;
     }
-    div.linkpart.selected:hover
+    div.linkpart.selected:hover:not(.read)
     {
-        background-color: #b2c1df;
+        background-color: #accdf6;
         box-shadow: #b0c4de 5px 5px 5px;
     }
-    div.linkpart:hover
+    div.linkpart:hover:not(.read)
     {
         background-color: #ccdbf9;
         box-shadow: #b0c4de 5px 5px 5px;
     }
-    div.linkpart div.rateAndClose
+    div.linkpart div.rateAndOperations
     {
         float: right;
     }
-    div.linkpart i.domain
+    div.linkpart .domain
     {
         color: #696969;
     }
@@ -107,6 +117,22 @@
     {
         visibility: visible;
     }
+    div.linkpart.read .read
+    {
+        display: none;
+    }
+    div.linkpart:not(.read) .unread
+    {
+        display: none;
+    }
+    div.actions .icon
+    {
+        opacity: 0.3;
+    }
+    div.actions:hover .icon
+    {
+        opacity: 0.7;
+    }
         </style>
 	</head>
 	<body>
@@ -152,24 +178,30 @@
 
                 var template =
                         '{{#links}}' +
-                            '<div class="linkpart" data-url="{{url}}" data-id="{{id}}" data-note={{note.name}}>' +
+                            '<div class="linkpart {{#read}}read{{/read}}" data-url="{{url}}" data-id="{{id}}" data-note={{note.name}}>' +
                                 '<div>' +
-                                    '<img align="left" src="http://www.google.com/s2/favicons?domain={{domain}}" class="linkparticon with-tooltip"' +
-                                        'width="20px" height="20px" border="4px" style="margin-right: 2px; margin-bottom: 1px;" ' +
-                                        'rel="tooltip" data-placement="top" data-original-title="go to {{domain}}"/>' +
-                                    '<div class="rateAndClose">' +
+                                    '<span class="linkUrl with-tooltip" rel="tooltip" data-placement="top" data-original-title="go to {{domain}}">' +
+                                        '<img align="left" src="http://www.google.com/s2/favicons?domain={{domain}}" class="linkparticon"' +
+                                            'width="20px" height="20px" border="4px" style="margin-right: 2px; margin-bottom: 1px;"/>' +
+                                    '</span>' +
+                                    '<div class="rateAndOperations">' +
                                         '<span class="rate"></span>' +
                                         //'<button class="archiveLinkButton with-tooltip" rel="tooltip" data-placement="top" data-original-title="Archive link">' +
                                         //    '<i class="icon-briefcase"></i>' +
                                         //'</button>' +
                                         //'<i class="icon-briefcase visible-on-hover"></i>' +
                                         '<button class="close deleteLinkButton with-tooltip visible-on-hover" rel="tooltip" data-placement="top" data-original-title="Delete link">&times;</button>' +
+                                        '<div style="clear: both;"></div>' +
+                                        '<div class="actions visible-on-hover" style="float: right; margin-right: 4px;">' +
+                                            '<a class="with-tooltip unread" rel="tooltip" data-placement="top" data-original-title="mark as unread"><i class="icon icon-eye-close"></i></a>' +
+                                            '<a class="with-tooltip read"   rel="tooltip" data-placement="top" data-original-title="mark as read"><i class="icon icon-eye-open"></i></a>' +
+                                        '</div>' +
                                     '</div>' +
                                 '</div>' +
                                 '<div style="margin-top: 1px;word-wrap:break-word;">' +
                                     '<div class="content with-tooltip" rel="tooltip" data-placement="top" data-original-title="go to {{domain}}">' +
-                                        '<b>{{title}}</b><br/>{{description}}<br/>' +
-                                        '<i class="domain" style="font-size: 11px;">{{domain}}</i>' +
+                                        '<span class="title"><b>{{title}}</b></span><br/><span class="description">{{description}}</span><br/>' +
+                                        '<span class="domain" style="font-size: 11px;"><i>{{domain}}</i></span>' +
                                     '</div>' +
                                     '<div class="tags">' +
                                         '<i class="icon-tags" style="margin-right: 3px; margin-left: 6px;"></i>' +
@@ -252,7 +284,7 @@
                     <g:hiddenField name="tag"/>
                 </g:formRemote>
 
-            <!-- form used to add a tag -->
+                <!-- form used to add a tag -->
                 <g:formRemote id="addTagForm" name="addTagForm" url="[controller: 'link', action: 'addTag']"
                               method="POST" style="display: none;" onSuccess="tagAdded(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
                     <g:hiddenField name="id"/>
@@ -265,6 +297,16 @@
                     <g:hiddenField name="id"/>
                     <g:hiddenField name="oldScore"/>
                     <g:hiddenField name="newScore"/>
+                </g:formRemote>
+
+                <!-- form used to modify the read attribute a link -->
+                <g:formRemote id="markAsReadForm" name="markAsReadForm" url="[controller: 'link', action: 'markAsRead']"
+                              method="POST" style="display: none;" onSuccess="markAsReadDone(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
+                    <g:hiddenField name="id"/>
+                </g:formRemote>
+                <g:formRemote id="markAsUnreadForm" name="markAsUnreadForm" url="[controller: 'link', action: 'markAsUnread']"
+                              method="POST" style="display: none;" onSuccess="markAsUnreadDone(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
+                    <g:hiddenField name="id"/>
                 </g:formRemote>
 
                 <g:formRemote id="filterLinkForm" class="form-inline" name="addUrlForm" url="[controller: 'link', action: 'filter']"
@@ -382,6 +424,22 @@
                 var d = jForm.first('input[name="oldScore"]').val();
                 $('div.linkpart[data-id="' + jForm.find('input[name="id"]').val() + '"] span.rate').raty('score', parseInt(jForm.find('input[name="oldScore"]').eq(0).val()));
                 displayStdError();
+            };
+
+            function markAsReadDone(data)
+            {
+                var linkPart = $('div.linkpart[data-id="' + $('#markAsReadForm').find('input[name="id"]').eq(0).val() + '"]');
+                linkPart.addClass("read");
+                //TODO : remove from masonry if read non coché
+                displayMessage(data);
+            };
+
+            function markAsUnreadDone(data)
+            {
+                var linkPart = $('div.linkpart[data-id="' + $('#markAsUnreadForm').find('input[name="id"]').eq(0).val() + '"]');
+                linkPart.removeClass("read");
+                //TODO : remove from masonry if unread non coché
+                displayMessage(data);
             };
 
             function displayFailure(XMLHttpRequest,textStatus,errorThrown)
@@ -537,11 +595,31 @@
                                      $('div.linkpart').removeClass('selected');
                                      var jThis = $(this).parents('div.linkpart').eq(0);
                                      jThis.addClass('selected');
+
+                                     var modalMarker = $('#markAsReadDialog');
+                                     modalMarker.find('span.img').html(jThis.find('span.linkUrl').html());
+                                     modalMarker.find('.question').html("Do you want to mark as read the link<br/><b>" + jThis.find('.title').html() + "</b><br/>from " + jThis.find('.domain').html() + " ?");
+                                     modalMarker.modal();
+
                                      window.open(jThis.attr('data-url'),'_blank');
                                   };
 
                                   $container.on('click', 'div.content', goToLink);
                                   $container.on('click', 'img.linkparticon', goToLink);
+
+                                  var changeRead = function(read, formName)
+                                  {
+                                    return function(event)
+                                    {
+                                        var linkId = $(this).parents('div.linkpart').eq(0).attr('data-id');
+                                        var form = $('#' + formName);
+                                        form.find('input[name="id"]').val(linkId);
+                                        form.submit();
+                                    };
+                                  };
+
+                                  $container.on('click', 'a.read', changeRead(true, "markAsReadForm"));
+                                  $container.on('click', 'a.unread', changeRead(false, "markAsUnreadForm"));
                               });
         </g:javascript>
 
@@ -615,6 +693,19 @@
                 <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="addTag();">Yes</button>
             </div>
         </div>
+    <div id="markAsReadDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3><span class="img"></span>Mark as read?</h3>
+        </div>
+        <div class="modal-body">
+            <p class="question"></p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
+            <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="markSelectedLinkAsRead();">Yes</button>
+        </div>
+    </div>
 
 	</body>
 </html>
