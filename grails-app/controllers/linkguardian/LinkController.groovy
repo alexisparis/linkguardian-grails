@@ -15,19 +15,19 @@ class LinkController
 
     def linkBuilderService
 
-    def success(String message)
+    def success(String msg)
     {
-        return new linkguardian.Message(message : message, level : linkguardian.Level.SUCCESS)
+        return new linkguardian.Message(message : msg, level : linkguardian.Level.SUCCESS)
     }
 
-    def error(String message)
+    def error(String msg)
     {
-        return new linkguardian.Message(message : message, level : linkguardian.Level.ERROR)
+        return new linkguardian.Message(message : msg, level : linkguardian.Level.ERROR)
     }
 
-    def warning(String message)
+    def warning(String msg)
     {
-        return new linkguardian.Message(message : message, level : linkguardian.Level.WARNING)
+        return new linkguardian.Message(message : msg, level : linkguardian.Level.WARNING)
     }
 
     def list()
@@ -38,44 +38,42 @@ class LinkController
     /**
      * filter the links and returns them as JSON result
      * @param token
-     * @param sort
      * @param read
      * @param unread
      * @return
      */
-    def filter(String token, String sort, String read, String unread)
+    def filter(String token, String read, String unread)
     {
-        println("calling filter from LinkController with filter equals to " + token + ", sort=" + sort + ", read=" + read + ", unread=" + unread)
+        log.info "calling filter from LinkController with filter equals to " + token + ", read : " + read + ", unread : " + unread
 
-        def tokenConvey = { String _fusionedTags, String _token ->
-            def result = true
+        def queryLinks = Collections.emptyList()
 
-            println "a"
-            if (_token?.length() > 0)
+        if ( read || unread ) // no need to launch the request if ! read && ! unread
+        {
+            //todo : manage pagination
+            def queryParams = [/*max: 3, offset: 2, */sort: "creationDate", order: "desc"]
+
+            //TODO : filter by connected user
+            def query = Link.where { 1 == 1 }
+
+            if ( token )
             {
-
-                println "b"
-                _token.toUpperCase().tokenize(' ').each {
-                    if (result)
-                    {
-                        println "c"
-                        println "   " + _fusionedTags + "#"
-                        println "   " + it
-                        if (!_fusionedTags.contains(" " + it + " "))
-                        {
-                            result = false
-                        }
-                    }
-                }
+                query = query.where { fusionedTags =~ "% " + token.toUpperCase() + " %"}
             }
 
-            result
+            if ( ! read )
+            {
+                query = query.where { read == false }
+            }
+            if ( ! unread )
+            {
+                query = query.where { read == true }
+            }
+
+            queryLinks = query.list(queryParams)
         }
 
-        Collection<Link> queryLinks = Link.withCriteria {
-            tokenConvey("fusionedTags", token)
-        }                                 .
-                sort { it.creationDate }  .grep()
+        log.info "query links found count : " + queryLinks.size()
 
         response.contentType = "text/json"
         render queryLinks as JSON
@@ -88,15 +86,107 @@ class LinkController
     def addUrl()
     {
         //TODO : check que l'url n'existe pas déjà pour l'utilisateur connecté
-        println "calling addUrl"
+        log.info "calling addUrl with url : " + params.url + " and tags : " + params.tag
 
-        def newLink = new Link(url: params.url, fusionedTags: " " + params.tag.toUpperCase() + " ", creationDate: new Date())
+        def msg
 
-        linkBuilderService.complete(newLink)
+        def realUrl = null
 
-        newLink.save(flush: true)
+        // manage redirect url
+        def urls = new HashSet<String>()
+        def redirectLimitCount = 10
+        def redirectCount = 0
+        def currentUrl = params.url
 
-        render success("the link has been created") as JSON
+        try  {
+            while(redirectCount < redirectLimitCount && realUrl == null && currentUrl != null)  {
+               if ( urls.add(currentUrl) )
+               {
+                   def _url = new URL(currentUrl)
+                   def _connection = _url.openConnection()
+                   if ( _connection instanceof HttpURLConnection )
+                   {
+                      def _httpConnection = (HttpURLConnection)_connection
+                      def code = _httpConnection.getResponseCode()
+                      if( code >= 300 && code < 400 ){ // redirection
+                         currentUrl = null
+                         def location = _httpConnection.getHeaderField("Location")
+                         if ( location != null ){
+                             currentUrl = location
+                         }
+                      }
+                      else{
+                          realUrl = currentUrl
+                      }
+                   }
+               }
+               else
+               {
+                   response.status = 500
+                   msg = this.error("invalid url ==> redirection loop")
+                   break
+               }
+
+               redirectCount++
+            }
+
+            if ( realUrl == null )
+            {
+                if ( msg != null && redirectCount >= redirectLimitCount )
+                {
+                    response.status = 500
+                    msg = this.error("invalid url ==> too many redirections")
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            log.error("error while trying to resolve redirections", e)
+        }
+
+        if ( response.status == 500 && msg == null )
+        {
+            // if no error detected before
+            // use url given by user to use default error handling
+            realUrl = params.url
+        }
+
+        if ( realUrl != null )
+        {
+            try {
+               def newLink = new Link(url: realUrl, fusionedTags: " " + params.tag.toUpperCase() + " ", creationDate: new Date())
+
+                linkBuilderService.complete(newLink)
+
+                newLink.save(flush: true)
+
+                msg = this.success("the link has been created")
+            }
+            catch(Exception e)
+            {
+                log.error(e.getClass().name + " :: error while trying to save new link with url : " + params.url, e)
+                response.status = 500
+                if ( e.getCause() != null )
+                {
+                    if ( e.getCause() instanceof MalformedURLException )
+                    {
+                        msg = this.error("The url '" + params.url + "' is invalid ==> '" + e.getCause().getMessage() + "'")
+                    }
+                    else if ( e.getCause() instanceof UnknownHostException )
+                    {
+                        msg = this.error("The host '" + ((UnknownHostException)e.getCause()).getMessage() + "' cannot be found")
+                    }
+                }
+
+                if ( msg == null )
+                {
+                    // default message
+                    msg = this.error("error while trying to save the link '" + params.url + "'")
+                }
+            }
+        }
+
+        render msg as JSON
     }
 
     /**
@@ -109,7 +199,7 @@ class LinkController
         def success = false
 
         // TODO : check if the link is linked ot he connected user
-        println "trying to delete link with id : " + id;
+        log.info "calling delete link with id : " + id;
 
         Link link = Link.get(id);
         if (link != null)
@@ -120,11 +210,12 @@ class LinkController
 
         if (success)
         {
-            render success("the link has been deleted") as JSON
+            render this.success("the link has been deleted") as JSON
         }
         else
         {
-            render error("error while trying to delete the link") as JSON
+            response.status = 500
+            render this.error("error while trying to delete the link") as JSON
         }
     }
 
@@ -136,30 +227,48 @@ class LinkController
      */
     def addTag(String id, String tag)
     {
-        println "calling addTag for " + id + " for tag " + tag
+        log.info "calling addTag for link " + id + " with tag " + tag
         def msg
 
         Link link = Link.get(id)
         if (link != null && tag != null)
         {
-            def _tag = tag
-            Set<String> tokens = new LinkedHashSet<String>(link.fusionedTags.tokenize())
-            if (tokens.add(_tag))
+            def _tag = tag.trim()
+
+            if ( _tag.length() == 0 )
             {
-                link.fusionedTags = " " + tokens.join(" ") + " "
-                link.save()
-                msg = success("the tag has been added")
+                response.setStatus(500)
+                msg = this.error("the tag is not valid")
             }
             else
             {
-                response.setStatus(406)
-                msg = error("the tag already exist")
+                List<String> tmp = _tag.tokenize();
+                if ( tmp.size() == 1 )
+                {
+                    Set<String> tokens = new LinkedHashSet<String>(link.fusionedTags.tokenize())
+                    if (tokens.add(_tag))
+                    {
+                        link.fusionedTags = " " + tokens.join(" ") + " "
+                        link.save()
+                        msg = this.success("the tag has been added")
+                    }
+                    else
+                    {
+                        response.setStatus(500)
+                        msg = this.error("the tag already exist")
+                    }
+                }
+                else
+                {
+                    response.status = 500
+                    msg = this.error("You can only provide one tag at a time")
+                }
             }
         }
-
-        if (msg == null)
+        else
         {
-            msg = error("error while trying to add the new tag")
+            response.setStatus(500)
+            msg = this.error("error while trying to add the new tag")
         }
 
         render msg as JSON
@@ -173,7 +282,7 @@ class LinkController
      */
     def deleteTag(String id, String tag)
     {
-        println "calling deleteTag for " + id + " for tag " + tag
+        log.info "calling deleteTag for link " + id + " for tag " + tag
         def success = false
 
         Link link = Link.get(id)
@@ -191,11 +300,12 @@ class LinkController
 
         if (success)
         {
-            render success("the tag has been deleted") as JSON
+            render this.success("the tag '" + tag + "' has been deleted") as JSON
         }
         else
         {
-            render error("error while trying to delete the tag") as JSON
+            response.status = 500
+            render this.error("error while trying to delete the tag") as JSON
         }
     }
 
@@ -212,9 +322,15 @@ class LinkController
 
         def link = Link.get(id);
 
+        def success = false
         def msg = null
 
-        if (link != null)
+        if (link == null)
+        {
+            response.status = 500
+            msg = this.error("link not found")
+        }
+        else
         {
             try
             {   def _score = newScore
@@ -227,17 +343,19 @@ class LinkController
 
                 link.note = Note.valueOf(Note.class, "Note_" + _score)
                 link.save()
-                msg = success("the note has been updated")
+                msg = this.success("the note has been updated")
+                success = true
             }
             catch (Exception e)
             {
-                println e
+                log.error("error while trying to update a note", e)
             }
         }
 
-        if (msg == null)
+        if (! success && msg == null)
         {
-            msg = error("error while trying to update the note")
+            response.status = 500
+            msg = this.error("error while trying to update the note")
         }
 
         render msg as JSON
@@ -268,6 +386,9 @@ class LinkController
      */
     def changeReadAttribute(String id, boolean value)
     {
+        log.info "calling changeReadAttribute for link : " + id + " read : " +value
+
+        def success = false
         def message = null
         def link = Link.get(id)
 
@@ -275,11 +396,13 @@ class LinkController
         {
             link.read = value
             link.save()
-            message = success("the link has been marked as " + (value ? "read" : "unread"))
+            message = this.success("the link has been marked as " + (value ? "read" : "unread"))
+            success = true
         }
-        if ( message == null )
+        if ( ! success && message == null )
         {
-            message = error("error while trying to mark the link as " + (value ? "read" : "unread"))
+            response.status = 500
+            message = this.error("error while trying to mark the link as " + (value ? "read" : "unread"))
         }
 
         render message as JSON

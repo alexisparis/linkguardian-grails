@@ -14,6 +14,7 @@ class LinkBuilderService {
       PHPTagTypes.PHP_SHORT.deregister() // remove PHP short tags for this example otherwise they override processing instructions
       MasonTagTypes.register()
       java.net.URL url = new java.net.URL(link.url)
+
       Source source=new Source(url)
 
       // Call fullSequentialParse manually as most of the source will be parsed.

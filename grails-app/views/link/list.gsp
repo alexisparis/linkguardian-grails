@@ -32,7 +32,7 @@
     }
     div.linkpart.read:hover
     {
-        box-shadow: #ccc 5px 5px 5px;
+        /*box-shadow: #ccc 5px 5px 5px;*/
     }
     div.linkpart.selected:not(.read)
     {
@@ -42,12 +42,12 @@
     div.linkpart.selected:hover:not(.read)
     {
         background-color: #accdf6;
-        box-shadow: #b0c4de 5px 5px 5px;
+        /*box-shadow: #b0c4de 5px 5px 5px;*/
     }
     div.linkpart:hover:not(.read)
     {
         background-color: #ccdbf9;
-        box-shadow: #b0c4de 5px 5px 5px;
+        /*box-shadow: #b0c4de 5px 5px 5px;*/
     }
     div.linkpart div.rateAndOperations
     {
@@ -208,15 +208,13 @@
                                         '{{#tags}}' +
                                             tagTemplate('.') +
                                         '{{/tags}}' +
-                                        '<span class="btn btn-primary btn-mini add-tag displayed-on-hover">' +
+                                        '<span class="btn btn-primary btn-mini add-tag visible-on-hover">' +
                                             '<i class="icon-plus-sign with-tooltip" rel="tooltip" data-original-title="add new tag" data-placement="top"></i>' +
                                         '</span>' +
                                     '</div>' +
                                 '</div>' +
                             '</div>' +
                         '{{/links}}';
-
-                console.log("template : " + template);
 
                 var output = Mustache.render(template, model);
 
@@ -260,17 +258,7 @@
         <p>
 
         <ul class="nav nav-pills" id="navigation">
-            <li class="active">
-                <a id="nav-home">Home</a>
-            </li>
-            <li style="visibility: hidden;">
-                <a id="nav-archive">Tools</a>
-            </li>
-            <li style="margin-left: 40px;">
-                <a href="#">About</a>
-            </li>
-            <li style="margin-left: 120px;">
-
+            <li>
                 <!-- form used to delete a link -->
                 <g:formRemote id="deleteLinkForm" name="deleteLinkForm" url="[controller: 'link', action: 'delete']"
                               method="POST" style="display: none;" onSuccess="linkDeletionConfirmed(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
@@ -314,29 +302,48 @@
                               onSuccess="updateLinks(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)"> <!-- update="[success: 'message', failure: 'error']"  -->
                     <fieldset>
                         <!--g:hiddenField name="archived" id="archived-input"/-->
-                        <label class="checkbox" style="margin-right: 10px;">
-                            <input type="checkbox" name="read" id="read" value="read"/>
+                        <label class="checkbox read-check" style="margin-right: 10px;">
+                            <input class="read-marker" type="checkbox" name="read" id="read" value="read"/>
                                 <i class="icon-eye-open"></i>&nbsp;read
                         </label>
-                        <label class="checkbox" style="margin-right: 10px;">
-                            <input type="checkbox" name="unread" id="unread" value="unread" checked>
+                        <label class="checkbox read-check" style="margin-right: 10px;">
+                            <input class="read-marker" type="checkbox" name="unread" id="unread" value="unread" checked>
                             <i class="icon-eye-close"></i>&nbsp;unread
                         </label>
                         <!--select name="sort">
                             <option value="date">sort by date</option>
                             <option value="rate">sort by rate</option>
                         </select-->
-                        <g:textField id="filterInput" name="token" title="filter" placeholder="filter by tag" class="input-medium"/>
-                        <g:submitButton id="filter-input" name="Filter" class="btn btn-primary" style="background-image_old: url('${resource(dir: 'images', file: 'search.png')}')"/>
+
+                        <div class="input-append">
+                            <g:textField id="filterInput" name="token" title="filter" placeholder="filter by tag" class="input-medium"/>
+                            <span class="add-on" id="clearFilterTag"><img src="${resource(dir: 'images', file: 'delete.png')}" width="14"/></span>
+                        </div>
+
+                        <g:submitButton onclick="setSubmitFilterButtonToNormalState();" id="filter-input" name="Filter" class="btn btn-primary" style="background-image_old: url('${resource(dir: 'images', file: 'search.png')}')"/>
                     </fieldset>
                 </g:formRemote>
+            </li>
+            <li style="float: right;">
+                <button class="btn" id="about">About</button>
             </li>
         </ul>
 
         <g:javascript src="jquery.raty.js"/>
         <g:javascript src="jquery.masonry.min.js"/>
+        <g:javascript src="jquery.blockUI.js"/>
 
         <g:javascript>
+
+            function setSubmitFilterButtonToNormalState()
+            {
+                $('#filter-input').removeClass("btn-warning").addClass("btn-primary");
+            };
+
+            function setSubmitFilterButtonToClickState()
+            {
+                $('#filter-input').removeClass("btn-primary").addClass("btn-warning");
+            };
 
             function submitFilterForm()
             {
@@ -378,6 +385,7 @@
                     $('div.linkpart[data-id="' + linkId + '"] span.tag[data-tag="' + tag + '"]').remove();
                     displayMessage(data);
                 }
+                submitFilterForm();
             };
 
             function addTag()
@@ -432,6 +440,7 @@
                 linkPart.addClass("read");
                 //TODO : remove from masonry if read non coché
                 displayMessage(data);
+                submitFilterForm();
             };
 
             function markAsUnreadDone(data)
@@ -440,6 +449,7 @@
                 linkPart.removeClass("read");
                 //TODO : remove from masonry if unread non coché
                 displayMessage(data);
+                submitFilterForm();
             };
 
             function displayFailure(XMLHttpRequest,textStatus,errorThrown)
@@ -493,6 +503,29 @@
 
             $(document).ready(function()
                               {
+                                  $(document).ajaxStart(function(){
+                                                $.blockUI(
+                                                    {
+                                                        message : '<img src="${resource(dir: "images/loading", file: "loading_big.gif")}"/>',
+                                                        css: {
+                                                            border: 'none',
+                                                            backgroundColor: 'none',
+                                                            opacity:         0.8
+                                                            }
+                                                    }
+                                                );
+                                            })
+                                             .ajaxStop(function(){
+                                                setTimeout(function(){
+                                                    $.unblockUI();
+                                                }, 200); //TODO : reduce additional times
+                                            });
+
+                                  $('#about').on('click', function(event)
+                                  {
+                                    $('#aboutDialog').modal();
+                                  });
+
                                   var callback = function(archived)
                                   {
                                       return function(event)
@@ -620,16 +653,36 @@
 
                                   $container.on('click', 'a.read', changeRead(true, "markAsReadForm"));
                                   $container.on('click', 'a.unread', changeRead(false, "markAsUnreadForm"));
+
+                                  $('input.read-marker').on('click', function(event)
+                                   {
+                                      setSubmitFilterButtonToClickState();
+                                   });
+                                  $('#filterInput').on('keypress', setSubmitFilterButtonToClickState);
+
+
+                                  $('#clearFilterTag').on('click', function(event)
+                                  {
+                                     var inputFilter = $('#filterInput');
+                                      var val = inputFilter.val();
+                                     if ( val && val.length > 0 )
+                                     {
+                                        inputFilter.val('');
+                                        setSubmitFilterButtonToClickState();
+                                     }
+                                  });
+
                               });
         </g:javascript>
 
         <div id="add-part">
             <g:formRemote name="addUrlForm" url="[controller: 'link', action: 'addUrl']"
-                          method="POST" onSuccess="resetAddForm();submitFilterForm(); displayMessage(data);">
+                          method="POST" onSuccess="resetAddForm();submitFilterForm(); displayMessage(data);"
+                          onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
 
                 <div class="input-prepend input-append">
                     <span class="add-on">url</span>
-                    <g:textField id="txtUrl" name="url" class="input-xxlarge" placeholder="http://..."/>
+                    <g:textField id="txtUrl" name="url" class="input-xxlarge" placeholder="http://..." required=""/>
 
                     <input class="btn btn-primary" type="submit" value="Add link"/>
 
@@ -657,7 +710,8 @@
         <div id="deleteLinkDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3>Confirmation</h3>
+                <h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue3.png')}" alt="LinkGuardian" width="50"/> Confirmation</h3>
             </div>
             <div class="modal-body">
                 <p>Do you really want to delete this link?</p>
@@ -670,7 +724,8 @@
         <div id="deleteTagDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3>Confirmation</h3>
+                <h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue3.png')}" alt="LinkGuardian" width="50"/> Confirmation</h3>
             </div>
             <div class="modal-body">
                 <p>Do you really want to delete this tag?</p>
@@ -683,7 +738,8 @@
         <div id="addTagDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3>Add a new tag</h3>
+                <h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue3.png')}" alt="LinkGuardian" width="50"/> Add a new tag</h3>
             </div>
             <div class="modal-body" style="text-align: center;">
                 <g:textField id="newTagInput" name="name" class="input-xlarge"/>
@@ -693,17 +749,35 @@
                 <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="addTag();">Yes</button>
             </div>
         </div>
-    <div id="markAsReadDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="markAsReadDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue3.png')}" alt="LinkGuardian" width="50"/> Mark as read?</h3>
+            </div>
+            <div class="modal-body">
+                <p class="question"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
+                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="markSelectedLinkAsRead();">Yes</button>
+            </div>
+        </div>
+    <div id="aboutDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3><span class="img"></span>Mark as read?</h3>
+            <h3>
+                <img src="${resource(dir: 'images', file: 'shield_blue3.png')}" alt="LinkGuardian" width="50"/> About Link Guardian</h3>
         </div>
         <div class="modal-body">
-            <p class="question"></p>
+            <p>Link Guardian is a tool that allow to <span class="label label-success">register websites adress</span>.</p>
+            <p>It is especially designed to manage articles that you want to <span class="label label-success">read later</span> or if you want to collect a set of articles related to the same subject.</p>
+            <p>Each link registered can be <u>tagged</u>, <u>marked as read or unread</u> or <u>removed</u> if the content of an article is not interesting enough.</p>
+            <p style="margin-top: 30px;"><strong>Link Guardian allows you to <span class="label label-success">bookmark websites</span> that you like and helps you <span class="label label-success">never forget to read an attractive article</span>.</strong></p>
+
         </div>
         <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
-            <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="markSelectedLinkAsRead();">Yes</button>
+            <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
     </div>
 
