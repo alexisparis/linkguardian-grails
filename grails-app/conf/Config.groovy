@@ -93,3 +93,8 @@ log4j = {
 }
 
 google.analytics.webPropertyID = "UA-29683223-2"
+
+// Added by the Spring Security Core plugin:
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'linkguardian.User'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'linkguardian.UserRole'
+grails.plugins.springsecurity.authority.className = 'linkguardian.Role'
