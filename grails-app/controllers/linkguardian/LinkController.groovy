@@ -1,6 +1,7 @@
 package linkguardian
 
 import grails.converters.JSON
+import grails.plugins.springsecurity.Secured
 import grails.util.GrailsUtil
 
 import java.util.logging.Level
@@ -9,11 +10,14 @@ import java.util.logging.Level
  *
  * see http://viralpatel.net/blogs/first-play-framework-gae-siena-application-tutorial-example/
  */
+@Secured(['ROLE_USER'])
 class LinkController
 {
     static defaultAction = "list"
 
     def linkBuilderService
+
+    def springSecurityService
 
     def success(String msg)
     {
