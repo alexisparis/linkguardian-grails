@@ -1,26 +1,35 @@
 <grails>
   <resources>
     <resource>DefaultWebXmlConfig</resource>
+    <resource>MustachePluginResources</resource>
     <resource>JQueryService</resource>
-    <resource>DefaultCacheConfig</resource>
-    <resource>org.grails.plugin.resource.CSSRewriterResourceMapper</resource>
-    <resource>OpenidController</resource>
     <resource>org.groovydev.TwitterBootstrapTagLib</resource>
-    <resource>JQueryPluginResources</resource>
-    <resource>DbdocUrlMappings</resource>
-    <resource>grails.plugin.cache.CacheTagLib</resource>
+    <resource>DefaultTwitterSecurityConfig</resource>
+    <resource>grails.plugins.springsecurity.SecurityTagLib</resource>
     <resource>org.grails.plugin.resource.BundleResourceMapper</resource>
+    <resource>grails.plugin.cache.CacheTagLib</resource>
     <resource>OpenidTagLib</resource>
-    <resource>grails.plugin.databasemigration.DbdocController</resource>
-    <resource>JQueryConfig</resource>
-    <resource>JQueryTagLib</resource>
-    <resource>org.grails.plugin.resource.CSSPreprocessorResourceMapper</resource>
-    <resource>grails.plugin.cache.GrailsCacheAdminService</resource>
     <resource>JQueryResourceTagLib</resource>
     <resource>BootstrapResources</resource>
     <resource>org.grails.plugin.resource.ResourceTagLib</resource>
-    <resource>OpenidService</resource>
+    <resource>DefaultSecurityConfig</resource>
     <resource>ResourcesBootStrap</resource>
+    <resource>org.grails.plugin.resource.CSSRewriterResourceMapper</resource>
+    <resource>DefaultCacheConfig</resource>
+    <resource>OpenidController</resource>
+    <resource>GoogleAnalyticsTagLib</resource>
+    <resource>grails.plugins.springsecurity.SpringSecurityService</resource>
+    <resource>JQueryPluginResources</resource>
+    <resource>DbdocUrlMappings</resource>
+    <resource>com.the6hours.grails.springsecurity.twitter.TwitterAuthController</resource>
+    <resource>com.the6hours.grails.springsecurity.twitter.TwitterAuthTagLib</resource>
+    <resource>JQueryConfig</resource>
+    <resource>grails.plugin.databasemigration.DbdocController</resource>
+    <resource>org.grails.plugins.mustache.MustacheTagLib</resource>
+    <resource>org.grails.plugin.resource.CSSPreprocessorResourceMapper</resource>
+    <resource>JQueryTagLib</resource>
+    <resource>grails.plugin.cache.GrailsCacheAdminService</resource>
+    <resource>OpenidService</resource>
     <resource>ApplicationResources</resource>
     <resource>BootStrap</resource>
     <resource>BuildConfig</resource>
@@ -28,19 +37,34 @@
     <resource>DataSource</resource>
     <resource>resources</resource>
     <resource>UrlMappings</resource>
+    <resource>linkguardian.CrudUserController</resource>
     <resource>linkguardian.LinkController</resource>
+    <resource>LoginController</resource>
+    <resource>LogoutController</resource>
+    <resource>TwitterAuthController</resource>
     <resource>linkguardian.Link</resource>
     <resource>linkguardian.Note</resource>
+    <resource>linkguardian.Role</resource>
+    <resource>linkguardian.User</resource>
+    <resource>linkguardian.UserRole</resource>
+    <resource>TwitterUser</resource>
+    <resource>linkguardian.LinkBuilderService</resource>
+    <resource>linkguardian.Level</resource>
+    <resource>linkguardian.Message</resource>
   </resources>
   <plugins>
-    <plugin>OpenidGrailsPlugin</plugin>
-    <plugin>HibernateGrailsPlugin</plugin>
-    <plugin>MongodbGrailsPlugin</plugin>
-    <plugin>TwitterBootstrapGrailsPlugin</plugin>
     <plugin>WebxmlGrailsPlugin</plugin>
+    <plugin>MustacheGrailsPlugin</plugin>
+    <plugin>RestGrailsPlugin</plugin>
+    <plugin>HibernateGrailsPlugin</plugin>
+    <plugin>OpenidGrailsPlugin</plugin>
+    <plugin>SpringSecurityCoreGrailsPlugin</plugin>
+    <plugin>GoogleAnalyticsGrailsPlugin</plugin>
+    <plugin>TwitterBootstrapGrailsPlugin</plugin>
+    <plugin>SpringSecurityTwitterGrailsPlugin</plugin>
     <plugin>DatabaseMigrationGrailsPlugin</plugin>
     <plugin>CacheGrailsPlugin</plugin>
-    <plugin>ResourcesGrailsPlugin</plugin>
     <plugin>JqueryGrailsPlugin</plugin>
+    <plugin>ResourcesGrailsPlugin</plugin>
   </plugins>
 </grails>
