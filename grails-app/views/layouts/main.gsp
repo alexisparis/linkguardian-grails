@@ -15,7 +15,6 @@
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
         <!--link rel="stylesheet" href="${resource(dir: 'css', file: 'application.css')}" type="text/css"-->
-        <link rel="stylesheet" href="${resource(dir:'css',file:'twitter-auth.css')}" />
 		<g:layoutHead/>
 		<r:layoutResources />
         <ga:trackPageview />

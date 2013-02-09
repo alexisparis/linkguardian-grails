@@ -82,11 +82,14 @@
 		height: 12px;
 	}
 	</style>
+
+    <link rel="stylesheet" href="${resource(dir:'css',file:'twitter-auth.css')}" />
 </head>
 
 <body>
 <div id='login'>
-	<div class='inner'>
+    <twitterAuth:button/>
+	<!--div class='inner'>
 		<div class='fheader'><g:message code="springSecurity.login.header"/></div>
 
 		<g:if test='${flash.message}'>
@@ -113,7 +116,7 @@
 				<input type='submit' id="submit" value='${message(code: "springSecurity.login.button")}'/>
 			</p>
 		</form>
-	</div>
+	</div-->
 </div>
 <script type='text/javascript'>
 	<!--
