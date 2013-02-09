@@ -38,7 +38,7 @@ environments {
     }
     production {
         dataSource {
-            dbCreate = "update"
+            dbCreate = "create-drop"//"update"
             url = "jdbc:postgresql://127.9.157.2:5432/linkguardian"
             username = "admin"
             password = "CwlQmXF8PmF4"
