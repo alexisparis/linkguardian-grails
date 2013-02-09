@@ -57,21 +57,21 @@ Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/antlr-2.7.7.jar,WEB-IN
  b/jta-1.1.jar,WEB-INF/lib/jul-to-slf4j-1.6.2.jar,WEB-INF/lib/liquibas
  e-core-2.0.5.jar,WEB-INF/lib/log4j-1.2.16.jar,WEB-INF/lib/nekohtml-1.
  9.14.jar,WEB-INF/lib/nekohtml-1.9.9.jar,WEB-INF/lib/openid4java-nodep
- s-0.9.6.jar,WEB-INF/lib/oro-2.0.8.jar,WEB-INF/lib/sitemesh-2.4.jar,WE
- B-INF/lib/slf4j-api-1.6.2.jar,WEB-INF/lib/spring-aop-3.1.2.RELEASE.ja
- r,WEB-INF/lib/spring-asm-3.1.2.RELEASE.jar,WEB-INF/lib/spring-aspects
- -3.1.2.RELEASE.jar,WEB-INF/lib/spring-beans-3.1.2.RELEASE.jar,WEB-INF
- /lib/spring-context-3.1.2.RELEASE.jar,WEB-INF/lib/spring-context-supp
- ort-3.1.2.RELEASE.jar,WEB-INF/lib/spring-core-3.1.2.RELEASE.jar,WEB-I
- NF/lib/spring-expression-3.1.2.RELEASE.jar,WEB-INF/lib/spring-jdbc-3.
- 1.2.RELEASE.jar,WEB-INF/lib/spring-jms-3.1.2.RELEASE.jar,WEB-INF/lib/
- spring-orm-3.1.2.RELEASE.jar,WEB-INF/lib/spring-security-core-3.0.7.R
- ELEASE.jar,WEB-INF/lib/spring-security-web-3.0.7.RELEASE.jar,WEB-INF/
- lib/spring-tx-3.1.2.RELEASE.jar,WEB-INF/lib/spring-web-3.1.2.RELEASE.
- jar,WEB-INF/lib/spring-webmvc-3.1.2.RELEASE.jar,WEB-INF/lib/twitter4j
- -core-2.2.5.jar,WEB-INF/lib/validation-api-1.0.0.GA.jar,WEB-INF/lib/x
- ercesImpl-2.8.1.jar,WEB-INF/lib/xml-resolver-1.2.jar,WEB-INF/lib/xpp3
- _min-1.1.4c.jar
+ s-0.9.6.jar,WEB-INF/lib/oro-2.0.8.jar,WEB-INF/lib/postgresql-9.2-1002
+ .jdbc4.jar,WEB-INF/lib/sitemesh-2.4.jar,WEB-INF/lib/slf4j-api-1.6.2.j
+ ar,WEB-INF/lib/spring-aop-3.1.2.RELEASE.jar,WEB-INF/lib/spring-asm-3.
+ 1.2.RELEASE.jar,WEB-INF/lib/spring-aspects-3.1.2.RELEASE.jar,WEB-INF/
+ lib/spring-beans-3.1.2.RELEASE.jar,WEB-INF/lib/spring-context-3.1.2.R
+ ELEASE.jar,WEB-INF/lib/spring-context-support-3.1.2.RELEASE.jar,WEB-I
+ NF/lib/spring-core-3.1.2.RELEASE.jar,WEB-INF/lib/spring-expression-3.
+ 1.2.RELEASE.jar,WEB-INF/lib/spring-jdbc-3.1.2.RELEASE.jar,WEB-INF/lib
+ /spring-jms-3.1.2.RELEASE.jar,WEB-INF/lib/spring-orm-3.1.2.RELEASE.ja
+ r,WEB-INF/lib/spring-security-core-3.0.7.RELEASE.jar,WEB-INF/lib/spri
+ ng-security-web-3.0.7.RELEASE.jar,WEB-INF/lib/spring-tx-3.1.2.RELEASE
+ .jar,WEB-INF/lib/spring-web-3.1.2.RELEASE.jar,WEB-INF/lib/spring-webm
+ vc-3.1.2.RELEASE.jar,WEB-INF/lib/twitter4j-core-2.2.5.jar,WEB-INF/lib
+ /validation-api-1.0.0.GA.jar,WEB-INF/lib/xercesImpl-2.8.1.jar,WEB-INF
+ /lib/xml-resolver-1.2.jar,WEB-INF/lib/xpp3_min-1.1.4c.jar
 
 Name: Grails Application
 Implementation-Title: LinkGuardian
