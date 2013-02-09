@@ -98,3 +98,31 @@ google.analytics.webPropertyID = "UA-29683223-2"
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'linkguardian.User'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'linkguardian.UserRole'
 grails.plugins.springsecurity.authority.className = 'linkguardian.Role'
+
+
+grails.plugins.springsecurity.twitter.app.key='dRDPZlccjxpnkyCPAPjtg'
+grails.plugins.springsecurity.twitter.app.consumerKey='dRDPZlccjxpnkyCPAPjtg'
+grails.plugins.springsecurity.twitter.app.consumerSecret='0BM06vBD436nPxZ41mLgthokfvdXj0HUbxrK3iP8'
+
+security {
+    twitter {
+        language = "en_US"
+        button.text = "Login with Twitter"
+        popup = false
+
+        autoCreate {
+            active = true
+            roles = ["ROLE_USER", "ROLE_TWITTER"]
+        }
+
+        filter {
+            processUrl = "/j_spring_twitter_security_check"
+            processPopupUrl = "/twitterAuth/popup"
+        }
+
+        domain {
+            classname = "TwitterUser"
+            connectionPropertyName = "user"
+        }
+    }
+}

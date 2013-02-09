@@ -254,6 +254,7 @@
         </g:javascript>
         <p>
             <openid:identifier />
+            <twitterAuth:button/>
         </p>
         <p>
 

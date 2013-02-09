@@ -60,6 +60,7 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/com.github.spullara.mustache.java/builder/jars/builder-0.6.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.springframework.security/spring-security-core/jars/spring-security-core-3.0.7.RELEASE.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.springframework.security/spring-security-web/jars/spring-security-web-3.0.7.RELEASE.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.twitter4j/twitter4j-core/jars/twitter4j-core-2.2.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

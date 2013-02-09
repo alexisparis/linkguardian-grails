@@ -10,6 +10,8 @@
           <root url="file://$USER_HOME$/.grails/2.2.0/projects/LinkGuardian/plugins/twitter-bootstrap-2.2.2/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.2.0/projects/LinkGuardian/plugins/rest-0.7/web-app" relative="/" />
           <root url="file://$USER_HOME$/.grails/2.2.0/projects/LinkGuardian/plugins/mustache-0.1/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.2.0/projects/LinkGuardian/plugins/spring-security-twitter-0.4.4/web-app" relative="/" />
+          <root url="file://$USER_HOME$/.grails/2.2.0/projects/LinkGuardian/plugins/spring-security-twitter-0.4.4/grails-app/views" relative="/" />
         </webroots>
         <sourceRoots />
       </configuration>
@@ -69,6 +71,12 @@
       <sourceFolder url="file://$USER_HOME$/.grails/2.2.0/projects/LinkGuardian/plugins/spring-security-core-1.2.7.3/grails-app/services" isTestSource="false" />
       <sourceFolder url="file://$USER_HOME$/.grails/2.2.0/projects/LinkGuardian/plugins/spring-security-core-1.2.7.3/grails-app/taglib" isTestSource="false" />
     </content>
+    <content url="file://$USER_HOME$/.grails/2.2.0/projects/LinkGuardian/plugins/spring-security-twitter-0.4.4">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.2.0/projects/LinkGuardian/plugins/spring-security-twitter-0.4.4/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.2.0/projects/LinkGuardian/plugins/spring-security-twitter-0.4.4/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.2.0/projects/LinkGuardian/plugins/spring-security-twitter-0.4.4/grails-app/controllers" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.2.0/projects/LinkGuardian/plugins/spring-security-twitter-0.4.4/grails-app/taglib" isTestSource="false" />
+    </content>
     <content url="file://$USER_HOME$/.grails/2.2.0/projects/LinkGuardian/plugins/tomcat-2.2.0" />
     <content url="file://$USER_HOME$/.grails/2.2.0/projects/LinkGuardian/plugins/twitter-bootstrap-2.2.2">
       <sourceFolder url="file://$USER_HOME$/.grails/2.2.0/projects/LinkGuardian/plugins/twitter-bootstrap-2.2.2/grails-app/i18n" isTestSource="false" />
@@ -99,6 +107,7 @@
           <root url="jar://$USER_HOME$/.grails/ivy-cache/com.github.spullara.mustache.java/builder/jars/builder-0.6.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.springframework.security/spring-security-core/jars/spring-security-core-3.0.7.RELEASE.jar!/" />
           <root url="jar://$USER_HOME$/.grails/ivy-cache/org.springframework.security/spring-security-web/jars/spring-security-web-3.0.7.RELEASE.jar!/" />
+          <root url="jar://$USER_HOME$/.grails/ivy-cache/org.twitter4j/twitter4j-core/jars/twitter4j-core-2.2.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
