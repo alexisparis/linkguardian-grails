@@ -39,7 +39,7 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:postgresql://127.9.157.1:5432/"
+            url = "jdbc:postgresql://127.9.157.1:5432/linkguardian"
             username = "admin"
             password = "ClWkVQ5B_Ay6"
             driverClassName = "org.postgresql.Driver"
