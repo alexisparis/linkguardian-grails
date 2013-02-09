@@ -117,7 +117,7 @@
       <file leaf-file-name="DataSource.groovy" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/grails-app/conf/DataSource.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="66" selection-start="1085" selection-end="1085" vertical-scroll-proportion="0.7774968">
+            <state line="43" column="36" selection-start="1154" selection-end="1154" vertical-scroll-proportion="0.8154235">
               <folding />
             </state>
           </provider>
@@ -146,6 +146,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state line="256" column="33" selection-start="9798" selection-end="9798" vertical-scroll-proportion="-8.936171">
               <folding>
+                <marker date="1360402730000" expanded="true" signature="2907:9717" placeholder="..." />
                 <marker date="1360402730000" expanded="true" signature="3017:3477" placeholder="{...}" />
                 <marker date="1360402730000" expanded="true" signature="3532:9692" placeholder="{...}" />
                 <marker date="1360402730000" expanded="true" signature="3757:4270" placeholder="{...}" />
@@ -155,13 +156,21 @@
                 <marker date="1360402730000" expanded="true" signature="8036:9492" placeholder="{...}" />
                 <marker date="1360402730000" expanded="true" signature="8354:9452" placeholder="{&quot;cancel&quot;: true...}" />
                 <marker date="1360402730000" expanded="true" signature="8651:9398" placeholder="{...}" />
+                <marker date="1360402730000" expanded="true" signature="9994:10313" placeholder="..." />
                 <marker date="1360402730000" expanded="true" signature="10113:10127" placeholder="{...}" />
+                <marker date="1360402730000" expanded="true" signature="10415:10783" placeholder="..." />
                 <marker date="1360402730000" expanded="true" signature="10536:10550" placeholder="{...}" />
+                <marker date="1360402730000" expanded="true" signature="10879:11229" placeholder="..." />
                 <marker date="1360402730000" expanded="true" signature="10994:11008" placeholder="{...}" />
+                <marker date="1360402730000" expanded="true" signature="11342:11770" placeholder="..." />
                 <marker date="1360402730000" expanded="true" signature="11465:11479" placeholder="{...}" />
+                <marker date="1360402730000" expanded="true" signature="11893:12209" placeholder="..." />
                 <marker date="1360402730000" expanded="true" signature="12016:12030" placeholder="{...}" />
+                <marker date="1360402730000" expanded="true" signature="12262:12584" placeholder="..." />
                 <marker date="1360402730000" expanded="true" signature="12389:12403" placeholder="{...}" />
+                <marker date="1360402730000" expanded="true" signature="12636:14587" placeholder="..." />
                 <marker date="1360402730000" expanded="true" signature="12771:12787" placeholder="{...}" />
+                <marker date="1360402730000" expanded="true" signature="14908:30143" placeholder="..." />
                 <marker date="1360402730000" expanded="true" signature="14981:15083" placeholder="{...}" />
                 <marker date="1360402730000" expanded="true" signature="15155:15257" placeholder="{...}" />
                 <marker date="1360402730000" expanded="true" signature="15312:15429" placeholder="{...}" />
@@ -221,6 +230,7 @@
                 <marker date="1360402730000" expanded="true" signature="29285:29398" placeholder="{...}" />
                 <marker date="1360402730000" expanded="true" signature="29623:30083" placeholder="{...}" />
                 <marker date="1360402730000" expanded="true" signature="29869:30047" placeholder="{...}" />
+                <marker date="1360402730000" expanded="true" signature="30217:31256" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -248,7 +258,9 @@
         <entry file="file://$PROJECT_DIR$/grails-app/views/login/auth.gsp">
           <provider selected="true" editor-type-id="text-editor">
             <state line="90" column="25" selection-start="1616" selection-end="1616" vertical-scroll-proportion="-9.765958">
-              <folding />
+              <folding>
+                <marker date="1360409705000" expanded="true" signature="1750:1813" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -1013,6 +1025,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="154" column="12" selection-start="3532" selection-end="3532" vertical-scroll-proportion="0.0">
           <folding>
+            <marker date="1360402730000" expanded="true" signature="2907:9717" placeholder="..." />
             <marker date="1360402730000" expanded="true" signature="3017:3477" placeholder="{...}" />
             <marker date="1360402730000" expanded="true" signature="3532:9692" placeholder="{...}" />
             <marker date="1360402730000" expanded="true" signature="3757:4270" placeholder="{...}" />
@@ -1022,13 +1035,21 @@
             <marker date="1360402730000" expanded="true" signature="8036:9492" placeholder="{...}" />
             <marker date="1360402730000" expanded="true" signature="8354:9452" placeholder="{&quot;cancel&quot;: true...}" />
             <marker date="1360402730000" expanded="true" signature="8651:9398" placeholder="{...}" />
+            <marker date="1360402730000" expanded="true" signature="9994:10313" placeholder="..." />
             <marker date="1360402730000" expanded="true" signature="10113:10127" placeholder="{...}" />
+            <marker date="1360402730000" expanded="true" signature="10415:10783" placeholder="..." />
             <marker date="1360402730000" expanded="true" signature="10536:10550" placeholder="{...}" />
+            <marker date="1360402730000" expanded="true" signature="10879:11229" placeholder="..." />
             <marker date="1360402730000" expanded="true" signature="10994:11008" placeholder="{...}" />
+            <marker date="1360402730000" expanded="true" signature="11342:11770" placeholder="..." />
             <marker date="1360402730000" expanded="true" signature="11465:11479" placeholder="{...}" />
+            <marker date="1360402730000" expanded="true" signature="11893:12209" placeholder="..." />
             <marker date="1360402730000" expanded="true" signature="12016:12030" placeholder="{...}" />
+            <marker date="1360402730000" expanded="true" signature="12262:12584" placeholder="..." />
             <marker date="1360402730000" expanded="true" signature="12389:12403" placeholder="{...}" />
+            <marker date="1360402730000" expanded="true" signature="12636:14587" placeholder="..." />
             <marker date="1360402730000" expanded="true" signature="12771:12787" placeholder="{...}" />
+            <marker date="1360402730000" expanded="true" signature="14908:30143" placeholder="..." />
             <marker date="1360402730000" expanded="true" signature="14981:15083" placeholder="{...}" />
             <marker date="1360402730000" expanded="true" signature="15155:15257" placeholder="{...}" />
             <marker date="1360402730000" expanded="true" signature="15312:15429" placeholder="{...}" />
@@ -1088,6 +1109,7 @@
             <marker date="1360402730000" expanded="true" signature="29285:29398" placeholder="{...}" />
             <marker date="1360402730000" expanded="true" signature="29623:30083" placeholder="{...}" />
             <marker date="1360402730000" expanded="true" signature="29869:30047" placeholder="{...}" />
+            <marker date="1360402730000" expanded="true" signature="30217:31256" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -1147,6 +1169,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="256" column="33" selection-start="9798" selection-end="9798" vertical-scroll-proportion="-8.936171">
           <folding>
+            <marker date="1360402730000" expanded="true" signature="2907:9717" placeholder="..." />
             <marker date="1360402730000" expanded="true" signature="3017:3477" placeholder="{...}" />
             <marker date="1360402730000" expanded="true" signature="3532:9692" placeholder="{...}" />
             <marker date="1360402730000" expanded="true" signature="3757:4270" placeholder="{...}" />
@@ -1156,13 +1179,21 @@
             <marker date="1360402730000" expanded="true" signature="8036:9492" placeholder="{...}" />
             <marker date="1360402730000" expanded="true" signature="8354:9452" placeholder="{&quot;cancel&quot;: true...}" />
             <marker date="1360402730000" expanded="true" signature="8651:9398" placeholder="{...}" />
+            <marker date="1360402730000" expanded="true" signature="9994:10313" placeholder="..." />
             <marker date="1360402730000" expanded="true" signature="10113:10127" placeholder="{...}" />
+            <marker date="1360402730000" expanded="true" signature="10415:10783" placeholder="..." />
             <marker date="1360402730000" expanded="true" signature="10536:10550" placeholder="{...}" />
+            <marker date="1360402730000" expanded="true" signature="10879:11229" placeholder="..." />
             <marker date="1360402730000" expanded="true" signature="10994:11008" placeholder="{...}" />
+            <marker date="1360402730000" expanded="true" signature="11342:11770" placeholder="..." />
             <marker date="1360402730000" expanded="true" signature="11465:11479" placeholder="{...}" />
+            <marker date="1360402730000" expanded="true" signature="11893:12209" placeholder="..." />
             <marker date="1360402730000" expanded="true" signature="12016:12030" placeholder="{...}" />
+            <marker date="1360402730000" expanded="true" signature="12262:12584" placeholder="..." />
             <marker date="1360402730000" expanded="true" signature="12389:12403" placeholder="{...}" />
+            <marker date="1360402730000" expanded="true" signature="12636:14587" placeholder="..." />
             <marker date="1360402730000" expanded="true" signature="12771:12787" placeholder="{...}" />
+            <marker date="1360402730000" expanded="true" signature="14908:30143" placeholder="..." />
             <marker date="1360402730000" expanded="true" signature="14981:15083" placeholder="{...}" />
             <marker date="1360402730000" expanded="true" signature="15155:15257" placeholder="{...}" />
             <marker date="1360402730000" expanded="true" signature="15312:15429" placeholder="{...}" />
@@ -1222,6 +1253,7 @@
             <marker date="1360402730000" expanded="true" signature="29285:29398" placeholder="{...}" />
             <marker date="1360402730000" expanded="true" signature="29623:30083" placeholder="{...}" />
             <marker date="1360402730000" expanded="true" signature="29869:30047" placeholder="{...}" />
+            <marker date="1360402730000" expanded="true" signature="30217:31256" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -1250,7 +1282,9 @@
     <entry file="file://$PROJECT_DIR$/grails-app/views/login/auth.gsp">
       <provider selected="true" editor-type-id="text-editor">
         <state line="90" column="25" selection-start="1616" selection-end="1616" vertical-scroll-proportion="-9.765958">
-          <folding />
+          <folding>
+            <marker date="1360409705000" expanded="true" signature="1750:1813" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1270,7 +1304,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/conf/DataSource.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="66" selection-start="1085" selection-end="1085" vertical-scroll-proportion="0.7774968">
+        <state line="43" column="36" selection-start="1154" selection-end="1154" vertical-scroll-proportion="0.8154235">
           <folding />
         </state>
       </provider>

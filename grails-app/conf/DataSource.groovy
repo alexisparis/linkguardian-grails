@@ -39,9 +39,9 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:postgresql://127.9.157.1:5432/linkguardian"
+            url = "jdbc:postgresql://127.9.157.2:5432/linkguardian"
             username = "admin"
-            password = "ClWkVQ5B_Ay6"
+            password = "CwlQmXF8PmF4"
             driverClassName = "org.postgresql.Driver"
             dialect = org.hibernate.dialect.PostgreSQLDialect
         }
