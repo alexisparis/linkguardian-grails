@@ -44,9 +44,9 @@
     <resource>TwitterAuthController</resource>
     <resource>linkguardian.Link</resource>
     <resource>linkguardian.Note</resource>
+    <resource>linkguardian.Person</resource>
+    <resource>linkguardian.PersonRole</resource>
     <resource>linkguardian.Role</resource>
-    <resource>linkguardian.User</resource>
-    <resource>linkguardian.UserRole</resource>
     <resource>TwitterUser</resource>
     <resource>linkguardian.LinkBuilderService</resource>
     <resource>linkguardian.Level</resource>

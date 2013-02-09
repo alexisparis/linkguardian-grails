@@ -1,7 +1,7 @@
 package linkguardian
 /**
  * Created with IntelliJ IDEA.
- * User: alexis
+ * Person: alexis
  * Date: 13/01/13
  * Time: 20:30
  * To change this template use File | Settings | File Templates.

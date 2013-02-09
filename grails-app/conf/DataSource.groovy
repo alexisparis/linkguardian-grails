@@ -2,7 +2,7 @@
 /*
 PostgreSQL 8.4 database added.  Please make note of these credentials:
 
-   Root User: admin
+   Root Person: admin
    Root Password: ClWkVQ5B_Ay6
    Database Name: linkguardian
 

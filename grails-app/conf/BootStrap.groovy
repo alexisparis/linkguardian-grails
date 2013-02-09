@@ -1,8 +1,9 @@
 import linkguardian.Link
 import linkguardian.Note
+import linkguardian.Person
 import linkguardian.Role
-import linkguardian.User
-import linkguardian.UserRole
+import linkguardian.Person
+import linkguardian.PersonRole
 
 class BootStrap {
 
@@ -60,18 +61,18 @@ class BootStrap {
 
         def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
         def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
-        def twitterRole = new Role(authority:  'ROLE_TWITTER').save(flush: true)
+        def twitterRole = new Role(authority: 'ROLE_TWITTER').save(flush: true)
 
-        def testUser = new User(username: 'me', enabled: true, password: 'password')
+        def testUser = new Person(username: 'me', enabled: true, password: 'password')
         testUser.save(flush: true)
 
-        UserRole.create testUser, adminRole, true
-        UserRole.create testUser, userRole, true
-        UserRole.create testUser, twitterRole, true
+        PersonRole.create testUser, adminRole, true
+        PersonRole.create testUser, userRole, true
+        PersonRole.create testUser, twitterRole, true
 
-        assert User.count() == 1
+        assert Person.count() == 1
         assert Role.count() == 3
-        assert UserRole.count() == 3
+        assert PersonRole.count() == 3
     }
     def destroy = {}
 }

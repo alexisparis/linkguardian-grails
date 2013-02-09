@@ -1,6 +1,7 @@
 package linkguardian
 
-class User {
+class Person
+{
 
 	transient springSecurityService
 
@@ -21,7 +22,7 @@ class User {
 	}
 
 	Set<Role> getAuthorities() {
-		UserRole.findAllByUser(this).collect { it.role } as Set
+		PersonRole.findAllByUser(this).collect { it.role } as Set
 	}
 
 	def beforeInsert() {

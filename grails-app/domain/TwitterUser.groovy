@@ -1,5 +1,5 @@
 import com.the6hours.grails.springsecurity.twitter.TwitterUserDomain
-import linkguardian.User
+import linkguardian.Person
 
 class TwitterUser implements TwitterUserDomain {
 
@@ -8,9 +8,9 @@ class TwitterUser implements TwitterUserDomain {
     String tokenSecret
     String token
 
-	static belongsTo = [user: User]
+	static belongsTo = [user: Person]
 
-	static constraints = {
-		uid unique: true
-	}
+    static constraints = {
+        uid unique: true
+    }
 }
