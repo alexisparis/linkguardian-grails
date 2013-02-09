@@ -39,7 +39,7 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:postgresql://$OPENSHIFT_POSTGRESQL_DB_HOST:$OPENSHIFT_POSTGRESQL_DB_PORT/"
+            url = "jdbc:postgresql://127.9.157.1:5432/"
             username = "admin"
             password = "ClWkVQ5B_Ay6"
             driverClassName = "org.postgresql.Driver"

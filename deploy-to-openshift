@@ -1,0 +1,5 @@
+./prepare-openshift-deployment
+git add .
+git add -u
+git commit -m "fix the database production url"
+git push origin master

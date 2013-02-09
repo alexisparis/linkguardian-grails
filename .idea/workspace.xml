@@ -27,6 +27,8 @@
     <file path="/Config.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1360013806871" ignored="false" />
     <file path="$PROJECT_DIR$/test/unit/linkguardian/CrudUserControllerTests.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1360361150459" ignored="false" />
     <file path="/CrudUserController.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1360361245105" ignored="false" />
+    <file path="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1360419457985" ignored="false" />
+    <file path="$PROJECT_DIR$/src/main/webapp/WEB-INF/grails.xml" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1360419457985" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,10 +96,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BootStrap.groovy" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BootStrap.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/conf/BootStrap.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="85" column="32" selection-start="4009" selection-end="4009" vertical-scroll-proportion="0.82932997">
+            <state line="85" column="32" selection-start="4009" selection-end="4009" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -106,7 +108,16 @@
       <file leaf-file-name="Config.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/conf/Config.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="114" column="35" selection-start="4695" selection-end="4707" vertical-scroll-proportion="0.0">
+            <state line="96" column="40" selection-start="3994" selection-end="3994" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DataSource.groovy" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/grails-app/conf/DataSource.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="41" column="54" selection-start="1073" selection-end="1073" vertical-scroll-proportion="0.7774968">
               <folding />
             </state>
           </provider>
@@ -252,7 +263,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/web-app/css/application.css" />
         <option value="$PROJECT_DIR$/grails-app/utils/Message.groovy" />
         <option value="$PROJECT_DIR$/grails-app/utils/linkguardian/Message.groovy" />
         <option value="$PROJECT_DIR$/grails-app/domain/linkguardian/Note.groovy" />
@@ -268,6 +278,7 @@
         <option value="$PROJECT_DIR$/grails-app/views/layouts/main.gsp" />
         <option value="$PROJECT_DIR$/grails-app/views/login/auth.gsp" />
         <option value="$PROJECT_DIR$/grails-app/conf/BootStrap.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/conf/DataSource.groovy" />
       </list>
     </option>
   </component>
@@ -903,7 +914,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1916" height="1178" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22941177" sideWeight="0.25283018" order="2" side_tool="true" content_ui="tabs" />
@@ -1243,16 +1254,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/conf/Config.groovy">
+    <entry file="file://$PROJECT_DIR$/grails-app/conf/BootStrap.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="114" column="35" selection-start="4695" selection-end="4707" vertical-scroll-proportion="0.0">
+        <state line="85" column="32" selection-start="4009" selection-end="4009" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/conf/BootStrap.groovy">
+    <entry file="file://$PROJECT_DIR$/grails-app/conf/Config.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="32" selection-start="4009" selection-end="4009" vertical-scroll-proportion="0.82932997">
+        <state line="96" column="40" selection-start="3994" selection-end="3994" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/conf/DataSource.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="54" selection-start="1073" selection-end="1073" vertical-scroll-proportion="0.7774968">
           <folding />
         </state>
       </provider>
