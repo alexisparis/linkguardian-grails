@@ -168,7 +168,7 @@ class LinkController
             else
             {
                 try {
-                   def newLink = new Link(url: realUrl, fusionedTags: " " + params.tag.toUpperCase() + " ", creationDate: new Date(), person: connectedPerson)
+                    def newLink = new Link(url: realUrl, fusionedTags: " " + params.tag.toUpperCase() + " ", creationDate: new Date(), person: connectedPerson)
 
                     linkBuilderService.complete(newLink)
 

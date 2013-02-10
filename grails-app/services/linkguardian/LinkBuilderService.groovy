@@ -4,6 +4,8 @@ import net.htmlparser.jericho.*
 
 class LinkBuilderService {
 
+    def shortenerService
+
     def complete(Link link) {
 
       // make an http request to get the header of the web site
@@ -33,6 +35,10 @@ class LinkBuilderService {
 
       link.domain = url.getHost()
       println "domain : " + link.domain
+
+      // shorten url with google service
+      def urlResource = shortenerService.shorten(link.url)
+      link.url = urlResource.shortUrl
     }
 
 
