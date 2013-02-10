@@ -126,3 +126,15 @@ security {
         }
     }
 }
+
+// used for spring-security-mock
+
+grails.plugins.springsecurity.mock.active = false
+development {
+    grails.plugins.springsecurity.mock.active = true
+    grails.plugins.springsecurity.mock.fullName = "Your name here"
+    grails.plugins.springsecurity.mock.email = "Your email address here"
+    grails.plugins.springsecurity.mock.username =  "your.username"
+    grails.plugins.springsecurity.mock.roles = [ 'ROLE_USER', 'ROLE_ADMIN', 'ROLE_TWITTER' ]
+    grails.plugins.springsecurity.ipRestrictions = [ '/**': ['127.0.0.0/8', '::1/128'] ]
+}
