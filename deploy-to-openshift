@@ -1,4 +1,4 @@
-%grails clean
+grails clean
 ./prepare-openshift-deployment
 git add .
 git add -u
