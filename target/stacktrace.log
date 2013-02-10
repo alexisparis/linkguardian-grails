@@ -38284,3 +38284,442 @@ org.codehaus.groovy.grails.exceptions.GrailsConfigurationException: Cannot add D
 2013-02-10 00:23:32,968 [FileSystemWatcher: files=#488 cl=java.net.URLClassLoader@7c959fa1] ERROR StackTrace  - Full Stack Trace:
 org.codehaus.groovy.grails.exceptions.GrailsConfigurationException: Cannot add Domain class [class linkguardian.Note]. It is not a Domain!
 	at java.lang.Thread.run(Thread.java:680)
+2013-02-10 13:57:40,876 [http-bio-8090-exec-8] ERROR StackTrace  - Full Stack Trace:
+groovy.lang.MissingPropertyException: No such property: id for class: edu.umn.auth.MockUserDetails
+	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.unwrap(ScriptBytecodeAdapter.java:50)
+	at org.codehaus.groovy.runtime.callsite.PojoMetaClassGetPropertySite.getProperty(PojoMetaClassGetPropertySite.java:35)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callGetProperty(AbstractCallSite.java:227)
+	at grails.plugins.springsecurity.SpringSecurityService.getCurrentUser(SpringSecurityService.groovy:80)
+	at grails.plugins.springsecurity.SpringSecurityService$getCurrentUser.call(Unknown Source)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:112)
+	at linkguardian.LinkController.list(LinkController.groovy:41)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.springsource.loaded.ri.ReflectiveInterceptor.jlrMethodInvoke(ReflectiveInterceptor.java:1243)
+	at org.codehaus.groovy.grails.web.servlet.mvc.MixedGrailsControllerHelper.invoke(MixedGrailsControllerHelper.java:69)
+	at grails.plugin.cache.web.ProxyAwareMixedGrailsControllerHelper.invoke(ProxyAwareMixedGrailsControllerHelper.java)
+	at org.codehaus.groovy.grails.web.servlet.mvc.AbstractGrailsControllerHelper.handleAction(AbstractGrailsControllerHelper.java:334)
+	at grails.plugin.cache.web.ProxyAwareMixedGrailsControllerHelper.handleAction(ProxyAwareMixedGrailsControllerHelper.java)
+	at org.codehaus.groovy.grails.web.servlet.mvc.AbstractGrailsControllerHelper.executeAction(AbstractGrailsControllerHelper.java:217)
+	at grails.plugin.cache.web.ProxyAwareMixedGrailsControllerHelper.executeAction(ProxyAwareMixedGrailsControllerHelper.java)
+	at org.codehaus.groovy.grails.web.servlet.mvc.AbstractGrailsControllerHelper.handleURI(AbstractGrailsControllerHelper.java:183)
+	at grails.plugin.cache.web.ProxyAwareMixedGrailsControllerHelper.handleURI(ProxyAwareMixedGrailsControllerHelper.java)
+	at org.codehaus.groovy.grails.web.servlet.mvc.AbstractGrailsControllerHelper.handleURI(AbstractGrailsControllerHelper.java:116)
+	at grails.plugin.cache.web.ProxyAwareMixedGrailsControllerHelper.handleURI(ProxyAwareMixedGrailsControllerHelper.java)
+	at org.codehaus.groovy.grails.web.servlet.mvc.SimpleGrailsController.handleRequest(SimpleGrailsController.java:72)
+	at org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter.handle(SimpleControllerHandlerAdapter.java:48)
+	at org.codehaus.groovy.grails.web.servlet.GrailsDispatcherServlet.doDispatch(GrailsDispatcherServlet.java:328)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:852)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:882)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:778)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:621)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:722)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:305)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at grails.plugin.cache.web.filter.PageFragmentCachingFilter.doFilter(PageFragmentCachingFilter.java:195)
+	at grails.plugin.cache.web.filter.simple.MemoryPageFragmentCachingFilter.doFilter(MemoryPageFragmentCachingFilter.java)
+	at grails.plugin.cache.web.filter.AbstractFilter.doFilter(AbstractFilter.java:63)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:259)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:70)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:70)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:70)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:749)
+	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:487)
+	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:412)
+	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:339)
+	at org.codehaus.groovy.grails.web.util.WebUtils.forwardRequestForUrlMappingInfo(WebUtils.java:314)
+	at org.codehaus.groovy.grails.web.util.WebUtils.forwardRequestForUrlMappingInfo(WebUtils.java:279)
+	at org.codehaus.groovy.grails.web.util.WebUtils.forwardRequestForUrlMappingInfo(WebUtils.java:270)
+	at org.codehaus.groovy.grails.web.mapping.filter.UrlMappingsFilter.doFilterInternal(UrlMappingsFilter.java:221)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.obtainContent(GrailsPageFilter.java:200)
+	at org.codehaus.groovy.grails.web.sitemesh.GrailsPageFilter.doFilter(GrailsPageFilter.java:151)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at javax.servlet.FilterChain$doFilter.call(Unknown Source)
+	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:45)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:108)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:120)
+	at org.grails.plugin.resource.DevModeSanityFilter.doFilter(DevModeSanityFilter.groovy:44)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:369)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:109)
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:83)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:78)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:119)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:54)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at com.the6hours.grails.springsecurity.twitter.TwitterAuthFilter.doFilter(TwitterAuthFilter.groovy)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at org.codehaus.groovy.grails.plugins.springsecurity.RequestHolderAuthenticationFilter.doFilter(RequestHolderAuthenticationFilter.java:40)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:187)
+	at edu.umn.auth.MockAuthenticationFilter.doFilter(MockAuthenticationFilter.java)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.codehaus.groovy.grails.plugins.springsecurity.IpAddressFilter.doFilter(IpAddressFilter.java:76)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.codehaus.groovy.grails.plugins.springsecurity.MutableLogoutFilter.doFilter(MutableLogoutFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:79)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:381)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:168)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:259)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequestFilter.doFilterInternal(GrailsWebRequestFilter.java:69)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.codehaus.groovy.grails.web.filters.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:66)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:259)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:243)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:210)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:222)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:123)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:168)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:99)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:118)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:407)
+	at org.apache.coyote.http11.AbstractHttp11Processor.process(AbstractHttp11Processor.java:1002)
+	at org.apache.coyote.AbstractProtocol$AbstractConnectionHandler.process(AbstractProtocol.java:585)
+	at org.apache.tomcat.util.net.JIoEndpoint$SocketProcessor.run(JIoEndpoint.java:312)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:895)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:918)
+	at java.lang.Thread.run(Thread.java:680)
+2013-02-10 13:57:40,932 [http-bio-8090-exec-8] ERROR StackTrace  - Full Stack Trace:
+groovy.lang.MissingPropertyException: No such property: id for class: edu.umn.auth.MockUserDetails
+	at grails.plugins.springsecurity.SpringSecurityService.getCurrentUser(SpringSecurityService.groovy:80)
+	at linkguardian.LinkController.list(LinkController.groovy:41)
+	at grails.plugin.cache.web.filter.PageFragmentCachingFilter.doFilter(PageFragmentCachingFilter.java:195)
+	at grails.plugin.cache.web.filter.AbstractFilter.doFilter(AbstractFilter.java:63)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:895)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:918)
+	at java.lang.Thread.run(Thread.java:680)
+2013-02-10 13:57:41,000 [http-bio-8090-exec-8] ERROR StackTrace  - Full Stack Trace:
+groovy.lang.MissingPropertyException: No such property: id for class: edu.umn.auth.MockUserDetails
+	at grails.plugins.springsecurity.SpringSecurityService.getCurrentUser(SpringSecurityService.groovy:80)
+	at linkguardian.LinkController.list(LinkController.groovy:41)
+	at grails.plugin.cache.web.filter.PageFragmentCachingFilter.doFilter(PageFragmentCachingFilter.java:195)
+	at grails.plugin.cache.web.filter.AbstractFilter.doFilter(AbstractFilter.java:63)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:895)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:918)
+	at java.lang.Thread.run(Thread.java:680)
+2013-02-10 13:57:41,001 [http-bio-8090-exec-8] ERROR StackTrace  - Full Stack Trace:
+groovy.lang.MissingPropertyException: No such property: id for class: edu.umn.auth.MockUserDetails
+	at grails.plugins.springsecurity.SpringSecurityService.getCurrentUser(SpringSecurityService.groovy:80)
+	at linkguardian.LinkController.list(LinkController.groovy:41)
+	at grails.plugin.cache.web.filter.PageFragmentCachingFilter.doFilter(PageFragmentCachingFilter.java:195)
+	at grails.plugin.cache.web.filter.AbstractFilter.doFilter(AbstractFilter.java:63)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:895)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:918)
+	at java.lang.Thread.run(Thread.java:680)
+2013-02-10 13:57:41,001 [http-bio-8090-exec-8] ERROR StackTrace  - Full Stack Trace:
+groovy.lang.MissingPropertyException: No such property: id for class: edu.umn.auth.MockUserDetails
+	at grails.plugins.springsecurity.SpringSecurityService.getCurrentUser(SpringSecurityService.groovy:80)
+	at linkguardian.LinkController.list(LinkController.groovy:41)
+	at grails.plugin.cache.web.filter.PageFragmentCachingFilter.doFilter(PageFragmentCachingFilter.java:195)
+	at grails.plugin.cache.web.filter.AbstractFilter.doFilter(AbstractFilter.java:63)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:895)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:918)
+	at java.lang.Thread.run(Thread.java:680)
+2013-02-10 13:57:41,002 [http-bio-8090-exec-8] ERROR StackTrace  - Full Stack Trace:
+groovy.lang.MissingPropertyException: No such property: id for class: edu.umn.auth.MockUserDetails
+	at grails.plugins.springsecurity.SpringSecurityService.getCurrentUser(SpringSecurityService.groovy:80)
+	at linkguardian.LinkController.list(LinkController.groovy:41)
+	at grails.plugin.cache.web.filter.PageFragmentCachingFilter.doFilter(PageFragmentCachingFilter.java:195)
+	at grails.plugin.cache.web.filter.AbstractFilter.doFilter(AbstractFilter.java:63)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:895)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:918)
+	at java.lang.Thread.run(Thread.java:680)
+2013-02-10 14:00:15,896 [Thread-12] ERROR StackTrace  - Full Stack Trace:
+java.lang.IllegalArgumentException: Dynamic method is<Artefact>Class(artefactClass) requires a single Class parameter
+	at org.codehaus.groovy.grails.commons.DefaultGrailsApplication.invokeMethod(DefaultGrailsApplication.java:682)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaClassSite.call(PogoMetaClassSite.java:45)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:116)
+	at SpringSecurityCoreGrailsPlugin$_closure5.doCall(SpringSecurityCoreGrailsPlugin.groovy:630)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.springsource.loaded.ri.OriginalClassInvoker.invoke(OriginalClassInvoker.java:47)
+	at org.springsource.loaded.ri.ReflectiveInterceptor.jlrMethodInvoke(ReflectiveInterceptor.java:1272)
+	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:90)
+	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:233)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1076)
+	at groovy.lang.ExpandoMetaClass.invokeMethod(ExpandoMetaClass.java:1110)
+	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:906)
+	at groovy.lang.Closure.call(Closure.java:415)
+	at SpringSecurityCoreGrailsPlugin$_closure5.call(SpringSecurityCoreGrailsPlugin.groovy)
+	at org.codehaus.groovy.grails.plugins.DefaultGrailsPlugin.invokeOnChangeListener(DefaultGrailsPlugin.java:768)
+	at org.codehaus.groovy.grails.plugins.DefaultGrailsPlugin.notifyOfEvent(DefaultGrailsPlugin.java:717)
+	at org.codehaus.groovy.grails.plugins.DefaultGrailsPluginManager.informObservers(DefaultGrailsPluginManager.java:243)
+	at org.codehaus.groovy.grails.plugins.DefaultGrailsPlugin.notifyOfEvent(DefaultGrailsPlugin.java:733)
+	at org.codehaus.groovy.grails.plugins.AbstractGrailsPluginManager.informOfClassChange(AbstractGrailsPluginManager.java:402)
+	at org.codehaus.groovy.grails.plugins.AbstractGrailsPluginManager.informOfFileChange(AbstractGrailsPluginManager.java:365)
+	at org.codehaus.groovy.grails.compiler.GrailsProjectWatcher.informPluginManager(GrailsProjectWatcher.java:242)
+	at org.codehaus.groovy.grails.compiler.GrailsProjectWatcher.access$400(GrailsProjectWatcher.java:46)
+	at org.codehaus.groovy.grails.compiler.GrailsProjectWatcher$1.onNew(GrailsProjectWatcher.java:168)
+	at org.codehaus.groovy.grails.compiler.DirectoryWatcher.cacheFilesForDirectory(DirectoryWatcher.java:194)
+	at org.codehaus.groovy.grails.compiler.DirectoryWatcher.checkForNewFiles(DirectoryWatcher.java:171)
+	at org.codehaus.groovy.grails.compiler.DirectoryWatcher.run(DirectoryWatcher.java:151)
+	at org.codehaus.groovy.grails.compiler.GrailsProjectWatcher.run(GrailsProjectWatcher.java:177)
+2013-02-10 14:00:15,897 [Thread-12] ERROR StackTrace  - Full Stack Trace:
+java.lang.IllegalArgumentException: Dynamic method is<Artefact>Class(artefactClass) requires a single Class parameter
+	at SpringSecurityCoreGrailsPlugin$_closure5.doCall(SpringSecurityCoreGrailsPlugin.groovy:630)
+2013-02-10 14:00:15,898 [Thread-12] ERROR StackTrace  - Full Stack Trace:
+java.lang.IllegalArgumentException: Dynamic method is<Artefact>Class(artefactClass) requires a single Class parameter
+	at SpringSecurityCoreGrailsPlugin$_closure5.doCall(SpringSecurityCoreGrailsPlugin.groovy:630)
+2013-02-10 14:00:15,898 [Thread-12] ERROR StackTrace  - Full Stack Trace:
+java.lang.IllegalArgumentException: Dynamic method is<Artefact>Class(artefactClass) requires a single Class parameter
+	at SpringSecurityCoreGrailsPlugin$_closure5.doCall(SpringSecurityCoreGrailsPlugin.groovy:630)
+2013-02-10 14:08:41,840 [http-bio-8090-exec-6] ERROR StackTrace  - Full Stack Trace:
+org.codehaus.groovy.control.MultipleCompilationErrorsException: startup failed:
+/data/projects/LinkGuardian/grails-app/controllers/linkguardian/crud/TwitterController.groovy: 5: Apparent variable 'TwitterUser' was found in a static scope but doesn't refer to a local variable, static field or class. Possible causes:
+You attempted to reference a variable in the binding or an instance variable from a static context.
+You misspelled a classname or statically imported field. Please check the spelling.
+You attempted to use a method 'TwitterUser' but left out brackets in a place not allowed by the grammar.
+ @ line 5, column 23.
+       static scaffold = TwitterUser
+                         ^
+
+/data/projects/LinkGuardian/grails-app/controllers/linkguardian/crud/TwitterController.groovy: 5: Apparent variable 'TwitterUser' was found in a static scope but doesn't refer to a local variable, static field or class. Possible causes:
+You attempted to reference a variable in the binding or an instance variable from a static context.
+You misspelled a classname or statically imported field. Please check the spelling.
+You attempted to use a method 'TwitterUser' but left out brackets in a place not allowed by the grammar.
+ @ line 5, column 23.
+       static scaffold = TwitterUser
+                         ^
+
+2 errors
+
+	at org.codehaus.groovy.control.ErrorCollector.failIfErrors(ErrorCollector.java:309)
+	at org.codehaus.groovy.control.CompilationUnit.applyToPrimaryClassNodes(CompilationUnit.java:1054)
+	at org.codehaus.groovy.control.CompilationUnit.doPhaseOperation(CompilationUnit.java:564)
+	at org.codehaus.groovy.control.CompilationUnit.processPhaseOperations(CompilationUnit.java:542)
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:519)
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:498)
+	at org.codehaus.groovy.tools.FileSystemCompiler.compile(FileSystemCompiler.java:57)
+	at org.codehaus.groovy.tools.FileSystemCompiler.doCompilation(FileSystemCompiler.java:213)
+	at org.codehaus.groovy.ant.Groovyc.runCompiler(Groovyc.java:947)
+	at org.codehaus.groovy.ant.Groovyc.compile(Groovyc.java:994)
+	at org.codehaus.groovy.grails.compiler.Grailsc.compile(Grailsc.java:79)
+	at org.codehaus.groovy.ant.Groovyc.execute(Groovyc.java:630)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at sun.reflect.GeneratedMethodAccessor80.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.springsource.loaded.ri.ReflectiveInterceptor.jlrMethodInvoke(ReflectiveInterceptor.java:1249)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+	at groovy.util.AntBuilder.performTask(AntBuilder.java:260)
+	at groovy.util.AntBuilder.nodeCompleted(AntBuilder.java:220)
+	at groovy.util.BuilderSupport.doInvokeMethod(BuilderSupport.java:147)
+	at groovy.util.AntBuilder.doInvokeMethod(AntBuilder.java:170)
+	at groovy.util.BuilderSupport.invokeMethod(BuilderSupport.java:64)
+	at org.codehaus.gant.GantBuilder.invokeMethod(GantBuilder.java:99)
+	at org.codehaus.groovy.runtime.callsite.PogoMetaClassSite.call(PogoMetaClassSite.java:45)
+	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:120)
+	at org.codehaus.groovy.grails.compiler.GrailsProjectCompiler.compile(GrailsProjectCompiler.groovy:268)
+	at org.codehaus.groovy.grails.compiler.GrailsProjectCompiler$compile$0.callCurrent(Unknown Source)
+	at org.codehaus.groovy.grails.compiler.GrailsProjectCompiler.compile(GrailsProjectCompiler.groovy:238)
+	at org.codehaus.groovy.grails.compiler.GrailsProjectCompiler.compileAll(GrailsProjectCompiler.groovy:230)
+	at org.codehaus.groovy.grails.compiler.GrailsProjectWatcher.compileIfSource(GrailsProjectWatcher.java:272)
+	at org.codehaus.groovy.grails.compiler.GrailsProjectWatcher.access$300(GrailsProjectWatcher.java:46)
+	at org.codehaus.groovy.grails.compiler.GrailsProjectWatcher$1.onChange(GrailsProjectWatcher.java:153)
+	at org.codehaus.groovy.grails.compiler.DirectoryWatcher.fireOnChange(DirectoryWatcher.java:162)
+	at org.codehaus.groovy.grails.compiler.DirectoryWatcher.run(DirectoryWatcher.java:144)
+	at org.codehaus.groovy.grails.compiler.GrailsProjectWatcher.run(GrailsProjectWatcher.java:177)
+2013-02-10 14:08:41,953 [http-bio-8090-exec-6] ERROR StackTrace  - Full Stack Trace:
+org.codehaus.groovy.control.MultipleCompilationErrorsException: startup failed:
+/data/projects/LinkGuardian/grails-app/controllers/linkguardian/crud/TwitterController.groovy: 5: Apparent variable 'TwitterUser' was found in a static scope but doesn't refer to a local variable, static field or class. Possible causes:
+You attempted to reference a variable in the binding or an instance variable from a static context.
+You misspelled a classname or statically imported field. Please check the spelling.
+You attempted to use a method 'TwitterUser' but left out brackets in a place not allowed by the grammar.
+ @ line 5, column 23.
+       static scaffold = TwitterUser
+                         ^
+
+/data/projects/LinkGuardian/grails-app/controllers/linkguardian/crud/TwitterController.groovy: 5: Apparent variable 'TwitterUser' was found in a static scope but doesn't refer to a local variable, static field or class. Possible causes:
+You attempted to reference a variable in the binding or an instance variable from a static context.
+You misspelled a classname or statically imported field. Please check the spelling.
+You attempted to use a method 'TwitterUser' but left out brackets in a place not allowed by the grammar.
+ @ line 5, column 23.
+       static scaffold = TwitterUser
+                         ^
+
+2 errors
+
+	at org.codehaus.groovy.control.ErrorCollector.failIfErrors(ErrorCollector.java:309)
+	at org.codehaus.groovy.control.CompilationUnit.applyToPrimaryClassNodes(CompilationUnit.java:1054)
+	at org.codehaus.groovy.control.CompilationUnit.doPhaseOperation(CompilationUnit.java:564)
+	at org.codehaus.groovy.control.CompilationUnit.processPhaseOperations(CompilationUnit.java:542)
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:519)
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:498)
+	at org.codehaus.groovy.tools.FileSystemCompiler.compile(FileSystemCompiler.java:57)
+	at org.codehaus.groovy.tools.FileSystemCompiler.doCompilation(FileSystemCompiler.java:213)
+	at org.codehaus.groovy.ant.Groovyc.runCompiler(Groovyc.java:947)
+	at org.codehaus.groovy.ant.Groovyc.compile(Groovyc.java:994)
+	at org.codehaus.groovy.ant.Groovyc.execute(Groovyc.java:630)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+2013-02-10 14:08:41,954 [http-bio-8090-exec-6] ERROR StackTrace  - Full Stack Trace:
+org.codehaus.groovy.control.MultipleCompilationErrorsException: startup failed:
+/data/projects/LinkGuardian/grails-app/controllers/linkguardian/crud/TwitterController.groovy: 5: Apparent variable 'TwitterUser' was found in a static scope but doesn't refer to a local variable, static field or class. Possible causes:
+You attempted to reference a variable in the binding or an instance variable from a static context.
+You misspelled a classname or statically imported field. Please check the spelling.
+You attempted to use a method 'TwitterUser' but left out brackets in a place not allowed by the grammar.
+ @ line 5, column 23.
+       static scaffold = TwitterUser
+                         ^
+
+/data/projects/LinkGuardian/grails-app/controllers/linkguardian/crud/TwitterController.groovy: 5: Apparent variable 'TwitterUser' was found in a static scope but doesn't refer to a local variable, static field or class. Possible causes:
+You attempted to reference a variable in the binding or an instance variable from a static context.
+You misspelled a classname or statically imported field. Please check the spelling.
+You attempted to use a method 'TwitterUser' but left out brackets in a place not allowed by the grammar.
+ @ line 5, column 23.
+       static scaffold = TwitterUser
+                         ^
+
+2 errors
+
+	at org.codehaus.groovy.control.ErrorCollector.failIfErrors(ErrorCollector.java:309)
+	at org.codehaus.groovy.control.CompilationUnit.applyToPrimaryClassNodes(CompilationUnit.java:1054)
+	at org.codehaus.groovy.control.CompilationUnit.doPhaseOperation(CompilationUnit.java:564)
+	at org.codehaus.groovy.control.CompilationUnit.processPhaseOperations(CompilationUnit.java:542)
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:519)
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:498)
+	at org.codehaus.groovy.tools.FileSystemCompiler.compile(FileSystemCompiler.java:57)
+	at org.codehaus.groovy.tools.FileSystemCompiler.doCompilation(FileSystemCompiler.java:213)
+	at org.codehaus.groovy.ant.Groovyc.runCompiler(Groovyc.java:947)
+	at org.codehaus.groovy.ant.Groovyc.compile(Groovyc.java:994)
+	at org.codehaus.groovy.ant.Groovyc.execute(Groovyc.java:630)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+2013-02-10 14:08:41,955 [http-bio-8090-exec-6] ERROR StackTrace  - Full Stack Trace:
+org.codehaus.groovy.control.MultipleCompilationErrorsException: startup failed:
+/data/projects/LinkGuardian/grails-app/controllers/linkguardian/crud/TwitterController.groovy: 5: Apparent variable 'TwitterUser' was found in a static scope but doesn't refer to a local variable, static field or class. Possible causes:
+You attempted to reference a variable in the binding or an instance variable from a static context.
+You misspelled a classname or statically imported field. Please check the spelling.
+You attempted to use a method 'TwitterUser' but left out brackets in a place not allowed by the grammar.
+ @ line 5, column 23.
+       static scaffold = TwitterUser
+                         ^
+
+/data/projects/LinkGuardian/grails-app/controllers/linkguardian/crud/TwitterController.groovy: 5: Apparent variable 'TwitterUser' was found in a static scope but doesn't refer to a local variable, static field or class. Possible causes:
+You attempted to reference a variable in the binding or an instance variable from a static context.
+You misspelled a classname or statically imported field. Please check the spelling.
+You attempted to use a method 'TwitterUser' but left out brackets in a place not allowed by the grammar.
+ @ line 5, column 23.
+       static scaffold = TwitterUser
+                         ^
+
+2 errors
+
+	at org.codehaus.groovy.control.ErrorCollector.failIfErrors(ErrorCollector.java:309)
+	at org.codehaus.groovy.control.CompilationUnit.applyToPrimaryClassNodes(CompilationUnit.java:1054)
+	at org.codehaus.groovy.control.CompilationUnit.doPhaseOperation(CompilationUnit.java:564)
+	at org.codehaus.groovy.control.CompilationUnit.processPhaseOperations(CompilationUnit.java:542)
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:519)
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:498)
+	at org.codehaus.groovy.tools.FileSystemCompiler.compile(FileSystemCompiler.java:57)
+	at org.codehaus.groovy.tools.FileSystemCompiler.doCompilation(FileSystemCompiler.java:213)
+	at org.codehaus.groovy.ant.Groovyc.runCompiler(Groovyc.java:947)
+	at org.codehaus.groovy.ant.Groovyc.compile(Groovyc.java:994)
+	at org.codehaus.groovy.ant.Groovyc.execute(Groovyc.java:630)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+2013-02-10 14:08:42,188 [http-bio-8090-exec-6] ERROR StackTrace  - Full Stack Trace:
+org.codehaus.groovy.control.MultipleCompilationErrorsException: startup failed:
+/data/projects/LinkGuardian/grails-app/controllers/linkguardian/crud/TwitterController.groovy: 5: Apparent variable 'TwitterUser' was found in a static scope but doesn't refer to a local variable, static field or class. Possible causes:
+You attempted to reference a variable in the binding or an instance variable from a static context.
+You misspelled a classname or statically imported field. Please check the spelling.
+You attempted to use a method 'TwitterUser' but left out brackets in a place not allowed by the grammar.
+ @ line 5, column 23.
+       static scaffold = TwitterUser
+                         ^
+
+/data/projects/LinkGuardian/grails-app/controllers/linkguardian/crud/TwitterController.groovy: 5: Apparent variable 'TwitterUser' was found in a static scope but doesn't refer to a local variable, static field or class. Possible causes:
+You attempted to reference a variable in the binding or an instance variable from a static context.
+You misspelled a classname or statically imported field. Please check the spelling.
+You attempted to use a method 'TwitterUser' but left out brackets in a place not allowed by the grammar.
+ @ line 5, column 23.
+       static scaffold = TwitterUser
+                         ^
+
+2 errors
+
+	at org.codehaus.groovy.control.ErrorCollector.failIfErrors(ErrorCollector.java:309)
+	at org.codehaus.groovy.control.CompilationUnit.applyToPrimaryClassNodes(CompilationUnit.java:1054)
+	at org.codehaus.groovy.control.CompilationUnit.doPhaseOperation(CompilationUnit.java:564)
+	at org.codehaus.groovy.control.CompilationUnit.processPhaseOperations(CompilationUnit.java:542)
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:519)
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:498)
+	at org.codehaus.groovy.tools.FileSystemCompiler.compile(FileSystemCompiler.java:57)
+	at org.codehaus.groovy.tools.FileSystemCompiler.doCompilation(FileSystemCompiler.java:213)
+	at org.codehaus.groovy.ant.Groovyc.runCompiler(Groovyc.java:947)
+	at org.codehaus.groovy.ant.Groovyc.compile(Groovyc.java:994)
+	at org.codehaus.groovy.ant.Groovyc.execute(Groovyc.java:630)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+2013-02-10 14:08:42,188 [http-bio-8090-exec-6] ERROR StackTrace  - Full Stack Trace:
+org.codehaus.groovy.control.MultipleCompilationErrorsException: startup failed:
+/data/projects/LinkGuardian/grails-app/controllers/linkguardian/crud/TwitterController.groovy: 5: Apparent variable 'TwitterUser' was found in a static scope but doesn't refer to a local variable, static field or class. Possible causes:
+You attempted to reference a variable in the binding or an instance variable from a static context.
+You misspelled a classname or statically imported field. Please check the spelling.
+You attempted to use a method 'TwitterUser' but left out brackets in a place not allowed by the grammar.
+ @ line 5, column 23.
+       static scaffold = TwitterUser
+                         ^
+
+/data/projects/LinkGuardian/grails-app/controllers/linkguardian/crud/TwitterController.groovy: 5: Apparent variable 'TwitterUser' was found in a static scope but doesn't refer to a local variable, static field or class. Possible causes:
+You attempted to reference a variable in the binding or an instance variable from a static context.
+You misspelled a classname or statically imported field. Please check the spelling.
+You attempted to use a method 'TwitterUser' but left out brackets in a place not allowed by the grammar.
+ @ line 5, column 23.
+       static scaffold = TwitterUser
+                         ^
+
+2 errors
+
+	at org.codehaus.groovy.control.ErrorCollector.failIfErrors(ErrorCollector.java:309)
+	at org.codehaus.groovy.control.CompilationUnit.applyToPrimaryClassNodes(CompilationUnit.java:1054)
+	at org.codehaus.groovy.control.CompilationUnit.doPhaseOperation(CompilationUnit.java:564)
+	at org.codehaus.groovy.control.CompilationUnit.processPhaseOperations(CompilationUnit.java:542)
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:519)
+	at org.codehaus.groovy.control.CompilationUnit.compile(CompilationUnit.java:498)
+	at org.codehaus.groovy.tools.FileSystemCompiler.compile(FileSystemCompiler.java:57)
+	at org.codehaus.groovy.tools.FileSystemCompiler.doCompilation(FileSystemCompiler.java:213)
+	at org.codehaus.groovy.ant.Groovyc.runCompiler(Groovyc.java:947)
+	at org.codehaus.groovy.ant.Groovyc.compile(Groovyc.java:994)
+	at org.codehaus.groovy.ant.Groovyc.execute(Groovyc.java:630)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:291)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)

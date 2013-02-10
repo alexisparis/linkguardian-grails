@@ -1,4 +1,4 @@
-package linkguardian
+package linkguardian.crud
 
 
 
@@ -8,12 +8,10 @@ import org.junit.*
 /**
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
-@TestFor(CrudUserController)
-class CrudUserControllerTests
-{
+@TestFor(RoleController)
+class RoleControllerTests {
 
-    void testSomething()
-    {
-        fail "Implement me"
+    void testSomething() {
+       fail "Implement me"
     }
 }

@@ -9,6 +9,7 @@
     <resource>org.grails.plugin.resource.BundleResourceMapper</resource>
     <resource>grails.plugin.cache.CacheTagLib</resource>
     <resource>OpenidTagLib</resource>
+    <resource>DefaultMockSecurityConfig</resource>
     <resource>JQueryResourceTagLib</resource>
     <resource>BootstrapResources</resource>
     <resource>org.grails.plugin.resource.ResourceTagLib</resource>
@@ -37,7 +38,8 @@
     <resource>DataSource</resource>
     <resource>resources</resource>
     <resource>UrlMappings</resource>
-    <resource>linkguardian.CrudUserController</resource>
+    <resource>linkguardian.crud.RoleController</resource>
+    <resource>linkguardian.crud.UserController</resource>
     <resource>linkguardian.LinkController</resource>
     <resource>LoginController</resource>
     <resource>LogoutController</resource>
@@ -59,10 +61,11 @@
     <plugin>HibernateGrailsPlugin</plugin>
     <plugin>OpenidGrailsPlugin</plugin>
     <plugin>SpringSecurityCoreGrailsPlugin</plugin>
+    <plugin>SpringSecurityTwitterGrailsPlugin</plugin>
     <plugin>GoogleAnalyticsGrailsPlugin</plugin>
     <plugin>TwitterBootstrapGrailsPlugin</plugin>
-    <plugin>SpringSecurityTwitterGrailsPlugin</plugin>
     <plugin>DatabaseMigrationGrailsPlugin</plugin>
+    <plugin>SpringSecurityMockGrailsPlugin</plugin>
     <plugin>CacheGrailsPlugin</plugin>
     <plugin>JqueryGrailsPlugin</plugin>
     <plugin>ResourcesGrailsPlugin</plugin>

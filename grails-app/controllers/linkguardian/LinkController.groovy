@@ -37,6 +37,9 @@ class LinkController
     def list()
     {
         println("calling list from LinkController")
+
+        //println "current user : " + springSecurityService.getCurrentUser()
+        println "principal : " + springSecurityService.getPrincipal()
     }
 
     /**

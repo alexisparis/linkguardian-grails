@@ -329,12 +329,12 @@
             </li>
         </ul>
 
+        <%--
+           cannot use <g:javascript src="jquery.raty.js" /> since it does not work with https
+        --%>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.raty.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.masonry.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.blockUI.js')}"></script>
-        <%--g:javascript src="jquery.raty.js" />
-        <g:javascript src="jquery.masonry.min.js"/>
-        <g:javascript src="jquery.blockUI.js"/--%>
 
         <g:javascript>
 
