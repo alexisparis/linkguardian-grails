@@ -3,7 +3,9 @@ package linkguardian
 class Link {
 
   static constraints = {
-    }
+  }
+
+  static belongsTo = [person: Person]
 
   static mapping = {
     fusionedTags index:true

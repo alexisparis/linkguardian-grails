@@ -20,6 +20,7 @@ class Person
 	static mapping = {
 		password column: '`password`'
 	}
+    static hasMany = [links: Link]
 
 	Set<Role> getAuthorities() {
 		PersonRole.findAllByUser(this).collect { it.role } as Set

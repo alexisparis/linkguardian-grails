@@ -38,8 +38,7 @@ class LinkController
     {
         println("calling list from LinkController")
 
-        //println "current user : " + springSecurityService.getCurrentUser()
-        println "principal : " + springSecurityService.getPrincipal()
+        println "username : " + springSecurityService.getPrincipal().username
     }
 
     /**
@@ -60,8 +59,7 @@ class LinkController
             //todo : manage pagination
             def queryParams = [/*max: 3, offset: 2, */sort: "creationDate", order: "desc"]
 
-            //TODO : filter by connected user
-            def query = Link.where { 1 == 1 }
+            def query = Link.where { person.username == springSecurityService.getPrincipal().username }
 
             if ( token )
             {
@@ -92,7 +90,6 @@ class LinkController
      */
     def addUrl()
     {
-        //TODO : check que l'url n'existe pas déjà pour l'utilisateur connecté
         log.info "calling addUrl with url : " + params.url + " and tags : " + params.tag
 
         def msg
@@ -160,35 +157,46 @@ class LinkController
 
         if ( realUrl != null )
         {
-            try {
-               def newLink = new Link(url: realUrl, fusionedTags: " " + params.tag.toUpperCase() + " ", creationDate: new Date())
+            def connectedPerson = Person.findByUsername(springSecurityService.getPrincipal().username)
 
-                linkBuilderService.complete(newLink)
-
-                newLink.save(flush: true)
-
-                msg = this.success("the link has been created")
-            }
-            catch(Exception e)
+            // check that this url does not already exist
+            if ( Link.findByPersonAndUrl(connectedPerson, realUrl) != null )
             {
-                log.error(e.getClass().name + " :: error while trying to save new link with url : " + params.url, e)
                 response.status = 500
-                if ( e.getCause() != null )
-                {
-                    if ( e.getCause() instanceof MalformedURLException )
-                    {
-                        msg = this.error("The url '" + params.url + "' is invalid ==> '" + e.getCause().getMessage() + "'")
-                    }
-                    else if ( e.getCause() instanceof UnknownHostException )
-                    {
-                        msg = this.error("The host '" + ((UnknownHostException)e.getCause()).getMessage() + "' cannot be found")
-                    }
-                }
+                msg = this.error("the link '" + params.url + "' already exists")
+            }
+            else
+            {
+                try {
+                   def newLink = new Link(url: realUrl, fusionedTags: " " + params.tag.toUpperCase() + " ", creationDate: new Date(), person: connectedPerson)
 
-                if ( msg == null )
+                    linkBuilderService.complete(newLink)
+
+                    newLink.save(flush: true)
+
+                    msg = this.success("the link has been created")
+                }
+                catch(Exception e)
                 {
-                    // default message
-                    msg = this.error("error while trying to save the link '" + params.url + "'")
+                    log.error(e.getClass().name + " :: error while trying to save new link with url : " + params.url, e)
+                    response.status = 500
+                    if ( e.getCause() != null )
+                    {
+                        if ( e.getCause() instanceof MalformedURLException )
+                        {
+                            msg = this.error("The url '" + params.url + "' is invalid ==> '" + e.getCause().getMessage() + "'")
+                        }
+                        else if ( e.getCause() instanceof UnknownHostException )
+                        {
+                            msg = this.error("The host '" + ((UnknownHostException)e.getCause()).getMessage() + "' cannot be found")
+                        }
+                    }
+
+                    if ( msg == null )
+                    {
+                        // default message
+                        msg = this.error("error while trying to save the link '" + params.url + "'")
+                    }
                 }
             }
         }
@@ -205,14 +213,21 @@ class LinkController
     {
         def success = false
 
-        // TODO : check if the link is linked ot he connected user
         log.info "calling delete link with id : " + id;
 
         Link link = Link.get(id);
         if (link != null)
         {
-            link.delete()
-            success = true
+            if ( link.person.username == springSecurityService.getPrincipal().username )
+            {
+                link.delete()
+                success = true
+            }
+            else
+            {
+                response.status = 500
+                render this.error("the link is owned by another user ==> you can't delete it") as JSON
+            }
         }
 
         if (success)
@@ -240,36 +255,44 @@ class LinkController
         Link link = Link.get(id)
         if (link != null && tag != null)
         {
-            def _tag = tag.trim()
+            if ( link.person.username == springSecurityService.getPrincipal().username )
+            {
+                def _tag = tag.trim()
 
-            if ( _tag.length() == 0 )
-            {
-                response.setStatus(500)
-                msg = this.error("the tag is not valid")
-            }
-            else
-            {
-                List<String> tmp = _tag.tokenize();
-                if ( tmp.size() == 1 )
+                if ( _tag.length() == 0 )
                 {
-                    Set<String> tokens = new LinkedHashSet<String>(link.fusionedTags.tokenize())
-                    if (tokens.add(_tag))
-                    {
-                        link.fusionedTags = " " + tokens.join(" ") + " "
-                        link.save()
-                        msg = this.success("the tag has been added")
-                    }
-                    else
-                    {
-                        response.setStatus(500)
-                        msg = this.error("the tag already exist")
-                    }
+                    response.setStatus(500)
+                    msg = this.error("the tag is not valid")
                 }
                 else
                 {
-                    response.status = 500
-                    msg = this.error("You can only provide one tag at a time")
+                    List<String> tmp = _tag.tokenize();
+                    if ( tmp.size() == 1 )
+                    {
+                        Set<String> tokens = new LinkedHashSet<String>(link.fusionedTags.tokenize())
+                        if (tokens.add(_tag))
+                        {
+                            link.fusionedTags = " " + tokens.join(" ") + " "
+                            link.save()
+                            msg = this.success("the tag has been added")
+                        }
+                        else
+                        {
+                            response.setStatus(500)
+                            msg = this.error("the tag already exist")
+                        }
+                    }
+                    else
+                    {
+                        response.status = 500
+                        msg = this.error("You can only provide one tag at a time")
+                    }
                 }
+            }
+            else
+            {
+                response.status = 500
+                msg = this.error("the link is owned by another user ==> you can't modify it")
             }
         }
         else
@@ -295,13 +318,21 @@ class LinkController
         Link link = Link.get(id)
         if (link != null && tag != null)
         {
-            def _tag = tag
-            List<String> tokens = link.fusionedTags.tokenize()
-            if (tokens.remove(_tag))
+            if ( link.person.username == springSecurityService.getPrincipal().username )
             {
-                link.fusionedTags = " " + tokens.join(" ") + " "
-                link.save()
-                success = true
+                def _tag = tag
+                List<String> tokens = link.fusionedTags.tokenize()
+                if (tokens.remove(_tag))
+                {
+                    link.fusionedTags = " " + tokens.join(" ") + " "
+                    link.save()
+                    success = true
+                }
+            }
+            else
+            {
+                response.status = 500
+                render this.error("the link is owned by another user ==> you can't modify it") as JSON
             }
         }
 
@@ -339,23 +370,31 @@ class LinkController
         }
         else
         {
-            try
-            {   def _score = newScore
-                if (_score == null)
-                {
-                    _score = 0
-                }
-
-                _score = Math.max(0, Math.min(_score, 5))
-
-                link.note = Note.valueOf(Note.class, "Note_" + _score)
-                link.save()
-                msg = this.success("the note has been updated")
-                success = true
-            }
-            catch (Exception e)
+            if ( link.person.username == springSecurityService.getPrincipal().username )
             {
-                log.error("error while trying to update a note", e)
+                try
+                {   def _score = newScore
+                    if (_score == null)
+                    {
+                        _score = 0
+                    }
+
+                    _score = Math.max(0, Math.min(_score, 5))
+
+                    link.note = Note.valueOf(Note.class, "Note_" + _score)
+                    link.save()
+                    msg = this.success("the note has been updated")
+                    success = true
+                }
+                catch (Exception e)
+                {
+                    log.error("error while trying to update a note", e)
+                }
+            }
+            else
+            {
+                response.status = 500
+                msg =  this.error("the link is owned by another user ==> you can't modify it")
             }
         }
 
@@ -401,10 +440,17 @@ class LinkController
 
         if ( link != null )
         {
-            link.read = value
-            link.save()
-            message = this.success("the link has been marked as " + (value ? "read" : "unread"))
-            success = true
+            if ( link.person.username == springSecurityService.getPrincipal().username )
+            {
+                link.read = value
+                link.save()
+                message = this.success("the link has been marked as " + (value ? "read" : "unread"))
+                success = true
+            }
+            else
+            {
+                message =  this.error("the link is owned by another user ==> you can't modify it")
+            }
         }
         if ( ! success && message == null )
         {
