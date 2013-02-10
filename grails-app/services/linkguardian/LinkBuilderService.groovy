@@ -39,6 +39,15 @@ class LinkBuilderService {
       // shorten url with google service
       def urlResource = shortenerService.shorten(link.url)
       link.url = urlResource.shortUrl
+
+        if ( link.title && link.title.length() > Link.TITLE_MAX_LENGTH )
+        {
+            link.title = link.title.substring(0, Link.TITLE_MAX_LENGTH)
+        }
+        if ( link.description && link.description.length() > Link.DESCRIPTION_MAX_LENGTH )
+        {
+            link.description = link.description.substring(0, Link.DESCRIPTION_MAX_LENGTH)
+        }
     }
 
 
