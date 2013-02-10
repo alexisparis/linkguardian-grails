@@ -254,7 +254,6 @@
         </g:javascript>
         <p>
             <openid:identifier />
-            <twitterAuth:button/>
         </p>
         <p>
 
@@ -330,9 +329,12 @@
             </li>
         </ul>
 
-        <g:javascript src="jquery.raty.js"/>
+        <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.raty.js')}"></script>
+        <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.masonry.js')}"></script>
+        <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.blockUI.js')}"></script>
+        <%--g:javascript src="jquery.raty.js" />
         <g:javascript src="jquery.masonry.min.js"/>
-        <g:javascript src="jquery.blockUI.js"/>
+        <g:javascript src="jquery.blockUI.js"/--%>
 
         <g:javascript>
 
