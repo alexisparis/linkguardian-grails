@@ -3,3 +3,4 @@ rm -Rf src/main/webapp/*
 cp target/*.war src/main/webapp
 cd src/main/webapp/
 unzip *.war
+rm *.war
