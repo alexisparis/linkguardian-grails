@@ -32,7 +32,7 @@ class BootStrap {
         def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
         def twitterRole = new Role(authority: 'ROLE_TWITTER').save(flush: true)
 
-        def admin = new Person(username: 'paris_alexa', enabled: true, password: 'password')
+        def admin = new Person(username: 'paris_alex', enabled: true, password: 'password')
         admin = admin.save(flush: true)
 
         PersonRole.create admin, adminRole, true
