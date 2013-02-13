@@ -3,6 +3,7 @@ package linkguardian
 import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
 import grails.util.GrailsUtil
+import linkguardian.exception.TagException
 
 import java.util.logging.Level
 
@@ -63,7 +64,12 @@ class LinkController
 
             if ( token )
             {
-                query = query.where { fusionedTags =~ "% " + token.toUpperCase() + " %"}
+                //query = query.where { fusionedTags =~ "% " + token.toUpperCase() + " %"}
+                query = query.where {
+                    tags {
+                        label =~ token.toLowerCase() + "%"
+                    }
+                }
             }
 
             if ( ! read )
@@ -79,6 +85,13 @@ class LinkController
         }
 
         log.info "query links found count : " + queryLinks.size()
+
+        queryLinks.each {
+            println "cur :" + it
+            it.tags.each {
+                println "current tag : " + it.label
+            }
+        }
 
         response.contentType = "text/json"
         render queryLinks as JSON
@@ -145,6 +158,7 @@ class LinkController
         }
         catch(Exception e)
         {
+            response.status = 500
             log.error("error while trying to resolve redirections", e)
         }
 
@@ -167,35 +181,49 @@ class LinkController
             }
             else
             {
-                try {
-                    def newLink = new Link(url: realUrl, fusionedTags: " " + params.tag.toUpperCase() + " ", creationDate: new Date(), person: connectedPerson)
-
-                    linkBuilderService.complete(newLink)
-
-                    newLink.save(flush: true)
-
-                    msg = this.success("the link has been created")
-                }
-                catch(Exception e)
+                if( realUrl.length() > Link.URL_MAX_LENGTH )
                 {
-                    log.error(e.getClass().name + " :: error while trying to save new link with url : " + params.url, e)
                     response.status = 500
-                    if ( e.getCause() != null )
-                    {
-                        if ( e.getCause() instanceof MalformedURLException )
-                        {
-                            msg = this.error("The url '" + params.url + "' is invalid ==> '" + e.getCause().getMessage() + "'")
-                        }
-                        else if ( e.getCause() instanceof UnknownHostException )
-                        {
-                            msg = this.error("The host '" + ((UnknownHostException)e.getCause()).getMessage() + "' cannot be found")
-                        }
-                    }
+                    msg = this.error("the length of an url cannot be greater than " + Link.URL_MAX_LENGTH)
+                }
+                else
+                {
+                    try {
+                        def newLink = new Link(url: realUrl, fusionedTags: " " + params.tag.toLowerCase() + " ", creationDate: new Date(), person: connectedPerson)
 
-                    if ( msg == null )
+                        linkBuilderService.complete(newLink)
+                        linkBuilderService.addTags(newLink, params.tag)
+
+                        newLink.save(flush: true)
+
+                        msg = this.success("the link has been created")
+                    }
+                    catch(TagException e)
                     {
-                        // default message
-                        msg = this.error("error while trying to save the link '" + params.url + "'")
+                        response.status = 500
+                        msg = this.error( ((TagException)e).getMessage() )
+                    }
+                    catch(Exception e)
+                    {
+                        log.error(e.getClass().name + " :: error while trying to save new link with url : " + params.url, e)
+                        response.status = 500
+                        if ( e.getCause() != null )
+                        {
+                            if ( e.getCause() instanceof MalformedURLException )
+                            {
+                                msg = this.error("The url '" + params.url + "' is invalid ==> '" + e.getCause().getMessage() + "'")
+                            }
+                            else if ( e.getCause() instanceof UnknownHostException )
+                            {
+                                msg = this.error("The host '" + ((UnknownHostException)e.getCause()).getMessage() + "' cannot be found")
+                            }
+                        }
+
+                        if ( msg == null )
+                        {
+                            // default message
+                            msg = this.error("error while trying to save the link '" + params.url + "'")
+                        }
                     }
                 }
             }

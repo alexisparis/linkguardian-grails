@@ -13,9 +13,10 @@ class BootStrap {
     {
         def newLink
         try {
-            newLink = new Link(url: _url, fusionedTags: _tags, creationDate: new Date(), read:  _read, person: _person)
+            newLink = new Link(url: _url, creationDate: new Date(), read:  _read, person: _person)
             newLink.note = _note
             linkBuilderService.complete(newLink)
+            linkBuilderService.addTags(newLink, _tags)
             newLink = newLink.save(flush: true)
         }
         catch(Exception e)
@@ -32,7 +33,7 @@ class BootStrap {
         def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
         def twitterRole = new Role(authority: 'ROLE_TWITTER').save(flush: true)
 
-        def admin = new Person(username: 'paris_alexa', enabled: true, password: 'password')
+        def admin = new Person(username: 'paris_alex', enabled: true, password: 'password')
         admin = admin.save(flush: true)
 
         PersonRole.create admin, adminRole, true

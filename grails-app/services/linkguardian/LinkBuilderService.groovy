@@ -1,10 +1,13 @@
 package linkguardian
 
+import linkguardian.exception.TagException
 import net.htmlparser.jericho.*
 
 class LinkBuilderService {
 
     def shortenerService
+
+    def stringNormalizerService
 
     def complete(Link link) {
 
@@ -50,15 +53,36 @@ class LinkBuilderService {
         }
     }
 
+    def addTags(Link link, String fusionedTags) throws TagException
+    {
+        def tags = new LinkedHashSet<String>(stringNormalizerService.normalize(fusionedTags?.toLowerCase()))
 
-    def getTitle(Source source) {
+        tags.each {
+            def _tag
+            _tag = Tag.findByLabel(it)
+            if ( _tag == null )
+            {
+                if ( it.length() > Tag.LABEL_MAX_LENGTH )
+                {
+                    throw new TagException("the tag '" + it.substring(10) + "...' is too long (" + Tag.LABEL_MAX_LENGTH + " characters maximum)")
+                }
+
+                _tag = new Tag(label:  it)
+                _tag.save(flush:  true)
+            }
+            link.addToTags(_tag)
+        }
+
+    }
+
+    private def getTitle(Source source) {
       Element titleElement=source.getFirstElement(HTMLElementName.TITLE);
       if (titleElement==null) return null;
       // TITLE element never contains other tags so just decode it collapsing whitespace:
       return CharacterReference.decodeCollapseWhiteSpace(titleElement.getContent());
     }
 
-    def getMetaValue(Source source, String key) {
+    private def getMetaValue(Source source, String key) {
       for (int pos=0; pos<source.length();) {
         StartTag startTag=source.getNextStartTag(pos,"name",key,false);
         if (startTag==null) return null;
