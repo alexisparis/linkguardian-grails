@@ -3,7 +3,10 @@ package linkguardian
 import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
 import grails.util.GrailsUtil
+import grails.web.JSONBuilder
+import groovy.json.JsonBuilder
 import linkguardian.exception.TagException
+import net.sf.json.JSONObject
 
 import java.util.logging.Level
 
@@ -86,15 +89,24 @@ class LinkController
 
         log.info "query links found count : " + queryLinks.size()
 
-        queryLinks.each {
-            println "cur :" + it
-            it.tags.each {
-                println "current tag : " + it.label
+        render(contentType: "text/json") {
+            links = array{
+                for (a in queryLinks) {
+                    item title: a.title,
+                         read: a.read,
+                         url : a.url,
+                         id: a.id,
+                         note: a.note.ordinal(),
+                         domain: a.domain,
+                         description: a.description,
+                         tags : array{
+                             for(b in a.tags) {
+                                 subitem label : b.label
+                             }
+                         }
+                }
             }
         }
-
-        response.contentType = "text/json"
-        render queryLinks as JSON
     }
 
     /**
@@ -279,41 +291,58 @@ class LinkController
     {
         log.info "calling addTag for link " + id + " with tag " + tag
         def msg
+        def success = false
 
         Link link = Link.get(id)
         if (link != null && tag != null)
         {
             if ( link.person.username == springSecurityService.getPrincipal().username )
             {
-                def _tag = tag.trim()
+                def tagsToAdd = linkBuilderService.extractTags(tag)
 
-                if ( _tag.length() == 0 )
+                int tagsToAddSize = tagsToAdd.size()
+                def severallTagsToAdd = tagsToAddSize > 1
+
+                if ( tagsToAddSize == 0 )
                 {
-                    response.setStatus(500)
+                    response.status = 500
                     msg = this.error("the tag is not valid")
                 }
                 else
                 {
-                    List<String> tmp = _tag.tokenize();
-                    if ( tmp.size() == 1 )
+                    // remove from the set tags that already exist
+                    link.tags.each {
+                        if ( tagsToAdd.contains(it.label) )
+                        {
+                            tagsToAdd.remove(it.label)
+                        }
+                    }
+
+                    if ( tagsToAdd.isEmpty() )
                     {
-                        Set<String> tokens = new LinkedHashSet<String>(link.fusionedTags.tokenize())
-                        if (tokens.add(_tag))
-                        {
-                            link.fusionedTags = " " + tokens.join(" ") + " "
-                            link.save()
-                            msg = this.success("the tag has been added")
-                        }
-                        else
-                        {
-                            response.setStatus(500)
-                            msg = this.error("the tag already exist")
-                        }
+                        response.status = 500
+                        msg = this.error("tag" + (severallTagsToAdd ? "s" : "") + " already exist" + (severallTagsToAdd ? "" : "s"))
                     }
                     else
                     {
-                        response.status = 500
-                        msg = this.error("You can only provide one tag at a time")
+                        linkBuilderService.addTags(link, tagsToAdd.join(" "))
+
+                        success = true
+                        if ( severallTagsToAdd )
+                        {
+                            if ( tagsToAdd.size() < tagsToAddSize )
+                            {
+                                msg = this.warning("some of the tags you provide have been added")
+                            }
+                            else
+                            {
+                                msg = this.success("the tags have been added")
+                            }
+                        }
+                        else
+                        {
+                            msg = this.success("the tag has been added")
+                        }
                     }
                 }
             }
@@ -329,7 +358,23 @@ class LinkController
             msg = this.error("error while trying to add the new tag")
         }
 
-        render msg as JSON
+        if ( success )
+        {
+            render(contentType: "text/json") {
+
+                tags = array{
+                    for (a in link.tags) {
+                        item label: a.label
+                    }
+                }
+                message = msg
+            }
+        }
+        else
+        {
+            response.contentType = "text/json"
+            render msg as JSON
+        }
     }
 
     /**
@@ -348,12 +393,24 @@ class LinkController
         {
             if ( link.person.username == springSecurityService.getPrincipal().username )
             {
-                def _tag = tag
-                List<String> tokens = link.fusionedTags.tokenize()
-                if (tokens.remove(_tag))
+                def tagToDelete = null
+
+                link.tags.each {
+                    if ( tagToDelete == null && it.label == tag )
+                    {
+                        tagToDelete = it
+                    }
+                }
+
+                if ( tagToDelete == null )
                 {
-                    link.fusionedTags = " " + tokens.join(" ") + " "
-                    link.save()
+                    response.status = 500
+                    render this.error("the tag '" + tag + "' does not exist for this link") as JSON
+                }
+                else
+                {
+                    link.removeFromTags(tagToDelete)
+                    link.save(flush:  true)
                     success = true
                 }
             }

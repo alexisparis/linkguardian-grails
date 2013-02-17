@@ -16,6 +16,7 @@ class StringNormalizerServiceTests
     void testNormalize()
     {
         def data = [:]
+        data.put("[]", null)
         data.put("[]", "")
         data.put("[]", "  ")
         data.put("[a]", "a")

@@ -55,7 +55,7 @@ class LinkBuilderService {
 
     def addTags(Link link, String fusionedTags) throws TagException
     {
-        def tags = new LinkedHashSet<String>(stringNormalizerService.normalize(fusionedTags?.toLowerCase()))
+        def tags = this.extractTags(fusionedTags)
 
         tags.each {
             def _tag
@@ -72,7 +72,15 @@ class LinkBuilderService {
             }
             link.addToTags(_tag)
         }
+    }
 
+    /**
+     * return a set of tag from the input string
+     * @param fusionedTags
+     */
+    def extractTags(String fusionedTags)
+    {
+        return new LinkedHashSet<String>(stringNormalizerService.normalize(fusionedTags?.toLowerCase()))
     }
 
     private def getTitle(Source source) {

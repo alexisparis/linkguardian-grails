@@ -21,21 +21,7 @@ function updateLinks(links)
 
     $container.masonry('reload');
 
-    var model = {
-        'links' : links/*,
-         'tags' : function()
-         {
-         var trimmed = this.fusionedTags.trim();
-         if ( trimmed && trimmed.length > 0 )
-         {
-         return trimmed.toLowerCase().split(reg);
-         }
-         else
-         {
-         return undefined;
-         }
-         }                */
-    };
+    var model = links;
 
     var template =
         '{{#links}}' +
