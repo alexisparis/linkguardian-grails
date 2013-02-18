@@ -11,6 +11,8 @@ class LinkBuilderService {
 
     def complete(Link link) {
 
+      log.info "completing link with url : " + link.url
+
       // make an http request to get the header of the web site
 
       MicrosoftTagTypes.register()
@@ -26,10 +28,10 @@ class LinkBuilderService {
       source.fullSequentialParse()
 
       link.title = getTitle(source)
-      println "title : " + link.title
+      log.info "setting title to " + link.title
 
       link.description = getMetaValue(source,"description")
-      println "description : " + link.description
+      log.info "setting description to " + link.description
 
       if ( link.description == null )
       {
@@ -37,7 +39,7 @@ class LinkBuilderService {
       }
 
       link.domain = url.getHost()
-      println "domain : " + link.domain
+      log.info "setting domain to " + link.domain
 
       // shorten url with google service
       def urlResource = shortenerService.shorten(link.url)

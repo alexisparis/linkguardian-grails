@@ -87,8 +87,12 @@ log4j = {
     //}
 
     debug "grails.app.controllers.LinkController",
+          //"grails.app.services.LinkBuilderService",
+          //"grails.app.services.StringNormalizerService",
           'org.hibernate.SQL',
           'org.hibernate.transaction' // optionally
+
+    debug "grails.app"
 
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP

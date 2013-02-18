@@ -67,6 +67,11 @@
         padding-right: 1px;
         padding-left: 5px;
     }
+    span.description
+    {
+        font-size: smaller;
+        line-heighta: 4px;
+    }
     button.close
     {
         margin-left: 10px;
@@ -275,7 +280,8 @@
                         '</div>' +
                         '<div style="margin-top: 1px;word-wrap:break-word;">' +
                         '<div class="content with-tooltip" rel="tooltip" data-placement="top" data-original-title="go to {{domain}}">' +
-                        '<span class="title"><b>{{title}}</b></span><br/><span class="description">{{description}}</span><br/>' +
+                        '{{#title}}<span class="title"><b>{{title}}</b></span><br/>{{/title}}' +
+                        '{{#description}}<span class="description">{{description}}</span><br/>{{/description}}' +
                         '<span class="domain" style="font-size: 11px;"><i>{{domain}}</i></span>' +
                         '</div>' +
                         '<div class="tags">' +
@@ -632,6 +638,7 @@
 
                         $container.on('click', 'div.content', goToLink);
                         $container.on('click', 'img.linkparticon', goToLink);
+                        $container.on('click', 'div.tags', goToLink);
 
                         var changeRead = function(read, formName)
                         {
@@ -701,7 +708,7 @@
 
                 <div class="input-prepend input-append" style="margin-bottom: 3px;">
                     <span class="add-on">url</span>
-                    <input type="url" id="txtUrl" name="url" class="input-xxlarge" placeholder="http://..." required="" maxlength="200"/>
+                    <input type="text" id="txtUrl" name="url" class="input-xxlarge" placeholder="http://..." maxlength="200"/> <%-- required="" --%>
 
                     <input class="btn btn-primary" type="submit" value="Add link"/>
 

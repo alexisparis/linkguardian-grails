@@ -1,9 +1,11 @@
+import grails.util.GrailsUtil
 import linkguardian.Link
 import linkguardian.Note
 import linkguardian.Person
 import linkguardian.Role
 import linkguardian.Person
 import linkguardian.PersonRole
+import grails.util.Environment
 
 class BootStrap {
 
@@ -33,26 +35,29 @@ class BootStrap {
         def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
         def twitterRole = new Role(authority: 'ROLE_TWITTER').save(flush: true)
 
-        def admin = new Person(username: 'paris_alex', enabled: true, password: 'password')
-        admin = admin.save(flush: true)
+        switch (Environment.current) {
+            case Environment.DEVELOPMENT:
 
-        PersonRole.create admin, adminRole, true
-        PersonRole.create admin, userRole, true
-        PersonRole.create admin, twitterRole, true
+                def admin = new Person(username: 'paris_alex', enabled: true, password: 'password')
+                admin = admin.save(flush: true)
 
-        def user = new Person(username: 'user', enabled: true, password: 'password')
-        user = user.save(flush: true)
+                PersonRole.create admin, adminRole, true
+                PersonRole.create admin, userRole, true
+                PersonRole.create admin, twitterRole, true
 
-        PersonRole.create user, userRole, true
-        PersonRole.create user, twitterRole, true
+                def user = new Person(username: 'user', enabled: true, password: 'password')
+                user = user.save(flush: true)
 
-        assert Person.count() == 2
-        assert Role.count() == 3
-        assert PersonRole.count() == 5
+                PersonRole.create user, userRole, true
+                PersonRole.create user, twitterRole, true
 
-        this.createLink("http://www.privatesportshop.com", " sport shop nike adidas reebok a ", Note.Note_2, admin)
+                assert Person.count() == 2
+                assert Role.count() == 3
+                assert PersonRole.count() == 5
 
-        this.createLink("http://www.brandalley.fr", " shop marque ", Note.Note_4, user)
+                this.createLink("http://www.privatesportshop.com", " sport shop nike adidas reebok a ", Note.Note_2, admin)
+
+                this.createLink("http://www.brandalley.fr", " shop marque ", Note.Note_4, user)
 
         /*
         admin.addToLinks(this.createLink("http://www.brandalley.fr", " shop marque ", Note.Note_4))
@@ -88,6 +93,7 @@ class BootStrap {
         //newLink.note = Note.Note_0
         //linkBuilderService.complete(newLink)
         //newLink.save(flush: true)
+        }
     }
     def destroy = {}
 }

@@ -40,9 +40,7 @@ class LinkController
 
     def list()
     {
-        println("calling list from LinkController")
-
-        println "username : " + springSecurityService.getPrincipal().username
+        log.info "username : " + springSecurityService.getPrincipal().username
     }
 
     /**
@@ -119,117 +117,132 @@ class LinkController
 
         def msg
 
-        def realUrl = null
-
-        // manage redirect url
-        def urls = new HashSet<String>()
-        def redirectLimitCount = 10
-        def redirectCount = 0
-        def currentUrl = params.url
-
-        try  {
-            while(redirectCount < redirectLimitCount && realUrl == null && currentUrl != null)  {
-               if ( urls.add(currentUrl) )
-               {
-                   def _url = new URL(currentUrl)
-                   def _connection = _url.openConnection()
-                   if ( _connection instanceof HttpURLConnection )
-                   {
-                      def _httpConnection = (HttpURLConnection)_connection
-                      def code = _httpConnection.getResponseCode()
-                      if( code >= 300 && code < 400 ){ // redirection
-                         currentUrl = null
-                         def location = _httpConnection.getHeaderField("Location")
-                         if ( location != null ){
-                             currentUrl = location
-                         }
-                      }
-                      else{
-                          realUrl = currentUrl
-                      }
-                   }
-               }
-               else
-               {
-                   response.status = 500
-                   msg = this.error("invalid url ==> redirection loop")
-                   break
-               }
-
-               redirectCount++
-            }
-
-            if ( realUrl == null )
-            {
-                if ( msg != null && redirectCount >= redirectLimitCount )
-                {
-                    response.status = 500
-                    msg = this.error("invalid url ==> too many redirections")
-                }
-            }
-        }
-        catch(Exception e)
+        if ( params.url == null || params.url.trim().length() == 0 )
         {
             response.status = 500
-            log.error("error while trying to resolve redirections", e)
-        }
-
-        if ( response.status == 500 && msg == null )
-        {
-            // if no error detected before
-            // use url given by user to use default error handling
-            realUrl = params.url
-        }
-
-        if ( realUrl != null )
-        {
-            def connectedPerson = Person.findByUsername(springSecurityService.getPrincipal().username)
-
-            // desactivated since we use url shortener
-            try {
-                def newLink = new Link(url: realUrl, fusionedTags: " " + params.tag.toLowerCase() + " ", creationDate: new Date(), person: connectedPerson)
-
-                linkBuilderService.complete(newLink)
-                linkBuilderService.addTags(newLink, params.tag)
-
-                // check that this url does not already exist
-                if ( Link.findByPersonAndUrl(connectedPerson, newLink.url) != null )
-                {
-                    response.status = 500
-                    msg = this.error("the link '" + params.url + "' already exists")
-                }
-                else
-                {
-                    newLink.save(flush: true)
-
-                    msg = this.success("the link has been created")
-                }
+                msg = this.error("provide a valid url")
             }
-            catch(TagException e)
+            else
             {
-                response.status = 500
-                msg = this.error( ((TagException)e).getMessage() )
+            def realUrl = null
+
+            // manage redirect url
+            def urls = new HashSet<String>()
+            def redirectLimitCount = 10
+            def redirectCount = 0
+            def currentUrl = params.url
+
+            // if params.url does not contains ://, then add http://
+            if ( currentUrl.indexOf("://") == -1 )
+            {
+                log.warn("adding http:// to url without protocol : " +currentUrl)
+                currentUrl = "http://" + currentUrl
+            }
+
+            try  {
+                while(redirectCount < redirectLimitCount && realUrl == null && currentUrl != null)  {
+                   if ( urls.add(currentUrl) )
+                   {
+                       def _url = new URL(currentUrl)
+                       def _connection = _url.openConnection()
+                       if ( _connection instanceof HttpURLConnection )
+                       {
+                          def _httpConnection = (HttpURLConnection)_connection
+                          def code = _httpConnection.getResponseCode()
+                          if( code >= 300 && code < 400 ){ // redirection
+                             currentUrl = null
+                             def location = _httpConnection.getHeaderField("Location")
+                             if ( location != null ){
+                                 currentUrl = location
+                             }
+                          }
+                          else{
+                              realUrl = currentUrl
+                          }
+                       }
+                   }
+                   else
+                   {
+                       response.status = 500
+                       msg = this.error("invalid url ==> redirection loop")
+                       break
+                   }
+
+                   redirectCount++
+                }
+
+                if ( realUrl == null )
+                {
+                    if ( msg != null && redirectCount >= redirectLimitCount )
+                    {
+                        response.status = 500
+                        msg = this.error("invalid url ==> too many redirections")
+                    }
+                }
             }
             catch(Exception e)
             {
-                log.error(e.getClass().name + " :: error while trying to save new link with url : " + params.url, e)
                 response.status = 500
-                if ( e.getCause() != null )
-                {
-                    if ( e.getCause() instanceof MalformedURLException )
+                log.error("error while trying to resolve redirections", e)
+            }
+
+            if ( response.status == 500 && msg == null )
+            {
+                // if no error detected before
+                // use url given by user to use default error handling
+                realUrl = params.url
+            }
+
+            if ( realUrl != null )
+            {
+                def connectedPerson = Person.findByUsername(springSecurityService.getPrincipal().username)
+
+                // desactivated since we use url shortener
+                try {
+                    def newLink = new Link(url: realUrl, fusionedTags: " " + params.tag.toLowerCase() + " ", creationDate: new Date(), person: connectedPerson)
+
+                    linkBuilderService.complete(newLink)
+                    linkBuilderService.addTags(newLink, params.tag)
+
+                    // check that this url does not already exist
+                    if ( Link.findByPersonAndUrl(connectedPerson, newLink.url) != null )
                     {
-                        msg = this.error("The url '" + params.url + "' is invalid ==> '" + e.getCause().getMessage() + "'")
+                        response.status = 500
+                        msg = this.error("the link '" + params.url + "' already exists")
                     }
-                    else if ( e.getCause() instanceof UnknownHostException )
+                    else
                     {
-                        msg = this.error("The host '" + ((UnknownHostException)e.getCause()).getMessage() + "' cannot be found")
+                        newLink.save(flush: true)
+
+                        msg = this.success("the link has been created")
                     }
                 }
-
-                if ( msg == null )
+                catch(TagException e)
                 {
-                    // default message
-                    msg = this.error("error while trying to save the link '" + params.url + "'")
+                    response.status = 500
+                    msg = this.error( ((TagException)e).getMessage() )
+                }
+                catch(Exception e)
+                {
+                    log.error(e.getClass().name + " :: error while trying to save new link with url : " + params.url, e)
+                    response.status = 500
+                    if ( e.getCause() != null )
+                    {
+                        if ( e.getCause() instanceof MalformedURLException )
+                        {
+                            msg = this.error("The url '" + params.url + "' is invalid ==> '" + e.getCause().getMessage() + "'")
+                        }
+                        else if ( e.getCause() instanceof UnknownHostException )
+                        {
+                            msg = this.error("The host '" + ((UnknownHostException)e.getCause()).getMessage() + "' cannot be found")
+                        }
+                    }
+
+                    if ( msg == null )
+                    {
+                        // default message
+                        msg = this.error("error while trying to save the link '" + params.url + "'")
+                    }
                 }
             }
         }
