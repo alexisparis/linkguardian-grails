@@ -53,7 +53,7 @@
                                 <span style="display: inline-block; padding-top: 14px; font-family: 'Clicker Script', cursive; font-size: 30px;">Link Guardian</span>
                                 <sec:ifLoggedIn>
                                     <div style="float: right; text-align: right;">
-                                        <span>Welcome <sec:username/> / <sec:loggedInUserInfo field="fullName"/></span><br/>
+                                        <span>Welcome <sec:username/> / <sec:loggedInUserInfo field="screenName"/></span><br/>
                                         <g:link controller='logout' action='index'><span class="btn btn-inverse btn-mini">Logout</span></g:link>
                                     </div>
                                 </sec:ifLoggedIn>
