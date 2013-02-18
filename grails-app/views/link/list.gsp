@@ -137,12 +137,7 @@
 	</head>
 	<body>
 
-        <p>
-            <openid:identifier />
-        </p>
-        <p>
-
-        <ul class="nav nav-pills" id="navigation">
+        <ul class="nav nav-pills" id="navigation" style="background-color: #ddd; margin-top: 3px; margin-bottom: 5px;"><!-- rgb(210, 225, 255); -->
             <li>
                 <!-- form used to delete a link -->
                 <g:formRemote id="deleteLinkForm" name="deleteLinkForm" url="[controller: 'link', action: 'delete']"
@@ -210,7 +205,7 @@
                 </g:formRemote>
             </li>
             <li style="float: right;">
-                <button class="btn" id="about">About</button>
+                <button class="btn btn-info" id="about">About</button>
             </li>
         </ul>
 
@@ -229,11 +224,11 @@
 
             function tagTemplate(tagNameRef)
             {
-                return '<span class="tag btn btn-primary btn-mini" data-tag="{{' + tagNameRef + '}}">' +
+                return '<span class="tag btn btn-primary btn-mini with-tooltip" data-tag="{{' + tagNameRef + '}}">' +
                        '<button class="close deleteTagButton with-tooltip"' +
                        ' rel="tooltip" data-placement="top" data-original-title="Delete tag"' +
                        ' style="color: #fff;">&times;</button>' +
-                       '{{' + tagNameRef + '}}' +
+                       '<span class="with-tooltip" rel="tooltip" data-placement="top" data-original-title="filter on \'{{' + tagNameRef + '}}\'">{{' + tagNameRef + '}}</span>' +
                        '</span>';
             };
 
@@ -245,6 +240,16 @@
                 $container.children().remove();
 
                 $container.masonry('reload');
+
+                //model._tags = model.tags.sort(compareTags);
+
+                var _model = {
+                    links : model.links,
+                    _tags : function()
+                    {
+                        return this.tags.sort(compareTags)
+                    }
+                };
 
                 var template =
                         '{{#links}}' +
@@ -276,19 +281,19 @@
                         '<div class="tags">' +
                         '<i class="icon-tags" style="margin-right: 3px; margin-left: 6px;"></i>' +
                         '<span class="tags-wrapper">' +
-                        '{{#tags}}' +
+                        '{{#_tags}}' +
                         tagTemplate('label') +
-                        '{{/tags}}' +
+                        '{{/_tags}}' +
                         '</span>' +
                         '<span class="btn btn-primary btn-mini add-tag visible-on-hover">' +
-                        '<i class="icon-plus-sign with-tooltip" rel="tooltip" data-original-title="add new tag" data-placement="top"></i>' +
+                        '<i class="icon-plus-sign with-tooltip" rel="tooltip" data-original-title="add a new tag" data-placement="top"></i>' +
                         '</span>' +
                         '</div>' +
                         '</div>' +
                         '</div>' +
                         '{{/links}}';
 
-                var output = Mustache.render(template, model);
+                var output = Mustache.render(template, _model);
 
                 $container.html(output);
 
@@ -384,6 +389,14 @@
                 $('#addTagForm').submit();
             };
 
+            function compareTags(a,b) {
+                if (a.label < b.label)
+                    return -1;
+                if (a.label > b.label)
+                    return 1;
+                return 0;
+            };
+
             function tagAdded(data)
             {
                 var linkId = $('#addTagForm input[name="id"]').val();
@@ -395,6 +408,8 @@
                     jTagWrapperRef.children().remove();
 
                     var template = tagTemplate('name');
+
+                    data.tags.sort(compareTags);
 
                     for(var i = 0; i < data.tags.length; i++)
                     {
@@ -493,7 +508,7 @@
                                    jObj.fadeOut({
                                                     duration: 1000
                                                 });
-                               },3000);
+                               },4000);
                 }
             };
 
@@ -518,7 +533,8 @@
                         $('#nav-home').click(callback(false));
                         $('#nav-archive').click(callback(true));
 
-                        $('#showTagInput').click(function(event)
+                        // txtTag is now always displayed
+                        /*$('#showTagInput').click(function(event)
                                                  {
                                                      $('#txtTag').fadeToggle({
                                                                                  easing: 'swing'
@@ -527,7 +543,7 @@
 
                         $('#txtTag').fadeOut({
                                                  duration: 0
-                                             });
+                                             });*/
 
                         $('#listing-part').on('click', 'button.deleteLinkButton', function(event)
                         {
@@ -680,9 +696,10 @@
         <div id="add-part">
             <g:formRemote name="addUrlForm" url="[controller: 'link', action: 'addUrl']"
                           method="POST" onSuccess="resetAddForm();submitFilterForm(); displayMessage(data);"
-                          onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
+                          onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)"
+                          style="margin-bottom: 3px;">
 
-                <div class="input-prepend input-append">
+                <div class="input-prepend input-append" style="margin-bottom: 3px;">
                     <span class="add-on">url</span>
                     <input type="url" id="txtUrl" name="url" class="input-xxlarge" placeholder="http://..." required="" maxlength="200"/>
 
@@ -691,10 +708,12 @@
                 </div>
 
                 <div>
-                    <span class="label">Tags (Optional)</span> <a class="btn btn-info btn-mini" id="showTagInput">show</a><br/>
-                    <div style="height: 20px; margin-top: 2px;">
-                        <g:textField id="txtTag" name="tag" class="input-xxlarge" placeholder="Comma separated tag names e.g. news, technical, travel, leisure" maxlength="100"/>
-                    </div>
+                    <span class="label" style="vertical-align: top; margin-top: 6px;">Tags (Optional)</span> <%--a class="btn btn-info btn-mini" id="showTagInput">show</a--%>
+                    <span>
+                        <g:textField id="txtTag" name="tag"
+                                     style="font-size: 13px; margin-bottom: 0px;"
+                                     class="input-xxlarge" placeholder="space separated tag names e.g. news travel ..." maxlength="100"/>
+                    </span>
                 </div>
 
             </g:formRemote>
@@ -713,7 +732,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3>
-                    <img src="${resource(dir: 'images', file: 'shield_blue3.png')}" alt="LinkGuardian" width="50"/> Confirmation</h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> Confirmation</h3>
             </div>
             <div class="modal-body">
                 <p>Do you really want to delete this link?</p>
@@ -727,7 +746,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3>
-                    <img src="${resource(dir: 'images', file: 'shield_blue3.png')}" alt="LinkGuardian" width="50"/> Confirmation</h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> Confirmation</h3>
             </div>
             <div class="modal-body">
                 <p>Do you really want to delete this tag?</p>
@@ -741,7 +760,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3>
-                    <img src="${resource(dir: 'images', file: 'shield_blue3.png')}" alt="LinkGuardian" width="50"/> Add tags</h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> Add tags</h3>
             </div>
             <div class="modal-body" style="text-align: center;">
                 <g:textField id="newTagInput" name="name" class="input-xlarge"/>
@@ -755,7 +774,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3>
-                    <img src="${resource(dir: 'images', file: 'shield_blue3.png')}" alt="LinkGuardian" width="50"/> Mark as read?</h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> Mark as read?</h3>
             </div>
             <div class="modal-body">
                 <p class="question"></p>
@@ -769,7 +788,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3>
-                    <img src="${resource(dir: 'images', file: 'shield_blue3.png')}" alt="LinkGuardian" width="50"/> About Link Guardian</h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> About Link Guardian</h3>
             </div>
             <div class="modal-body">
                 <p>Link Guardian is a tool that allow to <span class="label label-success">register websites adress</span>.</p>

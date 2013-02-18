@@ -185,58 +185,51 @@ class LinkController
         {
             def connectedPerson = Person.findByUsername(springSecurityService.getPrincipal().username)
 
-            // check that this url does not already exist
-            if ( Link.findByPersonAndUrl(connectedPerson, realUrl) != null )
-            {
-                response.status = 500
-                msg = this.error("the link '" + params.url + "' already exists")
-            }
-            else
-            {
-                if( realUrl.length() > Link.URL_MAX_LENGTH )
+            // desactivated since we use url shortener
+            try {
+                def newLink = new Link(url: realUrl, fusionedTags: " " + params.tag.toLowerCase() + " ", creationDate: new Date(), person: connectedPerson)
+
+                linkBuilderService.complete(newLink)
+                linkBuilderService.addTags(newLink, params.tag)
+
+                // check that this url does not already exist
+                if ( Link.findByPersonAndUrl(connectedPerson, newLink.url) != null )
                 {
                     response.status = 500
-                    msg = this.error("the length of an url cannot be greater than " + Link.URL_MAX_LENGTH)
+                    msg = this.error("the link '" + params.url + "' already exists")
                 }
                 else
                 {
-                    try {
-                        def newLink = new Link(url: realUrl, fusionedTags: " " + params.tag.toLowerCase() + " ", creationDate: new Date(), person: connectedPerson)
+                    newLink.save(flush: true)
 
-                        linkBuilderService.complete(newLink)
-                        linkBuilderService.addTags(newLink, params.tag)
-
-                        newLink.save(flush: true)
-
-                        msg = this.success("the link has been created")
-                    }
-                    catch(TagException e)
+                    msg = this.success("the link has been created")
+                }
+            }
+            catch(TagException e)
+            {
+                response.status = 500
+                msg = this.error( ((TagException)e).getMessage() )
+            }
+            catch(Exception e)
+            {
+                log.error(e.getClass().name + " :: error while trying to save new link with url : " + params.url, e)
+                response.status = 500
+                if ( e.getCause() != null )
+                {
+                    if ( e.getCause() instanceof MalformedURLException )
                     {
-                        response.status = 500
-                        msg = this.error( ((TagException)e).getMessage() )
+                        msg = this.error("The url '" + params.url + "' is invalid ==> '" + e.getCause().getMessage() + "'")
                     }
-                    catch(Exception e)
+                    else if ( e.getCause() instanceof UnknownHostException )
                     {
-                        log.error(e.getClass().name + " :: error while trying to save new link with url : " + params.url, e)
-                        response.status = 500
-                        if ( e.getCause() != null )
-                        {
-                            if ( e.getCause() instanceof MalformedURLException )
-                            {
-                                msg = this.error("The url '" + params.url + "' is invalid ==> '" + e.getCause().getMessage() + "'")
-                            }
-                            else if ( e.getCause() instanceof UnknownHostException )
-                            {
-                                msg = this.error("The host '" + ((UnknownHostException)e.getCause()).getMessage() + "' cannot be found")
-                            }
-                        }
-
-                        if ( msg == null )
-                        {
-                            // default message
-                            msg = this.error("error while trying to save the link '" + params.url + "'")
-                        }
+                        msg = this.error("The host '" + ((UnknownHostException)e.getCause()).getMessage() + "' cannot be found")
                     }
+                }
+
+                if ( msg == null )
+                {
+                    // default message
+                    msg = this.error("error while trying to save the link '" + params.url + "'")
                 }
             }
         }
