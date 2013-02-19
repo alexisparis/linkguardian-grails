@@ -63,7 +63,7 @@ environments {
     development {
         grails.logging.jul.usebridge = true
 
-        grails.plugins.springsecurity.mock.active = false
+        grails.plugins.springsecurity.mock.active = true
         grails.plugins.springsecurity.mock.fullName = "Alexis PARIS"
         grails.plugins.springsecurity.mock.email = "alexis.rt.paris@gmail.com"
         grails.plugins.springsecurity.mock.username =  "paris_alex"

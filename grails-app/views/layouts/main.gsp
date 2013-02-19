@@ -16,7 +16,9 @@
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'application.css')}" type="text/css">
 
-        <link href='http://fonts.googleapis.com/css?family=Clicker+Script' rel='stylesheet' type='text/css'>
+        <%--link href='http://fonts.googleapis.com/css?family=Clicker+Script' rel='stylesheet' type='text/css'--%>
+
+        <link href="${resource(dir: 'css', file: 'clicker.css')}" rel='stylesheet' type='text/css'>
 
         <r:require modules="bootstrap"/>
 
@@ -25,7 +27,7 @@
         <ga:trackPageview />
 
         <style type="text/css">
-            div.navbar-inner
+            div.header
             {
                 color: white;
 
@@ -53,30 +55,40 @@
     </head>
 
 	<body>
-        <div class="navbar" style="margin-bottom: 0px;">
-            <div class="navbar-inner">
-                <div class="container wrapper">
-                    <div class="row">
-                        <div class="span10">
-                            <div id="guardianLogo" role="banner" style="padding-top: 5px; padding-bottom: 3px;">
-                                <a href="https://linkguardian-blackdog.rhcloud.com">
-                                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50" style="margin-top: -10px;"/>
-                                </a>
-                                <span class="lg" style="display: inline-block; padding-top: 14px; font-size: 30px;"></span>
-                                <sec:ifLoggedIn>
-                                    <div style="float: right; text-align: right;">
-                                        <span>Welcome
-                                            <g:if env="production">
-                                                <sec:loggedInUserInfo field="fullName"/>
-                                            </g:if>
-                                            <g:else>
-                                                <sec:username/>
-                                            </g:else>
-                                        </span><br/>
-                                        <g:link controller='logout' action='index'><span class="btn btn-inverse btn-mini">Logout</span></g:link>
-                                    </div>
-                                </sec:ifLoggedIn>
-                            </div>
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="span12">
+                        <div id="guardianLogo" role="banner" style="padding-top: 5px; padding-bottom: 3px;">
+                            <a href="https://linkguardian-blackdog.rhcloud.com">
+                                <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50" style="margin-top: -10px;"/>
+                            </a>
+                            <span class="lg" style="display: inline-block; padding-top: 14px; font-size: 30px;"></span>
+                            <sec:ifLoggedIn>
+                                <div style="float: right; text-align: right;">
+
+                                    <sec:ifAllGranted roles="ROLE_ADMIN,ROLE_USER">
+                                        <div class="btn-group" style="margin-right: 20px;">
+                                            <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></button>
+                                            <ul class="dropdown-menu">
+                                                <li><g:link controller="userCrud">Users</g:link></li>
+                                                <li><g:link controller="roleCrud">Roles</g:link></li>
+                                                <li><g:link controller="linkCrud">Links</g:link></li>
+                                            </ul>
+                                        </div>
+                                    </sec:ifAllGranted>
+
+                                    <span>Welcome
+                                        <g:if env="production">
+                                            <sec:loggedInUserInfo field="fullName"/>
+                                        </g:if>
+                                        <g:else>
+                                            <sec:username/>
+                                        </g:else>
+                                    </span><br/>
+                                    <g:link controller='logout' action='index'><span class="btn btn-inverse btn-mini">Logout</span></g:link>
+                                </div>
+                            </sec:ifLoggedIn>
                         </div>
                     </div>
                 </div>
@@ -84,12 +96,22 @@
         </div>
         <div class="container wrapper">
             <div class="row">
-                <div class="span10">
+                <div class="span12">
                     <g:layoutBody/>
                     <g:javascript library="application"/>
                 </div>
             </div>
         </div>
         <r:layoutResources />
+
+        <footer>
+            <div class="container wrapper">
+                <div class="row">
+                    <div class="span12" style="text-align: center;">
+                        <g:message code="app.copyright"/>
+                    </div>
+                </div>
+            </div>
+        </footer>
 	</body>
 </html>
