@@ -258,7 +258,7 @@
       <file leaf-file-name="clicker.css" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web-app/css/clicker.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="157" selection-start="449" selection-end="449" vertical-scroll-proportion="0.10231923">
+            <state line="5" column="109" selection-start="401" selection-end="401" vertical-scroll-proportion="0.10231923">
               <folding />
             </state>
           </provider>
@@ -1352,7 +1352,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web-app/css/clicker.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="157" selection-start="449" selection-end="449" vertical-scroll-proportion="0.10231923">
+        <state line="5" column="109" selection-start="401" selection-end="401" vertical-scroll-proportion="0.10231923">
           <folding />
         </state>
       </provider>
