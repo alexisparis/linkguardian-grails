@@ -18,6 +18,8 @@
 
         <link href='http://fonts.googleapis.com/css?family=Clicker+Script' rel='stylesheet' type='text/css'>
 
+        <r:require modules="bootstrap"/>
+
 		<g:layoutHead/>
 		<r:layoutResources />
         <ga:trackPageview />
@@ -37,6 +39,16 @@
                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0c4d99', endColorstr='#0d88e5',GradientType=0 ); /* IE6-9 */
             }
 
+            .lg
+            {
+                font-family: 'Clicker Script', cursive;
+                font-size: 20px;
+            }
+        .lg:after
+        {
+            content: 'Link Guardian';
+        }
+
         </style>
     </head>
 
@@ -50,10 +62,17 @@
                                 <a href="https://linkguardian-blackdog.rhcloud.com">
                                     <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50" style="margin-top: -10px;"/>
                                 </a>
-                                <span style="display: inline-block; padding-top: 14px; font-family: 'Clicker Script', cursive; font-size: 30px;">Link Guardian</span>
+                                <span class="lg" style="display: inline-block; padding-top: 14px; font-size: 30px;"></span>
                                 <sec:ifLoggedIn>
                                     <div style="float: right; text-align: right;">
-                                        <span>Welcome <sec:username/> / <sec:loggedInUserInfo field="screenName"/></span><br/>
+                                        <span>Welcome
+                                            <g:if env="production">
+                                                <sec:loggedInUserInfo field="fullName"/>
+                                            </g:if>
+                                            <g:else>
+                                                <sec:username/>
+                                            </g:else>
+                                        </span><br/>
                                         <g:link controller='logout' action='index'><span class="btn btn-inverse btn-mini">Logout</span></g:link>
                                     </div>
                                 </sec:ifLoggedIn>

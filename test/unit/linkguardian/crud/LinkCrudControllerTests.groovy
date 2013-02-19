@@ -8,10 +8,12 @@ import org.junit.*
 /**
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
-@TestFor(RoleController)
-class RoleControllerTests {
+@TestFor(LinkCrudController)
+class LinkCrudControllerTests
+{
 
-    void testSomething() {
-       fail "Implement me"
+    void testSomething()
+    {
+        fail "Implement me"
     }
 }

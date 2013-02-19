@@ -4,7 +4,7 @@ import grails.plugins.springsecurity.Secured
 import linkguardian.Person
 
 //@Secured(['ROLE_ADMIN'])
-class UserController
+class UserCrudController
 {
     static scaffold = Person
 }

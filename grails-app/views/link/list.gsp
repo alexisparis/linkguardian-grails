@@ -3,7 +3,6 @@
 	<head>
 		<meta name="layout" content="main"/>
 		<title>Welcome to Link Guardian</title>
-        <r:require modules="bootstrap"/>
         <r:require modules="mustache"/>
 
         <style type="text/css">
@@ -798,10 +797,12 @@
                     <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> About Link Guardian</h3>
             </div>
             <div class="modal-body">
-                <p>Link Guardian is a tool that allow to <span class="label label-success">register websites adress</span>.</p>
+                <p><span class="lg"></span> is a tool that allow to <span class="label label-success">register websites address</span>.</p>
                 <p>It is especially designed to manage articles that you want to <span class="label label-success">read later</span> or if you want to collect a set of articles related to the same subject.</p>
                 <p>Each link registered can be <u>tagged</u>, <u>marked as read or unread</u> or <u>removed</u> if the content of an article is not interesting enough.</p>
-                <p style="margin-top: 30px;"><strong>Link Guardian allows you to <span class="label label-success">bookmark websites</span> that you like and helps you <span class="label label-success">never forget to read an attractive article</span>.</strong></p>
+                <p style="margin-top: 30px; margin-bottom: 30px;"><strong><span class="lg"></span> allows you to <span class="label label-success">bookmark websites</span> that you like and helps you <span class="label label-success">never forget to read an attractive article</span>.</strong></p>
+
+                <p>For new features, bugs, problems or information, please contact the <a target="_blank" href="mailto:alexis.rt.paris@gmail.com">administrator</a>.
 
             </div>
             <div class="modal-footer">
