@@ -88,7 +88,8 @@
                                         <button class="btn btn-info" id="about">About</button>
                                     </span>
 
-                                    <span style="margin-right: 5px;">Welcome
+                                    <span style="margin-right: 5px;">
+                                        <i class=" icon-user"></i>
                                         <g:if env="production">
                                             <sec:loggedInUserInfo field="fullName"/>
                                         </g:if>

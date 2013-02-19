@@ -153,7 +153,7 @@
                                   method="POST" style="display: inline;"
                                   onSuccess="updateLinks(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)"> <!-- update="[success: 'message', failure: 'error']"  -->
                         <fieldset>
-                            <legend>Search:</legend>
+                            <legend>Search</legend>
                             <!--g:hiddenField name="archived" id="archived-input"/-->
                             <label class="checkbox read-check" style="margin-right: 10px;">
                                 <input class="read-marker" type="checkbox" name="read" id="read" value="read"/>
@@ -173,8 +173,10 @@
                                 <span class="add-on" id="clearFilterTag"><img src="${resource(dir: 'images', file: 'delete.png')}" width="14"/></span>
                             </div>
 
-                            <g:submitButton onclick="setSubmitFilterButtonToNormalState();" id="filter-input" name="Filter"
-                                            class="btn btn-primary" style="background-image_old: url('${resource(dir: 'images', file: 'search.png')}')"/>
+                            <button type="submit" class="btn btn-primary" onclick="setSubmitFilterButtonToNormalState()" id="filter-input">
+                                <i class="icon-search icon-white"></i>
+                            </button>
+
                         </fieldset>
                     </g:formRemote>
                 </div>
@@ -183,15 +185,17 @@
                     <g:formRemote name="addUrlForm" url="[controller: 'link', action: 'addUrl']"
                                   method="POST" onSuccess="resetAddForm();submitFilterForm(); displayMessage(data);"
                                   onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)"
-                                  style="margin-bottom: 3px;">        <fieldset>
-                        <legend>Add a link:</legend>
+                                  style="margin-bottom: 3px;">
+                        <fieldset>
+                            <legend>Add a link</legend>
 
                             <div class="input-prepend input-append" style="margin-bottom: 3px;">
                                 <span class="add-on">url</span>
                                 <input type="text" id="txtUrl" name="url" class="input-xxlarge" placeholder="http://..." maxlength="200"/> <%-- required="" --%>
 
-                                <input class="btn btn-primary" type="submit" value="Add link"/>
-
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="icon-plus icon-white"></i>
+                                </button>
                             </div>
 
                             <div>
@@ -199,7 +203,8 @@
                                 <span>
                                     <g:textField id="txtTag" name="tag"
                                                  style="font-size: 13px; margin-bottom: 0px;"
-                                                 class="input-xxlarge" placeholder="space separated tag names e.g. news travel ..." maxlength="100"/>
+                                                 class="input-xlarge with-tooltip" placeholder="for example : news economy ..." maxlength="100"
+                                                 rel="tooltip" data-placement="top" data-original-title="space separated tag names"/>
                                 </span>
                             </div>
                         </fieldset>
@@ -239,6 +244,15 @@
 
                 //$('#listing-part').hide();
                 $container.children().remove();
+
+                if ( model && model.links && model.links.length > 0 )
+                {
+                    $('#no-result').hide();
+                }
+                else
+                {
+                    $('#no-result').show();
+                }
 
                 $container.masonry('reload');
 
@@ -517,6 +531,8 @@
             $(document).ready(
                     function()
                     {
+                        $('#no-result').hide();
+
                         var callback = function(archived)
                         {
                             return function(event)
@@ -691,10 +707,13 @@
                               });
         </g:javascript>
 
-        <div id="messageContainer" style="height: 38px; margin-top: 3px; margin-bottom: 3px;">
+        <div id="messageContainer" style="height: 38px; margin-top: 3px; margin-bottom: 3px; margin-left: 10px;"><%-- margin-left to center the element --%>
             <div id="message" ></div>
         </div>
 
+        <div id="no-result" class="alert alert-info" style="margin-left: 10px;">
+            No result
+        </div>
         <div id="listing-part"></div>
 
         </div>
