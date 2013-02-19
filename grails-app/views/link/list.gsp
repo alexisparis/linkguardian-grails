@@ -137,81 +137,78 @@
     {
         opacity: 0.7;
     }
+    legend {
+        font-size: 17px !important;
+        margin-bottom: 10px !important;
+    }
         </style>
 	</head>
 	<body>
 
-        <ul class="nav nav-pills" id="navigation" style="background-color: #ddd; margin-top: 3px; margin-bottom: 5px;"><!-- rgb(210, 225, 255); -->
-            <li>
-                <!-- form used to delete a link -->
-                <g:formRemote id="deleteLinkForm" name="deleteLinkForm" url="[controller: 'link', action: 'delete']"
-                              method="POST" style="display: none;" onSuccess="linkDeletionConfirmed(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
-                    <g:hiddenField name="id"/>
-                </g:formRemote>
+        <div class="nav nav-pills container" id="navigation" style="background-color: #ddd; margin-top: 3px; margin-bottom: 5px;"><!-- rgb(210, 225, 255); -->
+            <div class="row">
+                <div class="span5">
 
-                <!-- form used to delete a tag -->
-                <g:formRemote id="deleteTagForm" name="deleteTagForm" url="[controller: 'link', action: 'deleteTag']"
-                              method="POST" style="display: none;" onSuccess="tagDeletionConfirmed(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
-                    <g:hiddenField name="id"/>
-                    <g:hiddenField name="tag"/>
-                </g:formRemote>
+                    <g:formRemote id="filterLinkForm" class="form-inline" name="addUrlForm" url="[controller: 'link', action: 'filter']"
+                                  method="POST" style="display: inline;"
+                                  onSuccess="updateLinks(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)"> <!-- update="[success: 'message', failure: 'error']"  -->
+                        <fieldset>
+                            <legend>Search:</legend>
+                            <!--g:hiddenField name="archived" id="archived-input"/-->
+                            <label class="checkbox read-check" style="margin-right: 10px;">
+                                <input class="read-marker" type="checkbox" name="read" id="read" value="read"/>
+                                    <i class="icon-eye-open"></i>&nbsp;read
+                            </label>
+                            <label class="checkbox read-check" style="margin-right: 10px;">
+                                <input class="read-marker" type="checkbox" name="unread" id="unread" value="unread" checked>
+                                <i class="icon-eye-close"></i>&nbsp;unread
+                            </label>
+                            <!--select name="sort">
+                                <option value="date">sort by date</option>
+                                <option value="rate">sort by rate</option>
+                            </select-->
 
-                <!-- form used to add a tag -->
-                <g:formRemote id="addTagForm" name="addTagForm" url="[controller: 'link', action: 'addTag']"
-                              method="POST" style="display: none;" onSuccess="tagAdded(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
-                    <g:hiddenField name="id"/>
-                    <g:hiddenField name="tag"/>
-                </g:formRemote>
+                            <div class="input-append">
+                                <g:textField id="filterInput" name="token" title="filter" placeholder="filter by tag" class="input-medium" maxlength="50"/>
+                                <span class="add-on" id="clearFilterTag"><img src="${resource(dir: 'images', file: 'delete.png')}" width="14"/></span>
+                            </div>
 
-                <!-- form used to modify the rate a link -->
-                <g:formRemote id="changeNoteForm" name="changeNoteForm" url="[controller: 'link', action: 'updateNote']"
-                              method="POST" style="display: none;" onSuccess="noteUpdatedConfirmed(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
-                    <g:hiddenField name="id"/>
-                    <g:hiddenField name="oldScore"/>
-                    <g:hiddenField name="newScore"/>
-                </g:formRemote>
+                            <g:submitButton onclick="setSubmitFilterButtonToNormalState();" id="filter-input" name="Filter"
+                                            class="btn btn-primary" style="background-image_old: url('${resource(dir: 'images', file: 'search.png')}')"/>
+                        </fieldset>
+                    </g:formRemote>
+                </div>
 
-                <!-- form used to modify the read attribute a link -->
-                <g:formRemote id="markAsReadForm" name="markAsReadForm" url="[controller: 'link', action: 'markAsRead']"
-                              method="POST" style="display: none;" onSuccess="markAsReadDone(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
-                    <g:hiddenField name="id"/>
-                </g:formRemote>
-                <g:formRemote id="markAsUnreadForm" name="markAsUnreadForm" url="[controller: 'link', action: 'markAsUnread']"
-                              method="POST" style="display: none;" onSuccess="markAsUnreadDone(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
-                    <g:hiddenField name="id"/>
-                </g:formRemote>
+                <div class="span7">
+                    <g:formRemote name="addUrlForm" url="[controller: 'link', action: 'addUrl']"
+                                  method="POST" onSuccess="resetAddForm();submitFilterForm(); displayMessage(data);"
+                                  onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)"
+                                  style="margin-bottom: 3px;">        <fieldset>
+                        <legend>Add a link:</legend>
 
-                <g:formRemote id="filterLinkForm" class="form-inline" name="addUrlForm" url="[controller: 'link', action: 'filter']"
-                              method="POST" style="display: inline;"
-                              onSuccess="updateLinks(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)"> <!-- update="[success: 'message', failure: 'error']"  -->
-                    <fieldset>
-                        <!--g:hiddenField name="archived" id="archived-input"/-->
-                        <label class="checkbox read-check" style="margin-right: 10px;">
-                            <input class="read-marker" type="checkbox" name="read" id="read" value="read"/>
-                                <i class="icon-eye-open"></i>&nbsp;read
-                        </label>
-                        <label class="checkbox read-check" style="margin-right: 10px;">
-                            <input class="read-marker" type="checkbox" name="unread" id="unread" value="unread" checked>
-                            <i class="icon-eye-close"></i>&nbsp;unread
-                        </label>
-                        <!--select name="sort">
-                            <option value="date">sort by date</option>
-                            <option value="rate">sort by rate</option>
-                        </select-->
+                            <div class="input-prepend input-append" style="margin-bottom: 3px;">
+                                <span class="add-on">url</span>
+                                <input type="text" id="txtUrl" name="url" class="input-xxlarge" placeholder="http://..." maxlength="200"/> <%-- required="" --%>
 
-                        <div class="input-append">
-                            <g:textField id="filterInput" name="token" title="filter" placeholder="filter by tag" class="input-medium" maxlength="50"/>
-                            <span class="add-on" id="clearFilterTag"><img src="${resource(dir: 'images', file: 'delete.png')}" width="14"/></span>
-                        </div>
+                                <input class="btn btn-primary" type="submit" value="Add link"/>
 
-                        <g:submitButton onclick="setSubmitFilterButtonToNormalState();" id="filter-input" name="Filter" class="btn btn-primary" style="background-image_old: url('${resource(dir: 'images', file: 'search.png')}')"/>
-                    </fieldset>
-                </g:formRemote>
-            </li>
-            <li style="float: right;">
-                <button class="btn btn-info" id="about">About</button>
-            </li>
-        </ul>
+                            </div>
+
+                            <div>
+                                <span class="label" style="vertical-align: top; margin-top: 6px;">Tags (Optional)</span> <%--a class="btn btn-info btn-mini" id="showTagInput">show</a--%>
+                                <span>
+                                    <g:textField id="txtTag" name="tag"
+                                                 style="font-size: 13px; margin-bottom: 0px;"
+                                                 class="input-xxlarge" placeholder="space separated tag names e.g. news travel ..." maxlength="100"/>
+                                </span>
+                            </div>
+                        </fieldset>
+
+                    </g:formRemote>
+                </div>
+
+            </div>
+        </div>
 
         <%--
            cannot use <g:javascript src="jquery.raty.js" /> since it does not work with https
@@ -228,7 +225,7 @@
 
             function tagTemplate(tagNameRef)
             {
-                return '<span class="tag btn btn-primary btn-mini with-tooltip" data-tag="{{' + tagNameRef + '}}">' +
+                return '<span class="tag btn btn-primary btn-mini" data-tag="{{' + tagNameRef + '}}">' +
                        '<button class="close deleteTagButton with-tooltip"' +
                        ' rel="tooltip" data-placement="top" data-original-title="Delete tag"' +
                        ' style="color: #fff;">&times;</button>' +
@@ -520,11 +517,6 @@
             $(document).ready(
                     function()
                     {
-                        $('#about').on('click', function(event)
-                        {
-                            $('#aboutDialog').modal();
-                        });
-
                         var callback = function(archived)
                         {
                             return function(event)
@@ -699,32 +691,6 @@
                               });
         </g:javascript>
 
-        <div id="add-part">
-            <g:formRemote name="addUrlForm" url="[controller: 'link', action: 'addUrl']"
-                          method="POST" onSuccess="resetAddForm();submitFilterForm(); displayMessage(data);"
-                          onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)"
-                          style="margin-bottom: 3px;">
-
-                <div class="input-prepend input-append" style="margin-bottom: 3px;">
-                    <span class="add-on">url</span>
-                    <input type="text" id="txtUrl" name="url" class="input-xxlarge" placeholder="http://..." maxlength="200"/> <%-- required="" --%>
-
-                    <input class="btn btn-primary" type="submit" value="Add link"/>
-
-                </div>
-
-                <div>
-                    <span class="label" style="vertical-align: top; margin-top: 6px;">Tags (Optional)</span> <%--a class="btn btn-info btn-mini" id="showTagInput">show</a--%>
-                    <span>
-                        <g:textField id="txtTag" name="tag"
-                                     style="font-size: 13px; margin-bottom: 0px;"
-                                     class="input-xxlarge" placeholder="space separated tag names e.g. news travel ..." maxlength="100"/>
-                    </span>
-                </div>
-
-            </g:formRemote>
-        </div>
-
         <div id="messageContainer" style="height: 38px; margin-top: 3px; margin-bottom: 3px;">
             <div id="message" ></div>
         </div>
@@ -733,7 +699,52 @@
 
         </div>
 
+        <!-- ############# -->
+        <!-- fictive forms -->
+        <!-- ############# -->
+
+        <!-- form used to delete a link -->
+        <g:formRemote id="deleteLinkForm" name="deleteLinkForm" url="[controller: 'link', action: 'delete']"
+                      method="POST" style="display: none;" onSuccess="linkDeletionConfirmed(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
+            <g:hiddenField name="id"/>
+        </g:formRemote>
+
+        <!-- form used to delete a tag -->
+        <g:formRemote id="deleteTagForm" name="deleteTagForm" url="[controller: 'link', action: 'deleteTag']"
+                      method="POST" style="display: none;" onSuccess="tagDeletionConfirmed(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
+            <g:hiddenField name="id"/>
+            <g:hiddenField name="tag"/>
+        </g:formRemote>
+
+        <!-- form used to add a tag -->
+        <g:formRemote id="addTagForm" name="addTagForm" url="[controller: 'link', action: 'addTag']"
+                      method="POST" style="display: none;" onSuccess="tagAdded(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
+            <g:hiddenField name="id"/>
+            <g:hiddenField name="tag"/>
+        </g:formRemote>
+
+        <!-- form used to modify the rate a link -->
+        <g:formRemote id="changeNoteForm" name="changeNoteForm" url="[controller: 'link', action: 'updateNote']"
+                      method="POST" style="display: none;" onSuccess="noteUpdatedConfirmed(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
+            <g:hiddenField name="id"/>
+            <g:hiddenField name="oldScore"/>
+            <g:hiddenField name="newScore"/>
+        </g:formRemote>
+
+        <!-- form used to modify the read attribute a link -->
+        <g:formRemote id="markAsReadForm" name="markAsReadForm" url="[controller: 'link', action: 'markAsRead']"
+                      method="POST" style="display: none;" onSuccess="markAsReadDone(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
+            <g:hiddenField name="id"/>
+        </g:formRemote>
+        <g:formRemote id="markAsUnreadForm" name="markAsUnreadForm" url="[controller: 'link', action: 'markAsUnread']"
+                      method="POST" style="display: none;" onSuccess="markAsUnreadDone(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
+            <g:hiddenField name="id"/>
+        </g:formRemote>
+
+        <!-- ####### -->
         <!-- dialogs -->
+        <!-- ####### -->
+
         <div id="deleteLinkDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -788,25 +799,6 @@
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
                 <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="markSelectedLinkAsRead();">Yes</button>
-            </div>
-        </div>
-        <div id="aboutDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3>
-                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> About Link Guardian</h3>
-            </div>
-            <div class="modal-body">
-                <p><span class="lg"></span> is a tool that allow to <span class="label label-success">register websites address</span>.</p>
-                <p>It is especially designed to manage articles that you want to <span class="label label-success">read later</span> or if you want to collect a set of articles related to the same subject.</p>
-                <p>Each link registered can be <u>tagged</u>, <u>marked as read or unread</u> or <u>removed</u> if the content of an article is not interesting enough.</p>
-                <p style="margin-top: 30px; margin-bottom: 30px;"><strong><span class="lg"></span> allows you to <span class="label label-success">bookmark websites</span> that you like and helps you <span class="label label-success">never forget to read an attractive article</span>.</strong></p>
-
-                <p>For new features, bugs, problems or information, please contact the <a target="_blank" href="mailto:alexis.rt.paris@gmail.com">administrator</a>.
-
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true">Close</button>
             </div>
         </div>
 

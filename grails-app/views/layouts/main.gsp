@@ -46,10 +46,16 @@
                 font-family: 'Clicker Script', cursive;
                 font-size: 20px;
             }
-        .lg:after
-        {
-            content: 'Link Guardian';
-        }
+            .lg:before
+            {
+                content: 'Link Guardian';
+            }
+            .copyright
+            {
+                margin-top: 15px;
+                color: #777777;
+                font-style: italic;
+            }
 
         </style>
     </head>
@@ -59,34 +65,40 @@
             <div class="container">
                 <div class="row">
                     <div class="span12">
-                        <div id="guardianLogo" role="banner" style="padding-top: 5px; padding-bottom: 3px;">
+                        <div id="guardianLogo" role="banner" style="padding-top: 5px; padding-bottom: 8px;">
                             <a href="https://linkguardian-blackdog.rhcloud.com">
                                 <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50" style="margin-top: -10px;"/>
                             </a>
-                            <span class="lg" style="display: inline-block; padding-top: 14px; font-size: 30px;"></span>
+                            <span class="lg" style="display: inline-block; padding-top: 16px; font-size: 30px;"></span>
                             <sec:ifLoggedIn>
                                 <div style="float: right; text-align: right;">
 
-                                    <sec:ifAllGranted roles="ROLE_ADMIN,ROLE_USER">
-                                        <div class="btn-group" style="margin-right: 20px;">
-                                            <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></button>
-                                            <ul class="dropdown-menu">
-                                                <li><g:link controller="userCrud">Users</g:link></li>
-                                                <li><g:link controller="roleCrud">Roles</g:link></li>
-                                                <li><g:link controller="linkCrud">Links</g:link></li>
-                                            </ul>
-                                        </div>
-                                    </sec:ifAllGranted>
+                                    <span style="margin-right: 30px;">
+                                        <sec:ifAllGranted roles="ROLE_ADMIN,ROLE_USER">
+                                            <div class="btn-group" style="margin-right: 20px; ">
+                                                <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></button>
+                                                <ul class="dropdown-menu">
+                                                    <li><g:link controller="userCrud">Users</g:link></li>
+                                                    <li><g:link controller="roleCrud">Roles</g:link></li>
+                                                    <li><g:link controller="linkCrud">Links</g:link></li>
+                                                </ul>
+                                            </div>
+                                        </sec:ifAllGranted>
 
-                                    <span>Welcome
+                                        <button class="btn btn-info" id="about">About</button>
+                                    </span>
+
+                                    <span style="margin-right: 5px;">Welcome
                                         <g:if env="production">
                                             <sec:loggedInUserInfo field="fullName"/>
                                         </g:if>
                                         <g:else>
                                             <sec:username/>
                                         </g:else>
-                                    </span><br/>
-                                    <g:link controller='logout' action='index'><span class="btn btn-inverse btn-mini">Logout</span></g:link>
+                                    </span>
+                                    <g:link controller='logout' action='index' class="with-tooltip" rel="tooltip" data-placement="bottom" data-original-title="disconnect">
+                                        <span class="btn btn-inverse btn-mini"><i class="icon-off icon-white"></i></span>
+                                    </g:link>
                                 </div>
                             </sec:ifLoggedIn>
                         </div>
@@ -107,11 +119,43 @@
         <footer>
             <div class="container wrapper">
                 <div class="row">
-                    <div class="span12" style="text-align: center;">
+                    <div class="span12 copyright" style="text-align: left;">
                         <g:message code="app.copyright"/>
                     </div>
                 </div>
             </div>
         </footer>
+
+        <div id="aboutDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> About <span class="lg" style="font-size: 24px;"></span></h3>
+            </div>
+            <div class="modal-body">
+
+                <p class="text-info">Url bookmarker and domains monitoring.</p>
+
+                <g:include view="fragments/linkguardian_description.gsp"/>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+
+            $(document).ready(
+                    function()
+                    {
+                        $('#about').on('click', function(event)
+                        {
+                            $('#aboutDialog').modal();
+                        });
+                    });
+
+        </script>
+
 	</body>
 </html>
