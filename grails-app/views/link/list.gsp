@@ -13,9 +13,18 @@
     }
     div.linkpart
     {
-        width: 307px;
+        /*
+          border left et right : 1px et 1px
+          padding left et right : 2px et 2px
+          largeur total : 1170
+
+                     margins
+          1170 - (5 + 10 + 10 + 10 + 5) ==> 1130 / 4 ==> 282,5 ==> 282 - border et padding ==> 276
+        */
+        width: 276px;
         float: left;
-        margin-right: 10px;
+        margin-right: 5px;
+        margin-left: 5px;
         margin-bottom: 10px;
         background-color: #d2e1ff;
         border-radius: 5px 5px 5px;
@@ -141,11 +150,25 @@
         font-size: 17px !important;
         margin-bottom: 10px !important;
     }
+    div.forms
+    {
+        background-color: #ddd;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        -moz-box-shadow: 0 0 3px 1px #aaaaaa;
+        -webkit-box-shadow: 0 0 3px 1px #aaaaaa;
+        box-shadow: 0 0 3px 1px #aaaaaa;
+    }
+    .message-box
+    {
+        margin-bottom: 3px;
+        margin-top: 3px;
+    }
         </style>
 	</head>
 	<body>
 
-        <div class="nav nav-pills container" id="navigation" style="background-color: #ddd; margin-top: 3px; margin-bottom: 5px;"><!-- rgb(210, 225, 255); -->
+        <div class="container forms"><!-- rgb(210, 225, 255); -->
             <div class="row">
                 <div class="span5">
 
@@ -153,9 +176,9 @@
                                   method="POST" style="display: inline;"
                                   onSuccess="updateLinks(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)"> <!-- update="[success: 'message', failure: 'error']"  -->
                         <fieldset>
-                            <legend>Search</legend>
+                            <legend>&nbsp;Search</legend>
                             <!--g:hiddenField name="archived" id="archived-input"/-->
-                            <label class="checkbox read-check" style="margin-right: 10px;">
+                            &nbsp;<label class="checkbox read-check" style="margin-right: 10px;">
                                 <input class="read-marker" type="checkbox" name="read" id="read" value="read"/>
                                     <i class="icon-eye-open"></i>&nbsp;read
                             </label>
@@ -343,8 +366,6 @@
                 $('.with-tooltip').tooltip();
                 //$('#listing-part').fadeIn();
             };
-
-
 
             function setSubmitFilterButtonToNormalState()
             {
@@ -576,10 +597,10 @@
                         $container.imagesLoaded(function(){
 
                             $container.masonry({
-                                                   itemSelector : 'a.link',
-                                                   columnWidth : function( containerWidth ) {
-                                                       return (containerWidth) / 3;
-                                                   }
+                                                   itemSelector : 'a.link'
+                                                   /*,columnWidth : function( containerWidth ) {
+                                                       return (containerWidth) / 4;
+                                                   }*/
                                                });
 
                             submitFilterForm();
@@ -707,11 +728,11 @@
                               });
         </g:javascript>
 
-        <div id="messageContainer" style="height: 38px; margin-top: 3px; margin-bottom: 3px; margin-left: 10px;"><%-- margin-left to center the element --%>
+        <div id="messageContainer" class="message-box" style="height: 38px;">
             <div id="message" ></div>
         </div>
 
-        <div id="no-result" class="alert alert-info" style="margin-left: 10px;">
+        <div id="no-result" class="alert alert-info message-box">
             No result
         </div>
         <div id="listing-part"></div>
