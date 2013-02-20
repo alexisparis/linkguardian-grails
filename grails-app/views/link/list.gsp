@@ -7,10 +7,17 @@
 
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'jqcloud.css')}" type="text/css">
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'links.css')}" type="text/css">
+        <link rel="stylesheet" href="${resource(dir: 'css', file: 'dd.css')}" type="text/css"/>
 
         <style type="text/css">
 
             /* add here to test without deployment issue */
+            .dd .arrow {
+                width: 16px;
+                height: 16px;
+                margin-top: -8px;
+                background: url(${resource(dir: 'images', file: 'dd_arrow.gif')}) no-repeat;
+            }
 
         </style>
 	</head>
@@ -25,20 +32,12 @@
                                   onSuccess="updateLinks(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
                         <fieldset>
                             <legend>&nbsp;Search</legend>
-                            &nbsp;<label class="checkbox read-check with-tooltip" style="margin-right: 10px;"
-                                rel="tooltip" data-placement="top" data-original-title="show links that have been read">
-                                <input class="read-marker" type="checkbox" name="read" id="read" value="read"/>
-                                    <i class="icon-eye-open"></i>&nbsp;read
-                            </label>
-                            <label class="checkbox read-check with-tooltip" style="margin-right: 10px;"
-                                rel="tooltip" data-placement="top" data-original-title="show links that have NOT have been read yet">
-                                <input class="read-marker" type="checkbox" name="unread" id="unread" value="unread" checked>
-                                <i class="icon-eye-close"></i>&nbsp;unread
-                            </label>
-                            <!--select name="sort">
-                                <option value="date">sort by date</option>
-                                <option value="rate">sort by rate</option>
-                            </select-->
+                            &nbsp;
+                            <select name="read_status" id="read_status" style="width: 188px;">
+                                <option value="all" data-image="${resource(dir: 'images', file: 'world.png')}">all</option>
+                                <option value="read" data-image="${resource(dir: 'images', file: 'checked.png')}">already read</option>
+                                <option value="unread" data-image="${resource(dir: 'images', file: 'clock.png')}">not read yet</option>
+                            </select>
 
                             <div class="input-append">
                                 <g:textField id="filterInput" name="token" title="filter" placeholder="filter by tag" class="input-medium" maxlength="50"/>
@@ -53,6 +52,18 @@
                             <button type="submit" class="btn btn-primary" onclick="setSubmitFilterButtonToNormalState()" id="filter-input">
                                 <i class="icon-search icon-white"></i>
                             </button>
+
+                            <div style="margin-top: 3px; margin-bottom: 3px;">
+                                &nbsp;&nbsp;Sort by
+                                <select name="sortBy" style="width: 180px;">
+                                    <option value="creationDate" data-image="${resource(dir: 'images', file: 'date.png')}">creation date</option>
+                                    <option value="note" data-image="${resource(dir: 'images', file: 'star.png')}">note</option>
+                                </select>
+                                <select name="sortType" style="width: 150px;">
+                                    <option value="asc" data-image="${resource(dir: 'images', file: 'up.png')}">up</option>
+                                    <option value="desc" data-image="${resource(dir: 'images', file: 'down.png')}">down</option>
+                                </select>
+                            </div>
 
                         </fieldset>
                     </g:formRemote>
@@ -229,6 +240,7 @@
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.raty.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.masonry.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jqcloud-1.0.3.min.js')}"></script>
+        <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.dd.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'links.js')}"></script>
 
     <g:javascript>
@@ -237,8 +249,20 @@
                 {
                     $.fn.raty.defaults.path = '${resource(dir: 'images')}';
 
-                    // add here to test without deployment issue
+                    try
+                    {
+                        $("body select").msDropDown();
+                    }
+                    catch(e)
+                    {
+                        alert(e.message);
+                    }
 
+                    // add here to test without deployment issue
+                    $('#filterLinkForm select').on('change', function(event)
+                    {
+                        setSubmitFilterButtonToClickState();
+                    });
                 });
     </g:javascript>
 

@@ -47,22 +47,43 @@ class LinkController
     /**
      * filter the links and returns them as JSON result
      * @param token
-     * @param read
-     * @param unread
+     * @param read_status : all, read or unread
      * @return
      */
-    def filter(String token, String read, String unread)
+    def filter(String token, String read_status, String sortBy, String sortType)
     {
-        log.info "calling filter from LinkController with filter equals to " + token + ", read : " + read + ", unread : " + unread
+        log.info "calling filter from LinkController with filter equals to " + token + ", read status : " + read_status + ", sort by " + sortBy + " " + sortType
 
         def queryLinks = Collections.emptyList()
 
+        def _sortBy = sortBy
+        if ( _sortBy != "creationDate" && _sortBy != "note" )
+        {
+             _sortBy = "creationDate"
+        }
+        def _sortType = sortType
+        if ( _sortType != "asc" && _sortType != "desc" )
+        {
+            _sortType = "asc"
+        }
+
         def success = true
+
+        def read = true
+        def unread = true
+        if ( read_status == 'read' )
+        {
+            unread = false
+        }
+        else if ( read_status == 'unread' )
+        {
+            read = false
+        }
 
         if ( read || unread ) // no need to launch the request if ! read && ! unread
         {
             //todo : manage pagination
-            def queryParams = [/*max: 3, offset: 2, */sort: "creationDate", order: "desc"]
+            def queryParams = [/*max: 3, offset: 2, */sort: _sortBy, order: _sortType]
 
             def query = Link.where { person.username == springSecurityService.getPrincipal().username }
 
@@ -578,25 +599,6 @@ class LinkController
 
         def results = new ArrayList()
 
-        //////
-
-//        def query = Link.where { person.username == springSecurityService.getPrincipal().username }
-//
-//        def tokens = linkBuilderService.extractTags(token)
-//
-//        log.info "tokens size : " + tokens.size()
-//        if ( tokens != null && tokens.size() > 0)
-//        {
-//            if ( tokens.size() == 1 )
-//            {
-//                query = query.where {
-//                    tags {
-//                        label =~ tokens.first() + "%"
-//                    }
-//                }
-//            }
-        //////
-
         def iterator
 
         def q = Tag.createCriteria()
@@ -612,18 +614,6 @@ class LinkController
                 rowCount('total') //alias given to count
             }
         }
-
-//        iterator.each {
-//            println "result : " + it
-//        }
-
-//        iterator = Tag.createCriteria().list{
-//            projections{
-//                groupProperty('label')
-//                rowCount('total') //alias given to count
-//            }
-//            order('total', 'desc')
-//        }.listIterator()
 
         iterator.each {
             log.info "consider tag : " + it[0] + " with an occurrence of " + it[1]
