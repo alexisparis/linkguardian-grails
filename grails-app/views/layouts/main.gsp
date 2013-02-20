@@ -15,9 +15,6 @@
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'application.css')}" type="text/css">
-
-        <%--link href='http://fonts.googleapis.com/css?family=Clicker+Script' rel='stylesheet' type='text/css'--%>
-
         <link href="${resource(dir: 'css', file: 'clicker.css')}" rel='stylesheet' type='text/css'>
 
         <r:require modules="bootstrap"/>
@@ -26,38 +23,8 @@
 		<r:layoutResources />
         <ga:trackPageview />
 
-        <style type="text/css">
-            div.header
-            {
-                color: white;
+        <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.blockUI.js')}"></script>
 
-                background: #0c4d99; /* Old browsers */
-                background: -moz-linear-gradient(top, #0c4d99 0%, #0075d6 49%, #006ec9 50%, #0d88e5 100%); /* FF3.6+ */
-                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#0c4d99), color-stop(49%,#0075d6), color-stop(50%,#006ec9), color-stop(100%,#0d88e5)); /* Chrome,Safari4+ */
-                background: -webkit-linear-gradient(top, #0c4d99 0%,#0075d6 49%,#006ec9 50%,#0d88e5 100%); /* Chrome10+,Safari5.1+ */
-                background: -o-linear-gradient(top, #0c4d99 0%,#0075d6 49%,#006ec9 50%,#0d88e5 100%); /* Opera 11.10+ */
-                background: -ms-linear-gradient(top, #0c4d99 0%,#0075d6 49%,#006ec9 50%,#0d88e5 100%); /* IE10+ */
-                background: linear-gradient(to bottom, #0c4d99 0%,#0075d6 49%,#006ec9 50%,#0d88e5 100%); /* W3C */
-                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0c4d99', endColorstr='#0d88e5',GradientType=0 ); /* IE6-9 */
-            }
-
-            .lg
-            {
-                font-family: 'Clicker Script', cursive;
-                font-size: 20px;
-            }
-            .lg:before
-            {
-                content: 'Link Guardian';
-            }
-            .copyright
-            {
-                margin-top: 15px;
-                color: #777777;
-                font-style: italic;
-            }
-
-        </style>
     </head>
 
 	<body>
@@ -154,6 +121,24 @@
                         {
                             $('#aboutDialog').modal();
                         });
+
+                        $(document).ajaxStart(function(){
+                            $.blockUI(
+                                    {
+                                        message : '<img src="${resource(dir: "images/loading", file: "loading_big.gif")}"/>',
+                                        css: {
+                                            border: 'none',
+                                            backgroundColor: 'none',
+                                            opacity:         0.8
+                                        }
+                                    }
+                            );
+                        })
+                                .ajaxStop(function(){
+                                              setTimeout(function(){
+                                                  $.unblockUI();
+                                              }, 200); //TODO : reduce additional times
+                                          });
                     });
 
         </script>

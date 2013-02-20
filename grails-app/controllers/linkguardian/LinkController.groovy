@@ -1,6 +1,7 @@
 package linkguardian
 
 import grails.converters.JSON
+import grails.gorm.DetachedCriteria
 import grails.plugins.springsecurity.Secured
 import grails.util.GrailsUtil
 import grails.web.JSONBuilder
@@ -56,6 +57,8 @@ class LinkController
 
         def queryLinks = Collections.emptyList()
 
+        def success = true
+
         if ( read || unread ) // no need to launch the request if ! read && ! unread
         {
             //todo : manage pagination
@@ -63,13 +66,24 @@ class LinkController
 
             def query = Link.where { person.username == springSecurityService.getPrincipal().username }
 
-            if ( token )
+            def tokens = linkBuilderService.extractTags(token)
+
+            log.info "tokens size : " + tokens.size()
+            if ( tokens != null && tokens.size() > 0)
             {
-                //query = query.where { fusionedTags =~ "% " + token.toUpperCase() + " %"}
-                query = query.where {
-                    tags {
-                        label =~ token.toLowerCase() + "%"
+                if ( tokens.size() == 1 )
+                {
+                    query = query.where {
+                        tags {
+                            label =~ tokens.first() + "%"
+                        }
                     }
+                }
+                else
+                {
+                    response.status = 500
+                    render this.error("only one tag allowed in the filter input") as JSON
+                    success = false
                 }
             }
 
@@ -85,23 +99,26 @@ class LinkController
             queryLinks = query.list(queryParams)
         }
 
-        log.info "query links found count : " + queryLinks.size()
+        if ( success )
+        {
+            log.info "query links found count : " + queryLinks.size()
 
-        render(contentType: "text/json") {
-            links = array{
-                for (a in queryLinks) {
-                    item title: a.title,
-                         read: a.read,
-                         url : a.url,
-                         id: a.id,
-                         note: a.note.ordinal(),
-                         domain: a.domain,
-                         description: a.description,
-                         tags : array{
-                             for(b in a.tags) {
-                                 subitem label : b.label
+            render(contentType: "text/json") {
+                links = array{
+                    for (a in queryLinks) {
+                        item title: a.title,
+                             read: a.read,
+                             url : a.url,
+                             id: a.id,
+                             note: a.note.ordinal(),
+                             domain: a.domain,
+                             description: a.description,
+                             tags : array{
+                                 for(b in a.tags) {
+                                     subitem label : b.label
+                                 }
                              }
-                         }
+                    }
                 }
             }
         }
@@ -550,5 +567,69 @@ class LinkController
         }
 
         render message as JSON
+    }
+
+    /**
+     *
+     */
+    def getTagsCloud()
+    {
+        log.info "calling getTagsCloud"
+
+        def results = new ArrayList()
+
+        //////
+
+//        def query = Link.where { person.username == springSecurityService.getPrincipal().username }
+//
+//        def tokens = linkBuilderService.extractTags(token)
+//
+//        log.info "tokens size : " + tokens.size()
+//        if ( tokens != null && tokens.size() > 0)
+//        {
+//            if ( tokens.size() == 1 )
+//            {
+//                query = query.where {
+//                    tags {
+//                        label =~ tokens.first() + "%"
+//                    }
+//                }
+//            }
+        //////
+
+        def iterator
+
+        def q = Tag.createCriteria()
+        iterator = q.list {
+            links {
+                person
+                {
+                    eq('username', springSecurityService.getPrincipal().username)
+                }
+            }
+            projections{
+                groupProperty('label')
+                rowCount('total') //alias given to count
+            }
+        }
+
+//        iterator.each {
+//            println "result : " + it
+//        }
+
+//        iterator = Tag.createCriteria().list{
+//            projections{
+//                groupProperty('label')
+//                rowCount('total') //alias given to count
+//            }
+//            order('total', 'desc')
+//        }.listIterator()
+
+        iterator.each {
+            log.info "consider tag : " + it[0] + " with an occurrence of " + it[1]
+            results.add(new TagWeight(tag: it[0], weight: it[1]))
+        }
+
+        render results as JSON
     }
 }

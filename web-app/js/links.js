@@ -1,5 +1,3 @@
-
-
 var reg = new RegExp("[ ,;]+", "g");
 
 function tagTemplate(tagNameRef)
@@ -8,87 +6,107 @@ function tagTemplate(tagNameRef)
            '<button class="close deleteTagButton with-tooltip"' +
            ' rel="tooltip" data-placement="top" data-original-title="Delete tag"' +
            ' style="color: #fff;">&times;</button>' +
-           '{{' + tagNameRef + '}}' +
+           '<span class="with-tooltip" rel="tooltip" data-placement="top" data-original-title="filter on \'{{' + tagNameRef + '}}\'">{{' + tagNameRef + '}}</span>' +
            '</span>';
 };
 
-function updateLinks(links)
+function updateLinks(model)
 {
     var $container = $('#listing-part');
 
     //$('#listing-part').hide();
     $container.children().remove();
 
+    if ( model && model.links && model.links.length > 0 )
+    {
+        $('#no-result').hide();
+    }
+    else
+    {
+        $('#no-result').show();
+    }
+
     $container.masonry('reload');
 
-    var model = links;
+    //model._tags = model.tags.sort(compareTags);
+
+    var _model = {
+        links : model.links,
+        _tags : function()
+        {
+            return this.tags.sort(compareTags)
+        }
+    };
 
     var template =
         '{{#links}}' +
-            '<div class="linkpart {{#read}}read{{/read}}" data-url="{{url}}" data-id="{{id}}" data-note={{note.name}}>' +
-                '<div>' +
-                    '<span class="linkUrl with-tooltip" rel="tooltip" data-placement="top" data-original-title="go to {{domain}}">' +
-                        '<img align="left" src="http://www.google.com/s2/favicons?domain={{domain}}" class="linkparticon"' +
-                        'width="20px" height="20px" border="4px" style="margin-right: 2px; margin-bottom: 1px;"/>' +
-                    '</span>' +
-                    '<div class="rateAndOperations">' +
-                        '<span class="rate"></span>' +
-                            //'<button class="archiveLinkButton with-tooltip" rel="tooltip" data-placement="top" data-original-title="Archive link">' +
-                            //    '<i class="icon-briefcase"></i>' +
-                            //'</button>' +
-                            //'<i class="icon-briefcase visible-on-hover"></i>' +
-                        '<button class="close deleteLinkButton with-tooltip visible-on-hover" rel="tooltip" data-placement="top" data-original-title="Delete link">&times;</button>' +
-                        '<div style="clear: both;"></div>' +
-                        '<div class="actions visible-on-hover" style="float: right; margin-right: 4px;">' +
-                            '<a class="with-tooltip unread" rel="tooltip" data-placement="top" data-original-title="mark as unread"><i class="icon icon-eye-close"></i></a>' +
-                            '<a class="with-tooltip read"   rel="tooltip" data-placement="top" data-original-title="mark as read"><i class="icon icon-eye-open"></i></a>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>' +
-                '<div style="margin-top: 1px;word-wrap:break-word;">' +
-                    '<div class="content with-tooltip" rel="tooltip" data-placement="top" data-original-title="go to {{domain}}">' +
-                        '<span class="title"><b>{{title}}</b></span><br/><span class="description">{{description}}</span><br/>' +
-                        '<span class="domain" style="font-size: 11px;"><i>{{domain}}</i></span>' +
-                    '</div>' +
-                    '<div class="tags">' +
-                        '<i class="icon-tags" style="margin-right: 3px; margin-left: 6px;"></i>' +
-                            '{{#tags}}' +
-                            tagTemplate('.') +
-                            '{{/tags}}' +
-                        '<span class="btn btn-primary btn-mini add-tag visible-on-hover">' +
-                            '<i class="icon-plus-sign with-tooltip" rel="tooltip" data-original-title="add new tag" data-placement="top"></i>' +
-                        '</span>' +
-                    '</div>' +
-                '</div>' +
-            '</div>' +
+        '<div class="linkpart {{#read}}read{{/read}}" data-url="{{url}}" data-id="{{id}}" data-note={{note}}>' +
+        '<div>' +
+        '<span class="linkUrl with-tooltip" rel="tooltip" data-placement="top" data-original-title="go to {{domain}}">' +
+        '<img align="left" src="http://www.google.com/s2/favicons?domain={{domain}}" class="linkparticon"' +
+        'width="20px" height="20px" border="4px" style="margin-right: 2px; margin-bottom: 1px;"/>' +
+        '</span>' +
+        '<div class="rateAndOperations">' +
+        '<span class="rate"></span>' +
+            //'<button class="archiveLinkButton with-tooltip" rel="tooltip" data-placement="top" data-original-title="Archive link">' +
+            //    '<i class="icon-briefcase"></i>' +
+            //'</button>' +
+            //'<i class="icon-briefcase visible-on-hover"></i>' +
+        '<button class="close deleteLinkButton with-tooltip visible-on-hover" rel="tooltip" data-placement="top" data-original-title="Delete link">&times;</button>' +
+        '<div style="clear: both;"></div>' +
+        '<div class="actions visible-on-hover" style="float: right; margin-right: 4px;">' +
+        '<a class="with-tooltip unread" rel="tooltip" data-placement="top" data-original-title="mark as unread"><i class="icon icon-eye-close"></i></a>' +
+        '<a class="with-tooltip read"   rel="tooltip" data-placement="top" data-original-title="mark as read"><i class="icon icon-eye-open"></i></a>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '<div style="margin-top: 1px;word-wrap:break-word;">' +
+        '<div class="content with-tooltip" rel="tooltip" data-placement="top" data-original-title="go to {{domain}}">' +
+        '{{#title}}<span class="title"><b>{{title}}</b></span><br/>{{/title}}' +
+        '{{#description}}<span class="description">{{description}}</span><br/>{{/description}}' +
+        '<span class="domain" style="font-size: 11px;"><i>{{domain}}</i></span>' +
+        '</div>' +
+        '<div class="tags">' +
+        '<i class="icon-tags" style="margin-right: 3px; margin-left: 6px;"></i>' +
+        '<span class="tags-wrapper">' +
+        '{{#_tags}}' +
+        tagTemplate('label') +
+        '{{/_tags}}' +
+        '</span>' +
+        '<span class="btn btn-primary btn-mini add-tag visible-on-hover">' +
+        '<i class="icon-plus-sign with-tooltip" rel="tooltip" data-original-title="add a new tag" data-placement="top"></i>' +
+        '</span>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
         '{{/links}}';
 
-    var output = Mustache.render(template, model);
+    var output = Mustache.render(template, _model);
 
     $container.html(output);
 
     $('span.rate').each(function(idx, value)
-    {
-        var jValue = $(value);
-        var jLinkPart = jValue.parents('div.linkpart').eq(0);
-        var currentScore = parseInt(jLinkPart.attr('data-note').substring(5));
-        jValue.raty({
-                        cancel: true,
-                        size : 10,
-                        score: currentScore,
-                        click : function(score, evt) {
-                            var oldScore = currentScore;
-                            var linkId = parseInt(jLinkPart.attr('data-id'));
+                        {
+                            var jValue = $(value);
+                            var jLinkPart = jValue.parents('div.linkpart').eq(0);
+                            var currentScore = parseInt(jLinkPart.attr('data-note'));
+                            jValue.raty({
+                                            cancel: true,
+                                            size : 10,
+                                            score: currentScore,
+                                            click : function(score, evt) {
+                                                var oldScore = currentScore;
+                                                var linkId = parseInt(jLinkPart.attr('data-id'));
 
-                            var jForm = $('#changeNoteForm');
-                            jForm.find('input[name="id"]').val(linkId);
-                            jForm.find('input[name="oldScore"]').val(oldScore);
-                            jForm.find('input[name="newScore"]').val(score);
+                                                var jForm = $('#changeNoteForm');
+                                                jForm.find('input[name="id"]').val(linkId);
+                                                jForm.find('input[name="oldScore"]').val(oldScore);
+                                                jForm.find('input[name="newScore"]').val(score);
 
-                            jForm.submit();
-                        }
-                    });
-    });
+                                                jForm.submit();
+                                            }
+                                        });
+                        });
 
     $container.masonry('appended', $(output), true);
 
@@ -97,8 +115,6 @@ function updateLinks(links)
     $('.with-tooltip').tooltip();
     //$('#listing-part').fadeIn();
 };
-
-
 
 function setSubmitFilterButtonToNormalState()
 {
@@ -159,21 +175,38 @@ function addTag()
     $('#addTagForm').submit();
 };
 
+function compareTags(a,b) {
+    if (a.label < b.label)
+        return -1;
+    if (a.label > b.label)
+        return 1;
+    return 0;
+};
+
 function tagAdded(data)
 {
     var linkId = $('#addTagForm input[name="id"]').val();
     var tag = $('#addTagForm input[name="tag"]').val();
     if ( linkId )
     {
-        var jAddTagRef = $('div.linkpart[data-id="' + linkId + '"] div.tags span.add-tag');
+        var jTagWrapperRef = $('div.linkpart[data-id="' + linkId + '"] div.tags span.tags-wrapper');
 
-        var output = Mustache.render(tagTemplate('name'), {
-            name : tag
-        });
+        jTagWrapperRef.children().remove();
 
-        $(output).insertBefore(jAddTagRef);
+        var template = tagTemplate('name');
 
-        displayMessage(data);
+        data.tags.sort(compareTags);
+
+        for(var i = 0; i < data.tags.length; i++)
+        {
+            var output = Mustache.render(template, {
+                name : data.tags[i].label
+            });
+
+            $(output).appendTo(jTagWrapperRef);
+        }
+
+        displayMessage(data.message);
     }
 };
 
@@ -185,7 +218,6 @@ function noteUpdatedConfirmed(data)
     {
         note = 0;
     }
-    note = "Note_" + note;
     $('div.linkpart[data-id="' + jForm.find('input[name="id"]').val() + '"]').attr('data-note', note);
 
     displayMessage(data);
@@ -215,6 +247,54 @@ function markAsUnreadDone(data)
     //TODO : remove from masonry if unread non coché
     displayMessage(data);
     submitFilterForm();
+};
+
+function showTagsCloud(data)
+{
+    console.log("show tags cloud");
+    if ( data && data.length > 0 )
+    {
+        var jTagsCloud = $("#tagsCloud");
+
+        var createHandler = function(tag)
+        {
+            return {
+                click: function() {
+                    $('#tagsCloudDialog').modal('hide');
+                    $('#filterInput').val(tag);
+                    $('#filterLinkForm').submit();
+                }
+            };
+        };
+
+        var array = []
+
+        for(var i = 0; i < data.length; i++)
+        {
+            var current = data[i];
+            var newTag = {
+                text : current.tag,
+                weight : current.weight,
+                handlers : createHandler(current.tag)
+            };
+            array.push(newTag);
+        }
+
+        jTagsCloud.children().remove();
+        var innerContainer = jTagsCloud.clone(); // take style property from jTagsCloud
+        innerContainer.removeAttr('id'); // without its id
+        innerContainer.appendTo(jTagsCloud);
+
+        $('#tagsCloudDialog').modal();
+        $('#tagsCloudDialog').on('shown', function ()
+        {
+            innerContainer.jQCloud(array);
+        });
+    }
+    else
+    {
+        displayStdError();
+    }
 };
 
 function displayFailure(XMLHttpRequest,textStatus,errorThrown)
@@ -262,17 +342,14 @@ function displayMessage(data)
                        jObj.fadeOut({
                                         duration: 1000
                                     });
-                   },3000);
+                   },4000);
     }
 };
 
 $(document).ready(
     function()
     {
-        $('#about').on('click', function(event)
-        {
-            $('#aboutDialog').modal();
-        });
+        $('#no-result').hide();
 
         var callback = function(archived)
         {
@@ -287,16 +364,17 @@ $(document).ready(
         $('#nav-home').click(callback(false));
         $('#nav-archive').click(callback(true));
 
-        $('#showTagInput').click(function(event)
-        {
-            $('#txtTag').fadeToggle({
-                                       easing: 'swing'
-                                   });
-        });
+        // txtTag is now always displayed
+        /*$('#showTagInput').click(function(event)
+         {
+         $('#txtTag').fadeToggle({
+         easing: 'swing'
+         });
+         });
 
-        $('#txtTag').fadeOut({
-                               duration: 0
-                           });
+         $('#txtTag').fadeOut({
+         duration: 0
+         });*/
 
         $('#listing-part').on('click', 'button.deleteLinkButton', function(event)
         {
@@ -316,11 +394,11 @@ $(document).ready(
         $container.imagesLoaded(function(){
 
             $container.masonry({
-                                 itemSelector : 'a.link',
-                                 columnWidth : function( containerWidth ) {
-                                     return (containerWidth) / 3;
-                                 }
-                             });
+                                   itemSelector : 'a.link'
+                                   /*,columnWidth : function( containerWidth ) {
+                                    return (containerWidth) / 4;
+                                    }*/
+                               });
 
             submitFilterForm();
         });
@@ -357,9 +435,9 @@ $(document).ready(
             $('#newTagInput').val('');
             $('#addTagDialog').modal();
             setTimeout(function()
-                     {
-                         $('#newTagInput').focus();
-                     }, 1000);
+                       {
+                           $('#newTagInput').focus();
+                       }, 1000);
         });
 
         // key bindings on modal twitter bootstrap dialogs
@@ -385,6 +463,7 @@ $(document).ready(
 
         $container.on('click', 'div.content', goToLink);
         $container.on('click', 'img.linkparticon', goToLink);
+        $container.on('click', 'div.tags', goToLink);
 
         var changeRead = function(read, formName)
         {
@@ -413,9 +492,14 @@ $(document).ready(
             var val = inputFilter.val();
             if ( val && val.length > 0 )
             {
-              inputFilter.val('');
-              setSubmitFilterButtonToClickState();
+                inputFilter.val('');
+                setSubmitFilterButtonToClickState();
             }
+        });
+
+        $('#showTagsCloud').on('click', function(event)
+        {
+            $('#showTagsCloudForm').submit();
         });
 
     });

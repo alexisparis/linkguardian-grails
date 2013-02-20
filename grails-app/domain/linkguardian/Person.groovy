@@ -19,6 +19,7 @@ class Person
 
 	static mapping = {
 		password column: '`password`'
+        username index: true
 	}
     static hasMany = [links: Link]
 

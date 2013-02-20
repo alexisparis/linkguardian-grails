@@ -55,14 +55,18 @@ class BootStrap {
                 assert Role.count() == 3
                 assert PersonRole.count() == 5
 
-                this.createLink("http://www.privatesportshop.com", " sport shop nike adidas reebok a ", Note.Note_2, admin)
+                this.createLink("http://www.privatesportshop.com", "sport shop nike adidas reebok", Note.Note_2, admin)
+                this.createLink("http://blog.knoldus.com/2013/01/12/akka-futures-in-scala-with-a-simple-example/", "scala akka", Note.Note_0, admin)
+                this.createLink("http://www.brandalley.fr", "shop marque", Note.Note_4, admin)
+                this.createLink("http://aravindamadusanka.blogspot.fr/2012/08/how-to-use-apache-jmeter-for-web.html", "shop reebok", Note.Note_0, admin)
+                this.createLink("http://java.dzone.com/articles/introducing-spring-integration", "shop reebok", Note.Note_0, admin)
 
-                this.createLink("http://www.brandalley.fr", " shop marque ", Note.Note_4, user)
+                this.createLink("http://www.brandalley.fr", "shop marque", Note.Note_4, user)
+                this.createLink("http://www.m6.fr", "shop marque", Note.Note_2, user)
+
 
         /*
-        admin.addToLinks(this.createLink("http://www.brandalley.fr", " shop marque ", Note.Note_4))
 
-        admin.addToLinks(this.createLink("http://blog.knoldus.com/2013/01/12/akka-futures-in-scala-with-a-simple-example/", " scala akka ", Note.Note_0, true))
 
         admin.addToLinks(this.createLink("http://korben.info/idees-raspberry-pi.html", " scala akka ", Note.Note_0))
 

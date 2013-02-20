@@ -26,6 +26,7 @@ class Link {
     description length:  DESCRIPTION_MAX_LENGTH
     tags fetch: 'join', lazy: false
     note enumType: Note
+    person index: true
   }
 
   //  static belongsTo = Author
