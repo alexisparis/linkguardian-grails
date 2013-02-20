@@ -178,11 +178,13 @@
                         <fieldset>
                             <legend>&nbsp;Search</legend>
                             <!--g:hiddenField name="archived" id="archived-input"/-->
-                            &nbsp;<label class="checkbox read-check" style="margin-right: 10px;">
+                            &nbsp;<label class="checkbox read-check with-tooltip" style="margin-right: 10px;"
+                                rel="tooltip" data-placement="top" data-original-title="show links that have been read">
                                 <input class="read-marker" type="checkbox" name="read" id="read" value="read"/>
                                     <i class="icon-eye-open"></i>&nbsp;read
                             </label>
-                            <label class="checkbox read-check" style="margin-right: 10px;">
+                            <label class="checkbox read-check with-tooltip" style="margin-right: 10px;"
+                                rel="tooltip" data-placement="top" data-original-title="show links that have NOT have been read yet">
                                 <input class="read-marker" type="checkbox" name="unread" id="unread" value="unread" checked>
                                 <i class="icon-eye-close"></i>&nbsp;unread
                             </label>
@@ -193,7 +195,12 @@
 
                             <div class="input-append">
                                 <g:textField id="filterInput" name="token" title="filter" placeholder="filter by tag" class="input-medium" maxlength="50"/>
-                                <span class="add-on" id="clearFilterTag"><img src="${resource(dir: 'images', file: 'delete.png')}" width="14"/></span>
+                                <span class="add-on with-tooltip" id="clearFilterTag" rel="tooltip" data-placement="top" data-original-title="clear tag filter">
+                                    <img src="${resource(dir: 'images', file: 'delete.png')}" width="14"/>
+                                </span>
+                                <span class="add-on with-tooltip" rel="tooltip" data-placement="top" data-original-title="open tags cloud">
+                                    <img src="${resource(dir: 'images', file: 'cloud.png')}" width="22px"/>
+                                </span>
                             </div>
 
                             <button type="submit" class="btn btn-primary" onclick="setSubmitFilterButtonToNormalState()" id="filter-input">
