@@ -23,7 +23,10 @@
                 color:#000;
                 background:#e2e2e4 url(${resource(dir: 'images', file: 'title-bg.gif')}) repeat-x left top;
             }
-
+            .dd.ddcommon .divider, .dd.ddcommon
+            {
+                height: 32px !important;
+            }
         </style>
 	</head>
 	<body>
