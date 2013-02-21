@@ -19,6 +19,11 @@
                 background: url(${resource(dir: 'images', file: 'dd_arrow.gif')}) no-repeat;
             }
 
+            .dd .ddTitle {
+                color:#000;
+                background:#e2e2e4 url(${resource(dir: 'images', file: 'title-bg.gif')}) repeat-x left top;
+            }
+
         </style>
 	</head>
 	<body>
@@ -259,10 +264,6 @@
                     }
 
                     // add here to test without deployment issue
-                    $('#filterLinkForm select').on('change', function(event)
-                    {
-                        setSubmitFilterButtonToClickState();
-                    });
                 });
     </g:javascript>
 

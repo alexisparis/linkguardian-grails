@@ -262,7 +262,7 @@ function showTagsCloud(data)
                 click: function() {
                     $('#tagsCloudDialog').modal('hide');
                     $('#filterInput').val(tag);
-                    $('#filterLinkForm').submit();
+                    submitFilterForm();
                 }
             };
         };
@@ -501,5 +501,21 @@ $(document).ready(
         {
             $('#showTagsCloudForm').submit();
         });
+        $('#filterLinkForm select').on('change', function(event)
+        {
+            setSubmitFilterButtonToClickState();
+        });
+
+        // when return on linkguardian, if no input has focus, then set focus to txtUrl
+        $(window).focus(function() {
+            console.log('Focus');
+            var element = document.querySelector(":focus");
+            if ( ! element )
+            {
+                $('#txtUrl').focus();
+            }
+        });
+
+        $('#txtUrl').focus();
 
     });
