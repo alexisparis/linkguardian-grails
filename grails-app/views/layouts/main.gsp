@@ -25,9 +25,49 @@
 
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.blockUI.js')}"></script>
 
+        <script type="text/javascript">
+
+            var blockUiInhibiter = 0;
+
+            $(document).ready(
+                    function()
+                    {
+                        $('#about').on('click', function(event)
+                        {
+                            $('#aboutDialog').modal();
+                        });
+
+                        $(document).ajaxStart(function(event){
+                            if ( blockUiInhibiter == 0 )
+                            {
+                                $.blockUI(
+                                        {
+                                            message : '<img src="${resource(dir: "images/loading", file: "loading_big.gif")}"/>',
+                                            css: {
+                                                border: 'none',
+                                                backgroundColor: 'none',
+                                                opacity:         0.8
+                                            }
+                                        }
+                                );
+                            }
+                        })
+                                .ajaxStop(function(event){
+                                              if ( blockUiInhibiter == 0 )
+                                              {
+                                                  setTimeout(function(){
+                                                      $.unblockUI();
+                                                  }, 200); //TODO : reduce additional times
+                                              }
+                                          });
+                    });
+
+        </script>
+
     </head>
 
 	<body>
+
         <div class="header">
             <div class="container">
                 <div class="row">
@@ -111,37 +151,5 @@
                 <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true">Close</button>
             </div>
         </div>
-
-        <script type="text/javascript">
-
-            $(document).ready(
-                    function()
-                    {
-                        $('#about').on('click', function(event)
-                        {
-                            $('#aboutDialog').modal();
-                        });
-
-                        $(document).ajaxStart(function(){
-                            $.blockUI(
-                                    {
-                                        message : '<img src="${resource(dir: "images/loading", file: "loading_big.gif")}"/>',
-                                        css: {
-                                            border: 'none',
-                                            backgroundColor: 'none',
-                                            opacity:         0.8
-                                        }
-                                    }
-                            );
-                        })
-                                .ajaxStop(function(){
-                                              setTimeout(function(){
-                                                  $.unblockUI();
-                                              }, 200); //TODO : reduce additional times
-                                          });
-                    });
-
-        </script>
-
 	</body>
 </html>

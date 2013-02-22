@@ -10,26 +10,8 @@ function tagTemplate(tagNameRef)
            '</span>';
 };
 
-function updateLinks(model)
+function jsonLinksToHtml(model)
 {
-    var $container = $('#listing-part');
-
-    //$('#listing-part').hide();
-    $container.children().remove();
-
-    if ( model && model.links && model.links.length > 0 )
-    {
-        $('#no-result').hide();
-    }
-    else
-    {
-        $('#no-result').show();
-    }
-
-    $container.masonry('reload');
-
-    //model._tags = model.tags.sort(compareTags);
-
     var _model = {
         links : model.links,
         _tags : function()
@@ -66,7 +48,7 @@ function updateLinks(model)
         '{{#description}}<span class="description">{{description}}</span><br/>{{/description}}' +
         '<span class="domain" style="font-size: 11px;"><i>{{domain}}</i></span>' +
         '</div>' +
-        '<div class="tags">' +
+        '<div class="tags with-tooltip" rel="tooltip" data-placement="top" data-original-title="go to {{domain}}">' +
         '<i class="icon-tags" style="margin-right: 3px; margin-left: 6px;"></i>' +
         '<span class="tags-wrapper">' +
         '{{#_tags}}' +
@@ -81,9 +63,45 @@ function updateLinks(model)
         '</div>' +
         '{{/links}}';
 
+    var template2 =
+        '{{#links}}' +
+        '<div class="linkpart {{#read}}read{{/read}}" data-url="{{url}}" data-id="{{id}}" data-note={{note}}>' +
+        '{{description}}' +
+        '</div>' +
+        '{{/links}}';
+
     var output = Mustache.render(template, _model);
 
-    $container.html(output);
+    return output;
+};
+
+function updateLinks(model)
+{
+    var $container = $('#listing-part');
+
+//    $container.children().remove();
+//    $container.masonry('reload');
+    console.log("length : " + $container.children().length );
+    if ( $container.children().length > 0 )
+    {
+        $container.masonry('remove', $container.children());
+    }
+    //.masonry( 'reloadItems' );//.masonry( 'reloadItems' );
+    //$container.masonry('reload');
+
+    if ( model && model.links && model.links.length > 0 )
+    {
+        $('#no-result').hide();
+    }
+    else
+    {
+        $('#no-result').show();
+    }
+
+    //model._tags = model.tags.sort(compareTags);
+
+    var output = jsonLinksToHtml(model);
+    var jOutput = $(output);
 
     $('span.rate').each(function(idx, value)
                         {
@@ -108,7 +126,44 @@ function updateLinks(model)
                                         });
                         });
 
-    $container.masonry('appended', $(output), true);
+    // todo : find a better solution to force masonry to reset the layout
+    var data = $container.data('masonry');
+    for(var i = 0; i < data.colYs.length; i++)
+    {
+        data.colYs[i] = 0
+    }
+
+    $container.append(jOutput).masonry('appended', jOutput, true);
+
+    $container.infinitescroll({
+              loading: {
+                  selector: '#inf-scroll-load',
+                  finishedMsg: '<em>No more links to load.</em>'
+                  ,img: infiniteScrollLoadImage
+                  ,msgText: "<em>Loading next links...</em>",
+              },
+              debug : true,
+              navSelector : '#nav-inf-scroll',
+              nextSelector : '#nav-inf-scroll a',
+              itemSelector : '#listing-part .linkpart',
+              // other options
+              dataType: 'json',
+              appendCallback: false
+          }
+          ,function(json, opts)
+          {
+              var page = opts.state.currPage;
+
+              var appended = $(jsonLinksToHtml(json));
+              appended.css({ opacity: 0 });
+              appended.imagesLoaded(function(){
+                  // show elems now they're ready
+                  $container.append(appended);
+                  appended.animate({ opacity: 1 });
+                  $container.masonry('appended', appended, true);
+              });
+          }
+    );
 
     //TODO
 
@@ -128,7 +183,6 @@ function setSubmitFilterButtonToClickState()
 
 function submitFilterForm()
 {
-    console.log("submitting filter form");
     $('#filterLinkForm').submit();
 };
 
@@ -293,7 +347,7 @@ function showTagsCloud(data)
     }
     else
     {
-        displayStdError();
+        displayError('no tags found');
     }
 };
 
@@ -312,8 +366,13 @@ function displayFailure(XMLHttpRequest,textStatus,errorThrown)
 
 function displayStdError()
 {
+    displayError('error');
+};
+
+function displayError(msg)
+{
     displayMessage({
-                       message : 'error',
+                       message : msg,
                        level : {
                            name : "ERROR"
                        }
@@ -349,6 +408,23 @@ function displayMessage(data)
 $(document).ready(
     function()
     {
+        $('#filterLinkForm').on('submit', function(event)
+        {
+            // set the link for the anchor for infinite-scroll to work
+            var anchor = $('#nav-inf-scroll a').first();
+
+            var href = anchor.attr('data-filter-url-model');
+            href = href + "?read_status=" + $('#read_status').val();
+            href = href + "&sortBy=" + $('#sortBy').val();
+            href = href + "&sortType=" + $('#sortType').val();
+            href = href + "&token=" + encodeURIComponent($('#filterInput').val());
+            href = href + "&page=2";
+
+            console.log("href to set : " + href);
+
+            anchor.attr('href', href);
+        });
+
         $('#no-result').hide();
 
         var callback = function(archived)
@@ -391,17 +467,6 @@ $(document).ready(
         $('.with-tooltip').tooltip();
 
         var $container = $('#listing-part');
-        $container.imagesLoaded(function(){
-
-            $container.masonry({
-                                   itemSelector : 'a.link'
-                                   /*,columnWidth : function( containerWidth ) {
-                                    return (containerWidth) / 4;
-                                    }*/
-                               });
-
-            submitFilterForm();
-        });
 
         $container.on('click', 'span.tag', function(event)
         {

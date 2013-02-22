@@ -10,24 +10,19 @@
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'dd.css')}" type="text/css"/>
 
         <style type="text/css">
-
-            /* add here to test without deployment issue */
-            .dd .arrow {
-                width: 16px;
-                height: 16px;
-                margin-top: -8px;
-                background: url(${resource(dir: 'images', file: 'dd_arrow.gif')}) no-repeat;
-            }
-
-            .dd .ddTitle {
-                color:#000;
-                background:#e2e2e4 url(${resource(dir: 'images', file: 'title-bg.gif')}) repeat-x left top;
-            }
-            .dd.ddcommon .divider, .dd.ddcommon
+            #infscr-loading
             {
-                height: 32px !important;
+                margin-right: auto;
+                margin-left: auto;
+                text-align: center;
+            }
+            #infscr-loading > img
+            {
+                margin-right: auto;
+                margin-left: auto;
             }
         </style>
+
 	</head>
 	<body>
 
@@ -63,11 +58,11 @@
 
                             <div style="margin-top: 3px; margin-bottom: 3px;">
                                 &nbsp;&nbsp;Sort by
-                                <select name="sortBy" style="width: 180px;">
+                                <select name="sortBy" id="sortBy" style="width: 180px;">
                                     <option value="creationDate" data-image="${resource(dir: 'images', file: 'date.png')}">creation date</option>
                                     <option value="note" data-image="${resource(dir: 'images', file: 'star.png')}">note</option>
                                 </select>
-                                <select name="sortType" style="width: 150px;">
+                                <select name="sortType" id="sortType" style="width: 150px;">
                                     <option value="asc" data-image="${resource(dir: 'images', file: 'up.png')}">up</option>
                                     <option value="desc" data-image="${resource(dir: 'images', file: 'down.png')}">down</option>
                                 </select>
@@ -118,7 +113,19 @@
         <div id="no-result" class="alert alert-info message-box">
             No result
         </div>
-        <div id="listing-part"></div>
+        <%--
+            problem with masonry when no elements are in the listing-part when masonry initialization
+            so --> factice item added to fix it
+        --%>
+        <div id="listing-part">
+            <div class="linkpart" style="display: none;"></div>
+        </div>
+
+        <div id="nav-inf-scroll" style="displaya: none;">
+            <a data-filter-url-model="<g:createLink controller="link" action="filter"/>">infinite-scroll link</a>
+        </div>
+
+        <div id="inf-scroll-load" style="margin-left: auto; margin-right: auto;">
 
         </div>
 
@@ -249,6 +256,12 @@
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.masonry.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jqcloud-1.0.3.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.dd.min.js')}"></script>
+        <%--script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.infinitescroll.min.js')}"></script--%>
+        <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.infinitescroll.js')}"></script>
+
+        <g:javascript>
+            var infiniteScrollLoadImage = '${resource(dir: "images/loading", file: "loading_medium.gif")}';
+        </g:javascript>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'links.js')}"></script>
 
     <g:javascript>
@@ -267,6 +280,22 @@
                     }
 
                     // add here to test without deployment issue
+
+                    var $container = $('#listing-part');
+                    $container.imagesLoaded(function(){
+
+                        $container.masonry({
+                                               itemSelector : '#listing-part .linkpart',
+                                               isAnimated: false,
+                                               animationOptions: {
+                                                  duration: 750,
+                                                  easing: 'swing',
+                                                  queue: false
+                                               }
+                                           });
+
+                        submitFilterForm();
+                    });
                 });
     </g:javascript>
 

@@ -7,6 +7,8 @@ class UrlMappings {
       "/admin/roles"(controller: "roleCrud")
       "/admin/links"(controller: "linkCrud")
 
+      "/filter"(controller: "link", action: "filter")
+
       "/$controller/$action?/$id?" {
         constraints {
 

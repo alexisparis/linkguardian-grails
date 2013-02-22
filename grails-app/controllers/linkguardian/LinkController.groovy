@@ -24,6 +24,8 @@ class LinkController
 
     def springSecurityService
 
+    def linksPerPage = 20
+
     def success(String msg)
     {
         return new linkguardian.Message(message : msg, level : linkguardian.Level.SUCCESS)
@@ -50,9 +52,9 @@ class LinkController
      * @param read_status : all, read or unread
      * @return
      */
-    def filter(String token, String read_status, String sortBy, String sortType)
+    def filter(String token, String read_status, String sortBy, String sortType, int page)
     {
-        log.info "calling filter from LinkController with filter equals to " + token + ", read status : " + read_status + ", sort by " + sortBy + " " + sortType
+        log.info "calling filter from LinkController with filter equals to " + token + ", read status : " + read_status + ", sort by " + sortBy + " " + sortType + ", page = " + page
 
         def queryLinks = Collections.emptyList()
 
@@ -82,8 +84,7 @@ class LinkController
 
         if ( read || unread ) // no need to launch the request if ! read && ! unread
         {
-            //todo : manage pagination
-            def queryParams = [/*max: 3, offset: 2, */sort: _sortBy, order: _sortType]
+            def queryParams = [max: linksPerPage, offset: (page - 1) * linksPerPage, sort: _sortBy, order: _sortType]
 
             def query = Link.where { person.username == springSecurityService.getPrincipal().username }
 
@@ -124,21 +125,35 @@ class LinkController
         {
             log.info "query links found count : " + queryLinks.size()
 
-            render(contentType: "text/json") {
-                links = array{
-                    for (a in queryLinks) {
-                        item title: a.title,
-                             read: a.read,
-                             url : a.url,
-                             id: a.id,
-                             note: a.note.ordinal(),
-                             domain: a.domain,
-                             description: a.description,
-                             tags : array{
-                                 for(b in a.tags) {
-                                     subitem label : b.label
+            def pageError = false
+
+            if ( page > 0 ) // called from infinite scroll
+            {
+                if ( queryLinks.isEmpty() )
+                {
+                    response.status = 404
+                    pageError = true
+                }
+            }
+
+            if ( ! pageError )
+            {
+                render(contentType: "text/json") {
+                    links = array{
+                        for (a in queryLinks) {
+                            item title: a.title,
+                                 read: a.read,
+                                 url : a.url,
+                                 id: a.id,
+                                 note: a.note.ordinal(),
+                                 domain: a.domain,
+                                 description: a.description,
+                                 tags : array{
+                                     for(b in a.tags) {
+                                         subitem label : b.label
+                                     }
                                  }
-                             }
+                        }
                     }
                 }
             }

@@ -29,6 +29,33 @@ class BootStrap {
         return newLink
     }
 
+    def createFakeLink(String _tags, Note _note, Person _person, Boolean _read = false, String name)
+    {
+        def newLink
+        try {
+            newLink = new Link(url: "url_" + name, creationDate: new Date(), read:  _read, person: _person,
+                               domain: "domain_" + name, title: "title_" + name)
+
+            def desc = (("description_" + name + " ") * ((Math.random() * 25.0) + 1).intValue())
+            if ( desc.length() > 200 )
+            {
+                desc = desc.substring(0, 200)
+            }
+
+            newLink.description = desc
+            newLink.note = _note
+
+            //linkBuilderService.addTags(newLink, _tags)
+            newLink = newLink.save(flush: true)
+        }
+        catch(Exception e)
+        {
+            log.error("error while creating link with name '" + name + "'", e)
+        }
+
+        return newLink
+    }
+
     def init    = { servletContext ->
 
         def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
@@ -55,11 +82,16 @@ class BootStrap {
                 assert Role.count() == 3
                 assert PersonRole.count() == 5
 
-                this.createLink("http://www.privatesportshop.com", "sport shop nike adidas reebok", Note.Note_2, admin)
-                this.createLink("http://blog.knoldus.com/2013/01/12/akka-futures-in-scala-with-a-simple-example/", "scala akka", Note.Note_0, admin)
-                this.createLink("http://www.brandalley.fr", "shop marque", Note.Note_4, admin)
-                this.createLink("http://aravindamadusanka.blogspot.fr/2012/08/how-to-use-apache-jmeter-for-web.html", "shop reebok", Note.Note_0, admin)
-                this.createLink("http://java.dzone.com/articles/introducing-spring-integration", "shop reebok", Note.Note_0, admin)
+//                this.createLink("http://www.privatesportshop.com", "sport shop nike adidas reebok", Note.Note_2, admin)
+//                this.createLink("http://blog.knoldus.com/2013/01/12/akka-futures-in-scala-with-a-simple-example/", "scala akka", Note.Note_0, admin)
+//                this.createLink("http://www.brandalley.fr", "shop marque", Note.Note_4, admin)
+//                this.createLink("http://aravindamadusanka.blogspot.fr/2012/08/how-to-use-apache-jmeter-for-web.html", "shop reebok", Note.Note_0, admin)
+//                this.createLink("http://java.dzone.com/articles/introducing-spring-integration", "shop reebok", Note.Note_0, admin)
+
+                for(i in 1..200)
+                {
+                    this.createFakeLink("", Note.valueOf("Note_" + (i % 6)), admin, Math.random() > 0.5, i.toString())
+                }
 
                 this.createLink("http://www.brandalley.fr", "shop marque", Note.Note_4, user)
                 this.createLink("http://www.m6.fr", "shop marque", Note.Note_2, user)
