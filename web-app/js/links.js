@@ -79,9 +79,13 @@ function updateLinks(model)
 {
     var $container = $('#listing-part');
 
+    // https://github.com/paulirish/infinite-scroll/issues/88
+    // http://stackoverflow.com/questions/7936270/jquery-infinite-scroll-reset
+    $container.infinitescroll('destroy');
+    $container.data('infinitescroll', null);
+
 //    $container.children().remove();
 //    $container.masonry('reload');
-    console.log("length : " + $container.children().length );
     if ( $container.children().length > 0 )
     {
         $container.masonry('remove', $container.children());
@@ -138,9 +142,9 @@ function updateLinks(model)
     $container.infinitescroll({
               loading: {
                   selector: '#inf-scroll-load',
-                  finishedMsg: '<em>No more links to load.</em>'
+                  finishedMsg: '<em class="text-info">No more links to load.</em>'
                   ,img: infiniteScrollLoadImage
-                  ,msgText: "<em>Loading next links...</em>",
+                  ,msgText: '<em class="text-info">Loading next links...</em>'
               },
               debug : true,
               navSelector : '#nav-inf-scroll',
@@ -167,7 +171,7 @@ function updateLinks(model)
 
     //TODO
 
-    $('.with-tooltip').tooltip();
+    $('#listing-part .with-tooltip').tooltip();
     //$('#listing-part').fadeIn();
 };
 

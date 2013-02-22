@@ -77,6 +77,7 @@
                                 <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50" style="margin-top: -10px;"/>
                             </a>
                             <span class="lg" style="display: inline-block; padding-top: 16px; font-size: 30px;"></span>
+                            <span class="lgDescription" style="margin-left: 40px;">Online url bookmarker</span>
                             <sec:ifLoggedIn>
                                 <div style="float: right; text-align: right;">
 

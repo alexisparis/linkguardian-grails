@@ -22,6 +22,12 @@ div.header
 {
     content: 'Link Guardian';
 }
+.lgDescription
+{
+    font-family: 'Clicker Script', cursive;
+    font-size: 20px;
+    font-style: italic;
+}
 .copyright
 {
     margin-top: 15px;

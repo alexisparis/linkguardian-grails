@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'dd.css')}" type="text/css"/>
 
         <style type="text/css">
-            #infscr-loading
+            /*#infscr-loading
             {
                 margin-right: auto;
                 margin-left: auto;
@@ -20,6 +20,14 @@
             {
                 margin-right: auto;
                 margin-left: auto;
+            }*/
+            .dd .arrow
+            {
+                background: url('${resource(dir: 'images', file: 'dd_arrow.gif')}') no-repeat;
+            }
+            .dd .ddTitle
+            {
+                background:#e2e2e4 url('${resource(dir: 'images', file: 'title-bg.gif')}') repeat-x left top;
             }
         </style>
 
