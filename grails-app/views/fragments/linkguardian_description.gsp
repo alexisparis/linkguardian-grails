@@ -44,11 +44,11 @@
             <span class="section-title"><h4>Technology</h4></span>
             <p><span class="lg"></span> uses several modern web technologies like :
                 <ul>
-                    <li><a target="_blank" href="http://twitter.github.com/bootstrap/"><img src="${resource(dir: 'images', file: 'bootstrap.png')}" width="20px"/> Twitter Bootstrap</a></li>
                     <li><a target="_blank" href="http://grails.org/"><img src="${resource(dir: 'images', file: 'grails-logo.png')}" width="20px"/> Grails</a></li>
-                    <li><a target="_blank" href="http://lesscss.org/"><img src="${resource(dir: 'images', file: 'less-icon.png')}" width="40px"/></a></li>
                     <li><a target="_blank" href="http://www.springsource.org"><img src="${resource(dir: 'images', file: 'spring.png')}" width="20px"/> Spring</a></li>
+                    <li><a target="_blank" href="http://twitter.github.com/bootstrap/"><img src="${resource(dir: 'images', file: 'bootstrap.png')}" width="20px"/> Twitter Bootstrap</a></li>
                     <li><a target="_blank" href="http://jquery.com/"><img src="${resource(dir: 'images', file: 'icon-jquery.png')}" width="70px"/></a></li>
+                    <%--li><a target="_blank" href="http://lesscss.org/"><img src="${resource(dir: 'images', file: 'less-icon.png')}" width="40px"/></a></li--%>
                 </ul>
             </p>
             <p>
