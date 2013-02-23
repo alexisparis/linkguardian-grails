@@ -24,7 +24,7 @@ class LinkController
 
     def springSecurityService
 
-    def linksPerPage = 20
+    def linksPerPage = 50
 
     def success(String msg)
     {
@@ -55,6 +55,8 @@ class LinkController
     def filter(String token, String read_status, String sortBy, String sortType, int page)
     {
         log.info "calling filter from LinkController with filter equals to " + token + ", read status : " + read_status + ", sort by " + sortBy + " " + sortType + ", page = " + page
+
+        Thread.sleep(4000)
 
         def queryLinks = Collections.emptyList()
 

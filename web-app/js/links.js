@@ -163,7 +163,7 @@ function updateLinks(model)
               appended.imagesLoaded(function(){
                   // show elems now they're ready
                   $container.append(appended);
-                  appended.animate({ opacity: 1 });
+                  appended.animate({ opacity: 1});
                   $container.masonry('appended', appended, true);
               });
           }
@@ -428,8 +428,6 @@ $(document).ready(
 
             anchor.attr('href', href);
         });
-
-        $('#no-result').hide();
 
         var callback = function(archived)
         {

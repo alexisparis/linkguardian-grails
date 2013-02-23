@@ -118,9 +118,10 @@
             <div id="message"></div>
         </div>
 
-        <div id="no-result" class="alert alert-info message-box">
+        <div id="no-result" class="alert alert-info message-box" style="display: none;">
             No result
         </div>
+
         <%--
             problem with masonry when no elements are in the listing-part when masonry initialization
             so --> factice item added to fix it
@@ -129,7 +130,7 @@
             <div class="linkpart" style="display: none;"></div>
         </div>
 
-        <div id="nav-inf-scroll" style="displaya: none;">
+        <div id="nav-inf-scroll" style="display: none;">
             <a data-filter-url-model="<g:createLink controller="link" action="filter"/>">infinite-scroll link</a>
         </div>
 
