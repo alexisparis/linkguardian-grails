@@ -18,10 +18,17 @@ div.header
     font-family: 'Clicker Script', cursive;
     font-size: 20px;
 }
-.lg:before
+.lg-big
 {
-    content: 'Link Guardian';
+    font-family: 'Clicker Script', cursive;
+    font-size: 30px;
 }
+.lg-medium
+{
+    font-family: 'Clicker Script', cursive;
+    font-size: 24px;
+}
+
 .lgDescription
 {
     font-family: 'Clicker Script', cursive;

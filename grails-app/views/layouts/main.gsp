@@ -12,6 +12,8 @@
 		<link rel="shortcut icon" href="${resource(dir: 'images', file: 'shield_blue.ico')}" type="image/x-icon">
 		<link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'shield_blue.png')}">
 		<link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'shield_blue.png')}">
+
+        <%--link rel="stylesheet" href="${resource(dir: 'css', file: 'normalize.css')}" type="text/css"--%>
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'application.css')}" type="text/css">
@@ -76,24 +78,26 @@
                             <a href="https://linkguardian-blackdog.rhcloud.com">
                                 <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50" style="margin-top: -10px;"/>
                             </a>
-                            <span class="lg" style="display: inline-block; padding-top: 16px; font-size: 30px;"></span>
-                            <span class="lgDescription" style="margin-left: 40px;">Online url bookmarker</span>
+                            <span class="lg" style="display: inline-block; padding-top: 16px; font-size: 30px;">
+                                <g:message code="lg.title"/>
+                            </span>
+                            <span class="lgDescription" style="margin-left: 40px;"><g:message code="lg.description.small"/></span>
                             <sec:ifLoggedIn>
                                 <div style="float: right; text-align: right;">
 
                                     <span style="margin-right: 30px;">
                                         <sec:ifAllGranted roles="ROLE_ADMIN,ROLE_USER">
                                             <div class="btn-group" style="margin-right: 20px; ">
-                                                <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></button>
+                                                <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown"><g:message code="menu.admin.label"/> <span class="caret"></span></button>
                                                 <ul class="dropdown-menu">
-                                                    <li><g:link controller="userCrud">Users</g:link></li>
-                                                    <li><g:link controller="roleCrud">Roles</g:link></li>
-                                                    <li><g:link controller="linkCrud">Links</g:link></li>
+                                                    <li><g:link controller="userCrud"><g:message code="menu.admin.users.label"/></g:link></li>
+                                                    <li><g:link controller="roleCrud"><g:message code="menu.admin.roles.label"/></g:link></li>
+                                                    <li><g:link controller="linkCrud"><g:message code="menu.admin.links.label"/></g:link></li>
                                                 </ul>
                                             </div>
                                         </sec:ifAllGranted>
 
-                                        <button class="btn btn-info" id="about">About</button>
+                                        <button class="btn btn-info" id="about"><g:message code="menu.about.label"/></button>
                                     </span>
 
                                     <span style="margin-right: 5px;">
@@ -105,7 +109,7 @@
                                             <sec:username/>
                                         </g:else>
                                     </span>
-                                    <g:link controller='logout' action='index' class="with-tooltip" rel="tooltip" data-placement="bottom" data-original-title="disconnect">
+                                    <g:link controller='logout' action='index' class="with-tooltip" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'disconnect.button.tooltip')}">
                                         <span class="btn btn-inverse btn-mini"><i class="icon-off icon-white"></i></span>
                                     </g:link>
                                 </div>
@@ -139,17 +143,17 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3>
-                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> About <span class="lg" style="font-size: 24px;"></span></h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> <g:message code="dialog.about.title"/></h3>
             </div>
             <div class="modal-body">
 
-                <p class="text-info">Url bookmarker and domains monitoring.</p>
+                <p class="text-info"><g:message code="lg.description.small"/></p>
 
                 <g:include view="fragments/linkguardian_description.gsp"/>
 
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true"><g:message code="close.button.label"/></button>
             </div>
         </div>
 	</body>
