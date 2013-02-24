@@ -104,11 +104,23 @@ function updateLinks(model)
     var output = jsonLinksToHtml(model);
     var jOutput = $(output);
 
+    // todo : find a better solution to force masonry to reset the layout
+    var data = $container.data('masonry');
+    for(var i = 0; i < data.colYs.length; i++)
+    {
+        data.colYs[i] = 0
+    }
+
+    $container.append(jOutput);
+
     $('span.rate').each(function(idx, value)
                         {
+                            console.log("initialize raty...");
                             var jValue = $(value);
                             var jLinkPart = jValue.parents('div.linkpart').eq(0);
                             var currentScore = parseInt(jLinkPart.attr('data-note'));
+
+                            console.log("   current score : " + currentScore);
                             jValue.raty({
                                             cancel: true,
                                             size : 10,
@@ -127,14 +139,7 @@ function updateLinks(model)
                                         });
                         });
 
-    // todo : find a better solution to force masonry to reset the layout
-    var data = $container.data('masonry');
-    for(var i = 0; i < data.colYs.length; i++)
-    {
-        data.colYs[i] = 0
-    }
-
-    $container.append(jOutput).masonry('appended', jOutput, true);
+    $container.masonry('appended', jOutput, true);
 
     $container.infinitescroll({
               loading: {
