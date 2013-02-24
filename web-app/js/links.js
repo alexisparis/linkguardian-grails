@@ -169,7 +169,8 @@ function updateLinks(model)
     //TODO
 
     $('#listing-part .with-tooltip').tooltip();
-    //$('#listing-part').fadeIn();
+
+    //$('#listing-part').find('span.rate').raty();
 };
 
 function setSubmitFilterButtonToNormalState()
@@ -365,6 +366,8 @@ function displayFailure(XMLHttpRequest,textStatus,errorThrown)
     }
 };
 
+var permanentMessage = false;
+
 function displayStdError()
 {
     displayError(defaultErrorMessage);
@@ -397,12 +400,15 @@ function displayMessage(data)
         jObj.fadeIn({
                         duration: 0
                     });
-        setTimeout(function()
-                   {
-                       jObj.fadeOut({
-                                        duration: 1000
-                                    });
-                   },4000);
+        if ( ! permanentMessage )
+        {
+            setTimeout(function()
+                       {
+                           jObj.fadeOut({
+                                            duration: 1000
+                                        });
+                       },4000);
+        }
     }
 };
 

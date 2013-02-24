@@ -19,6 +19,14 @@
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'application.css')}" type="text/css">
         <link href="${resource(dir: 'css', file: 'clicker.css')}" rel='stylesheet' type='text/css'>
 
+    <style type="text/css">
+        #dragTool
+        {
+            cursor: move;
+            color: white;
+        }
+    </style>
+
         <r:require modules="bootstrap"/>
 
 		<g:layoutHead/>
@@ -39,6 +47,25 @@
                         $('#about').on('click', function(event)
                         {
                             $('#aboutDialog').modal();
+                        });
+
+                        // complete the href of dragTool
+                        var dragHref =
+                                'javascript:(function(){' +
+                                    'var u="<g:createLink controller="link" action="addUrl" absolute="true"/>?render=html&url="+escape(document.location.href);' +
+                                    'var a=function(){' +
+                                        'if(!window.open(u))location.href=u;' +
+                                    '};' +
+                                    'if(/Firefox/.test(navigator.userAgent))' +
+                                        'setTimeout(a,0);' +
+                                    'else a();' +
+                                '})();';
+
+                        $('#dragTool').attr('href', dragHref);
+
+                        $('#tools').on('click', function(event)
+                        {
+                            $('#toolsDialog').modal();
                         });
 
                         var hideBlockUi = function(event){
@@ -73,12 +100,12 @@
 
 	<body>
 
-        <div class="header">
+    <div class="header">
             <div class="container">
                 <div class="row">
                     <div class="span12">
                         <div id="guardianLogo" role="banner" style="padding-top: 5px; padding-bottom: 8px;">
-                            <a href="https://linkguardian-blackdog.rhcloud.com">
+                            <a href="<g:createLink controller="link" action="list" absolute="true"/>">
                                 <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50" style="margin-top: -10px;"/>
                             </a>
                             <span class="lg big" style="display: inline-block; padding-top: 16px;"></span>
@@ -97,6 +124,8 @@
                                                 </ul>
                                             </div>
                                         </sec:ifAllGranted>
+
+                                        <button class="btn btn-success btn-inverse" id="tools"><g:message code="menu.tools.label"/></button>
 
                                         <button class="btn btn-info" id="about"><g:message code="menu.about.label"/></button>
                                     </span>
@@ -157,5 +186,23 @@
                 <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true"><g:message code="close.button.label"/></button>
             </div>
         </div>
-	</body>
+
+        <div id="toolsDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> <g:message code="dialog.tools.title"/></h3>
+            </div>
+            <div class="modal-body">
+                <g:message code="dialogs.tools.paragraph"/>
+                <p>
+                    <img src="<g:resource dir="images" file="dragTool-final-reduced.png"/>"/>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true"><g:message code="close.button.label"/></button>
+            </div>
+        </div>
+
+    </body>
 </html>

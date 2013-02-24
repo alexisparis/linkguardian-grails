@@ -86,13 +86,13 @@ log4j = {
     //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
     //}
 
-    debug "grails.app.controllers.LinkController",
-          //"grails.app.services.LinkBuilderService",
-          //"grails.app.services.StringNormalizerService",
-          'org.hibernate.SQL',
-          'org.hibernate.transaction' // optionally
+    debug "grails.app.controllers.LinkController"
+          //,"grails.app.services.LinkBuilderService"
+          //,"grails.app.services.StringNormalizerService"
+          //,'org.hibernate.SQL'
+          //,'org.hibernate.transaction' // optionally
 
-    debug "grails.app"
+    //debug "grails.app"
 
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP

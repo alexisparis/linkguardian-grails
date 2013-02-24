@@ -72,7 +72,7 @@
                                 </select>
                                 <select name="sortType" id="sortType" style="width: 150px;">
                                     <option value="asc" data-image="${resource(dir: 'images', file: 'up.png')}"><g:message code="links.forms.search.sortType.asc"/></option>
-                                    <option value="desc" data-image="${resource(dir: 'images', file: 'down.png')}"><g:message code="links.forms.search.sortType.desc"/></option>
+                                    <option value="desc" selected="selected" data-image="${resource(dir: 'images', file: 'down.png')}"><g:message code="links.forms.search.sortType.desc"/></option>
                                 </select>
                             </div>
 
@@ -87,6 +87,7 @@
                                   style="margin-bottom: 3px;">
                         <fieldset>
                             <legend><g:message code="links.forms.add.title"/></legend>
+                            <g:hiddenField name="render" value="json"></g:hiddenField>
 
                             <div class="input-prepend input-append" style="margin-bottom: 3px;">
                                 <span class="add-on"><g:message code="links.forms.add.url.title"/></span>

@@ -8,6 +8,7 @@ import grails.web.JSONBuilder
 import groovy.json.JsonBuilder
 import linkguardian.exception.TagException
 import net.sf.json.JSONObject
+import org.springframework.web.servlet.ModelAndView
 
 import java.util.logging.Level
 
@@ -24,7 +25,7 @@ class LinkController
 
     def springSecurityService
 
-    def linksPerPage = 50
+    def linksPerPage = 30
 
     def success(String msg)
     {
@@ -168,7 +169,7 @@ class LinkController
      */
     def addUrl()
     {
-        log.info "calling addUrl with url : " + params.url + " and tags : " + params.tag
+        log.info "calling addUrl with url : " + params.url + " tags : " + params.tag + " and render : " + params.render
 
         def msg
 
@@ -254,7 +255,10 @@ class LinkController
 
                 // desactivated since we use url shortener
                 try {
-                    def newLink = new Link(url: realUrl, fusionedTags: " " + params.tag.toLowerCase() + " ", creationDate: new Date(), person: connectedPerson)
+
+                    def _tag = (params.tag == null ? "" : params.tag.toLowerCase())
+
+                    def newLink = new Link(url: realUrl, fusionedTags: " " + _tag + " ", creationDate: new Date(), person: connectedPerson)
 
                     linkBuilderService.complete(newLink)
                     linkBuilderService.addTags(newLink, params.tag)
@@ -262,6 +266,10 @@ class LinkController
                     // check that this url does not already exist
                     if ( Link.findByPersonAndUrl(connectedPerson, newLink.url) != null )
                     {
+                        def tata = message(code: "service.link.addUrl.linkAlreadyExists", args: [params.url])
+                        log.info "################################################ params.url : " + params.url + " ==> " + tata
+                        def toto = message(code: "service.link.addUrl.linkAlreadyExists", args: ['toto'])
+                        log.info "################################################ params.url : " + 'toto' + " ==> " + toto
                         response.status = 500
                         msg = this.error(message(code: "service.link.addUrl.linkAlreadyExists", args: [params.url]))
                     }
@@ -302,7 +310,16 @@ class LinkController
             }
         }
 
-        render msg as JSON
+        if ( params.render == 'json' )
+        {
+            render msg as JSON
+        }
+        else if ( params.render == 'html' )
+        {
+            //render(view: "/link/url-adding-attempt", model: msg)
+            return new ModelAndView("/link/url-adding-attempt", [ res : msg ])
+        }
+
     }
 
     /**
@@ -622,7 +639,7 @@ class LinkController
                 msg =  this.error(message(code: "service.link.changeReadAttribute.forbidden"))
             }
         }
-        if ( ! success && message == null )
+        if ( ! success && msg == null )
         {
             response.status = 500
             msg = this.error(message(code: "service.link.changeReadAttribute.error", args: [readType]))
