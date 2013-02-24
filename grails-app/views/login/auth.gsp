@@ -37,7 +37,7 @@
 
     <div id="login">
         <p>
-            <h3 class="text-center"><g:message code="auth.twitter.message"/> <b><span class="lg" style="font-size: 24px;">Link Guardian</span></b></h3>
+            <h3 class="text-center"><g:message code="auth.twitter.message"/> <b><span class="lg medium" style="font-size: 24px;"></span></b></h3>
         </p>
         <p class="text-center">
             <twitterAuth:button/>

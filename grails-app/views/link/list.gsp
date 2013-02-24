@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta name="layout" content="main"/>
-		<title>Welcome to Link Guardian</title>
+		<title><g:message code="links.title"/></title>
         <r:require modules="mustache"/>
 
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'jqcloud.css')}" type="text/css">
@@ -42,20 +42,20 @@
                                   method="POST" style="display: inline;"
                                   onSuccess="updateLinks(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
                         <fieldset>
-                            <legend>&nbsp;Search</legend>
+                            <legend>&nbsp;<g:message code="links.forms.search.title"/></legend>
                             &nbsp;
                             <select name="read_status" id="read_status" style="width: 188px;">
-                                <option value="all" data-image="${resource(dir: 'images', file: 'world.png')}">all</option>
-                                <option value="read" data-image="${resource(dir: 'images', file: 'checked.png')}">already read</option>
-                                <option value="unread" data-image="${resource(dir: 'images', file: 'clock.png')}">not read yet</option>
+                                <option value="all" data-image="${resource(dir: 'images', file: 'world.png')}"><g:message code="links.forms.search.read_status.all"/></option>
+                                <option value="read" data-image="${resource(dir: 'images', file: 'checked.png')}"><g:message code="links.forms.search.read_status.read"/></option>
+                                <option value="unread" data-image="${resource(dir: 'images', file: 'clock.png')}"><g:message code="links.forms.search.read_status.unread"/></option>
                             </select>
 
                             <div class="input-append">
-                                <g:textField id="filterInput" name="token" title="filter" placeholder="filter by tag" class="input-medium" maxlength="50"/>
-                                <span class="add-on with-tooltip" id="clearFilterTag" rel="tooltip" data-placement="top" data-original-title="clear tag filter">
+                                <input type="text" id="filterInput" name="token" title="filter" placeholder='<g:message code="links.forms.search.filterInput.placeholder"/>' class="input-medium" maxlength="50"/>
+                                <span class="add-on with-tooltip" id="clearFilterTag" rel="tooltip" data-placement="top" data-original-title="<g:message code="links.forms.search.clearFilterTag.tooltip"/>">
                                     <img src="${resource(dir: 'images', file: 'delete.png')}" width="14"/>
                                 </span>
-                                <span class="add-on with-tooltip" id="showTagsCloud" rel="tooltip" data-placement="top" data-original-title="open tags cloud">
+                                <span class="add-on with-tooltip" id="showTagsCloud" rel="tooltip" data-placement="top" data-original-title="<g:message code="links.forms.search.showTagsCloud.tooltip"/>">
                                     <img src="${resource(dir: 'images', file: 'cloud.png')}" width="22px"/>
                                 </span>
                             </div>
@@ -65,14 +65,14 @@
                             </button>
 
                             <div style="margin-top: 3px; margin-bottom: 3px;">
-                                &nbsp;&nbsp;Sort by
+                                &nbsp;&nbsp;<g:message code="links.forms.search.sortBy.title"/>
                                 <select name="sortBy" id="sortBy" style="width: 180px;">
-                                    <option value="creationDate" data-image="${resource(dir: 'images', file: 'date.png')}">creation date</option>
-                                    <option value="note" data-image="${resource(dir: 'images', file: 'star.png')}">note</option>
+                                    <option value="creationDate" data-image="${resource(dir: 'images', file: 'date.png')}"><g:message code="links.forms.search.sortBy.creationDate"/></option>
+                                    <option value="note" data-image="${resource(dir: 'images', file: 'star.png')}"><g:message code="links.forms.search.sortBy.note"/></option>
                                 </select>
                                 <select name="sortType" id="sortType" style="width: 150px;">
-                                    <option value="asc" data-image="${resource(dir: 'images', file: 'up.png')}">up</option>
-                                    <option value="desc" data-image="${resource(dir: 'images', file: 'down.png')}">down</option>
+                                    <option value="asc" data-image="${resource(dir: 'images', file: 'up.png')}"><g:message code="links.forms.search.sortType.asc"/></option>
+                                    <option value="desc" data-image="${resource(dir: 'images', file: 'down.png')}"><g:message code="links.forms.search.sortType.desc"/></option>
                                 </select>
                             </div>
 
@@ -86,11 +86,11 @@
                                   onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)"
                                   style="margin-bottom: 3px;">
                         <fieldset>
-                            <legend>Add a link</legend>
+                            <legend><g:message code="links.forms.add.title"/></legend>
 
                             <div class="input-prepend input-append" style="margin-bottom: 3px;">
-                                <span class="add-on">url</span>
-                                <input type="text" id="txtUrl" name="url" class="input-xxlarge" placeholder="http://..." maxlength="200"/> <%-- required="" --%>
+                                <span class="add-on"><g:message code="links.forms.add.url.title"/></span>
+                                <input type="text" id="txtUrl" name="url" class="input-xxlarge" placeholder="<g:message code="links.forms.add.txtUrl.placeholder"/>" maxlength="200"/> <%-- required="" --%>
 
                                 <button type="submit" class="btn btn-primary">
                                     <i class="icon-plus icon-white"></i>
@@ -98,12 +98,13 @@
                             </div>
 
                             <div>
-                                <span class="label" style="vertical-align: top; margin-top: 6px;">Tags (Optional)</span> <%--a class="btn btn-info btn-mini" id="showTagInput">show</a--%>
+                                <span class="label" style="vertical-align: top; margin-top: 6px;"><g:message code="links.forms.add.tags.title"/></span> <%--a class="btn btn-info btn-mini" id="showTagInput">show</a--%>
                                 <span>
-                                    <g:textField id="txtTag" name="tag"
-                                                 style="font-size: 13px; margin-bottom: 0px;"
-                                                 class="input-xlarge with-tooltip" placeholder="for example : news economy ..." maxlength="100"
-                                                 rel="tooltip" data-placement="top" data-original-title="space separated tag names"/>
+                                    <input type="text"
+                                           id="txtTag" name="tag"
+                                           style="font-size: 13px; margin-bottom: 0px;"
+                                           class="input-xlarge with-tooltip" placeholder="<g:message code="links.forms.add.txtTag.placeholder"/>" maxlength="100"
+                                           rel="tooltip" data-placement="top" data-original-title="<g:message code="links.forms.add.txtTag.tooltip"/>"/>
                                 </span>
                             </div>
                         </fieldset>
@@ -119,7 +120,7 @@
         </div>
 
         <div id="no-result" class="alert alert-info message-box" style="display: none;">
-            No result
+            <g:message code="links.noresult.label"/>
         </div>
 
         <%--
@@ -191,70 +192,70 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3>
-                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> Confirmation</h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> <g:message code="links.dialogs.confirmation.title"/></h3>
             </div>
             <div class="modal-body">
-                <p>Do you really want to delete this link?</p>
+                <p><g:message code="links.dialogs.deleteLinkDialog.label"/></p>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
-                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="deleteLink();">Yes</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true"><g:message code="links.dialogs.result.no"/></button>
+                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="deleteLink();"><g:message code="links.dialogs.result.yes"/></button>
             </div>
         </div>
         <div id="deleteTagDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3>
-                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> Confirmation</h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> <g:message code="links.dialogs.confirmation.title"/></h3>
             </div>
             <div class="modal-body">
-                <p>Do you really want to delete this tag?</p>
+                <p><g:message code="links.dialogs.deleteTagDialog.label"/></p>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
-                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="deleteTag();">Yes</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true"><g:message code="links.dialogs.result.no"/></button>
+                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="deleteTag();"><g:message code="links.dialogs.result.yes"/></button>
             </div>
         </div>
         <div id="addTagDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3>
-                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> Add tags</h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> <g:message code="links.dialogs.addTagDialog.title"/></h3>
             </div>
             <div class="modal-body" style="text-align: center;">
                 <g:textField id="newTagInput" name="name" class="input-xlarge"/>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
-                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="addTag();">Yes</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true"><g:message code="links.dialogs.result.no"/></button>
+                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="addTag();"><g:message code="links.dialogs.result.yes"/></button>
             </div>
         </div>
         <div id="markAsReadDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3>
-                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> Mark as read?</h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> <g:message code="links.dialogs.markAsReadDialog.title"/></h3>
             </div>
             <div class="modal-body">
                 <p class="question"></p>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">No</button>
-                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="markSelectedLinkAsRead();">Yes</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true"><g:message code="links.dialogs.result.no"/></button>
+                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="markSelectedLinkAsRead();"><g:message code="links.dialogs.result.yes"/></button>
             </div>
         </div>
         <div id="tagsCloudDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3>
-                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> Cloud of tags</h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> <g:message code="links.dialogs.tagsCloudDialog.title"/></h3>
             </div>
             <div class="modal-body">
-                <p class="question">Click on a tag to filter on it</p>
+                <p class="question"><g:message code="links.dialogs.tagsCloudDialog.label"/></p>
                 <div id="tagsCloud" style="width: 520px; height: 310px;"/>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true"><g:message code="links.dialogs.result.cancel"/></button>
             </div>
         </div>
 
@@ -270,6 +271,22 @@
 
         <g:javascript>
             var infiniteScrollLoadImage = '${resource(dir: "images/loading", file: "loading_medium.gif")}';
+            var noTagsFoundError  = '<g:message code="links.cloudtags.noTagsFoundError.label"/>';
+            var defaultErrorMessage = '<g:message code="links.default.errorMessage.label"/>';
+            var markAsReadMessage = '<g:message code="links.dialogs.markAsReadDialog.label"/>';
+            var markAsReadFromMessage = '<g:message code="links.dialogs.markAsReadDialog.from.label"/>';
+            var infinitescrollFinishedMsg = '<g:message code="infinitescroll.finishedMsg"/>';
+            var infinitescrollMsgText = '<g:message code="infinitescroll.msgText"/>';
+            var templateI18n = {
+                goto : '<g:message code="links.link.template.domain.goto"/>',
+                addTag : '<g:message code="links.link.template.domain.addTag"/>',
+                deleteLink : '<g:message code="links.link.template.domain.deleteLink"/>',
+                markAsRead : '<g:message code="links.link.template.domain.markAsRead"/>',
+                markAsUnread : '<g:message code="links.link.template.domain.markAsUnread"/>',
+                deleteTag : '<g:message code="links.link.template.domain.deleteTag"/>',
+                filterOnTag : '<g:message code="links.link.template.domain.filterOnTag"/>'
+            };
+            //var  = '<g:message code=""/>';
         </g:javascript>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'links.js')}"></script>
 

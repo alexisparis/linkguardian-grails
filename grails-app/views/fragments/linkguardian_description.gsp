@@ -9,6 +9,7 @@
         $('img.bootstrap').attr('src', '<g:resource  dir="images" file="bootstrap.png"/>');
         $('img.jquery').attr('src', '<g:resource  dir="images" file="icon-jquery.png"/>');
         $('img.openshift').attr('src', '<g:resource  dir="images" file="openshift.png"/>');
+        $('img.less').attr('src', '<g:resource  dir="images" file="less-icon.png"/>');
     });
 
 </script>

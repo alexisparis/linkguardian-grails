@@ -34,11 +34,21 @@
             $(document).ready(
                     function()
                     {
+                        $('.lg').html('<g:message code="lg.title"/>');
+
                         $('#about').on('click', function(event)
                         {
                             $('#aboutDialog').modal();
                         });
 
+                        var hideBlockUi = function(event){
+                            if ( blockUiInhibiter == 0 )
+                            {
+                                setTimeout(function(){
+                                    $.unblockUI();
+                                }, 200); //TODO : reduce additional times
+                            }
+                        };
                         $(document).ajaxStart(function(event){
                             if ( blockUiInhibiter == 0 )
                             {
@@ -54,14 +64,7 @@
                                 );
                             }
                         })
-                                .ajaxStop(function(event){
-                                              if ( blockUiInhibiter == 0 )
-                                              {
-                                                  setTimeout(function(){
-                                                      $.unblockUI();
-                                                  }, 200); //TODO : reduce additional times
-                                              }
-                                          });
+                                .ajaxStop(hideBlockUi).ajaxError(hideBlockUi);
                     });
 
         </script>
@@ -78,9 +81,7 @@
                             <a href="https://linkguardian-blackdog.rhcloud.com">
                                 <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50" style="margin-top: -10px;"/>
                             </a>
-                            <span class="lg" style="display: inline-block; padding-top: 16px; font-size: 30px;">
-                                <g:message code="lg.title"/>
-                            </span>
+                            <span class="lg big" style="display: inline-block; padding-top: 16px;"></span>
                             <span class="lgDescription" style="margin-left: 40px;"><g:message code="lg.description.small"/></span>
                             <sec:ifLoggedIn>
                                 <div style="float: right; text-align: right;">

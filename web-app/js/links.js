@@ -4,9 +4,9 @@ function tagTemplate(tagNameRef)
 {
     return '<span class="tag btn btn-primary btn-mini" data-tag="{{' + tagNameRef + '}}">' +
            '<button class="close deleteTagButton with-tooltip"' +
-           ' rel="tooltip" data-placement="top" data-original-title="Delete tag"' +
+           ' rel="tooltip" data-placement="top" data-original-title="' + templateI18n.deleteTag + '"' +
            ' style="color: #fff;">&times;</button>' +
-           '<span class="with-tooltip" rel="tooltip" data-placement="top" data-original-title="filter on \'{{' + tagNameRef + '}}\'">{{' + tagNameRef + '}}</span>' +
+           '<span class="with-tooltip" rel="tooltip" data-placement="top" data-original-title="' + templateI18n.filterOnTag + ' \'{{' + tagNameRef + '}}\'">{{' + tagNameRef + '}}</span>' +
            '</span>';
 };
 
@@ -22,52 +22,49 @@ function jsonLinksToHtml(model)
 
     var template =
         '{{#links}}' +
-        '<div class="linkpart {{#read}}read{{/read}}" data-url="{{url}}" data-id="{{id}}" data-note={{note}}>' +
-        '<div>' +
-        '<span class="linkUrl with-tooltip" rel="tooltip" data-placement="top" data-original-title="go to {{domain}}">' +
-        '<img align="left" src="http://www.google.com/s2/favicons?domain={{domain}}" class="linkparticon"' +
-        'width="20px" height="20px" border="4px" style="margin-right: 2px; margin-bottom: 1px;"/>' +
-        '</span>' +
-        '<div class="rateAndOperations">' +
-        '<span class="rate"></span>' +
-            //'<button class="archiveLinkButton with-tooltip" rel="tooltip" data-placement="top" data-original-title="Archive link">' +
-            //    '<i class="icon-briefcase"></i>' +
-            //'</button>' +
-            //'<i class="icon-briefcase visible-on-hover"></i>' +
-        '<button class="close deleteLinkButton with-tooltip visible-on-hover" rel="tooltip" data-placement="top" data-original-title="Delete link">&times;</button>' +
-        '<div style="clear: both;"></div>' +
-        '<div class="actions visible-on-hover" style="float: right; margin-right: 4px;">' +
-        '<a class="with-tooltip unread" rel="tooltip" data-placement="top" data-original-title="mark as unread"><i class="icon icon-eye-close"></i></a>' +
-        '<a class="with-tooltip read"   rel="tooltip" data-placement="top" data-original-title="mark as read"><i class="icon icon-eye-open"></i></a>' +
-        '</div>' +
-        '</div>' +
-        '</div>' +
-        '<div style="margin-top: 1px;word-wrap:break-word;">' +
-        '<div class="content with-tooltip" rel="tooltip" data-placement="top" data-original-title="go to {{domain}}">' +
-        '{{#title}}<span class="title"><b>{{title}}</b></span><br/>{{/title}}' +
-        '{{#description}}<span class="description">{{description}}</span><br/>{{/description}}' +
-        '<span class="domain" style="font-size: 11px;"><i>{{domain}}</i></span>' +
-        '</div>' +
-        '<div class="tags with-tooltip" rel="tooltip" data-placement="top" data-original-title="go to {{domain}}">' +
-        '<i class="icon-tags" style="margin-right: 3px; margin-left: 6px;"></i>' +
-        '<span class="tags-wrapper">' +
-        '{{#_tags}}' +
-        tagTemplate('label') +
-        '{{/_tags}}' +
-        '</span>' +
-        '<span class="btn btn-primary btn-mini add-tag visible-on-hover">' +
-        '<i class="icon-plus-sign with-tooltip" rel="tooltip" data-original-title="add a new tag" data-placement="top"></i>' +
-        '</span>' +
-        '</div>' +
-        '</div>' +
-        '</div>' +
-        '{{/links}}';
-
-    var template2 =
-        '{{#links}}' +
-        '<div class="linkpart {{#read}}read{{/read}}" data-url="{{url}}" data-id="{{id}}" data-note={{note}}>' +
-        '{{description}}' +
-        '</div>' +
+            '<div class="linkpart {{#read}}read{{/read}}" data-url="{{url}}" data-id="{{id}}" data-note={{note}}>' +
+                '<div>' +
+                    '<span class="linkUrl with-tooltip" rel="tooltip" data-placement="top" data-original-title="' + templateI18n.goto + ' {{domain}}">' +
+                        '<img align="left" src="http://www.google.com/s2/favicons?domain={{domain}}" class="linkparticon"' +
+                        'width="20px" height="20px" border="4px" style="margin-right: 2px; margin-bottom: 1px;"/>' +
+                    '</span>' +
+                    '<div class="rateAndOperations">' +
+                        '<span class="rate"></span>' +
+                            //'<button class="archiveLinkButton with-tooltip" rel="tooltip" data-placement="top" data-original-title="Archive link">' +
+                            //    '<i class="icon-briefcase"></i>' +
+                            //'</button>' +
+                            //'<i class="icon-briefcase visible-on-hover"></i>' +
+                        '<button class="close deleteLinkButton with-tooltip visible-on-hover" rel="tooltip" data-placement="left" data-original-title="' + templateI18n.deleteLink +'">&times;</button>' +
+                        '<div style="clear: both;"></div>' +
+                        '<div class="actions visible-on-hover" style="float: right; margin-right: 4px;">' +
+                            '<a class="with-tooltip unread" rel="tooltip" data-placement="left" data-original-title="' + templateI18n.markAsUnread + '">' +
+                                '<i class="icon icon-eye-close"></i>' +
+                            '</a>' +
+                            '<a class="with-tooltip read"   rel="tooltip" data-placement="left" data-original-title="' + templateI18n.markAsRead + '">' +
+                                '<i class="icon icon-eye-open"></i>' +
+                            '</a>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+                '<div style="margin-top: 1px;word-wrap:break-word;">' +
+                    '<div class="content with-tooltip" rel="tooltip" data-placement="top" data-original-title="' + templateI18n.goto + ' {{domain}}">' +
+                        '{{#title}}<span class="title"><b>{{title}}</b></span><br/>{{/title}}' +
+                        '{{#description}}<span class="description">{{description}}</span><br/>{{/description}}' +
+                        '<span class="domain" style="font-size: 11px;"><i>{{domain}}</i></span>' +
+                    '</div>' +
+                    '<div class="tags with-tooltip">' + //</div> rel="tooltip" data-placement="top" data-original-title="' + templateI18n.goto + ' {{domain}}">' +
+                        '<i class="icon-tags" style="margin-right: 3px; margin-left: 6px;"></i>' +
+                        '<span class="tags-wrapper">' +
+                            '{{#_tags}}' +
+                                tagTemplate('label') +
+                            '{{/_tags}}' +
+                        '</span>' +
+                        '<span class="btn btn-primary btn-mini add-tag visible-on-hover">' +
+                            '<i class="icon-plus-sign with-tooltip" rel="tooltip" data-original-title="' + templateI18n.addTag + '" data-placement="top"></i>' +
+                        '</span>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
         '{{/links}}';
 
     var output = Mustache.render(template, _model);
@@ -142,9 +139,9 @@ function updateLinks(model)
     $container.infinitescroll({
               loading: {
                   selector: '#inf-scroll-load',
-                  finishedMsg: '<em class="text-info">No more links to load.</em>'
+                  finishedMsg: infinitescrollFinishedMsg
                   ,img: infiniteScrollLoadImage
-                  ,msgText: '<em class="text-info">Loading next links...</em>'
+                  ,msgText: infinitescrollMsgText
               },
               debug : true,
               navSelector : '#nav-inf-scroll',
@@ -264,6 +261,8 @@ function tagAdded(data)
             $(output).appendTo(jTagWrapperRef);
         }
 
+        jTagWrapperRef.find('.with-tooltip').tooltip();
+
         displayMessage(data.message);
     }
 };
@@ -293,7 +292,6 @@ function markAsReadDone(data)
 {
     var linkPart = $('div.linkpart[data-id="' + $('#markAsReadForm').find('input[name="id"]').eq(0).val() + '"]');
     linkPart.addClass("read");
-    //TODO : remove from masonry if read non coché
     displayMessage(data);
     submitFilterForm();
 };
@@ -302,7 +300,6 @@ function markAsUnreadDone(data)
 {
     var linkPart = $('div.linkpart[data-id="' + $('#markAsUnreadForm').find('input[name="id"]').eq(0).val() + '"]');
     linkPart.removeClass("read");
-    //TODO : remove from masonry if unread non coché
     displayMessage(data);
     submitFilterForm();
 };
@@ -351,7 +348,7 @@ function showTagsCloud(data)
     }
     else
     {
-        displayError('no tags found');
+        displayError(noTagsFoundError);
     }
 };
 
@@ -370,7 +367,7 @@ function displayFailure(XMLHttpRequest,textStatus,errorThrown)
 
 function displayStdError()
 {
-    displayError('error');
+    displayError(defaultErrorMessage);
 };
 
 function displayError(msg)
@@ -522,7 +519,7 @@ $(document).ready(
 
             var modalMarker = $('#markAsReadDialog');
             modalMarker.find('span.img').html(jThis.find('span.linkUrl').html());
-            modalMarker.find('.question').html("Do you want to mark as read the link<br/><b>" + jThis.find('.title').html() + "</b><br/>from " + jThis.find('.domain').html() + " ?");
+            modalMarker.find('.question').html(markAsReadMessage + "<br/><b>" + jThis.find('.title').html() + "</b><br/>" + markAsReadFromMessage + " " + jThis.find('.domain').html() + " ?");
             modalMarker.modal();
 
             window.open(jThis.attr('data-url'),'_blank');

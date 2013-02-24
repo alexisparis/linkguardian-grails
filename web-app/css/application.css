@@ -18,14 +18,12 @@ div.header
     font-family: 'Clicker Script', cursive;
     font-size: 20px;
 }
-.lg-big
+.lg.big
 {
-    font-family: 'Clicker Script', cursive;
     font-size: 30px;
 }
-.lg-medium
+.lg.medium
 {
-    font-family: 'Clicker Script', cursive;
     font-size: 24px;
 }
 

@@ -20,6 +20,7 @@ class StringNormalizerService
 
                     token = Normalizer.normalize(token.trim(), Normalizer.Form.NFD)
                                       .replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
+                                      .replaceAll("_", "")
 
                     if ( token != null )
                     {

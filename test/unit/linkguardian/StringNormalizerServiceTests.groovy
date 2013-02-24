@@ -31,6 +31,7 @@ class StringNormalizerServiceTests
         data.put("[e]", " é   ")
         data.put("[eaecu]", "éàèçù")
         data.put("[]", "-¨<>'!%*£+/.?")
+        data.put("[]", "_%+=&@")
 
         data.each {
             assertEquals(it.key, stringNormalizerService.normalize(it.value).toString())

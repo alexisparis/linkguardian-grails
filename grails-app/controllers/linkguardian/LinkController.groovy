@@ -106,7 +106,7 @@ class LinkController
                 else
                 {
                     response.status = 500
-                    render this.error("only one tag allowed in the filter input") as JSON
+                    render this.error(message(code: "service.link.filter.oneTagAllowed")) as JSON
                     success = false
                 }
             }
@@ -175,7 +175,7 @@ class LinkController
         if ( params.url == null || params.url.trim().length() == 0 )
         {
             response.status = 500
-                msg = this.error("provide a valid url")
+                msg = this.error(message(code: "service.link.addUrl.invalidUrl"))
             }
             else
             {
@@ -219,7 +219,7 @@ class LinkController
                    else
                    {
                        response.status = 500
-                       msg = this.error("invalid url ==> redirection loop")
+                       msg = this.error(message(code: "service.link.addUrl.redirectionLoop"))
                        break
                    }
 
@@ -231,7 +231,7 @@ class LinkController
                     if ( msg != null && redirectCount >= redirectLimitCount )
                     {
                         response.status = 500
-                        msg = this.error("invalid url ==> too many redirections")
+                        msg = this.error(message(code: "service.link.addUrl.tooMuchRedirections"))
                     }
                 }
             }
@@ -263,13 +263,13 @@ class LinkController
                     if ( Link.findByPersonAndUrl(connectedPerson, newLink.url) != null )
                     {
                         response.status = 500
-                        msg = this.error("the link '" + params.url + "' already exists")
+                        msg = this.error(message(code: "service.link.addUrl.linkAlreadyExists", args: [params.url]))
                     }
                     else
                     {
                         newLink.save(flush: true)
 
-                        msg = this.success("the link has been created")
+                        msg = this.success(message(code: "service.link.addUrl.linkCreated"))
                     }
                 }
                 catch(TagException e)
@@ -285,18 +285,18 @@ class LinkController
                     {
                         if ( e.getCause() instanceof MalformedURLException )
                         {
-                            msg = this.error("The url '" + params.url + "' is invalid ==> '" + e.getCause().getMessage() + "'")
+                            msg = this.error(message(code: "service.link.addUrl.invalidUrlWithCause", args: [params.url, e.getCause().getMessage()]))
                         }
                         else if ( e.getCause() instanceof UnknownHostException )
                         {
-                            msg = this.error("The host '" + ((UnknownHostException)e.getCause()).getMessage() + "' cannot be found")
+                            msg = this.error(message(code: "service.link.addUrl.unknownHost", args: [((UnknownHostException)e.getCause()).getMessage()]))
                         }
                     }
 
                     if ( msg == null )
                     {
                         // default message
-                        msg = this.error("error while trying to save the link '" + params.url + "'")
+                        msg = this.error(message(code: "service.link.addUrl.defaultError", args: [params.url]))
                     }
                 }
             }
@@ -327,18 +327,18 @@ class LinkController
             else
             {
                 response.status = 500
-                render this.error("the link is owned by another user ==> you can't delete it") as JSON
+                msg = this.error(message(code: "service.link.delete.forbidden")) as JSON
             }
         }
 
         if (success)
         {
-            render this.success("the link has been deleted") as JSON
+            render this.success(message(code: "service.link.delete.success")) as JSON
         }
         else
         {
             response.status = 500
-            render this.error("error while trying to delete the link") as JSON
+            render this.error(message(code: "service.link.delete.error")) as JSON
         }
     }
 
@@ -363,11 +363,15 @@ class LinkController
 
                 int tagsToAddSize = tagsToAdd.size()
                 def severallTagsToAdd = tagsToAddSize > 1
+                log.info "tags to add count : " + tagsToAddSize
+                tagsToAdd.each {
+                    log.info "   " + it + "#"
+                }
 
                 if ( tagsToAddSize == 0 )
                 {
                     response.status = 500
-                    msg = this.error("the tag is not valid")
+                    msg = this.error(message(code: "service.link.addTag.invalidTag"))
                 }
                 else
                 {
@@ -382,7 +386,17 @@ class LinkController
                     if ( tagsToAdd.isEmpty() )
                     {
                         response.status = 500
-                        msg = this.error("tag" + (severallTagsToAdd ? "s" : "") + " already exist" + (severallTagsToAdd ? "" : "s"))
+                        def i18nCode
+                        if ( severallTagsToAdd )
+                        {
+                            i18nCode = "service.link.addTag.tagsExist"
+                        }
+                        else
+                        {
+                            i18nCode = "service.link.addTag.tagExists"
+                        }
+
+                        msg = this.error(message(code: i18nCode))
                     }
                     else
                     {
@@ -393,16 +407,16 @@ class LinkController
                         {
                             if ( tagsToAdd.size() < tagsToAddSize )
                             {
-                                msg = this.warning("some of the tags you provide have been added")
+                                msg = this.warning(message(code: "service.link.addTag.someTagsAdded"))
                             }
                             else
                             {
-                                msg = this.success("the tags have been added")
+                                msg = this.success(message(code: "service.link.addTag.tagsAdded"))
                             }
                         }
                         else
                         {
-                            msg = this.success("the tag has been added")
+                            msg = this.success(message(code: "service.link.addTag.tagAdded"))
                         }
                     }
                 }
@@ -410,13 +424,13 @@ class LinkController
             else
             {
                 response.status = 500
-                msg = this.error("the link is owned by another user ==> you can't modify it")
+                msg = this.error(message(code: "service.link.addTag.forbidden"))
             }
         }
         else
         {
             response.setStatus(500)
-            msg = this.error("error while trying to add the new tag")
+            msg = this.error(message(code: "service.link.addTag.error"))
         }
 
         if ( success )
@@ -466,7 +480,7 @@ class LinkController
                 if ( tagToDelete == null )
                 {
                     response.status = 500
-                    render this.error("the tag '" + tag + "' does not exist for this link") as JSON
+                    render this.error(message(code: "service.link.deleteTag.tagDoesNotExist"), args: [tag]) as JSON
                 }
                 else
                 {
@@ -478,18 +492,18 @@ class LinkController
             else
             {
                 response.status = 500
-                render this.error("the link is owned by another user ==> you can't modify it") as JSON
+                render this.error(message(code: "service.link.deleteTag.forbidden")) as JSON
             }
         }
 
         if (success)
         {
-            render this.success("the tag '" + tag + "' has been deleted") as JSON
+            render this.success(message(code: "service.link.deleteTag.success"), args: [tag]) as JSON
         }
         else
         {
             response.status = 500
-            render this.error("error while trying to delete the tag") as JSON
+            render this.error(message(code: "service.link.deleteTag.error")) as JSON
         }
     }
 
@@ -529,25 +543,25 @@ class LinkController
 
                     link.note = Note.valueOf(Note.class, "Note_" + _score)
                     link.save()
-                    msg = this.success("the note has been updated")
+                    msg = this.success(message(code: "service.link.updateNote.success"))
                     success = true
                 }
                 catch (Exception e)
                 {
-                    log.error("error while trying to update a note", e)
+                    log.error("error while trying to update the note", e)
                 }
             }
             else
             {
                 response.status = 500
-                msg =  this.error("the link is owned by another user ==> you can't modify it")
+                msg =  this.error(message(code: "service.link.updateNote.forbidden"))
             }
         }
 
         if (! success && msg == null)
         {
             response.status = 500
-            msg = this.error("error while trying to update the note")
+            msg = this.error(message(code: "service.link.updateNote.error"))
         }
 
         render msg as JSON
@@ -581,8 +595,18 @@ class LinkController
         log.info "calling changeReadAttribute for link : " + id + " read : " +value
 
         def success = false
-        def message = null
+        def msg = null
         def link = Link.get(id)
+
+        String readType
+        if ( value )
+        {
+            readType = message(code: "link.read.label")
+        }
+        else
+        {
+            readType = message(code: "link.unread.label")
+        }
 
         if ( link != null )
         {
@@ -590,21 +614,21 @@ class LinkController
             {
                 link.read = value
                 link.save()
-                message = this.success("the link has been marked as " + (value ? "read" : "unread"))
+                msg = this.success(message(code: "service.link.changeReadAttribute.success", args: [readType]))
                 success = true
             }
             else
             {
-                message =  this.error("the link is owned by another user ==> you can't modify it")
+                msg =  this.error(message(code: "service.link.changeReadAttribute.forbidden"))
             }
         }
         if ( ! success && message == null )
         {
             response.status = 500
-            message = this.error("error while trying to mark the link as " + (value ? "read" : "unread"))
+            msg = this.error(message(code: "service.link.changeReadAttribute.error", args: [readType]))
         }
 
-        render message as JSON
+        render msg as JSON
     }
 
     /**
