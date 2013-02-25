@@ -167,6 +167,8 @@ function updateLinks(model)
           }
     );
 
+    $('#listing-part .with-tooltip').tooltip();
+
     // si j'appelle masonry sans delay, cela provoque la superposition de block
     // certainement du au fait que certaines initialisations (infinite-scroll, raty) ne sont
     // pas complètement terminés et du coup la détermination de la hauteur du block foire.
@@ -177,8 +179,6 @@ function updateLinks(model)
 
                    jOutput.fadeIn();
                }, 200);//2000);
-
-    $('#listing-part .with-tooltip').tooltip();
 };
 
 function setSubmitFilterButtonToNormalState()

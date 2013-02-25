@@ -25,7 +25,7 @@ class LinkController
 
     def springSecurityService
 
-    def linksPerPage = 30
+    def linksPerPage = 100
 
     def success(String msg)
     {
