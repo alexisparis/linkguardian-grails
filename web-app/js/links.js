@@ -87,8 +87,6 @@ function updateLinks(model)
     {
         $container.masonry('remove', $container.children());
     }
-    //.masonry( 'reloadItems' );//.masonry( 'reloadItems' );
-    //$container.masonry('reload');
 
     if ( model && model.links && model.links.length > 0 )
     {
