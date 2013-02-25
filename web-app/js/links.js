@@ -24,16 +24,12 @@ function jsonLinksToHtml(model)
         '{{#links}}' +
             '<div class="linkpart {{#read}}read{{/read}}" data-url="{{url}}" data-id="{{id}}" data-note={{note}}>' +
                 '<div>' +
-                    '<div class="linkUrl with-tooltip" rel="tooltip" data-placement="top" data-original-title="' + templateI18n.goto + ' {{domain}}" style="height: 20px; width: 20px; float: left;">' +
+                    '<div class="linkUrl with-tooltip" rel="tooltip" data-placement="top" data-original-title="' + templateI18n.goto + ' {{domain}}" style="height: 21px; width: 22px; float: left;">' +
                         '<img align="left" src="http://www.google.com/s2/favicons?domain={{domain}}" class="linkparticon"' +
                         'width="20px" height="20px" border="4px" style="margin-right: 2px; margin-bottom: 1px;"/>' +
                     '</div>' +
-                    '<div class="rateAndOperations">' +
+                    '<div class="rateAndOperations" style="width: 143px; height: 40px;">' +
                         '<span class="rate"></span>' +
-                            //'<button class="archiveLinkButton with-tooltip" rel="tooltip" data-placement="top" data-original-title="Archive link">' +
-                            //    '<i class="icon-briefcase"></i>' +
-                            //'</button>' +
-                            //'<i class="icon-briefcase visible-on-hover"></i>' +
                         '<button class="close deleteLinkButton with-tooltip visible-on-hover" rel="tooltip" data-placement="left" data-original-title="' + templateI18n.deleteLink +'">&times;</button>' +
                         '<div style="clear: both;"></div>' +
                         '<div class="actions visible-on-hover" style="float: right; margin-right: 4px;">' +
