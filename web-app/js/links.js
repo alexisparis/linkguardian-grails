@@ -420,6 +420,64 @@ function displayMessage(data)
     }
 };
 
+var markAsReadFormName = "markAsReadForm";
+var markAsUnreadFormName = "markAsUnreadForm";
+
+function markAsRead(linkId)
+{
+    changeReadability(linkId, markAsReadFormName)(null);//.call(this, null);
+};
+
+function markAsUnread(linkId)
+{
+    changeReadability(linkId, markAsUnreadFormName)(null);//.call(this, null);
+};
+
+function changeReadability(linkId, formName)
+{
+    return function(event)
+    {
+        var form = $('#' + formName);
+        form.find('input[name="id"]').val(linkId);
+        form.submit();
+    };
+};
+
+function markSelectedLinkAsRead()
+{
+    var id = $('div.linkpart.selected').attr('data-id');
+    if ( id )
+    {
+        markAsRead(id);
+    }
+    else
+    {
+        displayStdError();
+    }
+};
+
+function changeRead(read)
+{
+    var formName = null;
+
+    if( read )
+    {
+        formName = markAsReadFormName;
+    }
+    else
+    {
+        formName = markAsUnreadFormName;
+    }
+
+    return function(event)
+    {
+        var linkId = $(this).parents('div.linkpart').eq(0).attr('data-id');
+        var form = $('#' + formName);
+        form.find('input[name="id"]').val(linkId);
+        form.submit();
+    }
+};
+
 $(document).ready(
     function()
     {
@@ -543,19 +601,8 @@ $(document).ready(
         $container.on('click', 'img.linkparticon', goToLink);
         $container.on('click', 'div.tags', goToLink);
 
-        var changeRead = function(read, formName)
-        {
-            return function(event)
-            {
-                var linkId = $(this).parents('div.linkpart').eq(0).attr('data-id');
-                var form = $('#' + formName);
-                form.find('input[name="id"]').val(linkId);
-                form.submit();
-            };
-        };
-
-        $container.on('click', 'a.read', changeRead(true, "markAsReadForm"));
-        $container.on('click', 'a.unread', changeRead(false, "markAsUnreadForm"));
+        $container.on('click', 'a.read', changeRead(true));
+        $container.on('click', 'a.unread', changeRead(false));
 
         $('input.read-marker').on('click', function(event)
         {

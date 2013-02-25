@@ -58,8 +58,6 @@ class LinkController
         def start = System.currentTimeMillis();
         log.info "calling filter from LinkController with filter equals to " + token + ", read status : " + read_status + ", sort by " + sortBy + " " + sortType + ", page = " + page
 
-        //Thread.sleep(4000)
-
         def queryLinks = Collections.emptyList()
 
         def _sortBy = sortBy
@@ -122,7 +120,11 @@ class LinkController
                 query = query.where { read == true }
             }
 
+            def query_start = System.currentTimeMillis();
+
             queryLinks = query.list(queryParams)
+
+            log.info "query execution : " + (System.currentTimeMillis() - query_start) + " ms"
         }
 
         if ( success )
@@ -160,6 +162,8 @@ class LinkController
                         }
                     }
                 }
+
+                log.info "filter execution : " + (System.currentTimeMillis() - start) + " ms"
             }
         }
     }

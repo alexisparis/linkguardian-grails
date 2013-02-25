@@ -8,7 +8,7 @@
     <file path="/User.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1358105264987" ignored="false" />
     <file path="/Link.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361392474042" ignored="false" />
     <file path="/Note.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1359324040118" ignored="false" />
-    <file path="/LinkController.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361822382593" ignored="false" />
+    <file path="/LinkController.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361823099910" ignored="false" />
     <file path="/fragment.java" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1359319633215" ignored="false" />
     <file path="/index.gsp" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1358108888633" ignored="false" />
     <file path="/list.gsp" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361719083680" ignored="false" />
@@ -40,17 +40,17 @@
     <file path="/Person.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361392440380" ignored="false" />
     <file path="$PROJECT_DIR$/src/main/webapp/plugins/twitter-bootstrap-2.2.2/js/bootstrap-tooltip.js" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1360585149994" ignored="false" />
     <file path="$PROJECT_DIR$/src/main/webapp/plugins/twitter-bootstrap-2.2.2/js/bootstrap-popover.js" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1360585149994" ignored="false" />
-    <file path="/DataSource.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1360618489170" ignored="false" />
+    <file path="/DataSource.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361823219025" ignored="false" />
     <file path="/StringNormalizerService.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361687215641" ignored="false" />
     <file path="/Tag.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1360760703663" ignored="false" />
     <file path="/StringNormalizerServiceTests.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1360960498185" ignored="false" />
     <file path="/TagException.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1360789451248" ignored="false" />
-    <file path="/links.js" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361777492610" ignored="false" />
+    <file path="/links.js" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361825766938" ignored="false" />
     <file path="$PROJECT_DIR$/test/unit/linkguardian/crud/LinkCrudControllerTests.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361230664662" ignored="false" />
     <file path="/LinkCrudController.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361230799673" ignored="false" />
     <file path="$PROJECT_DIR$/test/unit/linkguardian/crud/RoleCrudControllerTests.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361230727143" ignored="false" />
     <file path="/auth.gsp" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361659082386" ignored="false" />
-    <file path="/messages.properties" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361692053651" ignored="false" />
+    <file path="/messages.properties" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361825077173" ignored="false" />
     <file path="/messages_fr.properties" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361686665089" ignored="false" />
     <file path="/clicker.css" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361279800049" ignored="false" />
     <file path="/TagWeight.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361364890963" ignored="false" />
@@ -131,16 +131,16 @@
       <file leaf-file-name="list.gsp" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/views/link/list.gsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="244" column="133" selection-start="14983" selection-end="15005" vertical-scroll-proportion="0.0">
+            <state line="178" column="56" selection-start="9970" selection-end="10305" vertical-scroll-proportion="-4.6595745">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LinkController.groovy" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="LinkController.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/controllers/linkguardian/LinkController.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="60" column="10" selection-start="1649" selection-end="1649" vertical-scroll-proportion="0.47571853">
+            <state line="155" column="50" selection-start="4582" selection-end="4582" vertical-scroll-proportion="291.52173">
               <folding />
             </state>
           </provider>
@@ -149,7 +149,7 @@
       <file leaf-file-name="messages.properties" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/i18n/messages.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="190" column="39" selection-start="11562" selection-end="11562" vertical-scroll-proportion="0.0">
+            <state line="85" column="73" selection-start="5128" selection-end="5128" vertical-scroll-proportion="-21.851852">
               <folding />
             </state>
           </provider>
@@ -158,52 +158,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Config.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grails-app/conf/Config.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="88" column="49" selection-start="3720" selection-end="3720" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DataSource.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grails-app/conf/DataSource.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="33" selection-start="447" selection-end="452" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.gsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/main.gsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="107" column="99" selection-start="4840" selection-end="4840" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="url-adding-attempt.gsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/grails-app/views/link/url-adding-attempt.gsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="51" column="20" selection-start="2464" selection-end="2464" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="links.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="links.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web-app/js/links.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="88" column="5" selection-start="4874" selection-end="4874" vertical-scroll-proportion="0.0">
+            <state line="477" column="5" selection-start="15248" selection-end="15248" vertical-scroll-proportion="0.5929444">
               <folding>
-                <marker date="1361820469000" expanded="false" signature="2100:2112" placeholder="..." />
-                <marker date="1361820469000" expanded="false" signature="2194:2226" placeholder="..." />
-                <marker date="1361820469000" expanded="false" signature="2881:2918" placeholder="..." />
-                <marker date="1361820469000" expanded="false" signature="3341:3357" placeholder="..." />
-                <marker date="1361820469000" expanded="false" signature="3634:3670" placeholder="..." />
+                <marker date="1361825781000" expanded="false" signature="2100:2112" placeholder="..." />
+                <marker date="1361825781000" expanded="false" signature="2194:2226" placeholder="..." />
+                <marker date="1361825781000" expanded="false" signature="2881:2918" placeholder="..." />
+                <marker date="1361825781000" expanded="false" signature="3341:3357" placeholder="..." />
+                <marker date="1361825781000" expanded="false" signature="3634:3670" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -219,7 +183,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/web-app/js/jquery.infinitescroll.js" />
         <option value="$PROJECT_DIR$/grails-app/views/login/auth.gsp" />
         <option value="$PROJECT_DIR$/web-app/css/application.css" />
         <option value="$PROJECT_DIR$/grails-app/views/fragments/linkguardian_description.gsp" />
@@ -227,14 +190,15 @@
         <option value="$PROJECT_DIR$/test/unit/linkguardian/StringNormalizerServiceTests.groovy" />
         <option value="$PROJECT_DIR$/grails-app/views/link/url_adding-attempt.gsp" />
         <option value="$PROJECT_DIR$/grails-app/views/layouts/main.gsp" />
-        <option value="$PROJECT_DIR$/grails-app/views/link/url-adding-attempt.gsp" />
         <option value="$PROJECT_DIR$/grails-app/views/link/list.gsp" />
-        <option value="$PROJECT_DIR$/grails-app/i18n/messages_fr.properties" />
-        <option value="$PROJECT_DIR$/grails-app/i18n/messages.properties" />
-        <option value="$PROJECT_DIR$/grails-app/conf/Config.groovy" />
         <option value="$PROJECT_DIR$/web-app/css/links.css" />
-        <option value="$PROJECT_DIR$/web-app/js/links.js" />
+        <option value="$PROJECT_DIR$/grails-app/conf/Config.groovy" />
         <option value="$PROJECT_DIR$/grails-app/controllers/linkguardian/LinkController.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/conf/DataSource.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/views/link/url-adding-attempt.gsp" />
+        <option value="$PROJECT_DIR$/grails-app/i18n/messages.properties" />
+        <option value="$PROJECT_DIR$/grails-app/i18n/messages_fr.properties" />
+        <option value="$PROJECT_DIR$/web-app/js/links.js" />
       </list>
     </option>
   </component>
@@ -1085,8 +1049,8 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32994652" sideWeight="0.7330189" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22941177" sideWeight="0.67075473" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26603773" sideWeight="0.47219253" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22941177" sideWeight="0.73396224" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26603773" sideWeight="0.47219253" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24528302" sideWeight="0.47005346" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1180,50 +1144,9 @@
         <state line="31" column="43" selection-start="1148" selection-end="1148" vertical-scroll-proportion="0.6208278" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/views/link/url-adding-attempt.gsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="20" selection-start="2464" selection-end="2464" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///opt/grails-2.2.0/src/grails-plugin-gsp-2.2.0-sources.jar!/org/codehaus/groovy/grails/plugins/web/taglib/ValidationTagLib.groovy">
       <provider selected="true" editor-type-id="text-editor">
         <state line="276" column="12" selection-start="9980" selection-end="9980" vertical-scroll-proportion="0.020026702">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/i18n/messages_fr.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="146" column="62" selection-start="10074" selection-end="10075" vertical-scroll-proportion="0.5440729">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="ResourceBundle">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/i18n/messages.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="190" column="39" selection-start="11562" selection-end="11562" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="ResourceBundle">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/main.gsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="107" column="99" selection-start="4840" selection-end="4840" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/views/link/list.gsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="244" column="133" selection-start="14983" selection-end="15005" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1233,33 +1156,6 @@
         <state line="118" column="23" selection-start="2205" selection-end="2205" vertical-scroll-proportion="1.8369099" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web-app/js/links.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="5" selection-start="4874" selection-end="4874" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1361820469000" expanded="false" signature="2100:2112" placeholder="..." />
-            <marker date="1361820469000" expanded="false" signature="2194:2226" placeholder="..." />
-            <marker date="1361820469000" expanded="false" signature="2881:2918" placeholder="..." />
-            <marker date="1361820469000" expanded="false" signature="3341:3357" placeholder="..." />
-            <marker date="1361820469000" expanded="false" signature="3634:3670" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/conf/Config.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="49" selection-start="3720" selection-end="3720" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/conf/DataSource.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="33" selection-start="447" selection-end="452" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/views/fragments/linkguardian_description.gsp">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="134" selection-start="520" selection-end="520" vertical-scroll-proportion="-2.8723404">
@@ -1267,10 +1163,82 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/conf/Config.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="90" column="63" selection-start="3846" selection-end="3846" vertical-scroll-proportion="0.24">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/conf/DataSource.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="32" selection-start="451" selection-end="451" vertical-scroll-proportion="0.42">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/views/link/url-adding-attempt.gsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="14" selection-start="621" selection-end="621" vertical-scroll-proportion="0.38406828">
+          <folding>
+            <marker date="1361823350000" expanded="true" signature="-1:-1" placeholder="{&quot;goto&quot;: ''...}" />
+            <marker date="1361823350000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1361823350000" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/main.gsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="127" column="93" selection-start="6605" selection-end="6605" vertical-scroll-proportion="0.44179523">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/views/link/list.gsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="178" column="56" selection-start="9970" selection-end="10305" vertical-scroll-proportion="-4.6595745">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/i18n/messages_fr.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="49" selection-start="2086" selection-end="2086" vertical-scroll-proportion="0.21830986">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/i18n/messages.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="85" column="73" selection-start="5128" selection-end="5128" vertical-scroll-proportion="-21.851852">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/controllers/linkguardian/LinkController.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="10" selection-start="1649" selection-end="1649" vertical-scroll-proportion="0.47571853">
+        <state line="155" column="50" selection-start="4582" selection-end="4582" vertical-scroll-proportion="291.52173">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web-app/js/links.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="477" column="5" selection-start="15248" selection-end="15248" vertical-scroll-proportion="0.5929444">
+          <folding>
+            <marker date="1361825781000" expanded="false" signature="2100:2112" placeholder="..." />
+            <marker date="1361825781000" expanded="false" signature="2194:2226" placeholder="..." />
+            <marker date="1361825781000" expanded="false" signature="2881:2918" placeholder="..." />
+            <marker date="1361825781000" expanded="false" signature="3341:3357" placeholder="..." />
+            <marker date="1361825781000" expanded="false" signature="3634:3670" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -18,10 +18,6 @@
             </a>
         </div>
 
-        <%--
-           cannot use <g:javascript src="jquery.raty.js" /> since it does not work with https
-        --%>
-
         <g:javascript>
             var infiniteScrollLoadImage = '${resource(dir: "images/loading", file: "loading_medium.gif")}';
             var noTagsFoundError  = '<g:message code="links.cloudtags.noTagsFoundError.label"/>';

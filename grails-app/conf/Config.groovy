@@ -86,7 +86,7 @@ log4j = {
     //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
     //}
 
-    debug "grails.app.controllers.LinkController"
+    debug "grails.app.controllers.linkguardian.LinkController"
           //,"grails.app.services.LinkBuilderService"
           //,"grails.app.services.StringNormalizerService"
           //,'org.hibernate.SQL'
