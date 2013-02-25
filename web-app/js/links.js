@@ -24,10 +24,10 @@ function jsonLinksToHtml(model)
         '{{#links}}' +
             '<div class="linkpart {{#read}}read{{/read}}" data-url="{{url}}" data-id="{{id}}" data-note={{note}}>' +
                 '<div>' +
-                    '<span class="linkUrl with-tooltip" rel="tooltip" data-placement="top" data-original-title="' + templateI18n.goto + ' {{domain}}">' +
+                    '<div class="linkUrl with-tooltip" rel="tooltip" data-placement="top" data-original-title="' + templateI18n.goto + ' {{domain}}" style="height: 20px; width: 20px; float: left;">' +
                         '<img align="left" src="http://www.google.com/s2/favicons?domain={{domain}}" class="linkparticon"' +
                         'width="20px" height="20px" border="4px" style="margin-right: 2px; margin-bottom: 1px;"/>' +
-                    '</span>' +
+                    '</div>' +
                     '<div class="rateAndOperations">' +
                         '<span class="rate"></span>' +
                             //'<button class="archiveLinkButton with-tooltip" rel="tooltip" data-placement="top" data-original-title="Archive link">' +
@@ -169,16 +169,22 @@ function updateLinks(model)
 
     $('#listing-part .with-tooltip').tooltip();
 
+    $container.masonry('appended', jOutput, true);
+
+    jOutput.fadeIn();
+
     // si j'appelle masonry sans delay, cela provoque la superposition de block
     // certainement du au fait que certaines initialisations (infinite-scroll, raty) ne sont
     // pas complètement terminés et du coup la détermination de la hauteur du block foire.
     // du coup, obligé d'ajouter un délai pour lancer masonry
+    /*
     setTimeout(function()
                {
                    $container.masonry('appended', jOutput, true);
 
                    jOutput.fadeIn();
-               }, 200);//2000);
+               }, 200);
+    */
 };
 
 function setSubmitFilterButtonToNormalState()
