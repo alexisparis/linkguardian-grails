@@ -45,7 +45,7 @@
     <file path="/Tag.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1360760703663" ignored="false" />
     <file path="/StringNormalizerServiceTests.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1360960498185" ignored="false" />
     <file path="/TagException.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1360789451248" ignored="false" />
-    <file path="/links.js" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361734765350" ignored="false" />
+    <file path="/links.js" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361777492610" ignored="false" />
     <file path="$PROJECT_DIR$/test/unit/linkguardian/crud/LinkCrudControllerTests.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361230664662" ignored="false" />
     <file path="/LinkCrudController.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361230799673" ignored="false" />
     <file path="$PROJECT_DIR$/test/unit/linkguardian/crud/RoleCrudControllerTests.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361230727143" ignored="false" />
@@ -184,25 +184,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="links.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="links.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web-app/js/links.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="140" column="0" selection-start="6945" selection-end="6945" vertical-scroll-proportion="-1.0196079">
+            <state line="180" column="18" selection-start="8375" selection-end="8375" vertical-scroll-proportion="0.5349854">
               <folding>
-                <marker date="1361734986000" expanded="false" signature="2100:2112" placeholder="..." />
-                <marker date="1361734986000" expanded="false" signature="2194:2226" placeholder="..." />
-                <marker date="1361734986000" expanded="false" signature="2881:2918" placeholder="..." />
-                <marker date="1361734986000" expanded="false" signature="3341:3357" placeholder="..." />
-                <marker date="1361734986000" expanded="false" signature="3634:3670" placeholder="..." />
+                <marker date="1361777904000" expanded="false" signature="2100:2112" placeholder="..." />
+                <marker date="1361777904000" expanded="false" signature="2194:2226" placeholder="..." />
+                <marker date="1361777904000" expanded="false" signature="2881:2918" placeholder="..." />
+                <marker date="1361777904000" expanded="false" signature="3341:3357" placeholder="..." />
+                <marker date="1361777904000" expanded="false" signature="3634:3670" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="links.css" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="links.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web-app/css/links.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="118" column="23" selection-start="2205" selection-end="2205" vertical-scroll-proportion="0.7">
+            <state line="118" column="23" selection-start="2205" selection-end="2205" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -232,8 +232,8 @@
         <option value="$PROJECT_DIR$/grails-app/i18n/messages.properties" />
         <option value="$PROJECT_DIR$/grails-app/conf/Config.groovy" />
         <option value="$PROJECT_DIR$/grails-app/controllers/linkguardian/LinkController.groovy" />
-        <option value="$PROJECT_DIR$/web-app/js/links.js" />
         <option value="$PROJECT_DIR$/web-app/css/links.css" />
+        <option value="$PROJECT_DIR$/web-app/js/links.js" />
       </list>
     </option>
   </component>
@@ -1253,23 +1253,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web-app/js/links.js">
+    <entry file="file://$PROJECT_DIR$/web-app/css/links.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="140" column="0" selection-start="6945" selection-end="6945" vertical-scroll-proportion="-1.0196079">
-          <folding>
-            <marker date="1361734986000" expanded="false" signature="2100:2112" placeholder="..." />
-            <marker date="1361734986000" expanded="false" signature="2194:2226" placeholder="..." />
-            <marker date="1361734986000" expanded="false" signature="2881:2918" placeholder="..." />
-            <marker date="1361734986000" expanded="false" signature="3341:3357" placeholder="..." />
-            <marker date="1361734986000" expanded="false" signature="3634:3670" placeholder="..." />
-          </folding>
+        <state line="118" column="23" selection-start="2205" selection-end="2205" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web-app/css/links.css">
+    <entry file="file://$PROJECT_DIR$/web-app/js/links.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="118" column="23" selection-start="2205" selection-end="2205" vertical-scroll-proportion="0.7">
-          <folding />
+        <state line="180" column="18" selection-start="8375" selection-end="8375" vertical-scroll-proportion="0.5349854">
+          <folding>
+            <marker date="1361777904000" expanded="false" signature="2100:2112" placeholder="..." />
+            <marker date="1361777904000" expanded="false" signature="2194:2226" placeholder="..." />
+            <marker date="1361777904000" expanded="false" signature="2881:2918" placeholder="..." />
+            <marker date="1361777904000" expanded="false" signature="3341:3357" placeholder="..." />
+            <marker date="1361777904000" expanded="false" signature="3634:3670" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

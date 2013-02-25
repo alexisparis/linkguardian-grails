@@ -104,6 +104,8 @@ function updateLinks(model)
     var output = jsonLinksToHtml(model);
     var jOutput = $(output);
 
+    jOutput.hide();
+
     // todo : find a better solution to force masonry to reset the layout
     var data = $container.data('masonry');
     for(var i = 0; i < data.colYs.length; i++)
@@ -115,12 +117,10 @@ function updateLinks(model)
 
     $('span.rate').each(function(idx, value)
                         {
-                            console.log("initialize raty...");
                             var jValue = $(value);
                             var jLinkPart = jValue.parents('div.linkpart').eq(0);
                             var currentScore = parseInt(jLinkPart.attr('data-note'));
 
-                            console.log("   current score : " + currentScore);
                             jValue.raty({
                                             cancel: true,
                                             size : 10,
@@ -138,8 +138,6 @@ function updateLinks(model)
                                             }
                                         });
                         });
-
-    $container.masonry('appended', jOutput, true);
 
     $container.infinitescroll({
               loading: {
@@ -171,11 +169,18 @@ function updateLinks(model)
           }
     );
 
-    //TODO
+    // si j'appelle masonry sans delay, cela provoque la superposition de block
+    // certainement du au fait que certaines initialisations (infinite-scroll, raty) ne sont
+    // pas complètement terminés et du coup la détermination de la hauteur du block foire.
+    // du coup, obligé d'ajouter un délai pour lancer masonry
+    setTimeout(function()
+               {
+                   $container.masonry('appended', jOutput, true);
+
+                   jOutput.fadeIn();
+               }, 200);//2000);
 
     $('#listing-part .with-tooltip').tooltip();
-
-    //$('#listing-part').find('span.rate').raty();
 };
 
 function setSubmitFilterButtonToNormalState()
