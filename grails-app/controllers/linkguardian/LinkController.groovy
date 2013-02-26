@@ -44,7 +44,12 @@ class LinkController
 
     def list()
     {
-        log.info "username : " + springSecurityService.getPrincipal().username
+        log.info "username : " + springSecurityService.principal.username
+        log.info "username class : " + springSecurityService.principal.class
+        log.info "auth : " + springSecurityService.authentication?.name
+        log.info "auth class : " + springSecurityService.authentication?.class
+        log.info "current user : " + springSecurityService.currentUser
+        log.info "current user class : " + springSecurityService.currentUser?.class
     }
 
     /**
