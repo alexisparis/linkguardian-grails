@@ -134,7 +134,7 @@
                                         <i class=" icon-user"></i>
                                         <g:if env="production">
                                             <sec:loggedInUserInfo field="fullName"/>/
-                                            <sec:loggedInUserInfo field="username"/>
+                                            <sec:loggedInUserInfo field="screenName"/>
                                         </g:if>
                                         <g:else>
                                             <sec:username/>

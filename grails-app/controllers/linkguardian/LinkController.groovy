@@ -50,6 +50,7 @@ class LinkController
         log.info "auth class : " + springSecurityService.authentication?.class
         log.info "current user : " + springSecurityService.currentUser
         log.info "current user class : " + springSecurityService.currentUser?.class
+        log.info "principal domain class : " + springSecurityService.principal.domainClass
 
     }
 
