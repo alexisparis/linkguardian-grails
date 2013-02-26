@@ -133,7 +133,8 @@
                                     <span style="margin-right: 5px;">
                                         <i class=" icon-user"></i>
                                         <g:if env="production">
-                                            <sec:loggedInUserInfo field="fullName"/>
+                                            <sec:loggedInUserInfo field="fullName"/>/
+                                            <sec:loggedInUserInfo field="username"/>
                                         </g:if>
                                         <g:else>
                                             <sec:username/>
