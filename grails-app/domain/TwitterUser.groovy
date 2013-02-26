@@ -1,7 +1,7 @@
 import com.the6hours.grails.springsecurity.twitter.TwitterUserDomain
 import linkguardian.Person
 
-class TwitterUser implements TwitterUserDomain {
+class TwitterUser /*implements TwitterUserDomain*/ {
 
     int uid
     String screenName

@@ -51,6 +51,7 @@ class LinkController
         log.info "current user : " + springSecurityService.currentUser
         log.info "current user class : " + springSecurityService.currentUser?.class
         log.info "principal domain class : " + springSecurityService.principal.domainClass
+        log.info "has domain class ? " + principal.metaClass.respondsTo(principal, 'getDomainClass')
 
     }
 
