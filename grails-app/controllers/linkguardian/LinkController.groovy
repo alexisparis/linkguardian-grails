@@ -51,8 +51,6 @@ class LinkController
         log.info "current user : " + springSecurityService.currentUser
         log.info "current user class : " + springSecurityService.currentUser?.class
 
-
-        <sec:loggedInUserInfo field="fullName"/>
     }
 
     /**
