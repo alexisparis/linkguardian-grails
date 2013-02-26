@@ -15,11 +15,12 @@ div.header
 
 .lg
 {
-    font-family: 'Clicker Script', cursive;
-    font-size: 20px;
+    /*font-size: 20px;*/
+    font-weight: bolder;
 }
 .lg.big
 {
+    font-family: 'Clicker Script', cursive;
     font-size: 30px;
 }
 .lg.medium

@@ -267,8 +267,7 @@
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.masonry.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jqcloud-1.0.3.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.dd.min.js')}"></script>
-        <%--script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.infinitescroll.min.js')}"></script--%>
-        <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.infinitescroll.js')}"></script>
+        <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.infinitescroll.min.js')}"></script>
 
         <g:javascript>
             var infiniteScrollLoadImage = '${resource(dir: "images/loading", file: "loading_medium.gif")}';

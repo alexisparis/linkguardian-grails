@@ -10,6 +10,7 @@
         $('img.jquery').attr('src', '<g:resource  dir="images" file="icon-jquery.png"/>');
         $('img.openshift').attr('src', '<g:resource  dir="images" file="openshift.png"/>');
         $('img.less').attr('src', '<g:resource  dir="images" file="less-icon.png"/>');
+        $('img.googl').attr('src', '<g:resource dir="images" file="url_shortener_logo.gif"/>');
     });
 
 </script>

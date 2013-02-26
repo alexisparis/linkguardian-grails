@@ -140,7 +140,7 @@ function updateLinks(model)
                   ,img: infiniteScrollLoadImage
                   ,msgText: infinitescrollMsgText
               },
-              debug : true,
+              debug : false,
               navSelector : '#nav-inf-scroll',
               nextSelector : '#nav-inf-scroll a',
               itemSelector : '#listing-part .linkpart',
@@ -213,8 +213,13 @@ function linkDeletionConfirmed(data)
     var linkId = $('#deleteLinkForm input[name="id"]').val();
     if ( linkId )
     {
-        $('div.linkpart[data-id="' + linkId + '"]').remove();
-        displayMessage(data);
+        var toRemove = $('div.linkpart[data-id="' + linkId + '"]');
+        if ( toRemove.size() > 0 )
+        {
+            toRemove.remove();
+            $('#listing-part').masonry( 'reload' );
+            displayMessage(data);
+        }
     }
 };
 
@@ -273,6 +278,8 @@ function tagAdded(data)
         }
 
         jTagWrapperRef.find('.with-tooltip').tooltip();
+
+        $('#listing-part').masonry( 'reload' );
 
         displayMessage(data.message);
     }

@@ -33,7 +33,7 @@
 		<r:layoutResources />
         <ga:trackPageview />
 
-        <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.blockUI.js')}"></script>
+        <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.blockUI.min.js')}"></script>
 
         <script type="text/javascript">
 

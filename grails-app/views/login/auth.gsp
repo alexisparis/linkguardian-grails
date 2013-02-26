@@ -44,7 +44,25 @@
         </p>
     </div>
 
-    <g:include view="fragments/linkguardian_description.gsp"/>
+    <div id="description">
+        <g:include view="fragments/linkguardian_description.gsp"/>
+    </div>
+
+    <%-- put here to have the imagesLoaded method --%>
+    <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.masonry.min.js')}"></script>
+
+    <g:javascript>
+        var body = $('body');
+        body.hide();
+
+        $(document).ready(function()
+        {
+            body.imagesLoaded(function()
+            {
+                body.fadeIn();
+            });
+        });
+    </g:javascript>
 
 </body>
 </html>
