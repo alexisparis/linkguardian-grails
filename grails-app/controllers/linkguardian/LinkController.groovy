@@ -53,6 +53,7 @@ class LinkController
         log.info "principal domain class : " + springSecurityService.principal.domainClass
         log.info "has domain class ? " + principal.metaClass.respondsTo(principal, 'getDomainClass')
 
+        return new ModelAndView("/link/list", [ username : springSecurityService.principal.username ])
     }
 
     /**

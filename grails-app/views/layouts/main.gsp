@@ -132,13 +132,14 @@
 
                                     <span style="margin-right: 5px;">
                                         <i class=" icon-user"></i>
-                                        <g:if env="production">
+                                        {username}
+                                        <%--g:if env="production">
                                             <sec:loggedInUserInfo field="fullName"/>/
-                                            <sec:loggedInUserInfo field="screenName"/>
+                                            <sec:loggedInUserInfo field="principal.username"/>
                                         </g:if>
                                         <g:else>
                                             <sec:username/>
-                                        </g:else>
+                                        </g:else--%>
                                     </span>
                                     <g:link controller='logout' action='index' class="with-tooltip" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'disconnect.button.tooltip')}">
                                         <span class="btn btn-inverse btn-mini"><i class="icon-off icon-white"></i></span>
