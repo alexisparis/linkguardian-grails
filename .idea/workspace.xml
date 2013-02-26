@@ -154,11 +154,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LinkController.groovy" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="LinkController.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/controllers/linkguardian/LinkController.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="99" selection-start="1820" selection-end="1820" vertical-scroll-proportion="0.43111992">
+            <state line="55" column="99" selection-start="1820" selection-end="1820" vertical-scroll-proportion="-18.913044">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="url-adding-attempt.gsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grails-app/views/link/url-adding-attempt.gsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+              <folding>
+                <marker date="1361823350000" expanded="true" signature="1358:1986" placeholder="{&quot;goto&quot;: ''...}" />
+                <marker date="1361823350000" expanded="true" signature="2343:2564" placeholder="{...}" />
+                <marker date="1361823350000" expanded="true" signature="2468:2542" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -196,10 +209,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.gsp" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="main.gsp" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/main.gsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="134" column="41" selection-start="7007" selection-end="7015" vertical-scroll-proportion="-26.875">
+            <state line="136" column="80" selection-start="7165" selection-end="7165" vertical-scroll-proportion="0.67839193">
               <folding />
             </state>
           </provider>
@@ -241,8 +254,8 @@
         <option value="$PROJECT_DIR$/grails-app/conf/Config.groovy" />
         <option value="$PROJECT_DIR$/grails-app/views/link/list.gsp" />
         <option value="$PROJECT_DIR$/grails-app/domain/TwitterUser.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/views/layouts/main.gsp" />
         <option value="$PROJECT_DIR$/grails-app/controllers/linkguardian/LinkController.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/views/layouts/main.gsp" />
       </list>
     </option>
   </component>
@@ -1164,15 +1177,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/grails-app/conf/BootStrap.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="53" selection-start="1238" selection-end="1238" vertical-scroll-proportion="-0.22">
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/i18n/messages.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state line="103" column="108" selection-start="7066" selection-end="7066" vertical-scroll-proportion="0.53521127">
@@ -1252,16 +1256,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/views/login/auth.gsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="18" selection-start="1195" selection-end="1195" vertical-scroll-proportion="-15.851064">
-          <folding>
-            <marker date="1361862082000" expanded="true" signature="1293:1406" placeholder="{...}" />
-            <marker date="1361862082000" expanded="true" signature="1348:1394" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.grails/2.2.0/projects/LinkGuardian/plugins/spring-security-twitter-0.4.4/src/groovy/com/the6hours/grails/springsecurity/twitter/TwitterUserDomain.groovy">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="10" selection-start="154" selection-end="154" vertical-scroll-proportion="0.11627907">
@@ -1296,16 +1290,37 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/main.gsp">
+    <entry file="file://$PROJECT_DIR$/grails-app/controllers/linkguardian/LinkController.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="134" column="41" selection-start="7007" selection-end="7015" vertical-scroll-proportion="-26.875">
+        <state line="55" column="99" selection-start="1820" selection-end="1820" vertical-scroll-proportion="-18.913044">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/controllers/linkguardian/LinkController.groovy">
+    <entry file="file://$PROJECT_DIR$/grails-app/views/link/url-adding-attempt.gsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="99" selection-start="1820" selection-end="1820" vertical-scroll-proportion="0.43111992">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1361823350000" expanded="true" signature="1358:1986" placeholder="{&quot;goto&quot;: ''...}" />
+            <marker date="1361823350000" expanded="true" signature="2343:2564" placeholder="{...}" />
+            <marker date="1361823350000" expanded="true" signature="2468:2542" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/views/login/auth.gsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="18" selection-start="1195" selection-end="1195" vertical-scroll-proportion="-15.851064">
+          <folding>
+            <marker date="1361862082000" expanded="true" signature="1293:1406" placeholder="{...}" />
+            <marker date="1361862082000" expanded="true" signature="1348:1394" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/main.gsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="136" column="80" selection-start="7165" selection-end="7165" vertical-scroll-proportion="0.67839193">
           <folding />
         </state>
       </provider>

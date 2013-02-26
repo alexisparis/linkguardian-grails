@@ -132,7 +132,7 @@
 
                                     <span style="margin-right: 5px;">
                                         <i class=" icon-user"></i>
-                                        {username}
+                                        ${username}
                                         <%--g:if env="production">
                                             <sec:loggedInUserInfo field="fullName"/>/
                                             <sec:loggedInUserInfo field="principal.username"/>
