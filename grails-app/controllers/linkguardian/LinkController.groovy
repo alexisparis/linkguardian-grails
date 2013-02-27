@@ -44,6 +44,11 @@ class LinkController
 
     def list()
     {
+        println "authorities"
+        Person.findByUsername("paris_alex").getAuthorities().each {
+            println "   " + it.authority
+        }
+
         return new ModelAndView("/link/list", [ username : springSecurityService.principal.username ])
     }
 

@@ -67,7 +67,7 @@ environments {
         grails.plugins.springsecurity.mock.fullName = "Alexis PARIS"
         grails.plugins.springsecurity.mock.email = "alexis.rt.paris@gmail.com"
         grails.plugins.springsecurity.mock.username =  "paris_alex"
-        grails.plugins.springsecurity.mock.roles = [ 'ROLE_USER', 'ROLE_ADMIN', 'ROLE_TWITTER' ]
+        grails.plugins.springsecurity.mock.roles = [ 'ROLE_USER', 'ROLE_TWITTER', 'ROLE_ADMIN' ]
         grails.plugins.springsecurity.ipRestrictions = [ '/**': ['127.0.0.0/8', '::1/128'] ]
     }
     production {
@@ -128,7 +128,6 @@ security {
         autoCreate {
             active = true
             roles = ["ROLE_USER", "ROLE_TWITTER", "ROLE_ADMIN"]
-            //roles = ["ROLE_USER", "ROLE_TWITTER"]
         }
 
         filter {

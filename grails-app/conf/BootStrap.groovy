@@ -9,6 +9,8 @@ import grails.util.Environment
 
 class BootStrap {
 
+  static String ADMIN = "ROLE_ADMIN"
+
   def linkBuilderService
 
     def createLink(String _url, String _tags, Note _note, Person _person, Boolean _read = false)
@@ -17,7 +19,7 @@ class BootStrap {
         try {
             newLink = new Link(url: _url, creationDate: new Date(), read:  _read, person: _person)
             newLink.note = _note
-            linkBuilderService.complete(newLink)
+            linkBuilderService.complete(newLink, "html")
             linkBuilderService.addTags(newLink, _tags)
             newLink = newLink.save(flush: true)
         }
@@ -58,7 +60,7 @@ class BootStrap {
 
     def init    = { servletContext ->
 
-        def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
+        def adminRole = new Role(authority: ADMIN).save(flush: true)
         def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
         def twitterRole = new Role(authority: 'ROLE_TWITTER').save(flush: true)
 
@@ -68,7 +70,7 @@ class BootStrap {
                 def admin = new Person(username: 'paris_alex', enabled: true, password: 'password')
                 admin = admin.save(flush: true)
 
-                PersonRole.create admin, adminRole, true
+                //PersonRole.create admin, adminRole, true
                 PersonRole.create admin, userRole, true
                 PersonRole.create admin, twitterRole, true
 
@@ -77,10 +79,6 @@ class BootStrap {
 
                 PersonRole.create user, userRole, true
                 PersonRole.create user, twitterRole, true
-
-                assert Person.count() == 2
-                assert Role.count() == 3
-                assert PersonRole.count() == 5
 
 //                this.createLink("http://www.privatesportshop.com", "sport shop nike adidas reebok", Note.Note_2, admin)
 //                this.createLink("http://blog.knoldus.com/2013/01/12/akka-futures-in-scala-with-a-simple-example/", "scala akka", Note.Note_0, admin)
