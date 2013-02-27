@@ -44,9 +44,18 @@ class LinkController
 
     def list()
     {
-        println "authorities"
-        Person.findByUsername("paris_alex").getAuthorities().each {
-            println "   " + it.authority
+        println "list : "
+        def person = Person.findByUsername("paris_alex")
+        println "   username : " + person.username
+        println "   password : " + person.password
+        println "   enabled : " + person.enabled
+        println "   account expired : " + person.accountExpired
+        println "   account locked : " + person.accountLocked
+        println "   password expired : " + person.passwordExpired
+
+        println "   authorities"
+        person.getAuthorities().each {
+            println "      " + it.authority
         }
 
         return new ModelAndView("/link/list", [ username : springSecurityService.principal.username ])

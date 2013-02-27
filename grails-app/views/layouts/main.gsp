@@ -136,17 +136,8 @@
 
                                     <span style="margin-right: 5px;">
                                         <%-- https://dev.twitter.com/docs/api/1/get/users/profile_image/%3Ascreen_name --%>
-                                        <img src="https://api.twitter.com/1/users/profile_image?screen_name=${username}&size=mini"/>
-                                        <span>${username}</span>
-                                        test : <sec:username/>
-                                        <%-- ce qui suit ne marche pas en prod --%>
-                                        <%--g:if env="production">
-                                            <sec:loggedInUserInfo field="fullName"/>/
-                                            <sec:loggedInUserInfo field="principal.username"/>
-                                        </g:if>
-                                        <g:else>
-                                            <sec:username/>
-                                        </g:else--%>
+                                        <img src="https://api.twitter.com/1/users/profile_image?screen_name=<sec:username/>&size=mini"/>
+                                        <sec:username/>
                                     </span>
                                     <g:link controller='logout' action='index' class="with-tooltip" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'disconnect.button.tooltip')}">
                                         <span class="btn btn-inverse btn-mini"><i class="icon-off icon-white"></i></span>
@@ -229,11 +220,11 @@
 
         <script type="text/javascript">
             $(document).ready(function()
-                              {
-                                  <g:if env="development">
-                                      $('#devWarningDialog').modal();
-                                  </g:if>
-                              });
+            {
+                <g:if env="production">
+                    $('#devWarningDialog').modal();
+                </g:if>
+            });
         </script>
 
     </body>
