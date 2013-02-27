@@ -21,7 +21,7 @@
     <file path="/application.css" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361862227746" ignored="false" />
     <file path="/Message.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1359319350477" ignored="false" />
     <file path="/Level.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1359538646504" ignored="false" />
-    <file path="/BootStrap.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361974225159" ignored="false" />
+    <file path="/BootStrap.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361986717218" ignored="false" />
     <file path="$APPLICATION_HOME_DIR$/plugins/Grails/lib/grails_integration.jar!/org/jetbrains/plugins/grails/lang/gsp/resolve/taglib/tld/grails.tld" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1359673039540" ignored="false" />
     <file path="/a.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1359758798814" ignored="false" />
     <file path="/Config.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361862316374" ignored="false" />
@@ -159,10 +159,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BootStrap.groovy" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="BootStrap.groovy" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/grails-app/conf/BootStrap.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="81" column="10" selection-start="2704" selection-end="2704" vertical-scroll-proportion="0.0">
+            <state line="83" column="39" selection-start="2883" selection-end="2883" vertical-scroll-proportion="0.40600777">
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -179,10 +179,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LinkController.groovy" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="LinkController.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/controllers/linkguardian/LinkController.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="69" column="28" selection-start="1969" selection-end="1969" vertical-scroll-proportion="0.728444">
+            <state line="69" column="28" selection-start="1969" selection-end="1969" vertical-scroll-proportion="-31.956522">
               <folding />
             </state>
           </provider>
@@ -248,9 +248,9 @@
         <option value="$PROJECT_DIR$/src/groovy/linkguardian/LgTwitterAuthDao.groovy" />
         <option value="$PROJECT_DIR$/grails-app/conf/Config.groovy" />
         <option value="$PROJECT_DIR$/grails-app/conf/spring/resources.groovy" />
-        <option value="$PROJECT_DIR$/grails-app/conf/BootStrap.groovy" />
         <option value="$PROJECT_DIR$/grails-app/domain/linkguardian/TwitterUser.groovy" />
         <option value="$PROJECT_DIR$/grails-app/controllers/linkguardian/LinkController.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/conf/BootStrap.groovy" />
       </list>
     </option>
   </component>
@@ -1338,15 +1338,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/conf/BootStrap.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="10" selection-start="2704" selection-end="2704" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/domain/linkguardian/Link.groovy">
       <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
         <state />
@@ -1364,13 +1355,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/conf/Config.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="151" column="2" selection-start="6057" selection-end="6057" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/domain/TwitterUser.groovy">
       <provider editor-type-id="org.jetbrains.plugins.grails.perspectives.DomainClassesRelationsEditorProvider">
         <state />
@@ -1383,8 +1367,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/controllers/linkguardian/LinkController.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="28" selection-start="1969" selection-end="1969" vertical-scroll-proportion="0.728444">
+        <state line="69" column="28" selection-start="1969" selection-end="1969" vertical-scroll-proportion="-31.956522">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/conf/Config.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="151" column="2" selection-start="6057" selection-end="6057" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/conf/BootStrap.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="83" column="39" selection-start="2883" selection-end="2883" vertical-scroll-proportion="0.40600777">
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

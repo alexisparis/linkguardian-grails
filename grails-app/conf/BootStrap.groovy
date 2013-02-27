@@ -60,7 +60,7 @@ class BootStrap {
 
     def init    = { servletContext ->
 
-        /*
+
         def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
         def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
         def twitterRole = new Role(authority: 'ROLE_TWITTER').save(flush: true)
@@ -77,9 +77,11 @@ class BootStrap {
 
         TwitterUser adminTwitted = new TwitterUser()
         adminTwitted.screenName = admin.username
+        adminTwitted.uid = "55181004"
+        adminTwitted.token = "55181004-xY4Auj3gdik5GbwUS4JNuJbRRkvnybPdw0MCx7V61"
+        adminTwitted.tokenSecret = "l95f3RDrEeGVJtyiWUxy1gOAbPUH4oG1sGwC3dDWiU"
         adminTwitted.user = admin
         adminTwitted.save(flush:  true)
-        */
 
         switch (Environment.current) {
             case Environment.DEVELOPMENT:
