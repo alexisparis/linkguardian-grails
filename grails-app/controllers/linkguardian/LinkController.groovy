@@ -1,16 +1,9 @@
 package linkguardian
 
 import grails.converters.JSON
-import grails.gorm.DetachedCriteria
 import grails.plugins.springsecurity.Secured
-import grails.util.GrailsUtil
-import grails.web.JSONBuilder
-import groovy.json.JsonBuilder
 import linkguardian.exception.TagException
-import net.sf.json.JSONObject
 import org.springframework.web.servlet.ModelAndView
-
-import java.util.logging.Level
 
 /**
  *

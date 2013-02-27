@@ -75,7 +75,7 @@ class BootStrap {
         PersonRole.create admin, userRole, true
         PersonRole.create admin, twitterRole, true
 
-        linkguardian.TwitterUser adminTwitted = new linkguardian.TwitterUser()
+        TwitterUser adminTwitted = new TwitterUser()
         adminTwitted.screenName = admin.username
         adminTwitted.user = admin
         adminTwitted.save(flush:  true)
