@@ -74,6 +74,11 @@ class BootStrap {
         PersonRole.create admin, userRole, true
         PersonRole.create admin, twitterRole, true
 
+        TwitterUser adminTwitted = new TwitterUser()
+        adminTwitted.screenName = admin.username
+        adminTwitted.user = admin
+        adminTwitted.save(flush:  true)
+
         switch (Environment.current) {
             case Environment.DEVELOPMENT:
 

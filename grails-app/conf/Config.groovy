@@ -121,6 +121,12 @@ grails.plugins.springsecurity.twitter.app.consumerSecret='0BM06vBD436nPxZ41mLgth
 
 security {
     twitter {
+        app {
+            id = "dRDPZlccjxpnkyCPAPjtg"
+            key = "dRDPZlccjxpnkyCPAPjtg"
+            consumerKey = "dRDPZlccjxpnkyCPAPjtg"
+            consumerSecret = "0BM06vBD436nPxZ41mLgthokfvdXj0HUbxrK3iP8"
+        }
         language = "en_US"
         button.text = "Login with Twitter"
         popup = false
@@ -143,3 +149,4 @@ security {
 }
 
 google.shortener.api.key='AIzaSyCngRB7vyyCtY4B1ACOYyUt5pDEtLnhkzo'
+//grails.plugins.springsecurity.twitter.bean.dao='linkguardian.LgTwitterAuthDao'
