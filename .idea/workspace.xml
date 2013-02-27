@@ -162,7 +162,7 @@
       <file leaf-file-name="BootStrap.groovy" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/grails-app/conf/BootStrap.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="83" column="39" selection-start="2883" selection-end="2883" vertical-scroll-proportion="0.40600777">
+            <state line="79" column="10" selection-start="2620" selection-end="2620" vertical-scroll-proportion="0.3478682">
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -1381,7 +1381,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/conf/BootStrap.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="39" selection-start="2883" selection-end="2883" vertical-scroll-proportion="0.40600777">
+        <state line="79" column="10" selection-start="2620" selection-end="2620" vertical-scroll-proportion="0.3478682">
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
