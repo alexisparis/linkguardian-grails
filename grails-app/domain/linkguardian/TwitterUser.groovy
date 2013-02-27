@@ -1,3 +1,5 @@
+package linkguardian
+
 import com.the6hours.grails.springsecurity.twitter.TwitterUserDomain
 import linkguardian.Person
 

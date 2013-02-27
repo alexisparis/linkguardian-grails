@@ -60,6 +60,7 @@ class BootStrap {
 
     def init    = { servletContext ->
 
+        /*
         def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
         def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
         def twitterRole = new Role(authority: 'ROLE_TWITTER').save(flush: true)
@@ -74,10 +75,11 @@ class BootStrap {
         PersonRole.create admin, userRole, true
         PersonRole.create admin, twitterRole, true
 
-        TwitterUser adminTwitted = new TwitterUser()
+        linkguardian.TwitterUser adminTwitted = new linkguardian.TwitterUser()
         adminTwitted.screenName = admin.username
         adminTwitted.user = admin
         adminTwitted.save(flush:  true)
+        */
 
         switch (Environment.current) {
             case Environment.DEVELOPMENT:

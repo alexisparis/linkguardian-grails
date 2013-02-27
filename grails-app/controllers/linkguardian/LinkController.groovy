@@ -55,8 +55,17 @@ class LinkController
 
         println "   authorities"
         person.getAuthorities().each {
-            println "      " + it.authority
+            println "      " + it.authority + " which is a " + it.getClass()
         }
+
+        TwitterUser.findAll().each {
+            println "   twitter user : "
+            println "      uid : " + it.uid
+            println "      screenname : " + it.screenName
+            println "      token : " + it.token
+            println "      token secret : " + it.tokenSecret
+        }
+
 
         return new ModelAndView("/link/list", [ username : springSecurityService.principal.username ])
     }

@@ -142,7 +142,7 @@ security {
         }
 
         domain {
-            classname = "TwitterUser"
+            classname = "linkguardian.TwitterUser"
             connectionPropertyName = "user"
         }
     }
