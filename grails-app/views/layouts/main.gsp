@@ -37,6 +37,7 @@
 
         <script type="text/javascript">
 
+            var displayDevModeWarning = false;
             var blockUiInhibiter = 0;
 
             $(document).ready(
@@ -221,9 +222,12 @@
         <script type="text/javascript">
             $(document).ready(function()
             {
-                <g:if env="production">
-                    $('#devWarningDialog').modal();
-                </g:if>
+                if (displayDevModeWarning)
+                {
+                    <g:if env="production">
+                        $('#devWarningDialog').modal();
+                    </g:if>
+                }
             });
         </script>
 

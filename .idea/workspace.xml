@@ -11,8 +11,8 @@
     <file path="/LinkController.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361958218203" ignored="false" />
     <file path="/fragment.java" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1359319633215" ignored="false" />
     <file path="/index.gsp" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1358108888633" ignored="false" />
-    <file path="/list.gsp" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361956677440" ignored="false" />
-    <file path="/main.gsp" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361957912053" ignored="false" />
+    <file path="/list.gsp" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361961196362" ignored="false" />
+    <file path="/main.gsp" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361961207527" ignored="false" />
     <file path="/index.html" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1358628914273" ignored="false" />
     <file path="/main.css" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361175145841" ignored="false" />
     <file path="/BuildConfig.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1358845509287" ignored="false" />
@@ -125,33 +125,33 @@
       <file leaf-file-name="list.gsp" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/views/link/list.gsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="323" column="23" selection-start="19453" selection-end="19453" vertical-scroll-proportion="-10.87234">
+            <state line="296" column="41" selection-start="18351" selection-end="18372" vertical-scroll-proportion="-4.1702127">
               <folding>
-                <marker date="1361956989000" expanded="true" signature="1429:1445" placeholder="{...}" />
-                <marker date="1361956989000" expanded="true" signature="5370:5389" placeholder="{...}" />
-                <marker date="1361956989000" expanded="true" signature="8434:8448" placeholder="{...}" />
-                <marker date="1361956989000" expanded="true" signature="8817:8831" placeholder="{...}" />
-                <marker date="1361956989000" expanded="true" signature="9227:9241" placeholder="{...}" />
-                <marker date="1361956989000" expanded="true" signature="9650:9664" placeholder="{...}" />
-                <marker date="1361956989000" expanded="true" signature="10145:10159" placeholder="{...}" />
-                <marker date="1361956989000" expanded="true" signature="10486:10500" placeholder="{...}" />
-                <marker date="1361956989000" expanded="true" signature="10831:10845" placeholder="{...}" />
-                <marker date="1361956989000" expanded="true" signature="17444:18072" placeholder="{&quot;goto&quot;: ''...}" />
-                <marker date="1361956989000" expanded="true" signature="18329:19471" placeholder="{...}" />
-                <marker date="1361956989000" expanded="true" signature="18452:18530" placeholder="{...}" />
-                <marker date="1361956989000" expanded="true" signature="18580:18645" placeholder="{...}" />
-                <marker date="1361956989000" expanded="true" signature="18824:19451" placeholder="{...}" />
-                <marker date="1361956989000" expanded="true" signature="18870:19382" placeholder="{&quot;itemSelector&quot;: '#listing-part .linkpart'...}" />
-                <marker date="1361956989000" expanded="true" signature="19092:19337" placeholder="{&quot;duration&quot;: 750...}" />
+                <marker date="1361961235000" expanded="true" signature="1429:1445" placeholder="{...}" />
+                <marker date="1361961235000" expanded="true" signature="5370:5389" placeholder="{...}" />
+                <marker date="1361961235000" expanded="true" signature="8434:8448" placeholder="{...}" />
+                <marker date="1361961235000" expanded="true" signature="8817:8831" placeholder="{...}" />
+                <marker date="1361961235000" expanded="true" signature="9227:9241" placeholder="{...}" />
+                <marker date="1361961235000" expanded="true" signature="9650:9664" placeholder="{...}" />
+                <marker date="1361961235000" expanded="true" signature="10145:10159" placeholder="{...}" />
+                <marker date="1361961235000" expanded="true" signature="10486:10500" placeholder="{...}" />
+                <marker date="1361961235000" expanded="true" signature="10831:10845" placeholder="{...}" />
+                <marker date="1361961235000" expanded="true" signature="17444:18072" placeholder="{&quot;goto&quot;: ''...}" />
+                <marker date="1361961235000" expanded="true" signature="18329:19522" placeholder="{...}" />
+                <marker date="1361961235000" expanded="true" signature="18503:18581" placeholder="{...}" />
+                <marker date="1361961235000" expanded="true" signature="18631:18696" placeholder="{...}" />
+                <marker date="1361961235000" expanded="true" signature="18875:19502" placeholder="{...}" />
+                <marker date="1361961235000" expanded="true" signature="18921:19433" placeholder="{&quot;itemSelector&quot;: '#listing-part .linkpart'...}" />
+                <marker date="1361961235000" expanded="true" signature="19143:19388" placeholder="{&quot;duration&quot;: 750...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.gsp" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="main.gsp" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/main.gsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="139" column="55" selection-start="7471" selection-end="7471" vertical-scroll-proportion="-16.0">
+            <state line="229" column="17" selection-start="11797" selection-end="11797" vertical-scroll-proportion="4.789916">
               <folding />
             </state>
           </provider>
@@ -168,10 +168,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BootStrap.groovy" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BootStrap.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/conf/BootStrap.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="77" column="60" selection-start="2587" selection-end="2587" vertical-scroll-proportion="0.43808255">
+            <state line="56" column="14" selection-start="1756" selection-end="1756" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -232,11 +232,11 @@
         <option value="$PROJECT_DIR$/grails-app/domain/linkguardian/Role.groovy" />
         <option value="$PROJECT_DIR$/grails-app/domain/linkguardian/Person.groovy" />
         <option value="$PROJECT_DIR$/grails-app/i18n/messages_fr.properties" />
-        <option value="$PROJECT_DIR$/grails-app/views/link/list.gsp" />
         <option value="$PROJECT_DIR$/grails-app/i18n/messages.properties" />
-        <option value="$PROJECT_DIR$/grails-app/views/layouts/main.gsp" />
         <option value="$PROJECT_DIR$/grails-app/controllers/linkguardian/LinkController.groovy" />
         <option value="$PROJECT_DIR$/grails-app/conf/BootStrap.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/views/link/list.gsp" />
+        <option value="$PROJECT_DIR$/grails-app/views/layouts/main.gsp" />
       </list>
     </option>
   </component>
@@ -1231,30 +1231,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/views/link/list.gsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="323" column="23" selection-start="19453" selection-end="19453" vertical-scroll-proportion="-10.87234">
-          <folding>
-            <marker date="1361956989000" expanded="true" signature="1429:1445" placeholder="{...}" />
-            <marker date="1361956989000" expanded="true" signature="5370:5389" placeholder="{...}" />
-            <marker date="1361956989000" expanded="true" signature="8434:8448" placeholder="{...}" />
-            <marker date="1361956989000" expanded="true" signature="8817:8831" placeholder="{...}" />
-            <marker date="1361956989000" expanded="true" signature="9227:9241" placeholder="{...}" />
-            <marker date="1361956989000" expanded="true" signature="9650:9664" placeholder="{...}" />
-            <marker date="1361956989000" expanded="true" signature="10145:10159" placeholder="{...}" />
-            <marker date="1361956989000" expanded="true" signature="10486:10500" placeholder="{...}" />
-            <marker date="1361956989000" expanded="true" signature="10831:10845" placeholder="{...}" />
-            <marker date="1361956989000" expanded="true" signature="17444:18072" placeholder="{&quot;goto&quot;: ''...}" />
-            <marker date="1361956989000" expanded="true" signature="18329:19471" placeholder="{...}" />
-            <marker date="1361956989000" expanded="true" signature="18452:18530" placeholder="{...}" />
-            <marker date="1361956989000" expanded="true" signature="18580:18645" placeholder="{...}" />
-            <marker date="1361956989000" expanded="true" signature="18824:19451" placeholder="{...}" />
-            <marker date="1361956989000" expanded="true" signature="18870:19382" placeholder="{&quot;itemSelector&quot;: '#listing-part .linkpart'...}" />
-            <marker date="1361956989000" expanded="true" signature="19092:19337" placeholder="{&quot;duration&quot;: 750...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/i18n/messages.properties">
       <provider editor-type-id="ResourceBundle">
         <state />
@@ -1268,13 +1244,6 @@
     <entry file="file://$PROJECT_DIR$/grails-app/conf/Config.groovy">
       <provider selected="true" editor-type-id="text-editor">
         <state line="135" column="41" selection-start="5639" selection-end="5639" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/main.gsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="139" column="55" selection-start="7471" selection-end="7471" vertical-scroll-proportion="-16.0">
           <folding />
         </state>
       </provider>
@@ -1310,10 +1279,41 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/conf/BootStrap.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="60" selection-start="2587" selection-end="2587" vertical-scroll-proportion="0.43808255">
+        <state line="56" column="14" selection-start="1756" selection-end="1756" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/views/link/list.gsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="296" column="41" selection-start="18351" selection-end="18372" vertical-scroll-proportion="-4.1702127">
+          <folding>
+            <marker date="1361961235000" expanded="true" signature="1429:1445" placeholder="{...}" />
+            <marker date="1361961235000" expanded="true" signature="5370:5389" placeholder="{...}" />
+            <marker date="1361961235000" expanded="true" signature="8434:8448" placeholder="{...}" />
+            <marker date="1361961235000" expanded="true" signature="8817:8831" placeholder="{...}" />
+            <marker date="1361961235000" expanded="true" signature="9227:9241" placeholder="{...}" />
+            <marker date="1361961235000" expanded="true" signature="9650:9664" placeholder="{...}" />
+            <marker date="1361961235000" expanded="true" signature="10145:10159" placeholder="{...}" />
+            <marker date="1361961235000" expanded="true" signature="10486:10500" placeholder="{...}" />
+            <marker date="1361961235000" expanded="true" signature="10831:10845" placeholder="{...}" />
+            <marker date="1361961235000" expanded="true" signature="17444:18072" placeholder="{&quot;goto&quot;: ''...}" />
+            <marker date="1361961235000" expanded="true" signature="18329:19522" placeholder="{...}" />
+            <marker date="1361961235000" expanded="true" signature="18503:18581" placeholder="{...}" />
+            <marker date="1361961235000" expanded="true" signature="18631:18696" placeholder="{...}" />
+            <marker date="1361961235000" expanded="true" signature="18875:19502" placeholder="{...}" />
+            <marker date="1361961235000" expanded="true" signature="18921:19433" placeholder="{&quot;itemSelector&quot;: '#listing-part .linkpart'...}" />
+            <marker date="1361961235000" expanded="true" signature="19143:19388" placeholder="{&quot;duration&quot;: 750...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/main.gsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="229" column="17" selection-start="11797" selection-end="11797" vertical-scroll-proportion="4.789916">
+          <folding />
         </state>
       </provider>
     </entry>

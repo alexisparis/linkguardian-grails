@@ -294,6 +294,8 @@
         $(document).ready(
                 function()
                 {
+                    displayDevModeWarning = true;
+
                     $.fn.raty.defaults.path = '${resource(dir: 'images')}';
 
                     try
