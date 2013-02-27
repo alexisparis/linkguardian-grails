@@ -37,30 +37,7 @@ class LinkController
 
     def list()
     {
-        println "list : "
-        def person = Person.findByUsername("paris_alex")
-        println "   username : " + person.username
-        println "   password : " + person.password
-        println "   enabled : " + person.enabled
-        println "   account expired : " + person.accountExpired
-        println "   account locked : " + person.accountLocked
-        println "   password expired : " + person.passwordExpired
-
-        println "   authorities"
-        person.getAuthorities().each {
-            println "      " + it.authority + " which is a " + it.getClass()
-        }
-
-        TwitterUser.findAll().each {
-            println "   twitter user : "
-            println "      uid : " + it.uid
-            println "      screenname : " + it.screenName
-            println "      token : " + it.token
-            println "      token secret : " + it.tokenSecret
-        }
-
-
-        return new ModelAndView("/link/list", [ username : springSecurityService.principal.username ])
+        log.info "calling list with connected user " + springSecurityService.getPrincipal().username
     }
 
     def formatUrl(String url)

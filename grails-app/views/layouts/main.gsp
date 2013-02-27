@@ -125,10 +125,6 @@
                                                 </ul>
                                             </div>
                                         </sec:ifAllGranted>
-                                        <lg:ifAdministrator>
-                                            je suis admin youhouuuuuu!!!!
-                                        </lg:ifAdministrator>
-                                        username lg : <lg:username/>
 
                                         <button class="btn btn-success btn-inverse" id="tools"><g:message code="menu.tools.label"/></button>
 
