@@ -116,7 +116,7 @@
             </div>
         </div>
 
-        <div id="messageContainer" class="message-box" style="height: 38px;">
+        <div id="messageContainer" class="message-box" style="height: 38px; overflow: hidden;">
             <div id="message"></div>
         </div>
 

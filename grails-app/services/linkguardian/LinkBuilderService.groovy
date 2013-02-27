@@ -1,6 +1,7 @@
 package linkguardian
 
 import linkguardian.exception.TagException
+import linkguardian.exception.UnsupportedTypeException
 import net.htmlparser.jericho.*
 
 class LinkBuilderService {
@@ -9,41 +10,40 @@ class LinkBuilderService {
 
     def stringNormalizerService
 
-    def complete(Link link) {
+    def complete(Link link, String type) {
 
-      log.info "completing link with url : " + link.url
+        log.info "completing link with url : " + link.url + " and type : " + type
 
-      // make an http request to get the header of the web site
+        java.net.URL url = new java.net.URL(link.url)
 
-      MicrosoftTagTypes.register()
-      //MicrosoftConditionalCommentTagTypes.register();
-      PHPTagTypes.register()
-      PHPTagTypes.PHP_SHORT.deregister() // remove PHP short tags for this example otherwise they override processing instructions
-      MasonTagTypes.register()
-      java.net.URL url = new java.net.URL(link.url)
+        if ( "html"==type )
+        {
+            this.completeHtml(link, url)
+        }
+        else if ( "pdf"==type )
+        {
+            this.completePdf(link, url)
+        }
+        else
+        {
+             throw new UnsupportedTypeException("type '" + type + "' not supported")
+        }
 
-      Source source=new Source(url)
+        if ( link.title == null )
+        {
+            link.title = ""
+        }
+        if ( link.description == null )
+        {
+            link.description = ""
+        }
 
-      // Call fullSequentialParse manually as most of the source will be parsed.
-      source.fullSequentialParse()
+        link.domain = url.getHost()
+        log.info "setting domain to " + link.domain
 
-      link.title = getTitle(source)
-      log.info "setting title to " + link.title
-
-      link.description = getMetaValue(source,"description")
-      log.info "setting description to " + link.description
-
-      if ( link.description == null )
-      {
-        link.description = ""
-      }
-
-      link.domain = url.getHost()
-      log.info "setting domain to " + link.domain
-
-      // shorten url with google service
-      def urlResource = shortenerService.shorten(link.url)
-      link.url = urlResource.shortUrl
+        // shorten url with google service
+        def urlResource = shortenerService.shorten(link.url)
+        link.url = urlResource.shortUrl
 
         if ( link.title && link.title.length() > Link.TITLE_MAX_LENGTH )
         {
@@ -83,6 +83,63 @@ class LinkBuilderService {
     def extractTags(String fusionedTags)
     {
         return new LinkedHashSet<String>(stringNormalizerService.normalize(fusionedTags?.toLowerCase()))
+    }
+
+    /* ##############################
+       COMMON
+       ############################## */
+
+    private def extractFilenameFrom(URL url)
+    {
+        def result = null
+
+        if ( url )
+        {
+            result = url.getFile()
+            def lastSlashIndex = result.lastIndexOf('/')
+
+            if ( lastSlashIndex > -1 )
+            {
+                result = result.substring(lastSlashIndex + 1)
+            }
+        }
+
+        return result
+    }
+
+    /* ##############################
+       PDF
+       ############################## */
+
+    private def completePdf(Link link, java.net.URL url)
+    {
+        link.title = this.extractFilenameFrom(url)
+    }
+
+    /* ##############################
+       HTML
+       ############################## */
+
+    private def completeHtml(Link link, java.net.URL url)
+    {
+        // make an http request to get the header of the web site
+
+        MicrosoftTagTypes.register()
+        //MicrosoftConditionalCommentTagTypes.register();
+        PHPTagTypes.register()
+        PHPTagTypes.PHP_SHORT.deregister() // remove PHP short tags for this example otherwise they override processing instructions
+        MasonTagTypes.register()
+
+        Source source=new Source(url)
+
+        // Call fullSequentialParse manually as most of the source will be parsed.
+        source.fullSequentialParse()
+
+        link.title = getTitle(source)
+        log.info "setting title to " + link.title
+
+        link.description = getMetaValue(source,"description")
+        log.info "setting description to " + link.description
     }
 
     private def getTitle(Source source) {

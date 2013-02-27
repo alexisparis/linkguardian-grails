@@ -114,7 +114,7 @@
                                 <div style="float: right; text-align: right;">
 
                                     <span style="margin-right: 30px;">
-                                        <sec:ifAllGranted roles="ROLE_ADMIN,ROLE_USER">
+                                        <sec:ifAllGranted roles="ROLE_ADMIN">
                                             <div class="btn-group" style="margin-right: 20px; ">
                                                 <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown"><g:message code="menu.admin.label"/> <span class="caret"></span></button>
                                                 <ul class="dropdown-menu">
@@ -131,8 +131,10 @@
                                     </span>
 
                                     <span style="margin-right: 5px;">
-                                        <i class=" icon-user"></i>
-                                        ${username}
+                                        <%-- https://dev.twitter.com/docs/api/1/get/users/profile_image/%3Ascreen_name --%>
+                                        <img src="https://api.twitter.com/1/users/profile_image?screen_name=${username}&size=mini"/>
+                                        <span>${username}</span>
+                                        <%-- ce qui suit ne marche pas en prod --%>
                                         <%--g:if env="production">
                                             <sec:loggedInUserInfo field="fullName"/>/
                                             <sec:loggedInUserInfo field="principal.username"/>

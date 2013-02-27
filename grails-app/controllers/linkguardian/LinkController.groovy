@@ -44,16 +44,21 @@ class LinkController
 
     def list()
     {
-        log.info "username : " + springSecurityService.principal.username
-        log.info "username class : " + springSecurityService.principal.class
-        log.info "auth : " + springSecurityService.authentication?.name
-        log.info "auth class : " + springSecurityService.authentication?.class
-        log.info "current user : " + springSecurityService.currentUser
-        log.info "current user class : " + springSecurityService.currentUser?.class
-        log.info "principal domain class : " + springSecurityService.principal.domainClass
-        log.info "has domain class ? " + principal.metaClass.respondsTo(principal, 'getDomainClass')
-
         return new ModelAndView("/link/list", [ username : springSecurityService.principal.username ])
+    }
+
+    def formatUrl(String url)
+    {
+        def result = url
+        if ( url )
+        {
+            if( url.length() > 50 )
+            {
+                result = url.substring(0, 50) + "..."
+            }
+        }
+
+        return result
     }
 
     /**
@@ -190,10 +195,10 @@ class LinkController
         if ( params.url == null || params.url.trim().length() == 0 )
         {
             response.status = 500
-                msg = this.error(message(code: "service.link.addUrl.invalidUrl"))
-            }
-            else
-            {
+            msg = this.error(message(code: "service.link.addUrl.invalidUrl"))
+        }
+        else
+        {
             def realUrl = null
 
             // manage redirect url
@@ -209,6 +214,8 @@ class LinkController
                 currentUrl = "http://" + currentUrl
             }
 
+            def type = null
+
             try  {
                 while(redirectCount < redirectLimitCount && realUrl == null && currentUrl != null)  {
                    if ( urls.add(currentUrl) )
@@ -217,22 +224,59 @@ class LinkController
                        def _connection = _url.openConnection()
                        if ( _connection instanceof HttpURLConnection )
                        {
-                          def _httpConnection = (HttpURLConnection)_connection
-                          def code = _httpConnection.getResponseCode()
-                          if( code >= 300 && code < 400 ){ // redirection
-                             currentUrl = null
-                             def location = _httpConnection.getHeaderField("Location")
-                             if ( location != null ){
-                                 currentUrl = location
-                             }
-                          }
-                          else{
-                              realUrl = currentUrl
-                          }
+                           def _httpConnection = (HttpURLConnection)_connection
+                           _httpConnection.setInstanceFollowRedirects(true)
+                           def code = _httpConnection.getResponseCode()
+                           log.debug "getting http code " +code +" for url " + currentUrl
+                           log.debug "connection url : " + _httpConnection.getURL()
+
+                           def contentType = _httpConnection.getHeaderField("content-type")
+                           log.debug "content type : " + contentType
+
+                           if ( contentType.startsWith("text/html") )
+                           {
+                               if ( log.isDebugEnabled() )
+                               {
+                                   log.debug "headers are : "
+                                   _httpConnection.headerFields.each {
+                                       log.debug "   " + it.key + " ==> " + it.value
+                                   }
+                               }
+
+                               if( code >= 300 && code < 400 ){ // redirection
+                                   log.debug "it's a redirection"
+                                   currentUrl = null
+
+                                   def location = _httpConnection.getHeaderField("location")
+                                   if ( location != null ){
+                                       currentUrl = location
+                                       log.debug "setting current url to " + location
+                                   }
+                               }
+                               else{
+                                   realUrl = currentUrl
+                                   type = "html"
+                                   log.debug "setting real url to " + currentUrl
+                               }
+                           }
+                           else if ( contentType.startsWith("application/pdf") )
+                           {
+                               realUrl = currentUrl
+                               type = "pdf"
+                               log.debug "setting real url to " + currentUrl
+                           }
+                           else
+                           {
+                               log.error "found content type " +contentType + " for url " + currentUrl
+                               response.status = 500
+                               msg = this.error(message(code: "service.link.addUrl.invalidContentType"))
+                               break;
+                           }
                        }
                    }
                    else
                    {
+                       log.debug "url " + currentUrl + " already visited ==> redirection loop"
                        response.status = 500
                        msg = this.error(message(code: "service.link.addUrl.redirectionLoop"))
                        break
@@ -245,6 +289,7 @@ class LinkController
                 {
                     if ( msg != null && redirectCount >= redirectLimitCount )
                     {
+                        log.debug "url " + currentUrl + " too many redirections"
                         response.status = 500
                         msg = this.error(message(code: "service.link.addUrl.tooMuchRedirections"))
                     }
@@ -272,24 +317,28 @@ class LinkController
 
                     def _tag = (params.tag == null ? "" : params.tag.toLowerCase())
 
+                    log.debug "creating detached link..."
                     def newLink = new Link(url: realUrl, fusionedTags: " " + _tag + " ", creationDate: new Date(), person: connectedPerson)
+                    log.debug "detached link created"
 
-                    linkBuilderService.complete(newLink)
+                    linkBuilderService.complete(newLink, type)
+                    log.debug "link completed"
+
                     linkBuilderService.addTags(newLink, params.tag)
+                    log.debug "tags added to the link"
 
                     // check that this url does not already exist
                     if ( Link.findByPersonAndUrl(connectedPerson, newLink.url) != null )
                     {
-                        def tata = message(code: "service.link.addUrl.linkAlreadyExists", args: [params.url])
-                        log.info "################################################ params.url : " + params.url + " ==> " + tata
-                        def toto = message(code: "service.link.addUrl.linkAlreadyExists", args: ['toto'])
-                        log.info "################################################ params.url : " + 'toto' + " ==> " + toto
+                        log.debug "url " + newLink.url + " already exists"
                         response.status = 500
-                        msg = this.error(message(code: "service.link.addUrl.linkAlreadyExists", args: [params.url]))
+                        msg = this.error(message(code: "service.link.addUrl.linkAlreadyExists", args: [this.formatUrl(params.url)]))
                     }
                     else
                     {
+                        log.debug "saving new link..."
                         newLink.save(flush: true)
+                        log.debug "new link saved"
 
                         msg = this.success(message(code: "service.link.addUrl.linkCreated"))
                     }
@@ -307,7 +356,7 @@ class LinkController
                     {
                         if ( e.getCause() instanceof MalformedURLException )
                         {
-                            msg = this.error(message(code: "service.link.addUrl.invalidUrlWithCause", args: [params.url, e.getCause().getMessage()]))
+                            msg = this.error(message(code: "service.link.addUrl.invalidUrlWithCause", args: [this.formatUrl(params.url), e.getCause().getMessage()]))
                         }
                         else if ( e.getCause() instanceof UnknownHostException )
                         {
@@ -318,7 +367,7 @@ class LinkController
                     if ( msg == null )
                     {
                         // default message
-                        msg = this.error(message(code: "service.link.addUrl.defaultError", args: [params.url]))
+                        msg = this.error(message(code: "service.link.addUrl.defaultError", args: [this.formatUrl(params.url)]))
                     }
                 }
             }
