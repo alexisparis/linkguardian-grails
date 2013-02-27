@@ -138,6 +138,7 @@
                                         <%-- https://dev.twitter.com/docs/api/1/get/users/profile_image/%3Ascreen_name --%>
                                         <img src="https://api.twitter.com/1/users/profile_image?screen_name=${username}&size=mini"/>
                                         <span>${username}</span>
+                                        test : <sec:username/>
                                         <%-- ce qui suit ne marche pas en prod --%>
                                         <%--g:if env="production">
                                             <sec:loggedInUserInfo field="fullName"/>/
@@ -211,6 +212,29 @@
                 <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true"><g:message code="close.button.label"/></button>
             </div>
         </div>
+        <div id="devWarningDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> WARNING !!!!!!!!</h3>
+            </div>
+            <div class="modal-body">
+                this application is in <strong>development mode</strong>.<br/>
+                You can try it but all <strong>your data can be deleted at any time.</strong>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true"><g:message code="links.dialogs.result.yes"/></button>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready(function()
+                              {
+                                  <g:if env="development">
+                                      $('#devWarningDialog').modal();
+                                  </g:if>
+                              });
+        </script>
 
     </body>
 </html>

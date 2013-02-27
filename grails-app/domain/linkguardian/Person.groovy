@@ -1,6 +1,9 @@
 package linkguardian
 
-class Person
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.userdetails.UserDetails
+
+class Person implements UserDetails
 {
 
 	transient springSecurityService
@@ -23,7 +26,7 @@ class Person
 	}
     static hasMany = [links: Link]
 
-	Set<Role> getAuthorities() {
+	Set<GrantedAuthority> getAuthorities() {
 		PersonRole.findAllByUser(this).collect { it.role } as Set
 	}
 
@@ -40,4 +43,19 @@ class Person
 	protected void encodePassword() {
 		password = springSecurityService.encodePassword(password)
 	}
+
+    boolean isAccountNonExpired()
+    {
+        return ! this.accountExpired
+    }
+
+    boolean isAccountNonLocked()
+    {
+        return ! this.accountLocked
+    }
+
+    boolean isCredentialsNonExpired()
+    {
+        return ! this.passwordExpired
+    }
 }

@@ -260,21 +260,6 @@
             </div>
         </div>
 
-        <div id="devWarningDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3>
-                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> WARNING</h3>
-            </div>
-            <div class="modal-body">
-                this application is in development mode<br/>
-                You can try it but all your data can be deleted at any time.
-            </div>
-            <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true"><g:message code="links.dialogs.result.yes"/></button>
-            </div>
-        </div>
-
         <%--
            cannot use <g:javascript src="jquery.raty.js" /> since it does not work with https
         --%>
@@ -337,12 +322,6 @@
 
                         submitFilterForm();
                     });
-
-                    <g:if env="development">
-                        setTimeout(function(){
-                            $('#devWarningDialog').modal();
-                        }, 2000);
-                    </g:if>
                 });
     </g:javascript>
 
