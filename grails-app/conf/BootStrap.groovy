@@ -60,19 +60,22 @@ class BootStrap {
 
     def init    = { servletContext ->
 
-        def adminRole = new Role(authority: ADMIN).save(flush: true)
+        def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
         def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
         def twitterRole = new Role(authority: 'ROLE_TWITTER').save(flush: true)
 
+        def admin = new Person(username: 'paris_alex', enabled: false, password: '88f56921aa7f1a9372c9ae0e1f221f2e1c6dac7c8c6676d6ce521852bd06781b')
+        admin.accountExpired = false
+        admin.accountLocked = false
+        admin.passwordExpired = false
+        admin = admin.save(flush: true)
+
+        PersonRole.create admin, adminRole, true
+        PersonRole.create admin, userRole, true
+        PersonRole.create admin, twitterRole, true
+
         switch (Environment.current) {
             case Environment.DEVELOPMENT:
-
-                def admin = new Person(username: 'paris_alex', enabled: true, password: 'password')
-                admin = admin.save(flush: true)
-
-                //PersonRole.create admin, adminRole, true
-                PersonRole.create admin, userRole, true
-                PersonRole.create admin, twitterRole, true
 
                 def user = new Person(username: 'user', enabled: true, password: 'password')
                 user = user.save(flush: true)
