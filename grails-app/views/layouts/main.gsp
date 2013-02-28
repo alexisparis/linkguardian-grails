@@ -25,6 +25,14 @@
             cursor: move;
             color: white;
         }
+        a.twitter-follow-button, a.twitter-share-button
+        {
+            display: none; /* not visible until twitter js script loaded */
+        }
+        a *
+        {
+            color: white;
+        }
     </style>
 
         <r:require modules="bootstrap"/>
@@ -93,6 +101,19 @@
                             }
                         })
                                 .ajaxStop(hideBlockUi).ajaxError(hideBlockUi);
+
+                        <%-- https://dev.twitter.com/docs/api/1/get/users/profile_image/%3Ascreen_name --%>
+                        $('img.twitter-account').each(function(index, value)
+                        {
+                            var $value = $(value);
+                            $value.attr('src', 'https://api.twitter.com/1/users/profile_image?screen_name=' + $value.attr('data-twitter-name') + '&size=mini');
+                        });
+
+                        $('a.twitter-account').each(function(index, value)
+                        {
+                            var $value = $(value);
+                            $value.attr('href', 'https://twitter.com/' + $value.attr('data-twitter-name'));
+                        });
                     });
 
         </script>
@@ -106,13 +127,16 @@
                 <div class="row">
                     <div class="span12">
                         <div id="guardianLogo" role="banner" style="padding-top: 5px; padding-bottom: 8px;">
-                            <a href="<g:createLink controller="link" action="list" absolute="true"/>">
-                                <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50" style="margin-top: -10px;"/>
-                            </a>
-                            <span class="lg big" style="display: inline-block; padding-top: 16px;"></span>
-                            <span class="lgDescription" style="margin-left: 40px;"><g:message code="lg.description.small"/></span>
+                            <div style="float: left;">
+                                <a href="<g:createLink controller="link" action="list" absolute="true"/>">
+                                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50" style="margin-top: -10px;"/>
+                                    <span class="lg big" style="display: inline-block; padding-top: 16px;"></span>
+                                    <span class="lgDescription" style="margin-left: 40px;"><g:message code="lg.description.small"/></span>
+                                </a>
+                            </div>
+
                             <sec:ifLoggedIn>
-                                <div style="float: right; text-align: right;">
+                                <div style="float: right; text-align: right; margin-top: 5px;">
 
                                     <span style="margin-right: 30px;">
                                         <sec:ifAllGranted roles="ROLE_ADMIN">
@@ -132,15 +156,30 @@
                                     </span>
 
                                     <span style="margin-right: 5px;">
-                                        <%-- https://dev.twitter.com/docs/api/1/get/users/profile_image/%3Ascreen_name --%>
-                                        <img src="https://api.twitter.com/1/users/profile_image?screen_name=<sec:username/>&size=mini"/>
-                                        <sec:username/>
+
+                                        <a class="twitter-account" data-twitter-name="<sec:username/>" target="_blank">
+                                            <img class="twitter-account" data-twitter-name="<sec:username/>"/>
+                                            <span>
+                                                <sec:username/>
+                                            </span>
+                                        </a>
                                     </span>
                                     <g:link controller='logout' action='index' class="with-tooltip" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'disconnect.button.tooltip')}">
                                         <span class="btn btn-inverse btn-mini"><i class="icon-off icon-white"></i></span>
                                     </g:link>
                                 </div>
                             </sec:ifLoggedIn>
+
+
+                            <div style="clear: both; height: 20px; padding-top: 3px;">
+                                <%-- twitter follow button --%>
+                                <a href="https://twitter.com/linkguardian" class="twitter-follow-button" data-show-count="false">Follow @linkguardian</a>
+                                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+                                <%-- twitter recommend --%>
+                                <a href="https://twitter.com/share" class="twitter-share-button" data-text="online bookmarks manager" data-via="linkguardian" data-related="linkguardian" data-hashtags="linkguardian">Tweet</a>
+                                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                            </div>
                         </div>
                     </div>
                 </div>

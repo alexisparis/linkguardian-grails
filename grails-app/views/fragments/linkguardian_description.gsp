@@ -46,7 +46,7 @@
 
         <div class="section">
             <span class="section-title"><h4><g:message code="about.contact.title"/></h4></span>
-            <g:message code="about.contact.paragraph"/>
+            <g:message code="about.contact.paragraph" args="['linkguardian@blackdog-project.org']"/>
         </div>
 
     </div>
