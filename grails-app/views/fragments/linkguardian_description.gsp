@@ -21,11 +21,6 @@
             <span class="section-title"><h4><g:message code="about.generalities.title"/></h4></span>
             <g:message code="about.generalities.paragraph"/>
         </div>
-
-        <div class="section">
-            <span class="section-title"><h4><g:message code="about.privacy.title"/></h4></span>
-            <g:message code="about.privacy.paragraph"/>
-        </div>
     </div>
     <div class="span4">
         <div class="section">

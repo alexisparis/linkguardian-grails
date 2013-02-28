@@ -40,7 +40,9 @@ html * {
 }
 
 a:link, a:visited, a:hover {
-	color: #48802c;
+	/*color: #48802c;*/
+    color: white !important;
+    text-decoration: none !important;
 }
 
 a:hover, a:active {

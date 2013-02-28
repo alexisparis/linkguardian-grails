@@ -13,29 +13,28 @@
 		<link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'shield_blue.png')}">
 		<link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'shield_blue.png')}">
 
+        <r:require modules="bootstrap"/>
+
         <%--link rel="stylesheet" href="${resource(dir: 'css', file: 'normalize.css')}" type="text/css"--%>
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'application.css')}" type="text/css">
         <link href="${resource(dir: 'css', file: 'clicker.css')}" rel='stylesheet' type='text/css'>
 
-    <style type="text/css">
-        #dragTool
-        {
-            cursor: move;
-            color: white;
-        }
-        a.twitter-follow-button, a.twitter-share-button
-        {
-            display: none; /* not visible until twitter js script loaded */
-        }
-        a *
-        {
-            color: white;
-        }
-    </style>
-
-        <r:require modules="bootstrap"/>
+        <style type="text/css">
+            #dragTool
+            {
+                cursor: move;
+            }
+            a.twitter-follow-button, a.twitter-share-button
+            {
+                display: none; /* not visible until twitter js script loaded */
+            }
+            a:link, a:visited, a:hover {
+                color: white;
+                text-decoration: none;
+            }
+        </style>
 
 		<g:layoutHead/>
 		<r:layoutResources />
@@ -131,6 +130,10 @@
                                 <a href="<g:createLink controller="link" action="list" absolute="true"/>">
                                     <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50" style="margin-top: -10px;"/>
                                     <span class="lg big" style="display: inline-block; padding-top: 16px;"></span>
+
+                                    <%-- TODO : remove when no beta anymore --%>
+                                    <sup style="color: #bd362f; font-size: larger; margin-left: 5px; font-size: x-large;">BÊTA</sup>
+
                                     <span class="lgDescription" style="margin-left: 40px;"><g:message code="lg.description.small"/></span>
                                 </a>
                             </div>
@@ -170,16 +173,17 @@
                                 </div>
                             </sec:ifLoggedIn>
 
+                            <sec:ifLoggedIn>
+                                <div style="clear: both; height: 20px; padding-top: 3px;">
+                                    <%-- twitter follow button --%>
+                                    <a href="https://twitter.com/linkguardian" class="twitter-follow-button" data-show-count="false">Follow @linkguardian</a>
+                                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
-                            <div style="clear: both; height: 20px; padding-top: 3px;">
-                                <%-- twitter follow button --%>
-                                <a href="https://twitter.com/linkguardian" class="twitter-follow-button" data-show-count="false">Follow @linkguardian</a>
-                                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-                                <%-- twitter recommend --%>
-                                <a href="https://twitter.com/share" class="twitter-share-button" data-text="online bookmarks manager" data-via="linkguardian" data-related="linkguardian" data-hashtags="linkguardian">Tweet</a>
-                                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-                            </div>
+                                    <%-- twitter recommend --%>
+                                    <a href="https://twitter.com/share" class="twitter-share-button" data-text="online bookmarks manager" data-via="linkguardian" data-related="linkguardian" data-hashtags="linkguardian">Tweet</a>
+                                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                                </div>
+                            </sec:ifLoggedIn>
                         </div>
                     </div>
                 </div>
