@@ -40,6 +40,11 @@ function jsonLinksToHtml(model)
                                 '<i class="icon icon-eye-open"></i>' +
                             '</a>' +
                         '</div>' +
+                        '<div class="actions" style="float: right; margin-right: 4px;">' +
+                            '<span class="with-tooltip" rel="tooltip" data-placement="left" data-original-title="' + 'toto' + '">' +
+                            '<i class="icon icon-lock"></i>' +
+                            '</span>' +
+                        '</div>' +
                     '</div>' +
                 '</div>' +
                 '<div style="margin-top: 1px;word-wrap:break-word;">' +

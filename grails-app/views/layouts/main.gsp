@@ -5,8 +5,15 @@
 <!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <%-- TODO : delete 3 following lines when production --%>
+        <META http-equiv="Cache-Control" content="no-cache">
+        <META http-equiv="Pragma" content="no-cache">
+        <META http-equiv="Expires" content="0">
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
 		<title><g:layoutTitle default="Grails"/></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="shortcut icon" href="${resource(dir: 'images', file: 'shield_blue.ico')}" type="image/x-icon">
@@ -30,7 +37,7 @@
             {
                 display: none; /* not visible until twitter js script loaded */
             }
-            a:link, a:visited, a:hover {
+            a.text:link, a.text:visited, a.text:hover {
                 color: white;
                 text-decoration: none;
             }
@@ -127,12 +134,12 @@
                     <div class="span12">
                         <div id="guardianLogo" role="banner" style="padding-top: 5px; padding-bottom: 8px;">
                             <div style="float: left;">
-                                <a href="<g:createLink controller="link" action="list" absolute="true"/>">
+                                <a class="text" href="<g:createLink controller="link" action="list" absolute="true"/>">
                                     <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50" style="margin-top: -10px;"/>
                                     <span class="lg big" style="display: inline-block; padding-top: 16px;"></span>
 
                                     <%-- TODO : remove when no beta anymore --%>
-                                    <sup style="color: #bd362f; font-size: larger; margin-left: 5px; font-size: x-large;">BÊTA</sup>
+                                    <sup style="color: #bd362f; font-size: larger; margin-left: 5px; font-size: large;">BÊTA</sup>
 
                                     <span class="lgDescription" style="margin-left: 40px;"><g:message code="lg.description.small"/></span>
                                 </a>
@@ -153,14 +160,18 @@
                                             </div>
                                         </sec:ifAllGranted>
 
-                                        <button class="btn btn-success btn-inverse" id="tools"><g:message code="menu.tools.label"/></button>
+                                        <button class="btn btn-success btn-inverse with-tooltip" id="tools" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'menu.tools.label')}">
+                                            <i class="icon-wrench icon-white"></i>
+                                        </button>
 
-                                        <button class="btn btn-info" id="about"><g:message code="menu.about.label"/></button>
+                                        <button class="btn btn-info with-tooltip" id="about" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'menu.about.label')}">
+                                            <i class="icon-info-sign icon-white"></i>
+                                        </button>
                                     </span>
 
                                     <span style="margin-right: 5px;">
 
-                                        <a class="twitter-account" data-twitter-name="<sec:username/>" target="_blank">
+                                        <a class="text twitter-account" data-twitter-name="<sec:username/>" target="_blank">
                                             <img class="twitter-account" data-twitter-name="<sec:username/>"/>
                                             <span>
                                                 <sec:username/>
@@ -168,6 +179,11 @@
                                         </a>
                                     </span>
                                     <g:link controller='logout' action='index' class="with-tooltip" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'disconnect.button.tooltip')}">
+                                        <span class="btn btn-inverse btn-mini">
+                                            <img src="${resource(dir: 'images', file: 'configuration.png')}"/>
+                                        </span>
+                                    </g:link>
+                                    <g:link controller='logout' action='index' class="with-tooltip" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'configuration.button.tooltip')}">
                                         <span class="btn btn-inverse btn-mini"><i class="icon-off icon-white"></i></span>
                                     </g:link>
                                 </div>

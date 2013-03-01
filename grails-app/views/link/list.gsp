@@ -50,7 +50,7 @@
                                 <option value="unread" data-image="${resource(dir: 'images', file: 'clock.png')}"><g:message code="links.forms.search.read_status.unread"/></option>
                             </select>
 
-                            <div class="input-append">
+                            <div class="input-append" id="filterByTgContainer">
                                 <input type="text" id="filterInput" name="token" title="filter" placeholder='<g:message code="links.forms.search.filterInput.placeholder"/>' class="input-medium" maxlength="50"/>
                                 <span class="add-on with-tooltip" id="clearFilterTag" rel="tooltip" data-placement="top" data-original-title="<g:message code="links.forms.search.clearFilterTag.tooltip"/>">
                                     <img src="${resource(dir: 'images', file: 'delete.png')}" width="14"/>

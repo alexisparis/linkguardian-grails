@@ -160,3 +160,8 @@ div.jqcloud > span
 {
     cursor: pointer;
 }
+#filterByTgContainer *
+{
+    height: 24px;
+    /*padding-top: 0px;*/
+}
