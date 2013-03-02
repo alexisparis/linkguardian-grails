@@ -39,12 +39,7 @@
 
                 <g:if test="${!isOwner}">
                     <div class="span4">
-                        <legend>&nbsp;<g:message code="links.linksOf.label"/>
-
-                            <a style="float: right; margin-top: 5px;" class="text btn btn-primary" href="<g:createLink controller="link" action="list" absolute="true"/>">
-                                <i class="icon icon-circle-arrow-left icon-white"></i>&nbsp;<g:message code="links.returnToMyLinks.button.label"/>
-                            </a>
-                        </legend>
+                        <legend>&nbsp;<g:message code="links.linksOf.label"/></legend>
 
                         &nbsp;<a class="text twitter-account" data-twitter-name="${linksOfUser}" target="_blank" style="margin-left: 20px;">
                             <img class="twitter-account" width="60px" data-twitter-icon-size="bigger" data-twitter-name="${linksOfUser}"/>
@@ -64,11 +59,17 @@
                             <legend>&nbsp;
                             <g:if test="${isOwner}">
                                 <g:message code="links.forms.search.title"/>
+
+                                <a id="shareLinksButton" style="float: right; margin-top: 5px; margin-right: 0px;" class="text btn btn-small btn-primary">
+                                    <g:message code="links.share.button.label"/>
+                                </a>
                             </g:if>
                             <g:else>
-                                <g:set var="username" value="${linksOfUser}"/>
-
                                 <g:message code="links.forms.search.others.title" args="${[linksOfUser]}"/>
+
+                                <a style="float: right; margin-top: 5px; margin-right: 5px;" class="text btn btn-primary" href="<g:createLink controller="link" action="list" absolute="true"/>">
+                                    <i class="icon icon-circle-arrow-left icon-white"></i>&nbsp;<g:message code="links.returnToMyLinks.button.label"/>
+                                </a>
                             </g:else>
                             </legend>
                             &nbsp;
@@ -104,7 +105,8 @@
                                     <option value="desc" selected="selected" data-image="${resource(dir: 'images', file: 'down.png')}"><g:message code="links.forms.search.sortType.desc"/></option>
                                 </select>
                             </div>
-                            <g:hiddenField name="linksofuser" value="${linksOfUser}"/>
+                            <g:hiddenField id="linksofuser" name="linksofuser" value="${linksOfUser}"/>
+                            <g:hiddenField id="allLinksPrivate" name="allLinksPrivate" value="${allLinksPrivate}"/>
 
                         </fieldset>
                     </g:formRemote>
@@ -260,8 +262,8 @@
                 <g:textField id="newTagInput" name="name" class="input-xlarge"/>
             </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true"><g:message code="links.dialogs.result.no"/></button>
-                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="addTag();"><g:message code="links.dialogs.result.yes"/></button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true"><g:message code="links.dialogs.result.cancel"/></button>
+                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="addTag();"><g:message code="links.dialogs.result.save"/></button>
             </div>
         </div>
         <div id="markAsReadDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -286,10 +288,37 @@
             </div>
             <div class="modal-body">
                 <p class="question"><g:message code="links.dialogs.tagsCloudDialog.label"/></p>
-                <div id="tagsCloud" style="width: 520px; height: 310px;"/>
+                <div id="tagsCloud" style="width: 520px; height: 310px;"></div>
             </div>
             <div class="modal-footer">
                 <button class="btn" data-dismiss="modal" aria-hidden="true"><g:message code="links.dialogs.result.cancel"/></button>
+            </div>
+        </div>
+        <div id="shareWarningDueToPrivacyDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> <g:message code="links.dialogs.shareWarningDueToPrivacy.title"/></h3>
+            </div>
+            <div class="modal-body">
+                <p class="question"><g:message code="links.dialogs.shareWarningDueToPrivacy.paragraph"/></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true"><g:message code="links.dialogs.result.no"/></button>
+                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="openConfiguration();"><g:message code="links.dialogs.result.yes"/></button>
+            </div>
+        </div>
+        <div id="shareImpossibleCauseNoLinksDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> <g:message code="links.dialogs.shareImpossibleCauseNoLinks.title"/></h3>
+            </div>
+            <div class="modal-body">
+                <p class="question"><g:message code="links.dialogs.shareImpossibleCauseNoLinks.paragraph"/></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true"><g:message code="links.dialogs.result.ok"/></button>
             </div>
         </div>
 

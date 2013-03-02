@@ -35,7 +35,8 @@ class LinkController extends MessageOrientedObject
         return new ModelAndView("/link/list",
                                 [linksOfUser : _linksOfUser,
                                  isOwner : springSecurityService.getPrincipal().username == _linksOfUser,
-                                 policy : connectedPerson.privacyPolicy])
+                                 policy : connectedPerson.privacyPolicy,
+                                 allLinksPrivate : (LinkPrivacyPolicy.ALL_LOCKED == connectedPerson.privacyPolicy)])
     }
 
     def formatUrl(String url)

@@ -3,7 +3,6 @@
 
     $(document).ready(function()
     {
-        $('img.twitter').attr('src', '<g:resource  dir="images" file="twitter.png"/>');
         $('img.grails').attr('src', '<g:resource  dir="images" file="grails-logo.png"/>');
         $('img.spring').attr('src', '<g:resource  dir="images" file="spring.png"/>');
         $('img.bootstrap').attr('src', '<g:resource  dir="images" file="bootstrap.png"/>');

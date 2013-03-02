@@ -41,11 +41,11 @@ function jsonLinksToHtml(model)
                                 '<i class="icon icon-eye-open"></i>' +
                             '</a>' +
                         '</div>' +
-                        '<div class="actions" style="float: right; margin-right: 4px;">' +
-                            '<span class="with-tooltip" rel="tooltip" data-placement="left" data-original-title="' + 'toto' + '">' +
-                            '<i class="icon icon-lock"></i>' +
-                            '</span>' +
-                        '</div>' +
+                        //'<div class="actions" style="float: right; margin-right: 4px;">' +
+                        //    '<span class="with-tooltip" rel="tooltip" data-placement="left" data-original-title="' + 'toto' + '">' +
+                        //    '<i class="icon icon-lock"></i>' +
+                        //    '</span>' +
+                        //'</div>' +
                     '</div>' +
                     '{{/readonly}}' +
                 '</div>' +
@@ -195,11 +195,13 @@ function updateLinks(model)
 function setSubmitFilterButtonToNormalState()
 {
     $('#filter-input').removeClass("btn-warning").addClass("btn-primary");
+    $('#shareLinksButton').removeClass('disabled');
 };
 
 function setSubmitFilterButtonToClickState()
 {
     $('#filter-input').removeClass("btn-primary").addClass("btn-warning");
+    $('#shareLinksButton').addClass('disabled');
 };
 
 function submitFilterForm()
@@ -510,6 +512,7 @@ $(document).ready(
             href = href + "&sortType=" + $('#sortType').val();
             href = href + "&token=" + encodeURIComponent($('#filterInput').val());
             href = href + "&page=2";
+            href = href + "&linksofuser=" + $('#linksofuser').val();
 
             console.log("href to set : " + href);
 
@@ -663,6 +666,75 @@ $(document).ready(
             }
         });
 
-        $('#txtUrl').focus();
+        $('#shareLinksButton').on('click', function(event)
+        {
+            if ( ! $('#shareLinksButton').hasClass('disabled') )
+            {
+                // test if there are links
+                var linksCount = $('#listing-part .linkpart').size();
 
+                if ( linksCount == 0 )
+                {
+                    $('#shareImpossibleCauseNoLinksDialog').modal();
+                }
+                else
+                {
+                    // if my configuration is all locked, warn user that hte configuration must be modified
+                    if ( $('#allLinksPrivate').val() === 'true' )
+                    {
+                        $('#shareWarningDueToPrivacyDialog').modal();
+                    }
+                    else
+                    {
+                        // build an url to twitter.com to start creating a new tweet
+                        var tags = $('#filterInput').val();
+                        var _tags = "";
+                        var tagsArray;
+                        if ( tags )
+                        {
+                            tags = $.trim(tags);
+                            tagsArray = tags.split(" ");
+                        }
+
+                        var message = "My links";
+                        if ( tagsArray )
+                        {
+                            message = message + " about";
+                            for(var i = 0; i < tagsArray.length; i++)
+                            {
+                                var current = tagsArray[i];
+                                if ( current )
+                                {
+                                    current = $.trim(current);
+                                    if ( current.length > 0 )
+                                    {
+                                        message = message + " #" + current;
+
+                                        if ( _tags.length == 0 )
+                                        {
+                                            _tags = current;
+                                        }
+                                        else
+                                        {
+                                            _tags = _tags + " " + current;
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+
+                        var url = "https://linkguardian-blackdog.rhcloud.com/" + $('#linksofuser').val() + (_tags.length == 0 ? "" : "/" + _tags);
+
+                        message = message + " " + url;
+                        message = message + " (via @linkguardian)";
+
+                        window.open("https://twitter.com/home?status=" + encodeURIComponent(message),'mywindow',
+                                    'width=400,height=200,toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes,resizable=yes');
+                    }
+                }
+            }
+        });
+
+        $('#txtUrl').focus();
     });

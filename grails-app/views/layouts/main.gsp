@@ -59,11 +59,22 @@
                 // apply new values as original values
                 var policy = $('#privacy');
                 policy.attr('data-original-value', policy.msDropDown().data("dd").get('value'));
+
+                // reload current page
+                window.location.reload();
+            };
+
+            var openConfiguration = function()
+            {
+                $('#configurationButton').trigger('click');
             };
 
             $(document).ready(
                     function()
                     {
+                        $('img.twitter').attr('src', '<g:resource  dir="images" file="twitter.png"/>');
+                        $('img.twitter-white').attr('src', '<g:resource  dir="images" file="twitter-white.png"/>');
+
                         $('.lg').html('<g:message code="lg.title"/>');
 
                         $('#about').on('click', function(event)
