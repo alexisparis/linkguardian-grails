@@ -177,19 +177,6 @@ function updateLinks(model)
     $container.masonry('appended', jOutput, true);
 
     jOutput.fadeIn();
-
-    // si j'appelle masonry sans delay, cela provoque la superposition de block
-    // certainement du au fait que certaines initialisations (infinite-scroll, raty) ne sont
-    // pas complètement terminés et du coup la détermination de la hauteur du block foire.
-    // du coup, obligé d'ajouter un délai pour lancer masonry
-    /*
-    setTimeout(function()
-               {
-                   $container.masonry('appended', jOutput, true);
-
-                   jOutput.fadeIn();
-               }, 200);
-    */
 };
 
 function setSubmitFilterButtonToNormalState()
@@ -381,65 +368,6 @@ function showTagsCloud(data)
     }
 };
 
-function displayFailure(XMLHttpRequest,textStatus,errorThrown)
-{
-    if ( XMLHttpRequest && XMLHttpRequest.responseText && XMLHttpRequest.responseText.length )
-    {
-        var message = JSON.parse(XMLHttpRequest.responseText);
-        displayMessage(message);
-    }
-    else
-    {
-        displayStdError();
-    }
-};
-
-var permanentMessage = false;
-
-function displayStdError()
-{
-    displayError(defaultErrorMessage);
-};
-
-function displayError(msg)
-{
-    displayMessage({
-                       message : msg,
-                       level : {
-                           name : "ERROR"
-                       }
-                   });
-};
-
-function displayMessage(data)
-{
-    var jObj = $('#message');
-    jObj.fadeOut({
-                     duration: 0
-                 });
-    jObj.html('');
-    jObj.attr('class', '');
-
-    if( data )
-    {
-        jObj.html(data.message);
-        jObj.addClass('alert');
-        jObj.addClass('alert-' + data.level.name.toLowerCase());
-        jObj.fadeIn({
-                        duration: 0
-                    });
-        if ( ! permanentMessage )
-        {
-            setTimeout(function()
-                       {
-                           jObj.fadeOut({
-                                            duration: 1000
-                                        });
-                       },4000);
-        }
-    }
-};
-
 var markAsReadFormName = "markAsReadForm";
 var markAsUnreadFormName = "markAsUnreadForm";
 
@@ -595,12 +523,6 @@ $(document).ready(
                        {
                            $('#newTagInput').focus();
                        }, 1000);
-        });
-
-        // key bindings on modal twitter bootstrap dialogs
-        $('div.modal').on('keydown', function(event)
-        {
-            $(this).find('button[data-key|=' + event.which + ']').trigger('click');
         });
 
         var goToLink = function(event)

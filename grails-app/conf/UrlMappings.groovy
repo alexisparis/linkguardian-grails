@@ -14,6 +14,7 @@ class UrlMappings {
 
         }
       }
+      "/profile/$linksofuser/$tag?"(controller:"link", action:"list", cons)
 
       "500"(view: '/error')
     }

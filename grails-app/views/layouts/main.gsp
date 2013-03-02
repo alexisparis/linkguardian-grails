@@ -182,49 +182,97 @@
                             <sec:ifLoggedIn>
                                 <div style="float: right; text-align: right; margin-top: 5px;">
 
-                                    <span style="margin-right: 30px;">
-                                        <sec:ifAllGranted roles="ROLE_ADMIN">
-                                            <div class="btn-group" style="margin-right: 20px; ">
-                                                <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown"><g:message code="menu.admin.label"/> <span class="caret"></span></button>
-                                                <ul class="dropdown-menu">
-                                                    <li><g:link controller="userCrud"><g:message code="menu.admin.users.label"/></g:link></li>
-                                                    <li><g:link controller="roleCrud"><g:message code="menu.admin.roles.label"/></g:link></li>
-                                                    <li><g:link controller="linkCrud"><g:message code="menu.admin.links.label"/></g:link></li>
-                                                </ul>
-                                            </div>
-                                        </sec:ifAllGranted>
+                                    <div>
+                                        <span style="margin-right: 30px;">
+                                            <sec:ifAllGranted roles="ROLE_ADMIN">
+                                                <div class="btn-group" style="margin-right: 20px; ">
+                                                    <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown"><g:message code="menu.admin.label"/> <span class="caret"></span></button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><g:link controller="userCrud"><g:message code="menu.admin.users.label"/></g:link></li>
+                                                        <li><g:link controller="roleCrud"><g:message code="menu.admin.roles.label"/></g:link></li>
+                                                        <li><g:link controller="linkCrud"><g:message code="menu.admin.links.label"/></g:link></li>
+                                                    </ul>
+                                                </div>
+                                            </sec:ifAllGranted>
 
-                                        <button class="btn btn-success btn-inverse with-tooltip" id="tools" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'menu.tools.label')}">
-                                            <i class="icon-wrench icon-white"></i>
-                                        </button>
+                                            <button class="btn btn-success btn-inverse with-tooltip" id="tools" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'menu.tools.label')}">
+                                                <i class="icon-wrench icon-white"></i>
+                                            </button>
 
-                                        <button class="btn btn-info with-tooltip" id="about" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'menu.about.label')}">
-                                            <i class="icon-info-sign icon-white"></i>
-                                        </button>
-                                    </span>
+                                            <button class="btn btn-info with-tooltip" id="about" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'menu.about.label')}">
+                                                <i class="icon-info-sign icon-white"></i>
+                                            </button>
+                                        </span>
 
-                                    <span style="margin-right: 5px;">
+                                        <span style="margin-right: 5px;">
 
-                                        <a class="text twitter-account" data-twitter-name="<sec:username/>" target="_blank">
-                                            <img class="twitter-account" data-twitter-name="<sec:username/>"/>
-                                            <span>
-                                                <sec:username/>
+                                            <a class="text twitter-account" data-twitter-name="<sec:username/>" target="_blank">
+                                                <img class="twitter-account" data-twitter-name="<sec:username/>"/>
+                                                <span>
+                                                    <sec:username/>
+                                                </span>
+                                            </a>
+                                        </span>
+                                        <a id="configurationButton" class="with-tooltip" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'configuration.button.tooltip')}">
+                                            <span class="btn btn-inverse btn-mini">
+                                                <img src="${resource(dir: 'images', file: 'configuration.png')}"/>
                                             </span>
                                         </a>
-                                    </span>
-                                    <a id="configurationButton" class="with-tooltip" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'configuration.button.tooltip')}">
-                                        <span class="btn btn-inverse btn-mini">
-                                            <img src="${resource(dir: 'images', file: 'configuration.png')}"/>
-                                        </span>
-                                    </a>
-                                    <g:link controller='logout' action='index' class="with-tooltip" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'disconnect.button.tooltip')}">
-                                        <span class="btn btn-inverse btn-mini"><i class="icon-off icon-white"></i></span>
-                                    </g:link>
+                                        <g:link controller='logout' action='index' class="with-tooltip" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'disconnect.button.tooltip')}">
+                                            <span class="btn btn-inverse btn-mini"><i class="icon-off icon-white"></i></span>
+                                        </g:link>
+                                    </div>
+                                    <div style="float: right; text-align: right; margin-top: 15px;">
+
+                                        <g:form controller="person" action="persons" style="margin-bottom: 0px;" class="form-horizontal">
+                                            <div class="control-group">
+                                                <label class="control-label" for="searchUsernameInput"><g:message code="user.search.label"/></label>
+                                                <div class="controls">
+                                                    <input type="text" id="searchUsernameInput" name="username" data-provide="typeahead"/>
+
+                                                    <button type="submit" class="btn btn-primary" onclick="setSubmitFilterButtonToNormalState()" id="searchPerson-input"
+                                                            style="vertical-align: top;">
+                                                        <i class="icon-search icon-white"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <script type="text/javascript">
+                                                $(document).ready(function(event)
+                                                {
+                                                    $('#searchUsernameInput').typeahead({
+
+                                                                                  source: function (query, process) {
+                                                                                      blockUiInhibiter++;
+                                                                                      return $.getJSON(
+                                                                                              '<g:createLink controller="person" action="persons" absolute="true"/>',
+                                                                                              {
+                                                                                                  username: $('#searchUsernameInput').val(),
+                                                                                                  format: "json"
+                                                                                              },
+                                                                                              function (data) {
+                                                                                                  blockUiInhibiter--;
+                                                                                                  if ( data )
+                                                                                                  {
+                                                                                                      var extractedNames = [];
+                                                                                                      for(var i = 0; i < data.length; i++)
+                                                                                                      {
+                                                                                                          extractedNames.push(data[i].username);
+                                                                                                      }
+                                                                                                  }
+                                                                                                  return process(extractedNames);
+                                                                                              }).error(function() { blockUiInhibiter--; });
+                                                                                  }
+                                                                              });
+                                                });
+                                            </script>
+                                        </g:form>
+                                    </div>
                                 </div>
                             </sec:ifLoggedIn>
 
                             <sec:ifLoggedIn>
-                                <div style="clear: both; height: 20px; padding-top: 3px;">
+                                <div style="float: left; height: 20px; padding-top: 3px;">
                                     <%-- twitter follow button --%>
                                     <a href="https://twitter.com/linkguardian" class="twitter-follow-button" data-show-count="false">Follow @linkguardian</a>
                                     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>

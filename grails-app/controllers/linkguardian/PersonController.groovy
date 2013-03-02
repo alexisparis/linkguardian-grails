@@ -1,11 +1,15 @@
 package linkguardian
 
+import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
+import org.springframework.web.servlet.ModelAndView
 
 @Secured(['ROLE_USER'])
 class PersonController extends MessageOrientedObject
 {
     def springSecurityService
+
+    def personsPerPage = 100
 
     def saveConfiguration()
     {
@@ -16,6 +20,95 @@ class PersonController extends MessageOrientedObject
         person.privacyPolicy = LinkPrivacyPolicy.valueOf(params.privacy)
         person.save(flush: true)
 
-        render this.success("saved")
+        render this.success("saved") as JSON
+    }
+
+    def persons(String username, String format, int page)
+    {
+        log.info "calling searchPersons with username : " + username + " with format : " + format + " on page " + page
+
+        def results = [] // list of PersonResult
+
+        def formatJson = 'json' == format
+        def _page = page
+        if ( _page < 1 )
+        {
+            _page = 1
+        }
+
+        if ( username != null && username.length() > 0 )
+        {
+            def queryParams = [max: personsPerPage, offset: (_page - 1) * personsPerPage]//, sort: _sortBy, order: _sortType]
+
+            def q = Person.createCriteria()
+
+            if ( formatJson )
+            {
+                def iterator = q.list(queryParams) {
+                    and
+                    {
+                        ilike('username', "%" + username + "%")
+                        not {
+                            eq('privacyPolicy', LinkPrivacyPolicy.ALL_LOCKED) //not user whose links are private
+                        }
+                        not {
+                            eq('username', springSecurityService.principal.username)  // not connected user
+                        }
+                    }
+                    projections {
+                        property('username')
+                    }
+                }
+
+                iterator.each {
+                    results.add(new PersonResult(username : it))
+                }
+            }
+            else
+            {
+                def iterator = q.list(queryParams) {
+                    and
+                    {
+                        ilike('username', "%" + username + "%")
+                        not {
+                            eq('privacyPolicy', LinkPrivacyPolicy.ALL_LOCKED) //not user whose links are private
+                        }
+                        not {
+                            eq('username', springSecurityService.principal.username)  // not connected user
+                        }
+                    }
+                }
+
+                iterator.each {
+                    results.add(new PersonResult(username : it.username, linksCount: it.links.size()))
+                }
+            }
+        }
+
+        // sort result
+        results.sort {
+            a, b ->
+                if ( username == a.username )
+                {
+                    -1
+                }
+                else if ( username == b.username )
+                {
+                    1
+                }
+                else
+                {
+                    a.username <=> b.username
+                }
+        }
+
+        if ( formatJson )
+        {
+            render results as JSON
+        }
+        else
+        {
+            return new ModelAndView("/person/persons", [persons : results, username:  username])
+        }
     }
 }

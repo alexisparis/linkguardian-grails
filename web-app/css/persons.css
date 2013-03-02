@@ -1,0 +1,23 @@
+
+div.personpart
+{
+    /*
+      border left et right : 1px et 1px
+      padding left et right : 2px et 2px
+      largeur total : 1170
+
+                 margins
+      1170 - (5 + 10 + 10 + 10 + 5) ==> 1130 / 3 ==> 376 ==> 376 - border et padding ==> 370
+    */
+    width: 370px;
+    height: 83px;
+    float: left;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    background-color: #ddd;
+    border-radius: 5px 5px 5px;
+    border: 1px solid #888;
+    padding: 2px;
+    cursor: pointer;
+}

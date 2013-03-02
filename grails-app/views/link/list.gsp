@@ -80,7 +80,7 @@
                             </select>
 
                             <div class="input-append" id="filterByTgContainer">
-                                <input type="text" id="filterInput" name="token" title="filter" placeholder='<g:message code="links.forms.search.filterInput.placeholder"/>' class="input-medium" maxlength="50"/>
+                                <input type="text" value="${tag}" id="filterInput" name="token" title="filter" placeholder='<g:message code="links.forms.search.filterInput.placeholder"/>' class="input-medium" maxlength="50"/>
                                 <span class="button add-on with-tooltip" id="clearFilterTag" rel="tooltip" data-placement="top" data-original-title="<g:message code="links.forms.search.clearFilterTag.tooltip"/>">
                                     <%--img src="${resource(dir: 'images', file: 'delete.png')}" width="14"/--%>
                                     &times;
@@ -337,8 +337,8 @@
             var defaultErrorMessage = '<g:message code="links.default.errorMessage.label"/>';
             var markAsReadMessage = '<g:message code="links.dialogs.markAsReadDialog.label"/>';
             var markAsReadFromMessage = '<g:message code="links.dialogs.markAsReadDialog.from.label"/>';
-            var infinitescrollFinishedMsg = '<g:message code="infinitescroll.finishedMsg"/>';
-            var infinitescrollMsgText = '<g:message code="infinitescroll.msgText"/>';
+            var infinitescrollFinishedMsg = '<g:message code="infinitescroll.links.finishedMsg"/>';
+            var infinitescrollMsgText = '<g:message code="infinitescroll.links.msgText"/>';
             var templateI18n = {
                 goto : '<g:message code="links.link.template.domain.goto"/>',
                 addTag : '<g:message code="links.link.template.domain.addTag"/>',
@@ -348,46 +348,45 @@
                 deleteTag : '<g:message code="links.link.template.domain.deleteTag"/>',
                 filterOnTag : '<g:message code="links.link.template.domain.filterOnTag"/>'
             };
-            //var  = '<g:message code=""/>';
         </g:javascript>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'links.js')}"></script>
 
-    <g:javascript>
-        $(document).ready(
-                function()
-                {
-                    displayDevModeWarning = true;
-
-                    $.fn.raty.defaults.path = '${resource(dir: 'images')}';
-
-                    try
+        <g:javascript>
+            $(document).ready(
+                    function()
                     {
-                        $("body select").msDropDown();
-                    }
-                    catch(e)
-                    {
-                        alert(e.message);
-                    }
+                        displayDevModeWarning = true;
 
-                    // add here to test without deployment issue
+                        $.fn.raty.defaults.path = '${resource(dir: 'images')}';
 
-                    var $container = $('#listing-part');
-                    $container.imagesLoaded(function(){
+                        try
+                        {
+                            $("body select").msDropDown();
+                        }
+                        catch(e)
+                        {
+                            alert(e.message);
+                        }
 
-                        $container.masonry({
-                                               itemSelector : '#listing-part .linkpart',
-                                               isAnimated: false,
-                                               animationOptions: {
-                                                  duration: 750,
-                                                  easing: 'swing',
-                                                  queue: false
-                                               }
-                                           });
+                        // add here to test without deployment issue
 
-                        submitFilterForm();
+                        var $container = $('#listing-part');
+                        $container.imagesLoaded(function(){
+
+                            $container.masonry({
+                                                   itemSelector : '#listing-part .linkpart',
+                                                   isAnimated: false,
+                                                   animationOptions: {
+                                                      duration: 750,
+                                                      easing: 'swing',
+                                                      queue: false
+                                                   }
+                                               });
+
+                            submitFilterForm();
+                        });
                     });
-                });
-    </g:javascript>
+        </g:javascript>
 
 	</body>
 </html>
