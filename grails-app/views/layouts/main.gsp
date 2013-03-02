@@ -54,6 +54,13 @@
             var displayDevModeWarning = false;
             var blockUiInhibiter = 0;
 
+            var configurationSaved = function(data)
+            {
+                // apply new values as original values
+                var policy = $('#privacy');
+                policy.attr('data-original-value', policy.msDropDown().data("dd").get('value'));
+            };
+
             $(document).ready(
                     function()
                     {
@@ -109,16 +116,32 @@
                                 .ajaxStop(hideBlockUi).ajaxError(hideBlockUi);
 
                         <%-- https://dev.twitter.com/docs/api/1/get/users/profile_image/%3Ascreen_name --%>
+                        <%-- bigger normal mini --%>
                         $('img.twitter-account').each(function(index, value)
                         {
                             var $value = $(value);
-                            $value.attr('src', 'https://api.twitter.com/1/users/profile_image?screen_name=' + $value.attr('data-twitter-name') + '&size=mini');
+                            var size = 'mini';
+                            var sizeAttr = $value.attr('data-twitter-icon-size');
+                            if ( sizeAttr )
+                            {
+                                size = sizeAttr;
+                            }
+                            $value.attr('src', 'https://api.twitter.com/1/users/profile_image?screen_name=' + $value.attr('data-twitter-name') + '&size=' +size);
                         });
 
                         $('a.twitter-account').each(function(index, value)
                         {
                             var $value = $(value);
                             $value.attr('href', 'https://twitter.com/' + $value.attr('data-twitter-name'));
+                        });
+
+                        $('#configurationButton').on('click', function(event)
+                        {
+                            var select = $('#privacy');
+                            var handler = select.msDropDown().data("dd");
+                            handler.set('value', select.attr('data-original-value'));
+
+                            $('#configurationDialog').modal();
                         });
                     });
 
@@ -178,12 +201,12 @@
                                             </span>
                                         </a>
                                     </span>
-                                    <g:link controller='logout' action='index' class="with-tooltip" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'disconnect.button.tooltip')}">
+                                    <a id="configurationButton" class="with-tooltip" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'configuration.button.tooltip')}">
                                         <span class="btn btn-inverse btn-mini">
                                             <img src="${resource(dir: 'images', file: 'configuration.png')}"/>
                                         </span>
-                                    </g:link>
-                                    <g:link controller='logout' action='index' class="with-tooltip" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'configuration.button.tooltip')}">
+                                    </a>
+                                    <g:link controller='logout' action='index' class="with-tooltip" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'disconnect.button.tooltip')}">
                                         <span class="btn btn-inverse btn-mini"><i class="icon-off icon-white"></i></span>
                                     </g:link>
                                 </div>
@@ -257,6 +280,27 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true"><g:message code="close.button.label"/></button>
+            </div>
+        </div>
+        <div id="configurationDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> <g:message code="dialog.configuration.title"/></h3>
+            </div>
+            <div class="modal-body" style="height: 150px;">
+                <g:formRemote id="configurationForm" name="configurationForm" url="[controller: 'person', action: 'saveConfiguration']"
+                              method="POST" onSuccess="configurationSaved(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
+                    <g:message code="links.forms.configuration.privacy.label"/><br/>
+                    <select name="privacy" id="privacy" style="width: 300px; margin-left: 50px;" data-original-value="${policy}">
+                        <option value="ALL_LOCKED"><g:message code="links.forms.configuration.privacy.locked"/></option>
+                        <option value="ALL_PUBLIC"><g:message code="links.forms.configuration.privacy.public"/></option>
+                        <option value="LINK_PER_LINK"><g:message code="links.forms.configuration.privacy.linkPerLink"/></option>
+                    </select>
+                </g:formRemote>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true" onclick="javascript:$('#configurationForm').submit();"><g:message code="links.dialogs.result.save"/></button>
             </div>
         </div>
         <div id="devWarningDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

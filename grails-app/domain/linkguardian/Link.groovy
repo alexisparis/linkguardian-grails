@@ -17,7 +17,6 @@ class Link {
   static belongsTo = [person: Person]
 
   static mapping = {
-  //  fusionedTags index:true, length: TAGS_MAX_LENGTH
     url index:true, length: URL_MAX_LENGTH
     read index:true
     creationDate index:true
@@ -27,17 +26,17 @@ class Link {
     tags fetch: 'join', lazy: false
     note enumType: Note
     person index: true
+    locked index:  true
   }
 
-  //  static belongsTo = Author
   static hasMany = [tags:Tag]
 
   String url
   String domain
   Note note = Note.Note_0
   Date creationDate
-  //String fusionedTags
   Boolean read = false
   String title
   String description
+  Boolean locked = false
 }

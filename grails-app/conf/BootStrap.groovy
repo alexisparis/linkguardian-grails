@@ -1,5 +1,6 @@
 import grails.util.GrailsUtil
 import linkguardian.Link
+import linkguardian.LinkPrivacyPolicy
 import linkguardian.Note
 import linkguardian.Person
 import linkguardian.Role
@@ -31,12 +32,12 @@ class BootStrap {
         return newLink
     }
 
-    def createFakeLink(String _tags, Note _note, Person _person, Boolean _read = false, String name)
+    def createFakeLink(String _tags, Note _note, Person _person, Boolean _read = false, String name, boolean locked = false)
     {
         def newLink
         try {
             newLink = new Link(url: "url_" + name, creationDate: new Date(), read:  _read, person: _person,
-                               domain: "domain_" + name, title: "title_" + name)
+                               domain: "domain_" + name, title: "title_" + name, locked: locked)
 
             def desc = (("description_" + name + " ") * ((Math.random() * 25.0) + 1).intValue())
             if ( desc.length() > 200 )
@@ -80,30 +81,48 @@ class BootStrap {
         adminTwitted.token = "55181004-xY4Auj3gdik5GbwUS4JNuJbRRkvnybPdw0MCx7V61"
         adminTwitted.tokenSecret = "l95f3RDrEeGVJtyiWUxy1gOAbPUH4oG1sGwC3dDWiU"
         adminTwitted.user = admin
-        adminTwitted.save(flush:  true)
+        adminTwitted.save(flush: true)
 
-        switch (Environment.current) {
+        switch (Environment.current)
+        {
             case Environment.DEVELOPMENT:
 
-                def user = new Person(username: 'user', enabled: true, password: 'password')
-                user = user.save(flush: true)
-
-                PersonRole.create user, userRole, true
-                PersonRole.create user, twitterRole, true
-
-//                this.createLink("http://www.privatesportshop.com", "sport shop nike adidas reebok", Note.Note_2, admin)
-//                this.createLink("http://blog.knoldus.com/2013/01/12/akka-futures-in-scala-with-a-simple-example/", "scala akka", Note.Note_0, admin)
-//                this.createLink("http://www.brandalley.fr", "shop marque", Note.Note_4, admin)
-//                this.createLink("http://aravindamadusanka.blogspot.fr/2012/08/how-to-use-apache-jmeter-for-web.html", "shop reebok", Note.Note_0, admin)
-//                this.createLink("http://java.dzone.com/articles/introducing-spring-integration", "shop reebok", Note.Note_0, admin)
-
-                for(i in 1..200)
+                // links for admin
+                for (i in 1..200)
                 {
                     this.createFakeLink("", Note.valueOf("Note_" + (i % 6)), admin, Math.random() > 0.5, i.toString())
                 }
 
-                this.createLink("http://www.brandalley.fr", "shop marque", Note.Note_4, user)
-                this.createLink("http://www.m6.fr", "shop marque", Note.Note_2, user)
+                // fake user 1
+                def user1 = new Person(username: 'OlivierCroisier', enabled: true, password: 'password')
+                user1.privacyPolicy = LinkPrivacyPolicy.ALL_PUBLIC
+                user1 = user1.save(flush: true)
+                PersonRole.create user1, userRole, true
+                PersonRole.create user1, twitterRole, true
+
+                this.createFakeLink("", Note.Note_0, user1, false, "not_locked", false)
+                this.createFakeLink("", Note.Note_0, user1, false, "locked", true)
+
+                // fake user 2
+                def user2 = new Person(username: 'fonfec78', enabled: true, password: 'password')
+                user2.privacyPolicy = LinkPrivacyPolicy.ALL_LOCKED
+                user2 = user2.save(flush: true)
+                PersonRole.create user2, userRole, true
+                PersonRole.create user2, twitterRole, true
+
+                this.createFakeLink("", Note.Note_0, user2, false, "not_locked", false)
+                this.createFakeLink("", Note.Note_0, user2, false, "locked", true)
+
+                // fake user 3
+                def user3 = new Person(username: 'nodejs', enabled: true, password: 'password')
+                user3.privacyPolicy = LinkPrivacyPolicy.LINK_PER_LINK
+                user3 = user3.save(flush: true)
+                PersonRole.create user3, userRole, true
+                PersonRole.create user3, twitterRole, true
+
+                this.createFakeLink("", Note.Note_0, user3, false, "not_locked", false)
+                this.createFakeLink("", Note.Note_0, user3, false, "locked", true)
+
 
 
         /*

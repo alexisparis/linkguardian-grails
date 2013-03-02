@@ -165,3 +165,8 @@ div.jqcloud > span
     height: 24px;
     /*padding-top: 0px;*/
 }
+
+#filterByTgContainer span.button
+{
+    cursor: hand;
+}

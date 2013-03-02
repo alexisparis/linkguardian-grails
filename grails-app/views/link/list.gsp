@@ -36,15 +36,43 @@
 
         <div class="container forms">
             <div class="row">
-                <div class="span5">
+
+                <g:if test="${!isOwner}">
+                    <div class="span4">
+                        <legend>&nbsp;<g:message code="links.linksOf.label"/>
+
+                            <a style="float: right; margin-top: 5px;" class="text btn btn-primary" href="<g:createLink controller="link" action="list" absolute="true"/>">
+                                <i class="icon icon-circle-arrow-left icon-white"></i>&nbsp;<g:message code="links.returnToMyLinks.button.label"/>
+                            </a>
+                        </legend>
+
+                        &nbsp;<a class="text twitter-account" data-twitter-name="${linksOfUser}" target="_blank" style="margin-left: 20px;">
+                            <img class="twitter-account" width="60px" data-twitter-icon-size="bigger" data-twitter-name="${linksOfUser}"/>
+                            <span style="color: black; vertical-align: middle; font-size: x-large;">
+                                ${linksOfUser}
+                            </span>
+                        </a>
+                    </div>
+                </g:if>
+
+                <div class="<g:if test='${isOwner}'>span5</g:if><g:else>span8</g:else>">
 
                     <g:formRemote id="filterLinkForm" class="form-inline" name="addUrlForm" url="[controller: 'link', action: 'filter']"
                                   method="POST" style="display: inline;"
                                   onSuccess="updateLinks(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
                         <fieldset>
-                            <legend>&nbsp;<g:message code="links.forms.search.title"/></legend>
+                            <legend>&nbsp;
+                            <g:if test="${isOwner}">
+                                <g:message code="links.forms.search.title"/>
+                            </g:if>
+                            <g:else>
+                                <g:set var="username" value="${linksOfUser}"/>
+
+                                <g:message code="links.forms.search.others.title" args="${[linksOfUser]}"/>
+                            </g:else>
+                            </legend>
                             &nbsp;
-                            <select name="read_status" id="read_status" style="width: 188px;">
+                            <select name="read_status" id="read_status" style="width: 188px; <g:if test='${!isOwner}'>display: none; </g:if>">
                                 <option value="all" data-image="${resource(dir: 'images', file: 'world.png')}"><g:message code="links.forms.search.read_status.all"/></option>
                                 <option value="read" data-image="${resource(dir: 'images', file: 'checked.png')}"><g:message code="links.forms.search.read_status.read"/></option>
                                 <option value="unread" data-image="${resource(dir: 'images', file: 'clock.png')}"><g:message code="links.forms.search.read_status.unread"/></option>
@@ -52,10 +80,11 @@
 
                             <div class="input-append" id="filterByTgContainer">
                                 <input type="text" id="filterInput" name="token" title="filter" placeholder='<g:message code="links.forms.search.filterInput.placeholder"/>' class="input-medium" maxlength="50"/>
-                                <span class="add-on with-tooltip" id="clearFilterTag" rel="tooltip" data-placement="top" data-original-title="<g:message code="links.forms.search.clearFilterTag.tooltip"/>">
-                                    <img src="${resource(dir: 'images', file: 'delete.png')}" width="14"/>
+                                <span class="button add-on with-tooltip" id="clearFilterTag" rel="tooltip" data-placement="top" data-original-title="<g:message code="links.forms.search.clearFilterTag.tooltip"/>">
+                                    <%--img src="${resource(dir: 'images', file: 'delete.png')}" width="14"/--%>
+                                    &times;
                                 </span>
-                                <span class="add-on with-tooltip" id="showTagsCloud" rel="tooltip" data-placement="top" data-original-title="<g:message code="links.forms.search.showTagsCloud.tooltip"/>">
+                                <span class="button add-on with-tooltip" id="showTagsCloud" rel="tooltip" data-placement="top" data-original-title="<g:message code="links.forms.search.showTagsCloud.tooltip"/>">
                                     <img src="${resource(dir: 'images', file: 'cloud.png')}" width="22px"/>
                                 </span>
                             </div>
@@ -75,43 +104,46 @@
                                     <option value="desc" selected="selected" data-image="${resource(dir: 'images', file: 'down.png')}"><g:message code="links.forms.search.sortType.desc"/></option>
                                 </select>
                             </div>
+                            <g:hiddenField name="linksofuser" value="${linksOfUser}"/>
 
                         </fieldset>
                     </g:formRemote>
                 </div>
 
-                <div class="span7">
-                    <g:formRemote name="addUrlForm" url="[controller: 'link', action: 'addUrl']"
-                                  method="POST" onSuccess="resetAddForm();submitFilterForm(); displayMessage(data);"
-                                  onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)"
-                                  style="margin-bottom: 3px;">
-                        <fieldset>
-                            <legend><g:message code="links.forms.add.title"/></legend>
-                            <g:hiddenField name="render" value="json"></g:hiddenField>
+                <g:if test="${isOwner}">
+                    <div class="span7">
+                        <g:formRemote name="addUrlForm" url="[controller: 'link', action: 'addUrl']"
+                                      method="POST" onSuccess="resetAddForm();submitFilterForm(); displayMessage(data);"
+                                      onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)"
+                                      style="margin-bottom: 3px;">
+                            <fieldset>
+                                <legend><g:message code="links.forms.add.title"/></legend>
+                                <g:hiddenField name="render" value="json"></g:hiddenField>
 
-                            <div class="input-prepend input-append" style="margin-bottom: 3px;">
-                                <span class="add-on"><g:message code="links.forms.add.url.title"/></span>
-                                <input type="text" id="txtUrl" name="url" class="input-xxlarge" placeholder="<g:message code="links.forms.add.txtUrl.placeholder"/>" maxlength="200"/> <%-- required="" --%>
+                                <div class="input-prepend input-append" style="margin-bottom: 3px;">
+                                    <span class="add-on"><g:message code="links.forms.add.url.title"/></span>
+                                    <input type="text" id="txtUrl" name="url" class="input-xxlarge" placeholder="<g:message code="links.forms.add.txtUrl.placeholder"/>" maxlength="200"/> <%-- required="" --%>
 
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="icon-plus icon-white"></i>
-                                </button>
-                            </div>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="icon-plus icon-white"></i>
+                                    </button>
+                                </div>
 
-                            <div>
-                                <span class="label" style="vertical-align: top; margin-top: 6px;"><g:message code="links.forms.add.tags.title"/></span> <%--a class="btn btn-info btn-mini" id="showTagInput">show</a--%>
-                                <span>
-                                    <input type="text"
-                                           id="txtTag" name="tag"
-                                           style="font-size: 13px; margin-bottom: 0px;"
-                                           class="input-xlarge with-tooltip" placeholder="<g:message code="links.forms.add.txtTag.placeholder"/>" maxlength="100"
-                                           rel="tooltip" data-placement="top" data-original-title="<g:message code="links.forms.add.txtTag.tooltip"/>"/>
-                                </span>
-                            </div>
-                        </fieldset>
+                                <div>
+                                    <span class="label" style="vertical-align: top; margin-top: 6px;"><g:message code="links.forms.add.tags.title"/></span> <%--a class="btn btn-info btn-mini" id="showTagInput">show</a--%>
+                                    <span>
+                                        <input type="text"
+                                               id="txtTag" name="tag"
+                                               style="font-size: 13px; margin-bottom: 0px;"
+                                               class="input-xlarge with-tooltip" placeholder="<g:message code="links.forms.add.txtTag.placeholder"/>" maxlength="100"
+                                               rel="tooltip" data-placement="top" data-original-title="<g:message code="links.forms.add.txtTag.tooltip"/>"/>
+                                    </span>
+                                </div>
+                            </fieldset>
 
-                    </g:formRemote>
-                </div>
+                        </g:formRemote>
+                    </div>
+                </g:if>
 
             </div>
         </div>
@@ -183,6 +215,7 @@
         </g:formRemote>
         <g:formRemote id="showTagsCloudForm" name="showTagsCloudForm" url="[controller: 'link', action: 'getTagsCloud']"
                       method="POST" style="display: none;" onSuccess="showTagsCloud(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
+            <g:hiddenField name="username" value="${linksOfUser}"/>
         </g:formRemote>
 
         <!-- ################# -->

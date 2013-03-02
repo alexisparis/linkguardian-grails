@@ -14,6 +14,7 @@ class Person implements UserDetails
 	boolean accountExpired
 	boolean accountLocked
 	boolean passwordExpired
+    LinkPrivacyPolicy privacyPolicy = LinkPrivacyPolicy.ALL_PUBLIC
 
 	static constraints = {
 		username blank: false, unique: true

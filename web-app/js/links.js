@@ -22,12 +22,13 @@ function jsonLinksToHtml(model)
 
     var template =
         '{{#links}}' +
-            '<div class="linkpart {{#read}}read{{/read}}" data-url="{{url}}" data-id="{{id}}" data-note={{note}}>' +
+            '<div class="linkpart {{#read}}read{{/read}}" data-url="{{url}}" data-id="{{id}}" data-note="{{note}}" data-readonly="{{readonly}}">' +
                 '<div>' +
                     '<div class="linkUrl with-tooltip" rel="tooltip" data-placement="top" data-original-title="' + templateI18n.goto + ' {{domain}}" style="height: 21px; width: 22px; float: left;">' +
                         '<img align="left" src="http://www.google.com/s2/favicons?domain={{domain}}" class="linkparticon"' +
                         'width="20px" height="20px" border="4px" style="margin-right: 2px; margin-bottom: 1px;"/>' +
                     '</div>' +
+                    '{{^readonly}}' +
                     '<div class="rateAndOperations" style="width: 143px; height: 40px;">' +
                         '<span class="rate"></span>' +
                         '<button class="close deleteLinkButton with-tooltip visible-on-hover" rel="tooltip" data-placement="left" data-original-title="' + templateI18n.deleteLink +'">&times;</button>' +
@@ -46,6 +47,7 @@ function jsonLinksToHtml(model)
                             '</span>' +
                         '</div>' +
                     '</div>' +
+                    '{{/readonly}}' +
                 '</div>' +
                 '<div style="margin-top: 1px;word-wrap:break-word;">' +
                     '<div class="content with-tooltip" rel="tooltip" data-placement="top" data-original-title="' + templateI18n.goto + ' {{domain}}">' +
@@ -60,9 +62,11 @@ function jsonLinksToHtml(model)
                                 tagTemplate('label') +
                             '{{/_tags}}' +
                         '</span>' +
-                        '<span class="btn btn-primary btn-mini add-tag visible-on-hover">' +
-                            '<i class="icon-plus-sign with-tooltip" rel="tooltip" data-original-title="' + templateI18n.addTag + '" data-placement="top"></i>' +
-                        '</span>' +
+                        '{{^readonly}}' +
+                            '<span class="btn btn-primary btn-mini add-tag visible-on-hover">' +
+                                '<i class="icon-plus-sign with-tooltip" rel="tooltip" data-original-title="' + templateI18n.addTag + '" data-placement="top"></i>' +
+                            '</span>' +
+                        '{{/readonly}}' +
                     '</div>' +
                 '</div>' +
             '</div>' +
@@ -603,10 +607,14 @@ $(document).ready(
             var jThis = $(this).parents('div.linkpart').eq(0);
             jThis.addClass('selected');
 
-            var modalMarker = $('#markAsReadDialog');
-            modalMarker.find('span.img').html(jThis.find('span.linkUrl').html());
-            modalMarker.find('.question').html(markAsReadMessage + "<br/><b>" + jThis.find('.title').html() + "</b><br/>" + markAsReadFromMessage + " " + jThis.find('.domain').html() + " ?");
-            modalMarker.modal();
+            console.log("data-readonly : " + jThis.attr("data-readonly"));
+            if ( jThis.attr("data-readonly") === 'false' && !jThis.hasClass('read') )  // not readonly and not already read
+            {
+                var modalMarker = $('#markAsReadDialog');
+                modalMarker.find('span.img').html(jThis.find('span.linkUrl').html());
+                modalMarker.find('.question').html(markAsReadMessage + "<br/><b>" + jThis.find('.title').html() + "</b><br/>" + markAsReadFromMessage + " " + jThis.find('.domain').html() + " ?");
+                modalMarker.modal();
+            }
 
             window.open(jThis.attr('data-url'),'_blank');
         };

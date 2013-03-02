@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView
  * see http://viralpatel.net/blogs/first-play-framework-gae-siena-application-tutorial-example/
  */
 @Secured(['ROLE_USER'])
-class LinkController
+class LinkController extends MessageOrientedObject
 {
     static defaultAction = "list"
 
@@ -20,24 +20,22 @@ class LinkController
 
     def linksPerPage = 100
 
-    def success(String msg)
+    def list(String tag, String linksofuser)
     {
-        return new linkguardian.Message(message : msg, level : linkguardian.Level.SUCCESS)
-    }
+        log.info "calling list with connected user " + springSecurityService.getPrincipal().username + ", tag : " + tag + ", user : " + linksofuser
 
-    def error(String msg)
-    {
-        return new linkguardian.Message(message : msg, level : linkguardian.Level.ERROR)
-    }
+        def _linksOfUser = linksofuser
+        if ( _linksOfUser == null )
+        {
+            _linksOfUser = springSecurityService.getPrincipal().username
+        }
 
-    def warning(String msg)
-    {
-        return new linkguardian.Message(message : msg, level : linkguardian.Level.WARNING)
-    }
+        def connectedPerson = Person.findByUsername(springSecurityService.getPrincipal().username)
 
-    def list()
-    {
-        log.info "calling list with connected user " + springSecurityService.getPrincipal().username
+        return new ModelAndView("/link/list",
+                                [linksOfUser : _linksOfUser,
+                                 isOwner : springSecurityService.getPrincipal().username == _linksOfUser,
+                                 policy : connectedPerson.privacyPolicy])
     }
 
     def formatUrl(String url)
@@ -60,10 +58,13 @@ class LinkController
      * @param read_status : all, read or unread
      * @return
      */
-    def filter(String token, String read_status, String sortBy, String sortType, int page)
+    def filter(String token, String read_status, String sortBy, String sortType, int page, String linksofuser)
     {
         def start = System.currentTimeMillis();
-        log.info "calling filter from LinkController with filter equals to " + token + ", read status : " + read_status + ", sort by " + sortBy + " " + sortType + ", page = " + page
+        log.info "calling filter from LinkController with filter equals to " + token + ", read status : " + read_status +
+                 ", sort by " + sortBy + " " + sortType + ", page = " + page + ", links of user = " + linksofuser
+
+        def userAskedIsConnectedUser = springSecurityService.getPrincipal().username == linksofuser
 
         def queryLinks = Collections.emptyList()
 
@@ -90,48 +91,81 @@ class LinkController
         {
             read = false
         }
+        def policy = LinkPrivacyPolicy.ALL_PUBLIC
 
         if ( read || unread ) // no need to launch the request if ! read && ! unread
         {
-            def queryParams = [max: linksPerPage, offset: (page - 1) * linksPerPage, sort: _sortBy, order: _sortType]
-
-            def query = Link.where { person.username == springSecurityService.getPrincipal().username }
-
-            def tokens = linkBuilderService.extractTags(token)
-
-            log.info "tokens size : " + tokens.size()
-            if ( tokens != null && tokens.size() > 0)
+            if ( ! userAskedIsConnectedUser )
             {
-                if ( tokens.size() == 1 )
+                // load asked user to see if connected user has the right to see his links
+                def askedPerson = Person.findByUsername(linksofuser)
+
+                if ( askedPerson != null && askedPerson.privacyPolicy != null )
+                {
+                    policy = askedPerson.privacyPolicy
+                }
+            }
+
+            if ( ! userAskedIsConnectedUser && policy == LinkPrivacyPolicy.ALL_LOCKED )
+            {
+                response.status = 500
+                render this.error(message(code: "service.link.filter.allLinksLocked")) as JSON
+                success = false
+            }
+            else
+            {
+                def queryParams = [max: linksPerPage, offset: (page - 1) * linksPerPage, sort: _sortBy, order: _sortType]
+
+                def query = Link.where { person.username == linksofuser }
+
+                if ( ! userAskedIsConnectedUser && policy == LinkPrivacyPolicy.LINK_PER_LINK )
                 {
                     query = query.where {
-                        tags {
-                            label =~ tokens.first() + "%"
-                        }
+                        locked == false
                     }
                 }
-                else
+
+                def tokens = linkBuilderService.extractTags(token)
+
+                log.info "tokens size : " + tokens.size()
+                if ( tokens != null && tokens.size() > 0)
                 {
-                    response.status = 500
-                    render this.error(message(code: "service.link.filter.oneTagAllowed")) as JSON
-                    success = false
+                    if ( tokens.size() == 1 )
+                    {
+                        query = query.where {
+                            tags {
+                                label =~ tokens.first() + "%"
+                            }
+                        }
+                    }
+                    else
+                    {
+                        response.status = 500
+                        render this.error(message(code: "service.link.filter.oneTagAllowed")) as JSON
+                        success = false
+                    }
                 }
+
+                if ( ! read )
+                {
+                    query = query.where { read == false }
+                }
+                if ( ! unread )
+                {
+                    query = query.where { read == true }
+                }
+
+                if ( ! userAskedIsConnectedUser )
+                {
+                    //
+                }
+
+                def query_start = System.currentTimeMillis();
+
+                queryLinks = query.list(queryParams)
+
+                log.info "query execution : " + (System.currentTimeMillis() - query_start) + " ms"
             }
-
-            if ( ! read )
-            {
-                query = query.where { read == false }
-            }
-            if ( ! unread )
-            {
-                query = query.where { read == true }
-            }
-
-            def query_start = System.currentTimeMillis();
-
-            queryLinks = query.list(queryParams)
-
-            log.info "query execution : " + (System.currentTimeMillis() - query_start) + " ms"
         }
 
         if ( success )
@@ -157,6 +191,7 @@ class LinkController
                             item title: a.title,
                                  read: a.read,
                                  url : a.url,
+                                 readonly : (userAskedIsConnectedUser ? false : true),
                                  id: a.id,
                                  note: a.note.ordinal(),
                                  domain: a.domain,
@@ -400,7 +435,7 @@ class LinkController
             else
             {
                 response.status = 500
-                msg = this.error(message(code: "service.link.delete.forbidden")) as JSON
+                render this.error(message(code: "service.link.delete.forbidden")) as JSON
             }
         }
 
@@ -707,31 +742,32 @@ class LinkController
     /**
      *
      */
-    def getTagsCloud()
+    def getTagsCloud(String username)
     {
-        log.info "calling getTagsCloud"
+        log.info "calling getTagsCloud for user : " + username
 
         def results = new ArrayList()
 
-        def iterator
-
-        def q = Tag.createCriteria()
-        iterator = q.list {
-            links {
-                person
-                {
-                    eq('username', springSecurityService.getPrincipal().username)
+        if ( username )
+        {
+            def q = Tag.createCriteria()
+            def iterator = q.list {
+                links {
+                    person
+                    {
+                        eq('username', username)
+                    }
+                }
+                projections{
+                    groupProperty('label')
+                    rowCount('total') //alias given to count
                 }
             }
-            projections{
-                groupProperty('label')
-                rowCount('total') //alias given to count
-            }
-        }
 
-        iterator.each {
-            log.info "consider tag : " + it[0] + " with an occurrence of " + it[1]
-            results.add(new TagWeight(tag: it[0], weight: it[1]))
+            iterator.each {
+                log.info "consider tag : " + it[0] + " with an occurrence of " + it[1]
+                results.add(new TagWeight(tag: it[0], weight: it[1]))
+            }
         }
 
         render results as JSON
