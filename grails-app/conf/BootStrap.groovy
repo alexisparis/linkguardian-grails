@@ -123,16 +123,21 @@ class BootStrap {
                 this.createFakeLink("", Note.Note_0, user3, false, "not_locked", false)
                 this.createFakeLink("", Note.Note_0, user3, false, "locked", true)
 
-                for(i in 1..500)
-                {
-                    def userF = new Person(username: 'OlivierCroisier' + i, enabled: true, password: 'password')
-                    userF.privacyPolicy = LinkPrivacyPolicy.ALL_PUBLIC
-                    userF = userF.save(flush: true)
-                    PersonRole.create userF, userRole, true
-                    PersonRole.create userF, twitterRole, true
+                def twitterUsers = ['jaraparilla', 'glaforge', 'mathof1', 'wernerkeil', 'drenoux', 'xavroy',
+                                    'nfs_lu', 'vincent_germain', 'LahautXavier', 'caroline_simon', 'renox57',
+                                    'JeromeGodard', 'osaucin', 'Tibooo', 'insilencio', 'yannick_muller', 'JavaFreelance',
+                                    'javatv', 'Xebia', 'builddoctor', 'AlexisHassler', 'elsasspower', 'FrancoisMarot',
+                                    'ictjob_lu', 'efruh', 'Ali_Riad', 'Naooj', 'agnes_crepet', 'ericreboisson', 'ZenikaIT',
+                                    'TofDemulder', 'CTGLuxembourg', 'Logica', 'aheritier', 'CTGinc', 'thenrion',
+                                    'webcuriousanima', 'eucalyptus', 'xavroy', 'DataStax', 'CloudBees', 'nantesjug', 'AndroidDev']
+
+                twitterUsers.each{
+                    def userF = new Person(username: it, enabled: true, password: 'password')
+                        userF.privacyPolicy = LinkPrivacyPolicy.ALL_PUBLIC
+                        userF = userF.save(flush: true)
+                        PersonRole.create userF, userRole, true
+                        PersonRole.create userF, twitterRole, true
                 }
-
-
 
         /*
 

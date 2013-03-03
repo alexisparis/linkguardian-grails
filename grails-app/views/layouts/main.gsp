@@ -50,125 +50,21 @@
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.blockUI.min.js')}"></script>
 
         <script type="text/javascript">
-
             var displayDevModeWarning = false;
             var blockUiInhibiter = 0;
-
-            var configurationSaved = function(data)
-            {
-                // apply new values as original values
-                var policy = $('#privacy');
-                policy.attr('data-original-value', policy.msDropDown().data("dd").get('value'));
-
-                // reload current page
-                window.location.reload();
-            };
-
-            var openConfiguration = function()
-            {
-                $('#configurationButton').trigger('click');
-            };
-
-            $(document).ready(
-                    function()
-                    {
-                        $('img.twitter').attr('src', '<g:resource  dir="images" file="twitter.png"/>');
-                        $('img.twitter-white').attr('src', '<g:resource  dir="images" file="twitter-white.png"/>');
-
-                        $('.lg').html('<g:message code="lg.title"/>');
-
-                        $('#about').on('click', function(event)
-                        {
-                            $('#aboutDialog').modal();
-                        });
-
-                        // complete the href of dragTool
-                        var dragHref =
-                                'javascript:(function(){' +
-                                    'var u="<g:createLink controller="link" action="addUrl" absolute="true"/>?render=html&url="+escape(document.location.href);' +
-                                    'var a=function(){' +
-                                        'if(!window.open(u))location.href=u;' +
-                                    '};' +
-                                    'if(/Firefox/.test(navigator.userAgent))' +
-                                        'setTimeout(a,0);' +
-                                    'else a();' +
-                                '})();';
-
-                        $('#dragTool').attr('href', dragHref);
-
-                        $('#tools').on('click', function(event)
-                        {
-                            $('#toolsDialog').modal();
-                        });
-
-                        var hideBlockUi = function(event){
-                            if ( blockUiInhibiter == 0 )
-                            {
-                                setTimeout(function(){
-                                    $.unblockUI();
-                                }, 200); //TODO : reduce additional times
-                            }
-                        };
-                        $(document).ajaxStart(function(event){
-                            if ( blockUiInhibiter == 0 )
-                            {
-                                $.blockUI(
-                                        {
-                                            message : '<img src="${resource(dir: "images/loading", file: "loading_big.gif")}"/>',
-                                            css: {
-                                                border: 'none',
-                                                backgroundColor: 'none',
-                                                opacity:         0.8
-                                            }
-                                        }
-                                );
-                            }
-                        })
-                                .ajaxStop(hideBlockUi).ajaxError(hideBlockUi);
-
-                        <%-- https://dev.twitter.com/docs/api/1/get/users/profile_image/%3Ascreen_name --%>
-                        <%-- bigger normal mini --%>
-                        $('img.twitter-account').each(function(index, value)
-                        {
-                            var $value = $(value);
-                            var size = 'mini';
-                            var sizeAttr = $value.attr('data-twitter-icon-size');
-                            if ( sizeAttr )
-                            {
-                                size = sizeAttr;
-                            }
-                            $value.attr('src', 'https://api.twitter.com/1/users/profile_image?screen_name=' + $value.attr('data-twitter-name') + '&size=' +size);
-                        });
-
-                        $('a.twitter-account').each(function(index, value)
-                        {
-                            var $value = $(value);
-                            $value.attr('href', 'https://twitter.com/' + $value.attr('data-twitter-name'));
-                        });
-
-                        $('#configurationButton').on('click', function(event)
-                        {
-                            var select = $('#privacy');
-                            var handler = select.msDropDown().data("dd");
-                            handler.set('value', select.attr('data-original-value'));
-
-                            $('#configurationDialog').modal();
-                        });
-                    });
-
         </script>
 
-    </head>
+</head>
 
-	<body>
+<body>
 
-    <div class="header">
-            <div class="container">
-                <div class="row">
-                    <div class="span12">
-                        <div id="guardianLogo" role="banner" style="padding-top: 5px; padding-bottom: 8px;">
-                            <div style="float: left;">
-                                <a class="text" href="<g:createLink controller="link" action="list" absolute="true"/>">
+<div class="header">
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <div id="guardianLogo" role="banner" style="padding-top: 5px; padding-bottom: 8px;">
+                    <div style="float: left;">
+                        <a class="text" href="<g:createLink controller="link" action="list" absolute="true"/>">
                                     <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50" style="margin-top: -10px;"/>
                                     <span class="lg big" style="display: inline-block; padding-top: 16px;"></span>
 
@@ -378,15 +274,116 @@
         </div>
 
         <script type="text/javascript">
-            $(document).ready(function()
+
+            var configurationSaved = function(data)
             {
-                if (displayDevModeWarning)
-                {
-                    <g:if env="production">
-                        $('#devWarningDialog').modal();
-                    </g:if>
-                }
-            });
+                // apply new values as original values
+                var policy = $('#privacy');
+                policy.attr('data-original-value', policy.msDropDown().data("dd").get('value'));
+
+                // reload current page
+                window.location.reload();
+            };
+
+            var openConfiguration = function()
+            {
+                $('#configurationButton').trigger('click');
+            };
+
+            $(document).ready(
+                    function()
+                    {
+                        if (displayDevModeWarning)
+                        {
+                            <g:if env="production">
+                            $('#devWarningDialog').modal();
+                            </g:if>
+                        }
+
+                        $('img.twitter').attr('src', '<g:resource  dir="images" file="twitter.png"/>');
+                        $('img.twitter-white').attr('src', '<g:resource  dir="images" file="twitter-white.png"/>');
+
+                        $('.lg').html('<g:message code="lg.title"/>');
+
+                        $('#about').on('click', function(event)
+                        {
+                            $('#aboutDialog').modal();
+                        });
+
+                        // complete the href of dragTool
+                        var dragHref =
+                                'javascript:(function(){' +
+                                'var u="<g:createLink controller="link" action="addUrl" absolute="true"/>?render=html&url="+escape(document.location.href);' +
+                                'var a=function(){' +
+                                'if(!window.open(u))location.href=u;' +
+                                '};' +
+                                'if(/Firefox/.test(navigator.userAgent))' +
+                                'setTimeout(a,0);' +
+                                'else a();' +
+                                '})();';
+
+                        $('#dragTool').attr('href', dragHref);
+
+                        $('#tools').on('click', function(event)
+                        {
+                            $('#toolsDialog').modal();
+                        });
+
+                        var hideBlockUi = function(event){
+                            if ( blockUiInhibiter == 0 )
+                            {
+                                setTimeout(function(){
+                                    $.unblockUI();
+                                }, 200); //TODO : reduce additional times
+                            }
+                        };
+                        $(document).ajaxStart(function(event){
+                            if ( blockUiInhibiter == 0 )
+                            {
+                                $.blockUI(
+                                        {
+                                            message : '<img src="${resource(dir: "images/loading", file: "loading_big.gif")}"/>',
+                                            css: {
+                                                border: 'none',
+                                                backgroundColor: 'none',
+                                                opacity:         0.8
+                                            }
+                                        }
+                                );
+                            }
+                        })
+                                .ajaxStop(hideBlockUi).ajaxError(hideBlockUi);
+
+                        <%-- https://dev.twitter.com/docs/api/1/get/users/profile_image/%3Ascreen_name --%>
+                        <%-- bigger normal mini --%>
+                        $('img.twitter-account').each(function(index, value)
+                                                      {
+                                                          var $value = $(value);
+                                                          var size = 'mini';
+                                                          var sizeAttr = $value.attr('data-twitter-icon-size');
+                                                          if ( sizeAttr )
+                                                          {
+                                                              size = sizeAttr;
+                                                          }
+                                                          $value.attr('src', 'https://api.twitter.com/1/users/profile_image?screen_name=' + $value.attr('data-twitter-name') + '&size=' +size);
+                                                      });
+
+                        $('a.twitter-account').each(function(index, value)
+                                                    {
+                                                        var $value = $(value);
+                                                        $value.attr('href', 'https://twitter.com/' + $value.attr('data-twitter-name'));
+                                                    });
+
+                        $('#configurationButton').on('click', function(event)
+                        {
+                            var select = $('#privacy');
+                            var handler = select.msDropDown().data("dd");
+                            handler.set('value', select.attr('data-original-value'));
+
+                            $('#configurationDialog').modal();
+                        });
+                    });
+
         </script>
 
     </body>

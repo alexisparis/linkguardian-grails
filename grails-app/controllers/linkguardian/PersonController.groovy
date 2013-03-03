@@ -36,7 +36,7 @@ class PersonController extends MessageOrientedObject
             _page = 1
         }
 
-        if ( username != null && username.length() > 0 )
+        if ( username != null )
         {
             def queryParams = [max: personsPerPage, offset: (_page - 1) * personsPerPage]//, sort: _sortBy, order: _sortType]
 
@@ -85,6 +85,8 @@ class PersonController extends MessageOrientedObject
             }
         }
 
+        log.info "results found ==> " + results.size()
+
         // sort result
         results.sort {
             a, b ->
@@ -102,13 +104,20 @@ class PersonController extends MessageOrientedObject
                 }
         }
 
-        if ( formatJson )
+        if ( results.isEmpty() )
         {
-            render results as JSON
+            response.status = 404
         }
         else
         {
-            return new ModelAndView("/person/persons", [persons : results, username:  username])
+            if ( formatJson )
+            {
+                render results as JSON
+            }
+            else
+            {
+                return new ModelAndView("/person/persons", [persons : results, username:  username])
+            }
         }
     }
 }

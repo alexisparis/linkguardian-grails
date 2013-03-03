@@ -2,13 +2,23 @@
 function jsonPersonsToHtml(_persons)
 {
     var model = {
-        persons : _persons
+        persons : _persons,
+        "hasLinks": function () {
+            return this.linksCount > 0;
+        }
+
     };
 
     var template =
         '{{#persons}}' +
-            '<div class="personpart" data-username="{{username}}" data-links-count="{{linksCount}}">' +
-                '{{username}} with {{linksCount}}' +
+            '<div class="personpart with-tooltip" data-username="{{username}}" data-links-count="{{linksCount}}" style="" ' +
+                'rel="tooltip" data-placement="left" data-original-title="' + personsLinksGoToTooltip + '"' +
+                'data-link-url="' + rootUrl + 'profile/{{username}}">' +
+                '<span style="float: left; height: 73px; width: 73px; margin-top: 5px; margin-bottom: 5px; margin-left: 5px;">' +
+                    '<img class="twitter-account" data-twitter-name="{{username}}" data-twitter-icon-size="bigger"/>' +
+                '</span>' +
+                '<span style="line-height: 73px; margin-left: 5px; font-size: large; vertical-align: middle;">{{username}}</span>' +
+                '<span style="float: right">{{linksCount}} ' + linkLabel + '{{#hasLinks}}s{{/hasLinks}}</span>' +
             '</div>' +
         '{{/persons}}';
 
