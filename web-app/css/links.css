@@ -3,6 +3,34 @@
 {
     cursor: pointer;
 }
+
+.linkpart .action-toolbar
+{
+    display: none;
+}
+.linkpart:hover .action-toolbar
+{
+    display: block;
+}
+.action-toolbar
+{
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 20px;
+    position: absolute;
+    top: -21px;
+    margin-right: 5px;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+    -webkit-border-bottom-left-radius: 0px !important;
+    -webkit-border-bottom-right-radius: 0px !important;
+    -moz-border-radius-bottomleft: 0px !important;
+    -moz-border-radius-bottomright: 0px !important;
+}
+.action-toolbar a
+{
+    margin-right: 5px;
+}
 div.linkpart
 {
     /*

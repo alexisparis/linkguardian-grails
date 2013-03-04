@@ -54,17 +54,17 @@
             var blockUiInhibiter = 0;
         </script>
 
-</head>
+    </head>
 
-<body>
+    <body>
 
-<div class="header">
-    <div class="container">
-        <div class="row">
-            <div class="span12">
-                <div id="guardianLogo" role="banner" style="padding-top: 5px; padding-bottom: 8px;">
-                    <div style="float: left;">
-                        <a class="text" href="<g:createLink controller="link" action="list" absolute="true"/>">
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="span12">
+                        <div id="guardianLogo" role="banner" style="padding-top: 5px; padding-bottom: 8px;">
+                            <div style="float: left;">
+                                <a class="text" href="<g:createLink controller="link" action="list" absolute="true"/>">
                                     <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50" style="margin-top: -10px;"/>
                                     <span class="lg big" style="display: inline-block; padding-top: 16px;"></span>
 
@@ -90,6 +90,16 @@
                                                     </ul>
                                                 </div>
                                             </sec:ifAllGranted>
+
+                                            <g:link controller="link" action="list" class="btn btn-primary text"><g:message code="links.mylinks.label"/></g:link>
+
+                                            <div class="btn-group" style="margin-right: 20px; ">
+                                                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Recherche <span class="caret"></span></button>
+                                                <ul class="dropdown-menu">
+                                                    <li><g:link controller="roleCrud">derniers liens ajoutés</g:link></li>
+                                                    <li><g:link controller="linkCrud">personnes les plus actives</g:link></li>
+                                                </ul>
+                                            </div>
 
                                             <button class="btn btn-success btn-inverse with-tooltip" id="tools" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'menu.tools.label')}">
                                                 <i class="icon-wrench icon-white"></i>
@@ -120,7 +130,7 @@
                                     </div>
                                     <div style="float: right; text-align: right; margin-top: 15px;">
 
-                                        <g:form controller="person" action="persons" style="margin-bottom: 0px;" class="form-horizontal">
+                                        <g:form controller="person" action="persons" style="display: inline;margin-bottom: 0px;" class="form-horizontal">
                                             <div class="control-group">
                                                 <label class="control-label" for="searchUsernameInput"><g:message code="user.search.label"/></label>
                                                 <div class="controls">
@@ -290,6 +300,12 @@
                 $('#configurationButton').trigger('click');
             };
 
+            var includeTwitterLogo = function()
+            {
+                $('img.twitter:not(.included)').attr('src', '<g:resource  dir="images" file="twitter.png"/>').addClass("included");
+                $('img.twitter-white:not(.included)').attr('src', '<g:resource  dir="images" file="twitter-white.png"/>').addClass("included");
+            };
+
             $(document).ready(
                     function()
                     {
@@ -300,8 +316,7 @@
                             </g:if>
                         }
 
-                        $('img.twitter').attr('src', '<g:resource  dir="images" file="twitter.png"/>');
-                        $('img.twitter-white').attr('src', '<g:resource  dir="images" file="twitter-white.png"/>');
+                        includeTwitterLogo();
 
                         $('.lg').html('<g:message code="lg.title"/>');
 

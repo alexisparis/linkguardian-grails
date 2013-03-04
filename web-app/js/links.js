@@ -23,29 +23,37 @@ function jsonLinksToHtml(model)
     var template =
         '{{#links}}' +
             '<div class="linkpart {{#read}}read{{/read}}" data-url="{{url}}" data-id="{{id}}" data-note="{{note}}" data-readonly="{{readonly}}">' +
+                '<div class="action-toolbar btn btn-primary btn-mini">' +
+                    '<a class="with-tooltip unread" rel="tooltip" data-placement="top"' +
+                        'data-original-title="marquer comme non lu">' +
+                        '<i class="icon icon-eye-close icon-white"></i>' +
+                    '</a>' +
+                    '<a class="with-tooltip read" rel="tooltip" data-placement="top" data-original-title="marquer comme lu">' +
+                        '<i class="icon icon-eye-open icon-white"></i>' +
+                    '</a>' +
+                    '<a class="">' +
+                        '<i class="icon icon-lock icon-white"></i>' +
+                    '</a>' +
+                    '<a class="">' +
+                        '<i class="icon icon-plus icon-white"></i>' +
+                    '</a>' +
+                    '<a class="">' +
+                        '<img class="twitter-white" width="20px" height="20px">' +
+                    '</a>' +
+                    '<a class="deleteLinkButton with-tooltip visible-on-hover" style="color: white;"' +
+                        'rel="tooltip" data-placement="left" data-original-title="' + templateI18n.deleteLink +'"><i class="icon icon-remove icon-white"></i>' +
+                    '</a>' +
+                '</div>' +
                 '<div>' +
                     '<div class="linkUrl with-tooltip" rel="tooltip" data-placement="top" data-original-title="' + templateI18n.goto + ' {{domain}}" style="height: 21px; width: 22px; float: left;">' +
                         '<img align="left" src="http://www.google.com/s2/favicons?domain={{domain}}" class="linkparticon"' +
                         'width="20px" height="20px" border="4px" style="margin-right: 2px; margin-bottom: 1px;"/>' +
                     '</div>' +
                     '{{^readonly}}' +
-                    '<div class="rateAndOperations" style="width: 143px; height: 40px;">' +
+                    '<div class="rateAndOperations" style="width: 116; height: 16px;">' +
                         '<span class="rate"></span>' +
-                        '<button class="close deleteLinkButton with-tooltip visible-on-hover" rel="tooltip" data-placement="left" data-original-title="' + templateI18n.deleteLink +'">&times;</button>' +
-                        '<div style="clear: both;"></div>' +
-                        '<div class="actions visible-on-hover" style="float: right; margin-right: 4px;">' +
-                            '<a class="with-tooltip unread" rel="tooltip" data-placement="left" data-original-title="' + templateI18n.markAsUnread + '">' +
-                                '<i class="icon icon-eye-close"></i>' +
-                            '</a>' +
-                            '<a class="with-tooltip read"   rel="tooltip" data-placement="left" data-original-title="' + templateI18n.markAsRead + '">' +
-                                '<i class="icon icon-eye-open"></i>' +
-                            '</a>' +
-                        '</div>' +
-                        //'<div class="actions" style="float: right; margin-right: 4px;">' +
-                        //    '<span class="with-tooltip" rel="tooltip" data-placement="left" data-original-title="' + 'toto' + '">' +
-                        //    '<i class="icon icon-lock"></i>' +
-                        //    '</span>' +
-                        //'</div>' +
+                        //'<button class="close deleteLinkButton with-tooltip visible-on-hover" rel="tooltip" data-placement="left" data-original-title="' + templateI18n.deleteLink +'">&times;</button>' +
+                        //'<div style="clear: both;"></div>' +
                     '</div>' +
                     '{{/readonly}}' +
                 '</div>' +
@@ -64,7 +72,7 @@ function jsonLinksToHtml(model)
                         '</span>' +
                         '{{^readonly}}' +
                             '<span class="btn btn-primary btn-mini add-tag visible-on-hover">' +
-                                '<i class="icon-plus-sign with-tooltip" rel="tooltip" data-original-title="' + templateI18n.addTag + '" data-placement="top"></i>' +
+                                '<i class="icon-plus-sign with-tooltip icon-white" rel="tooltip" data-original-title="' + templateI18n.addTag + '" data-placement="top"></i>' +
                             '</span>' +
                         '{{/readonly}}' +
                     '</div>' +
@@ -173,6 +181,7 @@ function updateLinks(model)
     );
 
     $('#listing-part .with-tooltip').tooltip();
+    includeTwitterLogo();
 
     $container.masonry('appended', jOutput, true);
 
