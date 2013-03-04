@@ -9,5 +9,5 @@ package linkguardian
  */
 enum LinkPrivacyPolicy
 {
-    ALL_LOCKED, ALL_PUBLIC, LINK_PER_LINK;
+    ALL_LOCKED, ALL_PUBLIC;//, LINK_PER_LINK; en attente
 }

@@ -24,46 +24,46 @@ function jsonLinksToHtml(model)
         '{{#links}}' +
             '<div class="linkpart {{#read}}read{{/read}}" data-url="{{url}}" data-id="{{id}}" data-note="{{note}}" data-readonly="{{readonly}}">' +
                 '<div class="action-toolbar btn btn-primary btn-mini">' +
-                    '<a class="with-tooltip unread" rel="tooltip" data-placement="top"' +
+                    '<a class="with-tooltip unread" rel="tooltip" data-placement="bottom"' +
                         'data-original-title="marquer comme non lu">' +
                         '<i class="icon icon-eye-close icon-white"></i>' +
                     '</a>' +
-                    '<a class="with-tooltip read" rel="tooltip" data-placement="top" data-original-title="marquer comme lu">' +
+                    '<a class="with-tooltip read" rel="tooltip" data-placement="bottom" data-original-title="marquer comme lu">' +
                         '<i class="icon icon-eye-open icon-white"></i>' +
                     '</a>' +
-                    '<a class="">' +
-                        '<i class="icon icon-lock icon-white"></i>' +
-                    '</a>' +
-                    '<a class="">' +
+                    //'<a class="">' +
+                    //    '<i class="icon icon-lock icon-white"></i>' +
+                    //'</a>' +
+                    '<a class="importLinkButton with-tooltip" ' +
+                        'rel="tooltip" data-placement="bottom" data-original-title="' + templateI18n.importLink +'">' +
                         '<i class="icon icon-plus icon-white"></i>' +
                     '</a>' +
-                    '<a class="">' +
+                    '<a class="twitter with-tooltip" ' +
+                        'rel="tooltip" data-placement="bottom" data-original-title="' + templateI18n.tweetLink +'">' +
                         '<img class="twitter-white" width="20px" height="20px">' +
                     '</a>' +
-                    '<a class="deleteLinkButton with-tooltip visible-on-hover" style="color: white;"' +
-                        'rel="tooltip" data-placement="left" data-original-title="' + templateI18n.deleteLink +'"><i class="icon icon-remove icon-white"></i>' +
+                    '<a class="deleteLinkButton with-tooltip" ' +
+                        'rel="tooltip" data-placement="bottom" data-original-title="' + templateI18n.deleteLink +'"><i class="icon icon-remove icon-white"></i>' +
                     '</a>' +
                 '</div>' +
                 '<div>' +
-                    '<div class="linkUrl with-tooltip" rel="tooltip" data-placement="top" data-original-title="' + templateI18n.goto + ' {{domain}}" style="height: 21px; width: 22px; float: left;">' +
+                    '<div class="linkUrl with-tooltip" rel="tooltip" data-placement="right" data-original-title="' + templateI18n.goto + ' {{domain}}" style="height: 21px; width: 22px; float: left;">' +
                         '<img align="left" src="http://www.google.com/s2/favicons?domain={{domain}}" class="linkparticon"' +
                         'width="20px" height="20px" border="4px" style="margin-right: 2px; margin-bottom: 1px;"/>' +
                     '</div>' +
                     '{{^readonly}}' +
                     '<div class="rateAndOperations" style="width: 116; height: 16px;">' +
                         '<span class="rate"></span>' +
-                        //'<button class="close deleteLinkButton with-tooltip visible-on-hover" rel="tooltip" data-placement="left" data-original-title="' + templateI18n.deleteLink +'">&times;</button>' +
-                        //'<div style="clear: both;"></div>' +
                     '</div>' +
                     '{{/readonly}}' +
                 '</div>' +
                 '<div style="margin-top: 1px;word-wrap:break-word;">' +
-                    '<div class="content with-tooltip" rel="tooltip" data-placement="top" data-original-title="' + templateI18n.goto + ' {{domain}}">' +
-                        '{{#title}}<span class="title"><b>{{title}}</b></span><br/>{{/title}}' +
+                    '<div class="content with-tooltip" rel="tooltip" data-placement="right" data-original-title="' + templateI18n.goto + ' {{domain}}">' +
+                        '{{#title}}<span class="title" style="font-weight: bold;">{{title}}</span><br/>{{/title}}' +
                         '{{#description}}<span class="description">{{description}}</span><br/>{{/description}}' +
                         '<span class="domain" style="font-size: 11px;"><i>{{domain}}</i></span>' +
                     '</div>' +
-                    '<div class="tags with-tooltip">' + //</div> rel="tooltip" data-placement="top" data-original-title="' + templateI18n.goto + ' {{domain}}">' +
+                    '<div class="tags with-tooltip">' +
                         '<i class="icon-tags" style="margin-right: 3px; margin-left: 6px;"></i>' +
                         '<span class="tags-wrapper">' +
                             '{{#_tags}}' +
@@ -382,12 +382,12 @@ var markAsUnreadFormName = "markAsUnreadForm";
 
 function markAsRead(linkId)
 {
-    changeReadability(linkId, markAsReadFormName)(null);//.call(this, null);
+    changeReadability(linkId, markAsReadFormName)(null);
 };
 
 function markAsUnread(linkId)
 {
-    changeReadability(linkId, markAsUnreadFormName)(null);//.call(this, null);
+    changeReadability(linkId, markAsUnreadFormName)(null);
 };
 
 function changeReadability(linkId, formName)
@@ -435,9 +435,42 @@ function changeRead(read)
     }
 };
 
+function importDone(data)
+{
+   displayMessage(data);
+};
+
+function postTwitterStatus(status)
+{
+    window.open("https://twitter.com/home?status=" + status,'_blank');
+};
+
 $(document).ready(
     function()
     {
+        /* mark search icon as to be clicked when modifications occurs */
+        $('input.read-marker').on('click', function(event)
+        {
+            setSubmitFilterButtonToClickState();
+        });
+        $('#filterInput').on('keypress', setSubmitFilterButtonToClickState);
+
+
+        $('#clearFilterTag').on('click', function(event)
+        {
+            var inputFilter = $('#filterInput');
+            var val = inputFilter.val();
+            if ( val && val.length > 0 )
+            {
+                inputFilter.val('');
+                setSubmitFilterButtonToClickState();
+            }
+        });
+        $('#filterLinkForm select').on('change', function(event)
+        {
+            setSubmitFilterButtonToClickState();
+        });
+
         $('#filterLinkForm').on('submit', function(event)
         {
             // set the link for the anchor for infinite-scroll to work
@@ -456,32 +489,7 @@ $(document).ready(
             anchor.attr('href', href);
         });
 
-        var callback = function(archived)
-        {
-            return function(event)
-            {
-                $('#navigation > li').removeClass('active')
-                $(this).parent().addClass('active')
-                $('#archived-input').val(archived);
-                submitFilterForm();
-            };
-        }
-        $('#nav-home').click(callback(false));
-        $('#nav-archive').click(callback(true));
-
-        // txtTag is now always displayed
-        /*$('#showTagInput').click(function(event)
-         {
-         $('#txtTag').fadeToggle({
-         easing: 'swing'
-         });
-         });
-
-         $('#txtTag').fadeOut({
-         duration: 0
-         });*/
-
-        $('#listing-part').on('click', 'button.deleteLinkButton', function(event)
+        $('#listing-part').on('click', '.deleteLinkButton', function(event)
         {
             event.stopPropagation();
             var linkId = $(event.target).parents('div.linkpart').eq(0).attr('data-id');
@@ -497,6 +505,7 @@ $(document).ready(
 
         var $container = $('#listing-part');
 
+        /* Tags management */
         $container.on('click', 'span.tag', function(event)
         {
             event.stopPropagation();
@@ -504,10 +513,7 @@ $(document).ready(
             var tag = jThis.attr('data-tag');
             $('#filterInput').val(tag);
             submitFilterForm();
-        });
-
-
-        $container.on('click', 'button.deleteTagButton', function(event)
+        }).on('click', '.deleteTagButton', function(event)
         {
             event.stopPropagation();
             var jTag = $(this).parents('span.tag').eq(0);
@@ -517,9 +523,7 @@ $(document).ready(
             jForm.find('input[name="tag"]').val(jTag.attr("data-tag"));
 
             $('#deleteTagDialog').modal();
-        });
-
-        $container.on('click', 'span.add-tag', function(event)
+        }).on('click', '.add-tag', function(event)
         {
             event.stopPropagation();
 
@@ -534,6 +538,7 @@ $(document).ready(
                        }, 1000);
         });
 
+        /* go to link */
         var goToLink = function(event)
         {
             event.stopPropagation();
@@ -557,44 +562,45 @@ $(document).ready(
         $container.on('click', 'img.linkparticon', goToLink);
         $container.on('click', 'div.tags', goToLink);
 
-        $container.on('click', 'a.read', changeRead(true));
-        $container.on('click', 'a.unread', changeRead(false));
+        /* actions */
+        $container.on('click', '.action-toolbar .read', changeRead(true));
+        $container.on('click', '.action-toolbar .unread', changeRead(false));
 
-        $('input.read-marker').on('click', function(event)
+        $container.on('click', '.action-toolbar .twitter', function(event)
         {
-            setSubmitFilterButtonToClickState();
-        });
-        $('#filterInput').on('keypress', setSubmitFilterButtonToClickState);
-
-
-        $('#clearFilterTag').on('click', function(event)
-        {
-            var inputFilter = $('#filterInput');
-            var val = inputFilter.val();
-            if ( val && val.length > 0 )
+            var linkpart = $(this).parents('div.linkpart').eq(0);
+            if ( linkpart )
             {
-                inputFilter.val('');
-                setSubmitFilterButtonToClickState();
+                var message = "";
+                var title = linkpart.find('.title');
+                // title
+                if ( title )
+                {
+                    message = message + title.text() + " ";
+                }
+                //tags
+                linkpart.find('span.tag').each(function(index, value)
+                {
+                    message = message + "#" + $(value).attr('data-tag') + " ";
+                });
+
+                message = message + linkpart.attr('data-url');
+
+                postTwitterStatus(encodeURIComponent(message));
             }
         });
+        $container.on('click', '.action-toolbar .importLinkButton', function(event)
+        {
+            // modify form and submit it
+            var jForm = $('#importLink');
+            jForm.find('input[name="id"]').val($(this).parents('div.linkpart').eq(0).attr('data-id'));
+            jForm.submit();
+        });
 
+        /* tags of cloud */
         $('#showTagsCloud').on('click', function(event)
         {
             $('#showTagsCloudForm').submit();
-        });
-        $('#filterLinkForm select').on('change', function(event)
-        {
-            setSubmitFilterButtonToClickState();
-        });
-
-        // when return on linkguardian, if no input has focus, then set focus to txtUrl
-        $(window).focus(function() {
-            console.log('Focus');
-            var element = document.querySelector(":focus");
-            if ( ! element )
-            {
-                $('#txtUrl').focus();
-            }
         });
 
         $('#shareLinksButton').on('click', function(event)
@@ -627,7 +633,7 @@ $(document).ready(
                             tagsArray = tags.split(" ");
                         }
 
-                        var message = "My links";
+                        var message = "my links";
                         if ( tagsArray )
                         {
                             message = message + " about";
@@ -657,13 +663,33 @@ $(document).ready(
 
                         var url = "https://linkguardian-blackdog.rhcloud.com/" + $('#linksofuser').val() + (_tags.length == 0 ? "" : "/" + _tags);
 
-                        message = message + " " + url;
-                        message = message + " (via @linkguardian)";
+                        // shorten url
+                        shortenUrl(url, function(data)
+                        {
+                            console.log("calling callback with " + data);
 
-                        window.open("https://twitter.com/home?status=" + encodeURIComponent(message),'mywindow',
-                                    'width=400,height=200,toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes,resizable=yes');
+                            message = message + " " + data;
+                            message = message + " (via @linkguardian)";
+
+                            console.log("message : " + message);
+                            console.log("encoded : " + encodeURIComponent(message));
+
+                            postTwitterStatus(encodeURIComponent(message));
+                        });
                     }
                 }
+            }
+        });
+
+        /* focus management */
+
+        // when return on linkguardian, if no input has focus, then set focus to txtUrl
+        $(window).focus(function() {
+            console.log('Focus');
+            var element = document.querySelector(":focus");
+            if ( ! element )
+            {
+                $('#txtUrl').focus();
             }
         });
 

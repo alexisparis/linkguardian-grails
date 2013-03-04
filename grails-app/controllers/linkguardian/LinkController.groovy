@@ -20,6 +20,8 @@ class LinkController extends MessageOrientedObject
 
     def linksPerPage = 100
 
+    def shortenerService
+
     def list(String tag, String linksofuser)
     {
         log.info "calling list with connected user " + springSecurityService.getPrincipal().username + ", tag : " + tag + ", user : " + linksofuser
@@ -120,12 +122,13 @@ class LinkController extends MessageOrientedObject
 
                 def query = Link.where { person.username == linksofuser }
 
-                if ( ! userAskedIsConnectedUser && policy == LinkPrivacyPolicy.LINK_PER_LINK )
+                // desactive : en attente d'implémentation
+                /*if ( ! userAskedIsConnectedUser && policy == LinkPrivacyPolicy.LINK_PER_LINK )
                 {
                     query = query.where {
                         locked == false
                     }
-                }
+                } */
 
                 def tokens = linkBuilderService.extractTags(token)
 
@@ -773,5 +776,60 @@ class LinkController extends MessageOrientedObject
         }
 
         render results as JSON
+    }
+
+    def importLink(Long id)
+    {
+        log.info "calling importLink with id : " + id
+        def message = null;
+
+        def link = Link.findById(id)//Long.parseLong(id))
+        if ( link )
+        {
+            if ( link.person.username == springSecurityService.principal.username )
+            {
+                response.status = 500
+                message = this.error(message(code: "service.link.importLink.linkExistsForConnectedUser"))
+            }
+            else
+            {
+                def connectedUser = Person.findByUsername(springSecurityService.getPrincipal().username)
+
+                if ( Link.findByUrlAndPerson(link.url, connectedUser) != null )
+                {
+                    response.status = 500
+                    message = this.error(message(code: "service.link.importLink.linkExistsForConnectedUser"))
+                }
+                else
+                {
+                    // clone link
+                    Link result = linkBuilderService.clone(link)
+                    result.creationDate = new Date()
+                    result.locked = Boolean.TRUE
+                    result.read = Boolean.FALSE
+                    result.person = connectedUser
+
+                    result.save(flush:  true)
+
+                    message = this.success(message(code: "service.link.importLink.linkImported"))
+                }
+            }
+        }
+        else
+        {
+            response.status = 500
+            message = this.error(message(code: "service.link.importLink.linkDoesNotExist"))
+            message = this.error("Link not found");
+        }
+
+        render message as JSON
+    }
+
+    def shortenUrl(String url)
+    {
+        log.info "calling shorten url with url " + url
+        def urlResource = shortenerService.shorten(url)
+        log.info "returning " + urlResource.shortUrl
+        render urlResource.shortUrl
     }
 }

@@ -38,5 +38,6 @@ class Link {
   Boolean read = false
   String title
   String description
+  // non implementé pour le moment
   Boolean locked = false
 }

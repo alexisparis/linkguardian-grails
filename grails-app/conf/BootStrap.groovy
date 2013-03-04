@@ -115,7 +115,7 @@ class BootStrap {
 
                 // fake user 3
                 def user3 = new Person(username: 'nodejs', enabled: true, password: 'password')
-                user3.privacyPolicy = LinkPrivacyPolicy.LINK_PER_LINK
+                user3.privacyPolicy = LinkPrivacyPolicy.ALL_PUBLIC
                 user3 = user3.save(flush: true)
                 PersonRole.create user3, userRole, true
                 PersonRole.create user3, twitterRole, true

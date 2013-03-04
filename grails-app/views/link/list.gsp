@@ -29,6 +29,18 @@
             {
                 background:#e2e2e4 url('${resource(dir: 'images', file: 'title-bg.gif')}') repeat-x left top;
             }
+            <g:if test="${isOwner}">
+                .action-toolbar .importLinkButton
+                {
+                    display: none;
+                }
+            </g:if>
+            <g:else>
+                .action-toolbar .read, .action-toolbar .unread, .action-toolbar .deleteLinkButton
+                {
+                    display: none;
+                }
+            </g:else>
         </style>
 
 	</head>
@@ -220,6 +232,12 @@
             <g:hiddenField name="username" value="${linksOfUser}"/>
         </g:formRemote>
 
+        <!-- form used to import a link -->
+        <g:formRemote id="importLink" name="importLink" url="[controller: 'link', action: 'importLink']"
+                      method="POST" style="display: none;" onSuccess="importDone(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
+            <g:hiddenField name="id"/>
+        </g:formRemote>
+
         <!-- ################# -->
         <!-- bootstrap dialogs -->
         <!-- ################# -->
@@ -343,15 +361,36 @@
                 goto : '<g:message code="links.link.template.domain.goto"/>',
                 addTag : '<g:message code="links.link.template.domain.addTag"/>',
                 deleteLink : '<g:message code="links.link.template.domain.deleteLink"/>',
+                tweetLink :'<g:message code="links.link.template.domain.tweetLink"/>',
                 markAsRead : '<g:message code="links.link.template.domain.markAsRead"/>',
                 markAsUnread : '<g:message code="links.link.template.domain.markAsUnread"/>',
                 deleteTag : '<g:message code="links.link.template.domain.deleteTag"/>',
-                filterOnTag : '<g:message code="links.link.template.domain.filterOnTag"/>'
+                filterOnTag : '<g:message code="links.link.template.domain.filterOnTag"/>',
+                importLink : '<g:message code="links.link.template.domain.importLink"/>'
             };
         </g:javascript>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'links.js')}"></script>
 
         <g:javascript>
+
+            function shortenUrl(url, callback)
+            {
+                jQuery.ajax('<g:createLink controller="link" action="shortenUrl" absolute="true"/>?url=' +url,
+                    {
+                        success: function(data, textStatus, jqXHR)
+                        {
+                            if ( data )
+                            {
+                                callback.call(this, data);
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown )
+                        {
+                            displayStdError();
+                        }
+                    })
+            };
+
             $(document).ready(
                     function()
                     {

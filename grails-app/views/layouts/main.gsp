@@ -71,7 +71,7 @@
                                     <%-- TODO : remove when no beta anymore --%>
                                     <sup style="color: #bd362f; font-size: larger; margin-left: 5px; font-size: large;">BÊTA</sup>
 
-                                    <span class="lgDescription" style="margin-left: 40px;"><g:message code="lg.description.small"/></span>
+                                    <span class="lgDescription" style="margin-left: 40px; width: 183px; "><g:message code="lg.description.small"/></span>
                                 </a>
                             </div>
 
@@ -93,19 +93,19 @@
 
                                             <g:link controller="link" action="list" class="btn btn-primary text"><g:message code="links.mylinks.label"/></g:link>
 
-                                            <div class="btn-group" style="margin-right: 20px; ">
+                                            <%--div class="btn-group" style="margin-right: 20px; ">
                                                 <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Recherche <span class="caret"></span></button>
                                                 <ul class="dropdown-menu">
                                                     <li><g:link controller="roleCrud">derniers liens ajoutés</g:link></li>
                                                     <li><g:link controller="linkCrud">personnes les plus actives</g:link></li>
                                                 </ul>
-                                            </div>
+                                            </div--%>
 
-                                            <button class="btn btn-success btn-inverse with-tooltip" id="tools" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'menu.tools.label')}">
+                                            <button class="btn btn-inverse with-tooltip" id="tools" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'menu.tools.label')}">
                                                 <i class="icon-wrench icon-white"></i>
                                             </button>
 
-                                            <button class="btn btn-info with-tooltip" id="about" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'menu.about.label')}">
+                                            <button class="btn btn-inverse with-tooltip" id="about" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'menu.about.label')}">
                                                 <i class="icon-info-sign icon-white"></i>
                                             </button>
                                         </span>
@@ -260,7 +260,7 @@
                     <select name="privacy" id="privacy" style="width: 300px; margin-left: 50px;" data-original-value="${policy}">
                         <option value="ALL_LOCKED"><g:message code="links.forms.configuration.privacy.locked"/></option>
                         <option value="ALL_PUBLIC"><g:message code="links.forms.configuration.privacy.public"/></option>
-                        <option value="LINK_PER_LINK"><g:message code="links.forms.configuration.privacy.linkPerLink"/></option>
+                        <%--option value="LINK_PER_LINK"><g:message code="links.forms.configuration.privacy.linkPerLink"/></option--%>
                     </select>
                 </g:formRemote>
             </div>

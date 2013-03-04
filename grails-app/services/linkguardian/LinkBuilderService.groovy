@@ -10,6 +10,30 @@ class LinkBuilderService {
 
     def stringNormalizerService
 
+    def clone(Link link)
+    {
+        def result = null;
+
+        if ( link )
+        {
+            result = new Link()
+            result.title = link.title
+            result.description = link.description
+            result.domain = link.domain
+            result.url = link.url
+            result.read = link.read
+            result.note = link.note
+            result.creationDate = link.creationDate
+            result.locked = link.locked
+
+            link.tags.each {
+                result.addToTags(it)
+            }
+        }
+
+        return result
+    }
+
     def complete(Link link, String type) {
 
         log.info "completing link with url : " + link.url + " and type : " + type
