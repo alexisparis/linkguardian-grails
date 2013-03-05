@@ -40,7 +40,7 @@
         </div>
 
         <div id="nav-inf-scroll" style="display: none;">
-            <a href="<g:createLink controller="person" action="persons"/>?username=${username}&format=json&page=2">infinite-scroll person</a>
+            <a href="<g:createLink controller="person" action="persons"/>?username=username/>&format=json&page=2">infinite-scroll person</a>
         </div>
 
         <div id="inf-scroll-load" style="margin-left: auto; margin-right: auto;">

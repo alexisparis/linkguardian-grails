@@ -119,7 +119,7 @@ class PersonController extends MessageOrientedObject
             }
             else
             {
-                return new ModelAndView("/person/persons", [persons : results, username:  username, policy : connectedUser.privacyPolicy])
+                return new ModelAndView("/person/persons", [persons : results, username:  username])
             }
         }
     }

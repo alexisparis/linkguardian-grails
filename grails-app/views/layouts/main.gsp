@@ -267,7 +267,7 @@
                 <g:formRemote id="configurationForm" name="configurationForm" url="[controller: 'person', action: 'saveConfiguration']"
                               method="POST" onSuccess="configurationSaved(data)" onFailure="displayFailure(XMLHttpRequest,textStatus,errorThrown)">
                     <g:message code="links.forms.configuration.privacy.label"/><br/>
-                    <select name="privacy" id="privacy" style="width: 300px; margin-left: 50px;" data-original-value="${policy}">
+                    <select name="privacy" id="privacy" style="width: 300px; margin-left: 50px;" data-original-value="<lg:user_privacy/>">
                         <option value="ALL_LOCKED"><g:message code="links.forms.configuration.privacy.locked"/></option>
                         <option value="ALL_PUBLIC"><g:message code="links.forms.configuration.privacy.public"/></option>
                         <%--option value="LINK_PER_LINK"><g:message code="links.forms.configuration.privacy.linkPerLink"/></option--%>

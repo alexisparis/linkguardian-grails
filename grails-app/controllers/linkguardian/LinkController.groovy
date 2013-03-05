@@ -38,7 +38,6 @@ class LinkController extends MessageOrientedObject
                                 [linksOfUser : _linksOfUser,
                                  tag: tag,
                                  isOwner : springSecurityService.getPrincipal().username == _linksOfUser,
-                                 policy : connectedPerson.privacyPolicy,
                                  allLinksPrivate : (LinkPrivacyPolicy.ALL_LOCKED == connectedPerson.privacyPolicy)])
     }
 
