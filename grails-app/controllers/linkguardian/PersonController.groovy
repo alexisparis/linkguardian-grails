@@ -36,52 +36,55 @@ class PersonController extends MessageOrientedObject
             _page = 1
         }
 
-        if ( username != null )
+        def connectedUser = Person.findByUsername(springSecurityService.principal.username)
+
+        def _username = username
+        if ( _username == null )
+            _username = ""
+
+        def queryParams = [max: personsPerPage, offset: (_page - 1) * personsPerPage]//, sort: _sortBy, order: _sortType]
+
+        def q = Person.createCriteria()
+
+        if ( formatJson )
         {
-            def queryParams = [max: personsPerPage, offset: (_page - 1) * personsPerPage]//, sort: _sortBy, order: _sortType]
-
-            def q = Person.createCriteria()
-
-            if ( formatJson )
-            {
-                def iterator = q.list(queryParams) {
-                    and
-                    {
-                        ilike('username', "%" + username + "%")
-                        not {
-                            eq('privacyPolicy', LinkPrivacyPolicy.ALL_LOCKED) //not user whose links are private
-                        }
-                        not {
-                            eq('username', springSecurityService.principal.username)  // not connected user
-                        }
+            def iterator = q.list(queryParams) {
+                and
+                {
+                    ilike('username', "%" + _username + "%")
+                    not {
+                        eq('privacyPolicy', LinkPrivacyPolicy.ALL_LOCKED) //not user whose links are private
                     }
-                    projections {
-                        property('username')
+                    not {
+                        eq('username', springSecurityService.principal.username)  // not connected user
                     }
                 }
-
-                iterator.each {
-                    results.add(new PersonResult(username : it))
+                projections {
+                    property('username')
                 }
             }
-            else
-            {
-                def iterator = q.list(queryParams) {
-                    and
-                    {
-                        ilike('username', "%" + username + "%")
-                        not {
-                            eq('privacyPolicy', LinkPrivacyPolicy.ALL_LOCKED) //not user whose links are private
-                        }
-                        not {
-                            eq('username', springSecurityService.principal.username)  // not connected user
-                        }
+
+            iterator.each {
+                results.add(new PersonResult(username : it))
+            }
+        }
+        else
+        {
+            def iterator = q.list(queryParams) {
+                and
+                {
+                    ilike('username', "%" + _username + "%")
+                    not {
+                        eq('privacyPolicy', LinkPrivacyPolicy.ALL_LOCKED) //not user whose links are private
+                    }
+                    not {
+                        eq('username', springSecurityService.principal.username)  // not connected user
                     }
                 }
+            }
 
-                iterator.each {
-                    results.add(new PersonResult(username : it.username, linksCount: it.links.size()))
-                }
+            iterator.each {
+                results.add(new PersonResult(username : it.username, linksCount: it.links.size()))
             }
         }
 
@@ -116,7 +119,7 @@ class PersonController extends MessageOrientedObject
             }
             else
             {
-                return new ModelAndView("/person/persons", [persons : results, username:  username])
+                return new ModelAndView("/person/persons", [persons : results, username:  username, policy : connectedUser.privacyPolicy])
             }
         }
     }

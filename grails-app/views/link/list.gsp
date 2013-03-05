@@ -7,7 +7,6 @@
 
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'jqcloud.css')}" type="text/css">
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'links.css')}" type="text/css">
-        <link rel="stylesheet" href="${resource(dir: 'css', file: 'dd.css')}" type="text/css"/>
 
         <style type="text/css">
             /*#infscr-loading
@@ -21,14 +20,6 @@
                 margin-right: auto;
                 margin-left: auto;
             }*/
-            .dd .arrow
-            {
-                background: url('${resource(dir: 'images', file: 'dd_arrow.gif')}') no-repeat;
-            }
-            .dd .ddTitle
-            {
-                background:#e2e2e4 url('${resource(dir: 'images', file: 'title-bg.gif')}') repeat-x left top;
-            }
             <g:if test="${isOwner}">
                 .action-toolbar .importLinkButton
                 {
@@ -346,7 +337,6 @@
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.raty.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.masonry.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jqcloud-1.0.3.min.js')}"></script>
-        <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.dd.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.infinitescroll.min.js')}"></script>
 
         <g:javascript>
@@ -397,17 +387,6 @@
                         displayDevModeWarning = true;
 
                         $.fn.raty.defaults.path = '${resource(dir: 'images')}';
-
-                        try
-                        {
-                            $("body select").msDropDown();
-                        }
-                        catch(e)
-                        {
-                            alert(e.message);
-                        }
-
-                        // add here to test without deployment issue
 
                         var $container = $('#listing-part');
                         $container.imagesLoaded(function(){

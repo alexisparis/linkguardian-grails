@@ -27,6 +27,7 @@
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'application.css')}" type="text/css">
         <link href="${resource(dir: 'css', file: 'clicker.css')}" rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="${resource(dir: 'css', file: 'dd.css')}" type="text/css"/>
 
         <style type="text/css">
             #dragTool
@@ -41,6 +42,14 @@
                 color: white;
                 text-decoration: none;
             }
+            .dd .arrow
+            {
+                background: url('${resource(dir: 'images', file: 'dd_arrow.gif')}') no-repeat;
+            }
+            .dd .ddTitle
+            {
+                background:#e2e2e4 url('${resource(dir: 'images', file: 'title-bg.gif')}') repeat-x left top;
+            }
         </style>
 
 		<g:layoutHead/>
@@ -48,6 +57,7 @@
         <ga:trackPageview />
 
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.blockUI.min.js')}"></script>
+        <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.dd.min.js')}"></script>
 
         <script type="text/javascript">
             var displayDevModeWarning = false;
@@ -317,6 +327,15 @@
                         }
 
                         includeTwitterLogo();
+
+                        try
+                        {
+                            $("body select").msDropDown();
+                        }
+                        catch(e)
+                        {
+                            alert(e.message);
+                        }
 
                         $('.lg').html('<g:message code="lg.title"/>');
 
