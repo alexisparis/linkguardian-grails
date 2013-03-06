@@ -1,6 +1,3 @@
-
-
-
 function displayFailure(XMLHttpRequest,textStatus,errorThrown)
 {
     if ( XMLHttpRequest && XMLHttpRequest.responseText && XMLHttpRequest.responseText.length )
@@ -69,6 +66,25 @@ $(document).ready(function()
                       });
                   });
 
+
+
+function includeTwitterAccountLogo()
+{
+    // https://dev.twitter.com/docs/api/1/get/users/profile_image/%3Ascreen_name
+    // bigger normal mini
+    $('img.twitter-account:not(.included)').each(function(index, value)
+                                                         {
+                                                             var $value = $(value);
+                                                             var size = 'mini';
+                                                             var sizeAttr = $value.attr('data-twitter-icon-size');
+                                                             if ( sizeAttr )
+                                                             {
+                                                                size = sizeAttr;
+                                                             }
+                                                             $value.attr('src', 'https://api.twitter.com/1/users/profile_image?screen_name=' + $value.attr('data-twitter-name') + '&size=' +size);
+                                                             $value.addClass('included');
+                                                         });
+};
 
 
 

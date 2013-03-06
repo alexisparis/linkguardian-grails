@@ -48,7 +48,7 @@ class BootStrap {
             newLink.description = desc
             newLink.note = _note
 
-            //linkBuilderService.addTags(newLink, _tags)
+            linkBuilderService.addTags(newLink, _tags)
             newLink = newLink.save(flush: true)
         }
         catch(Exception e)
@@ -85,6 +85,15 @@ class BootStrap {
 
         switch (Environment.current)
         {
+            case Environment.TEST:
+
+                def user1 = new Person(username: 'OlivierCroisier', enabled: true, password: 'password')
+                user1.privacyPolicy = LinkPrivacyPolicy.ALL_PUBLIC
+                user1 = user1.save(flush: true)
+                PersonRole.create user1, userRole, true
+                PersonRole.create user1, twitterRole, true
+
+                break
             case Environment.DEVELOPMENT:
 
                 // links for admin
@@ -100,8 +109,8 @@ class BootStrap {
                 PersonRole.create user1, userRole, true
                 PersonRole.create user1, twitterRole, true
 
-                this.createFakeLink("", Note.Note_0, user1, false, "not_locked", false)
-                this.createFakeLink("", Note.Note_0, user1, false, "locked", true)
+                this.createFakeLink(" a b ", Note.Note_0, user1, false, "not_locked_1", false)
+                this.createFakeLink(" a c ", Note.Note_0, user1, false, "not_locked_2", false)
 
                 // fake user 2
                 def user2 = new Person(username: 'fonfec78', enabled: true, password: 'password')
@@ -120,8 +129,8 @@ class BootStrap {
                 PersonRole.create user3, userRole, true
                 PersonRole.create user3, twitterRole, true
 
-                this.createFakeLink("", Note.Note_0, user3, false, "not_locked", false)
-                this.createFakeLink("", Note.Note_0, user3, false, "locked", true)
+                this.createFakeLink(" toto ", Note.Note_0, user3, true, "not_locked_1", false)
+                this.createFakeLink(" a ", Note.Note_0, user3, true, "not_locked_2", false)
 
                 def twitterUsers = ['jaraparilla', 'glaforge', 'mathof1', 'wernerkeil', 'drenoux', 'xavroy',
                                     'nfs_lu', 'vincent_germain', 'LahautXavier', 'caroline_simon', 'renox57',

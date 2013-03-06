@@ -32,8 +32,12 @@ environments {
     }
     test {
         dataSource {
-            dbCreate = "update"
-            url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+            dbCreate = "create-drop"//"create-drop"//"update"
+            url = "jdbc:postgresql://127.5.32.1:5432/linkguardianIntegrationTest"
+            username = "admin"
+            password = "PFbIHZJ_WumX"
+            driverClassName = "org.postgresql.Driver"
+            dialect = org.hibernate.dialect.PostgreSQLDialect
         }
     }
     production {

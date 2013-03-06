@@ -1,0 +1,23 @@
+
+#git add .
+#git add -u
+#git commit -m "$1"
+#git push origin master
+
+grails clean
+
+grails test war
+rm -Rf ../deployment-test/src/main/webapp/*
+cp target/*.war ../deployment-test/src/main/webapp
+cd ../deployment-test/src/main/webapp/
+unzip *.war
+rm *.war
+
+cd ../../..
+
+git add .
+git add -u
+git commit -m "$1"
+git push origin master
+
+cd ../Linkguardian

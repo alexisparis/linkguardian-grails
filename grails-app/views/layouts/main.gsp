@@ -42,6 +42,10 @@
                 color: white;
                 text-decoration: none;
             }
+            a.text-dark:link, a.text-dark:visited, a.text-dark:hover {
+                color: black;
+                text-decoration: none;
+            }
             .dd .arrow
             {
                 background: url('${resource(dir: 'images', file: 'dd_arrow.gif')}') no-repeat;
@@ -103,13 +107,15 @@
 
                                             <g:link controller="link" action="list" class="btn btn-primary text"><g:message code="links.mylinks.label"/></g:link>
 
-                                            <%--div class="btn-group" style="margin-right: 20px; ">
+                                            <g:link controller="link" action="recentsLinks" class="btn btn-primary text">derniers liens ajoutés</g:link>
+
+                                            <!--div class="btn-group" style="margin-right: 20px; ">
                                                 <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Recherche <span class="caret"></span></button>
                                                 <ul class="dropdown-menu">
                                                     <li><g:link controller="roleCrud">derniers liens ajoutés</g:link></li>
-                                                    <li><g:link controller="linkCrud">personnes les plus actives</g:link></li>
+                                                    <li><g:link absolute="true" uri="/recent">personnes les plus actives</g:link></li>
                                                 </ul>
-                                            </div--%>
+                                            </div-->
 
                                             <button class="btn btn-inverse with-tooltip" id="tools" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'menu.tools.label')}">
                                                 <i class="icon-wrench icon-white"></i>
@@ -161,7 +167,7 @@
                                                                                   source: function (query, process) {
                                                                                       blockUiInhibiter++;
                                                                                       return $.getJSON(
-                                                                                              '<g:createLink controller="person" action="persons" absolute="true"/>',
+                                                                                              '<lg:secureLink controller="person" action="persons" absolute="true"/>',
                                                                                               {
                                                                                                   username: $('#searchUsernameInput').val(),
                                                                                                   format: "json"
@@ -203,7 +209,17 @@
                 </div>
             </div>
         </div>
+
         <div class="container wrapper">
+
+            <g:if env="test">
+                <div class="row" style="padding-top: 5px; padding-bottom: 5px;">
+                    <strong span="12" style="color: red; font-size: x-large;">This is an application used to make test integration.<br/>
+                        To use the real application, go to <a href="https://linkguardian-blackdog.rhcloud.com/" class="text btn btn-primary">Link Guardian</a>
+                    </strong>
+                </div>
+            </g:if>
+
             <div class="row">
                 <div class="span12">
                     <g:layoutBody/>
@@ -388,24 +404,13 @@
                         })
                                 .ajaxStop(hideBlockUi).ajaxError(hideBlockUi);
 
-                        <%-- https://dev.twitter.com/docs/api/1/get/users/profile_image/%3Ascreen_name --%>
-                        <%-- bigger normal mini --%>
-                        $('img.twitter-account').each(function(index, value)
-                                                      {
-                                                          var $value = $(value);
-                                                          var size = 'mini';
-                                                          var sizeAttr = $value.attr('data-twitter-icon-size');
-                                                          if ( sizeAttr )
-                                                          {
-                                                              size = sizeAttr;
-                                                          }
-                                                          $value.attr('src', 'https://api.twitter.com/1/users/profile_image?screen_name=' + $value.attr('data-twitter-name') + '&size=' +size);
-                                                      });
+                        includeTwitterAccountLogo();
 
-                        $('a.twitter-account').each(function(index, value)
+                        $('a.twitter-account:not(.included)').each(function(index, value)
                                                     {
                                                         var $value = $(value);
                                                         $value.attr('href', 'https://twitter.com/' + $value.attr('data-twitter-name'));
+                                                        $value.addClass('included');
                                                     });
 
                         $('#configurationButton').on('click', function(event)

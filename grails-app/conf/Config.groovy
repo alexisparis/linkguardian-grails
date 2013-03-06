@@ -70,6 +70,16 @@ environments {
         grails.plugins.springsecurity.mock.roles = [ 'ROLE_USER', 'ROLE_TWITTER', 'ROLE_ADMIN' ]
         grails.plugins.springsecurity.ipRestrictions = [ '/**': ['127.0.0.0/8', '::1/128'] ]
     }
+    test {
+        grails.logging.jul.usebridge = true
+
+        grails.plugins.springsecurity.mock.active = true
+        grails.plugins.springsecurity.mock.fullName = "Alexis PARIS"
+        grails.plugins.springsecurity.mock.email = "alexis.rt.paris@gmail.com"
+        grails.plugins.springsecurity.mock.username =  "paris_alex"
+        grails.plugins.springsecurity.mock.roles = [ 'ROLE_USER', 'ROLE_TWITTER']
+        grails.plugins.springsecurity.ipRestrictions = [ '/**': ['127.0.0.0/8', '::1/128'] ]
+    }
     production {
         grails.logging.jul.usebridge = false
         // TODO: grails.serverURL = "http://www.changeme.com"
@@ -87,11 +97,11 @@ log4j = {
     //}
 
     debug "grails.app.controllers.linkguardian.LinkController",
-          "grails.app.controllers.linkguardian.PersonController"
-          //,"grails.app.services.LinkBuilderService"
-          //,"grails.app.services.StringNormalizerService"
-          //,'org.hibernate.SQL'
-          //,'org.hibernate.transaction' // optionally
+          "grails.app.controllers.linkguardian.PersonController"/*,
+          "grails.app.services.LinkBuilderService",
+          "grails.app.services.StringNormalizerService",
+          'org.hibernate.SQL',
+          'org.hibernate.transaction'*/
 
     //debug "grails.app"
 

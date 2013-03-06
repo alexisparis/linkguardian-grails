@@ -1,6 +1,7 @@
 package linkguardian
 
 import grails.converters.JSON
+import grails.gorm.DetachedCriteria
 import grails.plugins.springsecurity.Secured
 import linkguardian.exception.TagException
 import org.springframework.web.servlet.ModelAndView
@@ -22,6 +23,20 @@ class LinkController extends MessageOrientedObject
 
     def shortenerService
 
+    def formatUrl(String url)
+    {
+        def result = url
+        if ( url )
+        {
+            if( url.length() > 50 )
+            {
+                result = url.substring(0, 50) + "..."
+            }
+        }
+
+        return result
+    }
+
     def list(String tag, String linksofuser)
     {
         log.info "calling list with connected user " + springSecurityService.getPrincipal().username + ", tag : " + tag + ", user : " + linksofuser
@@ -38,21 +53,20 @@ class LinkController extends MessageOrientedObject
                                 [linksOfUser : _linksOfUser,
                                  tag: tag,
                                  isOwner : springSecurityService.getPrincipal().username == _linksOfUser,
-                                 allLinksPrivate : (LinkPrivacyPolicy.ALL_LOCKED == connectedPerson.privacyPolicy)])
+                                 allLinksPrivate : (LinkPrivacyPolicy.ALL_LOCKED == connectedPerson.privacyPolicy),
+                                 searchType : "user-oriented",
+                                 isGlobal : false])
     }
 
-    def formatUrl(String url)
+    def recentsLinks()
     {
-        def result = url
-        if ( url )
-        {
-            if( url.length() > 50 )
-            {
-                result = url.substring(0, 50) + "..."
-            }
-        }
-
-        return result
+        return new ModelAndView("/link/list",
+                                [linksOfUser : "",
+                                 tag: "",
+                                 isOwner : false,
+                                 allLinksPrivate : false,
+                                 searchType : "global",
+                                 isGlobal : true])
     }
 
     /**
@@ -61,15 +75,17 @@ class LinkController extends MessageOrientedObject
      * @param read_status : all, read or unread
      * @return
      */
-    def filter(String token, String read_status, String sortBy, String sortType, int page, String linksofuser)
+    def filter(String token, String read_status, String sortBy, String sortType, int page, String linksofuser, String searchType)
     {
         def start = System.currentTimeMillis();
         log.info "calling filter from LinkController with filter equals to " + token + ", read status : " + read_status +
-                 ", sort by " + sortBy + " " + sortType + ", page = " + page + ", links of user = " + linksofuser
+                 ", sort by " + sortBy + " " + sortType + ", page = " + page + ", links of user = " + linksofuser + ", with search type = " + searchType
 
         def userAskedIsConnectedUser = springSecurityService.getPrincipal().username == linksofuser
 
         def queryLinks = Collections.emptyList()
+
+        def isGlobalSearch = "global" == searchType
 
         def _sortBy = sortBy
         if ( _sortBy != "creationDate" && _sortBy != "note" )
@@ -81,7 +97,6 @@ class LinkController extends MessageOrientedObject
         {
             _sortType = "asc"
         }
-
         def success = true
 
         def read = true
@@ -94,11 +109,30 @@ class LinkController extends MessageOrientedObject
         {
             read = false
         }
+
+        if ( isGlobalSearch )
+        {
+            _sortBy = "creationDate"
+            _sortType = "desc"
+            read = true
+            unread = true
+        }
+
+        log.info "before test query"
+        def q = Link.where {
+            read == true
+        }
+        q = q.where {
+            title == 'toto'
+        }
+        q.list()
+        log.info "after test query"
+
         def policy = LinkPrivacyPolicy.ALL_PUBLIC
 
         if ( read || unread ) // no need to launch the request if ! read && ! unread
         {
-            if ( ! userAskedIsConnectedUser )
+            if ( ! userAskedIsConnectedUser && ! isGlobalSearch )
             {
                 // load asked user to see if connected user has the right to see his links
                 def askedPerson = Person.findByUsername(linksofuser)
@@ -109,7 +143,7 @@ class LinkController extends MessageOrientedObject
                 }
             }
 
-            if ( ! userAskedIsConnectedUser && policy == LinkPrivacyPolicy.ALL_LOCKED )
+            if ( ! isGlobalSearch && ! userAskedIsConnectedUser && policy == LinkPrivacyPolicy.ALL_LOCKED )
             {
                 response.status = 500
                 render this.error(message(code: "service.link.filter.allLinksLocked")) as JSON
@@ -119,7 +153,26 @@ class LinkController extends MessageOrientedObject
             {
                 def queryParams = [max: linksPerPage, offset: (page - 1) * linksPerPage, sort: _sortBy, order: _sortType]
 
-                def query = Link.where { person.username == linksofuser }
+                // obligé d'initialiser query a un truc non null
+                // sinon, la création d'une requete avec plusieurs where foire
+                def query = Link.where {
+                }
+
+                if ( isGlobalSearch )
+                {
+                    log.info "applying criteria 'not links of connected user + public'"
+                    query = query.where {
+                        person {
+                            privacyPolicy == LinkPrivacyPolicy.ALL_PUBLIC && username != springSecurityService.principal.username
+                        }
+                        locked == false
+                    }
+                }
+                else
+                {
+                    log.info "applying criteria about username with " + linksofuser
+                    query = query.where { person.username == linksofuser }
+                }
 
                 // desactive : en attente d'implémentation
                 /*if ( ! userAskedIsConnectedUser && policy == LinkPrivacyPolicy.LINK_PER_LINK )
@@ -136,6 +189,7 @@ class LinkController extends MessageOrientedObject
                 {
                     if ( tokens.size() == 1 )
                     {
+                        log.info "applying criteria on tag like '" + tokens.first() + "%'"
                         query = query.where {
                             tags {
                                 label =~ tokens.first() + "%"
@@ -150,18 +204,23 @@ class LinkController extends MessageOrientedObject
                     }
                 }
 
-                if ( ! read )
+                if ( ! isGlobalSearch )
                 {
-                    query = query.where { read == false }
-                }
-                if ( ! unread )
-                {
-                    query = query.where { read == true }
-                }
+                    if ( ! read )
+                    {
+                        log.info "applying criteria on read = false"
+                        query = query.where { read == false }
+                    }
+                    if ( ! unread )
+                    {
+                        log.info "applying criteria on read = true"
+                        query = query.where { read == true }
+                    }
 
-                if ( ! userAskedIsConnectedUser )
-                {
-                    //
+                    if ( ! userAskedIsConnectedUser )
+                    {
+                        //
+                    }
                 }
 
                 def query_start = System.currentTimeMillis();
@@ -193,6 +252,7 @@ class LinkController extends MessageOrientedObject
                     links = array{
                         for (a in queryLinks) {
                             item title: a.title,
+                                 owner: a.person.username,
                                  read: a.read,
                                  url : a.url,
                                  readonly : (userAskedIsConnectedUser ? false : true),

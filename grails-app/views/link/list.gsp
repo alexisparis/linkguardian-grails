@@ -41,16 +41,24 @@
             <div class="row">
 
                 <g:if test="${!isOwner}">
-                    <div class="span4">
-                        <legend>&nbsp;<g:message code="links.linksOf.label"/></legend>
+                    <g:if test="${isGlobal}">
+                        <div class="span4">
+                            <legend>&nbsp;<g:message code="links.recent.label"/></legend>
+                            <img style="margin-left: 10px; margin-bottom: 5px;" width="60px" src="${resource(dir: 'images', file: 'world2.png')}"/>
+                        </div>
+                    </g:if>
+                    <g:else>
+                        <div class="span4">
+                            <legend>&nbsp;<g:message code="links.linksOf.label"/></legend>
 
-                        &nbsp;<a class="text twitter-account" data-twitter-name="${linksOfUser}" target="_blank" style="margin-left: 20px;">
+                            &nbsp;<a class="text twitter-account" data-twitter-name="${linksOfUser}" target="_blank" style="margin-left: 20px;">
                             <img class="twitter-account" width="60px" data-twitter-icon-size="bigger" data-twitter-name="${linksOfUser}"/>
                             <span style="color: black; vertical-align: middle; font-size: x-large;">
                                 ${linksOfUser}
                             </span>
                         </a>
-                    </div>
+                        </div>
+                    </g:else>
                 </g:if>
 
                 <div class="<g:if test='${isOwner}'>span5</g:if><g:else>span8</g:else>">
@@ -68,7 +76,12 @@
                                 </a>
                             </g:if>
                             <g:else>
-                                <g:message code="links.forms.search.others.title" args="${[linksOfUser]}"/>
+                                <g:if test="${isGlobal}">
+                                    <g:message code="links.forms.search.recent.title"/>
+                                </g:if>
+                                <g:else>
+                                    <g:message code="links.forms.search.others.title" args="${[linksOfUser]}"/>
+                                </g:else>
 
                                 <a style="float: right; margin-top: 5px; margin-right: 5px;" class="text btn btn-primary" href="<g:createLink controller="link" action="list" absolute="true"/>">
                                     <i class="icon icon-circle-arrow-left icon-white"></i>&nbsp;<g:message code="links.returnToMyLinks.button.label"/>
@@ -97,7 +110,7 @@
                                 <i class="icon-search icon-white"></i>
                             </button>
 
-                            <div style="margin-top: 3px; margin-bottom: 3px;">
+                            <div style="margin-top: 3px; margin-bottom: 3px;<g:if test="${isGlobal}">display: none;</g:if>">
                                 &nbsp;&nbsp;<g:message code="links.forms.search.sortBy.title"/>
                                 <select name="sortBy" id="sortBy" style="width: 180px;">
                                     <option value="creationDate" data-image="${resource(dir: 'images', file: 'date.png')}"><g:message code="links.forms.search.sortBy.creationDate"/></option>
@@ -110,6 +123,7 @@
                             </div>
                             <g:hiddenField id="linksofuser" name="linksofuser" value="${linksOfUser}"/>
                             <g:hiddenField id="allLinksPrivate" name="allLinksPrivate" value="${allLinksPrivate}"/>
+                            <g:hiddenField id="searchType" name="searchType" value="${searchType}"/>
 
                         </fieldset>
                     </g:formRemote>
@@ -340,7 +354,12 @@
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.infinitescroll.min.js')}"></script>
 
         <g:javascript>
+
+            var showUserInLink = ${isGlobal};
+            var showReadUnreadLink = ${!isGlobal && isOwner};
+
             var infiniteScrollLoadImage = '${resource(dir: "images/loading", file: "loading_medium.gif")}';
+            var rootUrl = '<g:createLink uri="/" absolute="true"/>';
             var noTagsFoundError  = '<g:message code="links.cloudtags.noTagsFoundError.label"/>';
             var defaultErrorMessage = '<g:message code="links.default.errorMessage.label"/>';
             var markAsReadMessage = '<g:message code="links.dialogs.markAsReadDialog.label"/>';
@@ -356,7 +375,9 @@
                 markAsUnread : '<g:message code="links.link.template.domain.markAsUnread"/>',
                 deleteTag : '<g:message code="links.link.template.domain.deleteTag"/>',
                 filterOnTag : '<g:message code="links.link.template.domain.filterOnTag"/>',
-                importLink : '<g:message code="links.link.template.domain.importLink"/>'
+                importLink : '<g:message code="links.link.template.domain.importLink"/>',
+                by : '<g:message code="links.link.template.domain.byUser"/>',
+                byTooltip : '<g:message code="links.link.template.domain.byUserTooltip"/>'
             };
         </g:javascript>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'links.js')}"></script>

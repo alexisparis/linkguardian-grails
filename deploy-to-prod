@@ -7,9 +7,9 @@ git push origin master
 grails clean
 
 grails war
-rm -Rf ../deployment/src/main/webapp/*
-cp target/*.war ../deployment/src/main/webapp
-cd ../deployment/src/main/webapp/
+rm -Rf ../deployment-prod/src/main/webapp/*
+cp target/*.war ../deployment-prod/src/main/webapp
+cd ../deployment-prod/src/main/webapp/
 unzip *.war
 rm *.war
 

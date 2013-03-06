@@ -13,4 +13,9 @@ class LgTagLib {
             out << user.privacyPolicy
         }
     }
+
+    def secureLink = { attrs, body ->
+        def link = g.createLink(attrs)
+        out << link.replace('http://','https://')
+    }
 }

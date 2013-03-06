@@ -22,7 +22,7 @@ function jsonLinksToHtml(model)
 
     var template =
         '{{#links}}' +
-            '<div class="linkpart {{#read}}read{{/read}}" data-url="{{url}}" data-id="{{id}}" data-note="{{note}}" data-readonly="{{readonly}}">' +
+            '<div class="linkpart ' + (showReadUnreadLink ? '{{#read}}read{{/read}}' : '') + '" data-url="{{url}}" data-id="{{id}}" data-note="{{note}}" data-readonly="{{readonly}}">' +
                 '<div class="action-toolbar btn btn-primary btn-mini">' +
                     '<a class="with-tooltip unread" rel="tooltip" data-placement="bottom"' +
                         'data-original-title="marquer comme non lu">' +
@@ -31,9 +31,6 @@ function jsonLinksToHtml(model)
                     '<a class="with-tooltip read" rel="tooltip" data-placement="bottom" data-original-title="marquer comme lu">' +
                         '<i class="icon icon-eye-open icon-white"></i>' +
                     '</a>' +
-                    //'<a class="">' +
-                    //    '<i class="icon icon-lock icon-white"></i>' +
-                    //'</a>' +
                     '<a class="importLinkButton with-tooltip" ' +
                         'rel="tooltip" data-placement="bottom" data-original-title="' + templateI18n.importLink +'">' +
                         '<i class="icon icon-plus icon-white"></i>' +
@@ -77,6 +74,17 @@ function jsonLinksToHtml(model)
                         '{{/readonly}}' +
                     '</div>' +
                 '</div>' +
+
+                (showUserInLink ?
+                 '<div style="float: right; height: 24px;" class="with-tooltip" rel="tooltip" data-placement="top" data-original-title="' + templateI18n.byTooltip + '">' +
+                    '<a class="text-dark" href="' + rootUrl + 'profile/{{owner}}">' +
+                        templateI18n.by + '&nbsp;' +
+                        '<img class="twitter-account" data-twitter-name="{{owner}}" data-twitter-icon-size="mini"/>' +
+                        '<span>&nbsp;{{owner}}</span>' +
+                    '</a>' +
+                 '</div>'
+                 : '') +
+
             '</div>' +
         '{{/links}}';
 
@@ -182,6 +190,7 @@ function updateLinks(model)
 
     $('#listing-part .with-tooltip').tooltip();
     includeTwitterLogo();
+    includeTwitterAccountLogo();
 
     $container.masonry('appended', jOutput, true);
 
