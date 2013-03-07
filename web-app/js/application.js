@@ -1,9 +1,20 @@
 function displayFailure(XMLHttpRequest,textStatus,errorThrown)
 {
-    if ( XMLHttpRequest && XMLHttpRequest.responseText && XMLHttpRequest.responseText.length )
+    if ( XMLHttpRequest )
     {
-        var message = JSON.parse(XMLHttpRequest.responseText);
-        displayMessage(message);
+        if ( XMLHttpRequest.status == 0 )
+        {
+            displayCommunicationError();
+        }
+        else if ( XMLHttpRequest.responseText && XMLHttpRequest.responseText.length  )
+        {
+            var message = JSON.parse(XMLHttpRequest.responseText);
+            displayMessage(message);
+        }
+        else
+        {
+            displayStdError();
+        }
     }
     else
     {
@@ -16,6 +27,11 @@ var permanentMessage = false;
 function displayStdError()
 {
     displayError(defaultErrorMessage);
+};
+
+function displayCommunicationError()
+{
+    displayError(communicationErrorMessage);
 };
 
 function displayError(msg)

@@ -361,7 +361,6 @@
             var infiniteScrollLoadImage = '${resource(dir: "images/loading", file: "loading_medium.gif")}';
             var rootUrl = '<g:createLink uri="/" absolute="true"/>';
             var noTagsFoundError  = '<g:message code="links.cloudtags.noTagsFoundError.label"/>';
-            var defaultErrorMessage = '<g:message code="links.default.errorMessage.label"/>';
             var markAsReadMessage = '<g:message code="links.dialogs.markAsReadDialog.label"/>';
             var markAsReadFromMessage = '<g:message code="links.dialogs.markAsReadDialog.from.label"/>';
             var infinitescrollFinishedMsg = '<g:message code="infinitescroll.links.finishedMsg"/>';

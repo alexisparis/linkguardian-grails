@@ -61,17 +61,28 @@ class BootStrap {
 
     def init    = { servletContext ->
 
-        def adminRole
-        def userRole
-        def twitterRole
+        def adminRole = Role.findByAuthority('ROLE_ADMIN')
+        def userRole = Role.findByAuthority('ROLE_USER')
+        def twitterRole = Role.findByAuthority('ROLE_TWITTER')
 
-        if ( Environment.current != Environment.PRODUCTION )
+        if ( adminRole == null )
         {
             adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
+        }
+        if ( userRole == null )
+        {
             userRole = new Role(authority: 'ROLE_USER').save(flush: true)
+        }
+        if ( twitterRole == null )
+        {
             twitterRole = new Role(authority: 'ROLE_TWITTER').save(flush: true)
+        }
 
-            def admin = new Person(username: 'paris_alex', enabled: false, password: '88f56921aa7f1a9372c9ae0e1f221f2e1c6dac7c8c6676d6ce521852bd06781b')
+        def admin = Person.findByUsername('paris_alex')
+
+        if ( admin == null )
+        {
+            admin = new Person(username: 'paris_alex', enabled: false, password: '88f56921aa7f1a9372c9ae0e1f221f2e1c6dac7c8c6676d6ce521852bd06781b')
             admin.accountExpired = false
             admin.accountLocked = false
             admin.passwordExpired = false

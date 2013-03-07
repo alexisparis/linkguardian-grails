@@ -60,6 +60,11 @@
 		<r:layoutResources />
         <ga:trackPageview />
 
+        <script type="text/javascript">
+            var defaultErrorMessage = '<g:message code="default.errorMessage.label"/>';
+            var communicationErrorMessage = '<g:message code="communication.errorMessage.label"/>';
+        </script>
+
         <script type="text/javascript" src="${resource(dir: 'js', file: 'application.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.blockUI.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.dd.min.js')}"></script>
@@ -393,7 +398,7 @@
                             {
                                 $.blockUI(
                                         {
-                                            message : '<img src="${resource(dir: "images/loading", file: "loading_big.gif")}"/>',
+                                            message : '<img src="<g:resource dir="images/loading" file="loading_big.gif" absolute="true"/>"/>',
                                             css: {
                                                 border: 'none',
                                                 backgroundColor: 'none',

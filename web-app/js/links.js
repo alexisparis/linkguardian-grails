@@ -340,7 +340,6 @@ function markAsUnreadDone(data)
 
 function showTagsCloud(data)
 {
-    console.log("show tags cloud");
     if ( data && data.length > 0 )
     {
         var jTagsCloud = $("#tagsCloud");
@@ -493,8 +492,6 @@ $(document).ready(
             href = href + "&page=2";
             href = href + "&linksofuser=" + $('#linksofuser').val();
 
-            console.log("href to set : " + href);
-
             anchor.attr('href', href);
         });
 
@@ -555,7 +552,6 @@ $(document).ready(
             var jThis = $(this).parents('div.linkpart').eq(0);
             jThis.addClass('selected');
 
-            console.log("data-readonly : " + jThis.attr("data-readonly"));
             if ( jThis.attr("data-readonly") === 'false' && !jThis.hasClass('read') )  // not readonly and not already read
             {
                 var modalMarker = $('#markAsReadDialog');
@@ -675,13 +671,8 @@ $(document).ready(
                         // shorten url
                         shortenUrl(url, function(data)
                         {
-                            console.log("calling callback with " + data);
-
                             message = message + " " + data;
                             message = message + " (via @linkguardian)";
-
-                            console.log("message : " + message);
-                            console.log("encoded : " + encodeURIComponent(message));
 
                             postTwitterStatus(encodeURIComponent(message));
                         });
@@ -694,7 +685,6 @@ $(document).ready(
 
         // when return on linkguardian, if no input has focus, then set focus to txtUrl
         $(window).focus(function() {
-            console.log('Focus');
             var element = document.querySelector(":focus");
             if ( ! element )
             {
