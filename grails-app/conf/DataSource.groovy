@@ -11,15 +11,15 @@ Connection URL: postgresql://$OPENSHIFT_POSTGRESQL_DB_HOST:$OPENSHIFT_POSTGRESQL
 
 
 
-dataSource {
+/*dataSource {
     pooled = true
     driverClassName = "org.h2.Driver"
     username = "sa"
     password = ""
-}
+}*/
 hibernate {
-    cache.use_second_level_cache = true
-    cache.use_query_cache = true
+    cache.use_second_level_cache = false
+    cache.use_query_cache = false
     cache.region.factory_class = 'net.sf.ehcache.hibernate.EhCacheRegionFactory'
 }
 // environment specific settings
@@ -33,19 +33,22 @@ environments {
     test {
         dataSource {
             dbCreate = "create-drop"//"create-drop"//"update"
-            url = "jdbc:postgresql://127.5.32.1:5432/linkguardianIntegrationTest"
+            url = "jdbc:postgresql://127.4.128.1:5432/linkguardianIntegrationTest"
             username = "admin"
-            password = "PFbIHZJ_WumX"
+            password = "LTzhTSeWHq54"
             driverClassName = "org.postgresql.Driver"
             dialect = org.hibernate.dialect.PostgreSQLDialect
         }
     }
     production {
         dataSource {
-            dbCreate = "create-drop"//"create-drop"//"update"
-            url = "jdbc:postgresql://127.6.232.1:5432/linkguardian"
+            dbCreate = "update"
+            /*url = "jdbc:postgresql://127.6.232.1:5432/linkguardian"
             username = "admin"
-            password = "pHCHSMI4qQ_y"
+            password = "pHCHSMI4qQ_y"*/
+            url = "jdbc:postgresql://127.4.115.129:5432/linkguardian"
+            username = "admin"
+            password = "iKHCgQvJC8GZ"
             driverClassName = "org.postgresql.Driver"
             dialect = org.hibernate.dialect.PostgreSQLDialect
         }

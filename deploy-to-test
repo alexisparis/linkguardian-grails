@@ -17,7 +17,7 @@ cd ../../..
 
 git add .
 git add -u
-git commit -m "$1"
+git commit -m "deployment in test"
 git push origin master
 
 cd ../Linkguardian

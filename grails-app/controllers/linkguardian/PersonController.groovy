@@ -109,7 +109,7 @@ class PersonController extends MessageOrientedObject
 
         if ( results.isEmpty() )
         {
-            response.status = 404
+            response.setStatus(404)
         }
         else
         {

@@ -7,10 +7,13 @@ class LgTagLib {
     def springSecurityService
 
     def user_privacy = { attrs, body ->
-        def user = Person.findByUsername(springSecurityService.principal.username)
-        if ( user )
+        if ( springSecurityService.isLoggedIn() )
         {
-            out << user.privacyPolicy
+            def user = Person.findByUsername(springSecurityService.principal.username)
+            if ( user )
+            {
+                out << user.privacyPolicy
+            }
         }
     }
 

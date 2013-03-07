@@ -6,10 +6,10 @@
 
 grails clean
 
-grails prod war
-rm -Rf ../deployment-prod/src/main/webapp/*
-cp target/*.war ../deployment-prod/src/main/webapp
-cd ../deployment-prod/src/main/webapp/
+grails war
+rm -Rf ../deployment-prod2/src/main/webapp/*
+cp target/*.war ../deployment-prod2/src/main/webapp
+cd ../deployment-prod2/src/main/webapp/
 unzip *.war
 rm *.war
 

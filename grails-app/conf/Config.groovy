@@ -144,7 +144,7 @@ security {
 
         autoCreate {
             active = true
-            roles = ["ROLE_USER", "ROLE_TWITTER", "ROLE_ADMIN"]
+            roles = ["ROLE_USER", "ROLE_TWITTER"]
         }
 
         filter {

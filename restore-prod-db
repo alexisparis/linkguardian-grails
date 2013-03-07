@@ -1,0 +1,28 @@
+if [ $# -ne 2 ]
+then
+  echo "Usage: restore-prod-db openshift_password timestamp_of_backup_file"
+  exit 65
+fi
+
+if [ -f ../backup/backup_$2.tar.gz ]
+then
+    SSH_HOST=513882935004462a7d0000f0@linkguardian-blackdog.rhcloud.com
+    echo restoring database from file backup_$2.tar.gz
+    echo "clearing current db data..."
+    ssh $SSH_HOST "rm -Rf postgresql-8.4/data/*"
+    echo "db data removed"
+    echo "transfering data to restore..."
+    scp ../backup/backup_$2.tar.gz $SSH_HOST:~/postgresql-8.4/data/backup.tar.gz
+    echo "data to restore transfered"
+    rhc app stop -a linkguardian --password $1
+    echo "unzipping file..."
+    ssh $SSH_HOST "cd postgresql-8.4/data && gunzip backup.tar.gz"
+    ssh $SSH_HOST "cd postgresql-8.4/data && tar xf backup.tar"
+    echo "file unzipped"
+    rhc app start -a linkguardian --password $1
+    echo "removing temp file"
+    ssh $SSH_HOST "rm -Rf postgresql-8.4/data/backup.tar"
+    echo "FINISHED!!!"
+else
+    echo the file does not exist
+fi

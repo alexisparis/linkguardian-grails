@@ -61,27 +61,33 @@ class BootStrap {
 
     def init    = { servletContext ->
 
+        def adminRole
+        def userRole
+        def twitterRole
 
-        def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
-        def userRole = new Role(authority: 'ROLE_USER').save(flush: true)
-        def twitterRole = new Role(authority: 'ROLE_TWITTER').save(flush: true)
+        if ( Environment.current != Environment.PRODUCTION )
+        {
+            adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true)
+            userRole = new Role(authority: 'ROLE_USER').save(flush: true)
+            twitterRole = new Role(authority: 'ROLE_TWITTER').save(flush: true)
 
-        def admin = new Person(username: 'paris_alex', enabled: false, password: '88f56921aa7f1a9372c9ae0e1f221f2e1c6dac7c8c6676d6ce521852bd06781b')
-        admin.accountExpired = false
-        admin.accountLocked = false
-        admin.passwordExpired = false
-        admin = admin.save(flush: true)
+            def admin = new Person(username: 'paris_alex', enabled: false, password: '88f56921aa7f1a9372c9ae0e1f221f2e1c6dac7c8c6676d6ce521852bd06781b')
+            admin.accountExpired = false
+            admin.accountLocked = false
+            admin.passwordExpired = false
+            admin = admin.save(flush: true)
 
-        PersonRole.create admin, adminRole, true
-        PersonRole.create admin, userRole, true
-        PersonRole.create admin, twitterRole, true
+            PersonRole.create admin, adminRole, true
+            PersonRole.create admin, userRole, true
+            PersonRole.create admin, twitterRole, true
 
-        TwitterUser adminTwitted = new TwitterUser()
-        adminTwitted.screenName = admin.username
-        adminTwitted.token = "55181004-xY4Auj3gdik5GbwUS4JNuJbRRkvnybPdw0MCx7V61"
-        adminTwitted.tokenSecret = "l95f3RDrEeGVJtyiWUxy1gOAbPUH4oG1sGwC3dDWiU"
-        adminTwitted.user = admin
-        adminTwitted.save(flush: true)
+            TwitterUser adminTwitted = new TwitterUser()
+            adminTwitted.screenName = admin.username
+            adminTwitted.token = "55181004-xY4Auj3gdik5GbwUS4JNuJbRRkvnybPdw0MCx7V61"
+            adminTwitted.tokenSecret = "l95f3RDrEeGVJtyiWUxy1gOAbPUH4oG1sGwC3dDWiU"
+            adminTwitted.user = admin
+            adminTwitted.save(flush: true)
+        }
 
         switch (Environment.current)
         {

@@ -60,6 +60,7 @@
 		<r:layoutResources />
         <ga:trackPageview />
 
+        <script type="text/javascript" src="${resource(dir: 'js', file: 'application.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.blockUI.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.dd.min.js')}"></script>
 
@@ -107,7 +108,7 @@
 
                                             <g:link controller="link" action="list" class="btn btn-primary text"><g:message code="links.mylinks.label"/></g:link>
 
-                                            <g:link controller="link" action="recentsLinks" class="btn btn-primary text">derniers liens ajoutés</g:link>
+                                            <g:link controller="link" action="recentsLinks" class="btn btn-primary text"><g:message code="links.recent.button.label"/></g:link>
 
                                             <!--div class="btn-group" style="margin-right: 20px; ">
                                                 <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Recherche <span class="caret"></span></button>
@@ -337,9 +338,9 @@
                     {
                         if (displayDevModeWarning)
                         {
-                            <g:if env="production">
+                            <%--g:if env="production">
                             $('#devWarningDialog').modal();
-                            </g:if>
+                            </g:if--%>
                         }
 
                         includeTwitterLogo();

@@ -1,0 +1,25 @@
+if [ $# -ne 1 ]
+then
+  echo "Usage: backup-prod-db openshift_password"
+  exit 65
+fi
+
+SSH_HOST=513882935004462a7d0000f0@linkguardian-blackdog.rhcloud.com
+
+echo "clearing remote backup data..."
+ssh $SSH_HOST "rm -Rf postgresql-8.4/log/backup.tar"
+ssh $SSH_HOST "rm -Rf postgresql-8.4/log/backup.tar.gz"
+echo "remote backup data cleared"
+rhc app stop -a linkguardian --password  $1
+echo "creating backup archive file..."
+ssh $SSH_HOST "cd postgresql-8.4/data && tar cf ../log/backup.tar *"
+echo "backup archive file created"
+rhc app start -a linkguardian --password  $1
+echo "zipping data..."
+ssh $SSH_HOST "gzip postgresql-8.4/log/backup.tar"
+echo "data zipped"
+DATE=$(date +"%H%M-%d%m%Y")
+echo "tranfering data..."
+scp $SSH_HOST:~/postgresql-8.4/log/backup.tar.gz ../backup/backup_$DATE.tar.gz
+echo "data transfered"
+echo "FINISHED!!!"

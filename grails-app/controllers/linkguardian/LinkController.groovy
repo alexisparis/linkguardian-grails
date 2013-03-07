@@ -145,7 +145,7 @@ class LinkController extends MessageOrientedObject
 
             if ( ! isGlobalSearch && ! userAskedIsConnectedUser && policy == LinkPrivacyPolicy.ALL_LOCKED )
             {
-                response.status = 500
+                response.setStatus(500)
                 render this.error(message(code: "service.link.filter.allLinksLocked")) as JSON
                 success = false
             }
@@ -198,7 +198,7 @@ class LinkController extends MessageOrientedObject
                     }
                     else
                     {
-                        response.status = 500
+                        response.setStatus(500)
                         render this.error(message(code: "service.link.filter.oneTagAllowed")) as JSON
                         success = false
                     }
@@ -241,7 +241,7 @@ class LinkController extends MessageOrientedObject
             {
                 if ( queryLinks.isEmpty() )
                 {
-                    response.status = 404
+                    response.setStatus(404)
                     pageError = true
                 }
             }
@@ -286,7 +286,7 @@ class LinkController extends MessageOrientedObject
 
         if ( params.url == null || params.url.trim().length() == 0 )
         {
-            response.status = 500
+            response.setStatus(500)
             msg = this.error(message(code: "service.link.addUrl.invalidUrl"))
         }
         else
@@ -307,6 +307,7 @@ class LinkController extends MessageOrientedObject
             }
 
             def type = null
+            def errorCode = -1
 
             try  {
                 while(redirectCount < redirectLimitCount && realUrl == null && currentUrl != null)  {
@@ -360,7 +361,8 @@ class LinkController extends MessageOrientedObject
                            else
                            {
                                log.error "found content type " +contentType + " for url " + currentUrl
-                               response.status = 500
+                               response.setStatus(500)
+                               errorCode = 500
                                msg = this.error(message(code: "service.link.addUrl.invalidContentType"))
                                break;
                            }
@@ -369,7 +371,8 @@ class LinkController extends MessageOrientedObject
                    else
                    {
                        log.debug "url " + currentUrl + " already visited ==> redirection loop"
-                       response.status = 500
+                       response.setStatus(500)
+                       errorCode = 500
                        msg = this.error(message(code: "service.link.addUrl.redirectionLoop"))
                        break
                    }
@@ -382,18 +385,20 @@ class LinkController extends MessageOrientedObject
                     if ( msg != null && redirectCount >= redirectLimitCount )
                     {
                         log.debug "url " + currentUrl + " too many redirections"
-                        response.status = 500
+                        response.setStatus(500)
+                        errorCode = 500
                         msg = this.error(message(code: "service.link.addUrl.tooMuchRedirections"))
                     }
                 }
             }
             catch(Exception e)
             {
-                response.status = 500
+                response.setStatus(500)
+                errorCode = 500
                 log.error("error while trying to resolve redirections", e)
             }
 
-            if ( response.status == 500 && msg == null )
+            if ( errorCode == 500 && msg == null )
             {
                 // if no error detected before
                 // use url given by user to use default error handling
@@ -423,7 +428,7 @@ class LinkController extends MessageOrientedObject
                     if ( Link.findByPersonAndUrl(connectedPerson, newLink.url) != null )
                     {
                         log.debug "url " + newLink.url + " already exists"
-                        response.status = 500
+                        response.setStatus(500)
                         msg = this.error(message(code: "service.link.addUrl.linkAlreadyExists", args: [this.formatUrl(params.url)]))
                     }
                     else
@@ -437,13 +442,13 @@ class LinkController extends MessageOrientedObject
                 }
                 catch(TagException e)
                 {
-                    response.status = 500
+                    response.setStatus(500)
                     msg = this.error( ((TagException)e).getMessage() )
                 }
                 catch(Exception e)
                 {
                     log.error(e.getClass().name + " :: error while trying to save new link with url : " + params.url, e)
-                    response.status = 500
+                    response.setStatus(500)
                     if ( e.getCause() != null )
                     {
                         if ( e.getCause() instanceof MalformedURLException )
@@ -498,7 +503,7 @@ class LinkController extends MessageOrientedObject
             }
             else
             {
-                response.status = 500
+                response.setStatus(500)
                 render this.error(message(code: "service.link.delete.forbidden")) as JSON
             }
         }
@@ -509,7 +514,7 @@ class LinkController extends MessageOrientedObject
         }
         else
         {
-            response.status = 500
+            response.setStatus(500)
             render this.error(message(code: "service.link.delete.error")) as JSON
         }
     }
@@ -542,7 +547,7 @@ class LinkController extends MessageOrientedObject
 
                 if ( tagsToAddSize == 0 )
                 {
-                    response.status = 500
+                    response.setStatus(500)
                     msg = this.error(message(code: "service.link.addTag.invalidTag"))
                 }
                 else
@@ -557,7 +562,7 @@ class LinkController extends MessageOrientedObject
 
                     if ( tagsToAdd.isEmpty() )
                     {
-                        response.status = 500
+                        response.setStatus(500)
                         def i18nCode
                         if ( severallTagsToAdd )
                         {
@@ -573,6 +578,7 @@ class LinkController extends MessageOrientedObject
                     else
                     {
                         linkBuilderService.addTags(link, tagsToAdd.join(" "))
+                        link.save(flush: true)
 
                         success = true
                         if ( severallTagsToAdd )
@@ -595,7 +601,7 @@ class LinkController extends MessageOrientedObject
             }
             else
             {
-                response.status = 500
+                response.setStatus(500)
                 msg = this.error(message(code: "service.link.addTag.forbidden"))
             }
         }
@@ -651,7 +657,7 @@ class LinkController extends MessageOrientedObject
 
                 if ( tagToDelete == null )
                 {
-                    response.status = 500
+                    response.setStatus(500)
                     render this.error(message(code: "service.link.deleteTag.tagDoesNotExist"), args: [tag]) as JSON
                 }
                 else
@@ -663,7 +669,7 @@ class LinkController extends MessageOrientedObject
             }
             else
             {
-                response.status = 500
+                response.setStatus(500)
                 render this.error(message(code: "service.link.deleteTag.forbidden")) as JSON
             }
         }
@@ -674,7 +680,7 @@ class LinkController extends MessageOrientedObject
         }
         else
         {
-            response.status = 500
+            response.setStatus(500)
             render this.error(message(code: "service.link.deleteTag.error")) as JSON
         }
     }
@@ -697,7 +703,7 @@ class LinkController extends MessageOrientedObject
 
         if (link == null)
         {
-            response.status = 500
+            response.setStatus(500)
             msg = this.error("link not found")
         }
         else
@@ -725,14 +731,14 @@ class LinkController extends MessageOrientedObject
             }
             else
             {
-                response.status = 500
+                response.setStatus(500)
                 msg =  this.error(message(code: "service.link.updateNote.forbidden"))
             }
         }
 
         if (! success && msg == null)
         {
-            response.status = 500
+            response.setStatus(500)
             msg = this.error(message(code: "service.link.updateNote.error"))
         }
 
@@ -796,7 +802,7 @@ class LinkController extends MessageOrientedObject
         }
         if ( ! success && msg == null )
         {
-            response.status = 500
+            response.setStatus(500)
             msg = this.error(message(code: "service.link.changeReadAttribute.error", args: [readType]))
         }
 
@@ -847,7 +853,7 @@ class LinkController extends MessageOrientedObject
         {
             if ( link.person.username == springSecurityService.principal.username )
             {
-                response.status = 500
+                response.setStatus(500)
                 message = this.error(message(code: "service.link.importLink.linkExistsForConnectedUser"))
             }
             else
@@ -856,7 +862,7 @@ class LinkController extends MessageOrientedObject
 
                 if ( Link.findByUrlAndPerson(link.url, connectedUser) != null )
                 {
-                    response.status = 500
+                    response.setStatus(500)
                     message = this.error(message(code: "service.link.importLink.linkExistsForConnectedUser"))
                 }
                 else
@@ -876,7 +882,7 @@ class LinkController extends MessageOrientedObject
         }
         else
         {
-            response.status = 500
+            response.setStatus(500)
             message = this.error(message(code: "service.link.importLink.linkDoesNotExist"))
             message = this.error("Link not found");
         }
