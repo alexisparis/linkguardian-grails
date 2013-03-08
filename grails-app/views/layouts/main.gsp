@@ -177,7 +177,7 @@
                                                                                   source: function (query, process) {
                                                                                       blockUiInhibiter++;
                                                                                       return $.getJSON(
-                                                                                              <g:if env="dev">
+                                                                                              <g:if env="development">
                                                                                                 '<g:createLink controller="person" action="persons" absolute="true"/>'
                                                                                               </g:if>
                                                                                               <g:else>
@@ -189,9 +189,9 @@
                                                                                               },
                                                                                               function (data) {
                                                                                                   blockUiInhibiter--;
+                                                                                                  var extractedNames = [];
                                                                                                   if ( data )
                                                                                                   {
-                                                                                                      var extractedNames = [];
                                                                                                       for(var i = 0; i < data.length; i++)
                                                                                                       {
                                                                                                           extractedNames.push(data[i].username);
@@ -436,6 +436,8 @@
 
                             $('#configurationDialog').modal();
                         });
+
+
                     });
 
         </script>

@@ -423,6 +423,30 @@
 
                             submitFilterForm();
                         });
+
+                        $('#filterInput').typeahead({
+                                                      source: function (query, process) {
+                                                          blockUiInhibiter++;
+                                                          return $.getJSON(
+                                                                  <g:if env="development">
+                                                                      '<g:createLink controller="link" action="tags" absolute="true"/>'
+                                                                  </g:if>
+                                                                  <g:else>
+                                                                      '<lg:secureLink controller="link" action="tags" absolute="true"/>'
+                                                                  </g:else>,
+                                                                  {
+                                                                      value: $('#filterInput').val()
+                                                                  },
+                                                                  function (data) {
+                                                                      blockUiInhibiter--;
+                                                                      return process(data);
+                                                                  }).error(function() { blockUiInhibiter--; });
+                                                      },
+                                                      matcher: function(item) {
+                                                         // to force typehead not to ignore items returned by the source method
+                                                         return true;
+                                                      }
+                                                  });
                     });
         </g:javascript>
 

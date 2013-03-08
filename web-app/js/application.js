@@ -8,8 +8,15 @@ function displayFailure(XMLHttpRequest,textStatus,errorThrown)
         }
         else if ( XMLHttpRequest.responseText && XMLHttpRequest.responseText.length  )
         {
-            var message = JSON.parse(XMLHttpRequest.responseText);
-            displayMessage(message);
+            try
+            {
+                var message = JSON.parse(XMLHttpRequest.responseText);
+                displayMessage(message);
+            }
+            catch(err)
+            {
+                displayStdError();
+            }
         }
         else
         {

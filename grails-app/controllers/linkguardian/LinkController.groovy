@@ -930,6 +930,62 @@ class LinkController extends MessageOrientedObject
         render message as JSON
     }
 
+    def tags(String value)
+    {
+        log.info "calling tags with value : " + value
+
+        def results = []
+
+        if ( value )
+        {
+            def tagsToAdd = linkBuilderService.extractTags(value)
+
+            if ( tagsToAdd && tagsToAdd.size() == 1 )
+            {
+                def q = Tag.createCriteria()
+
+                def iterator = q.list() {
+                    and
+                    {
+                        ilike('label', "%" + tagsToAdd.first() + "%")
+                    }
+                }
+
+                iterator.each {
+                    results.add(it.label)
+                }
+
+                // sort result
+                results.sort {
+                    a, b ->
+                        if ( value == a )
+                        {
+                            -1
+                        }
+                        else if ( value == b )
+                        {
+                            1
+                        }
+                        else
+                        {
+                            a <=> b
+                        }
+                }
+            }
+        }
+
+        log.info "founds " + results.size() + " tags results"
+
+        if ( results.isEmpty() )
+        {
+            response.setStatus(404)
+        }
+        else
+        {
+            render results as JSON
+        }
+    }
+
     def shortenUrl(String url)
     {
         log.info "calling shorten url with url " + url
