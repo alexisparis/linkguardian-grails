@@ -33,9 +33,9 @@ environments {
     test {
         dataSource {
             dbCreate = "create-drop"//"create-drop"//"update"
-            url = "jdbc:postgresql://127.4.128.1:5432/linkguardianIntegrationTest"
+            url = "jdbc:postgresql://127.4.197.1:5432/linkguardianTest"
             username = "admin"
-            password = "LTzhTSeWHq54"
+            password = "ldEAHlVMk13d"
             driverClassName = "org.postgresql.Driver"
             dialect = org.hibernate.dialect.PostgreSQLDialect
         }
@@ -43,12 +43,9 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            /*url = "jdbc:postgresql://127.6.232.1:5432/linkguardian"
+            url = "jdbc:postgresql://127.2.98.1:5432/linkguardian"
             username = "admin"
-            password = "pHCHSMI4qQ_y"*/
-            url = "jdbc:postgresql://127.4.115.129:5432/linkguardian"
-            username = "admin"
-            password = "iKHCgQvJC8GZ"
+            password = "tEmNIv7xfwlL"
             driverClassName = "org.postgresql.Driver"
             dialect = org.hibernate.dialect.PostgreSQLDialect
         }

@@ -4,7 +4,7 @@ then
   exit 65
 fi
 
-SSH_HOST=513882935004462a7d0000f0@linkguardian-blackdog.rhcloud.com
+SSH_HOST=513a18605973caceb00000f1@linkguardian-blackdog.rhcloud.com
 
 echo "clearing remote backup data..."
 ssh $SSH_HOST "rm -Rf postgresql-8.4/log/backup.tar"

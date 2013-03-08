@@ -6,7 +6,7 @@ fi
 
 if [ -f ../backup/backup_$2.tar.gz ]
 then
-    SSH_HOST=513882935004462a7d0000f0@linkguardian-blackdog.rhcloud.com
+    SSH_HOST=513a18605973caceb00000f1@linkguardian-blackdog.rhcloud.com
     echo restoring database from file backup_$2.tar.gz
     echo "clearing current db data..."
     ssh $SSH_HOST "rm -Rf postgresql-8.4/data/*"
