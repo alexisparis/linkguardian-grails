@@ -94,7 +94,7 @@ class LinkBuilderService {
                 }
 
                 _tag = new Tag(label:  it)
-                _tag.save(flush:  true)
+                //_tag.save()
             }
             link.addToTags(_tag)
         }

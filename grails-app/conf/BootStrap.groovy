@@ -131,13 +131,13 @@ class BootStrap {
 
                 // fake user 2
                 def user2 = new Person(username: 'fonfec78', enabled: true, password: 'password')
-                user2.privacyPolicy = LinkPrivacyPolicy.ALL_LOCKED
+                user2.privacyPolicy = LinkPrivacyPolicy.ALL_PUBLIC
                 user2 = user2.save(flush: true)
                 PersonRole.create user2, userRole, true
                 PersonRole.create user2, twitterRole, true
 
-                this.createFakeLink("", Note.Note_0, user2, false, "not_locked", false)
-                this.createFakeLink("", Note.Note_0, user2, false, "locked", true)
+                this.createFakeLink(" saucisson ", Note.Note_0, user2, false, "not_locked", false)
+                this.createFakeLink(" cochon ", Note.Note_0, user2, false, "locked", true)
 
                 // fake user 3
                 def user3 = new Person(username: 'nodejs', enabled: true, password: 'password')

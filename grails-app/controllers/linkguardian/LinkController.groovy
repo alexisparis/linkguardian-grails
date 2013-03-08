@@ -818,22 +818,62 @@ class LinkController extends MessageOrientedObject
 
         def results = new ArrayList()
 
+        def iterator
+
         if ( username )
         {
-            def q = Tag.createCriteria()
-            def iterator = q.list {
+            if ( springSecurityService.principal.username == username ) // user connected
+            {
+                iterator = Tag.createCriteria().list {
+                    links {
+                        person
+                                {
+                                    eq('username', username)
+                                }
+                    }
+                    projections{
+                        groupProperty('label')
+                        rowCount('total') //alias given to count
+                    }
+                }
+            }
+            else
+            {
+                iterator = Tag.createCriteria().list {
+                    links {
+                        person
+                        {
+                            eq('username', username)
+                            eq('privacyPolicy', LinkPrivacyPolicy.ALL_PUBLIC)
+                        }
+                    }
+                    projections{
+                        groupProperty('label')
+                        rowCount('total') //alias given to count
+                    }
+                }
+            }
+        }
+        else
+        {
+            // global search
+            iterator = Tag.createCriteria().list {
                 links {
                     person
-                    {
-                        eq('username', username)
-                    }
+                            {
+                                ne('username', springSecurityService.principal.username)
+                                eq('privacyPolicy', LinkPrivacyPolicy.ALL_PUBLIC)
+                            }
                 }
                 projections{
                     groupProperty('label')
                     rowCount('total') //alias given to count
                 }
             }
+        }
 
+        if ( iterator )
+        {
             iterator.each {
                 log.info "consider tag : " + it[0] + " with an occurrence of " + it[1]
                 results.add(new TagWeight(tag: it[0], weight: it[1]))

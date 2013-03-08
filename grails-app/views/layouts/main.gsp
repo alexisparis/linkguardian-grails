@@ -5,11 +5,15 @@
 <!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
 	<head>
+        <!-- todo : i18n + more keywords and description -->
+        <meta name="keywords" content="bookmark, favorite, browser, tools, links, computer, search">
+        <meta name="description" content="MyBookmarks - access your bookmarks anytime, anywhere.  Free productivity tool for business, student or personal use.">
 
-        <%-- TODO : delete 3 following lines when production --%>
-        <META http-equiv="Cache-Control" content="no-cache">
-        <META http-equiv="Pragma" content="no-cache">
-        <META http-equiv="Expires" content="0">
+        <g:if env="dev">
+            <META http-equiv="Cache-Control" content="no-cache">
+            <META http-equiv="Pragma" content="no-cache">
+            <META http-equiv="Expires" content="0">
+        </g:if>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -173,7 +177,12 @@
                                                                                   source: function (query, process) {
                                                                                       blockUiInhibiter++;
                                                                                       return $.getJSON(
-                                                                                              '<lg:secureLink controller="person" action="persons" absolute="true"/>',
+                                                                                              <g:if env="dev">
+                                                                                                '<g:createLink controller="person" action="persons" absolute="true"/>'
+                                                                                              </g:if>
+                                                                                              <g:else>
+                                                                                                  '<lg:secureLink controller="person" action="persons" absolute="true"/>'
+                                                                                              </g:else>,
                                                                                               {
                                                                                                   username: $('#searchUsernameInput').val(),
                                                                                                   format: "json"
