@@ -29,9 +29,13 @@ then
     echo "removing temp file"
     #ssh $SSH_HOST "rm -Rf postgresql-8.4/log/restore.sql*"
 
-    echo "restarting application..."
-    rhc app restart -a linkguardian --password $1
-    
+    read -p "Do you want to restart linkguardian in production ? (y/n) " -n 1
+    if [[ ! $REPLY =~ ^[Yy]$ ]]
+    then
+    else
+       echo "restarting application..."
+       rhc app restart -a linkguardian --password $1
+    fi
     echo "FINISHED!!!"
 else
     echo the file does not exist

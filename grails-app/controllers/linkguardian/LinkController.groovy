@@ -888,7 +888,7 @@ class LinkController extends MessageOrientedObject
         log.info "calling importLink with id : " + id
         def message = null;
 
-        def link = Link.findById(id)//Long.parseLong(id))
+        def link = Link.findById(id)
         if ( link )
         {
             if ( link.person.username == springSecurityService.principal.username )
@@ -942,9 +942,11 @@ class LinkController extends MessageOrientedObject
 
             if ( tagsToAdd && tagsToAdd.size() == 1 )
             {
+                def queryParams = [max: 20]
+
                 def q = Tag.createCriteria()
 
-                def iterator = q.list() {
+                def iterator = q.list(queryParams) {
                     and
                     {
                         ilike('label', "%" + tagsToAdd.first() + "%")

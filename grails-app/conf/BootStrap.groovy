@@ -104,11 +104,18 @@ class BootStrap {
         {
             case Environment.TEST:
 
-                def user1 = new Person(username: 'OlivierCroisier', enabled: true, password: 'password')
-                user1.privacyPolicy = LinkPrivacyPolicy.ALL_PUBLIC
-                user1 = user1.save(flush: true)
-                PersonRole.create user1, userRole, true
-                PersonRole.create user1, twitterRole, true
+                if ( true ) // test de charge de la db
+                {
+
+                }
+                else
+                {
+                    def user1 = new Person(username: 'OlivierCroisier', enabled: true, password: 'password')
+                    user1.privacyPolicy = LinkPrivacyPolicy.ALL_PUBLIC
+                    user1 = user1.save(flush: true)
+                    PersonRole.create user1, userRole, true
+                    PersonRole.create user1, twitterRole, true
+                }
 
                 break
             case Environment.DEVELOPMENT:

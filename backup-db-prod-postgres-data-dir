@@ -1,0 +1,34 @@
+if [ $# -ne 1 ]
+then
+  echo "Usage: backup-prod-db openshift_password"
+  exit 65
+fi
+read -p "This will stop and start linkguardian, Are you sure? (y/n) " -n 1
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then 
+    echo ""
+    echo "canceled"
+    exit 1
+else
+    SSH_HOST=513a18605973caceb00000f1@linkguardian-blackdog.rhcloud.com
+
+    echo ""
+    echo "clearing remote backup data..."
+    ssh $SSH_HOST "rm -Rf postgresql-8.4/log/data-backup.tar*"
+    echo "remote backup data cleared"
+    rhc app stop -a linkguardian --password  $1
+    echo "creating backup archive file..."
+    ssh $SSH_HOST "cd postgresql-8.4/data && tar cf ../log/data-backup.tar *"
+    echo "backup archive file created"
+    rhc app start -a linkguardian --password  $1
+    echo "zipping data..."
+    ssh $SSH_HOST "gzip postgresql-8.4/log/data-backup.tar"
+    echo "data zipped"
+    DATE=$(date +"%Y%m%d-%H%M")
+    echo "tranfering data..."
+    scp $SSH_HOST:~/postgresql-8.4/log/data-backup.tar.gz ../backup/postgres-data-dir-backup_$DATE.tar.gz
+    echo "data transfered"
+    ssh $SSH_HOST "rm -Rf postgresql-8.4/log/data-backup.tar*"
+    echo "FINISHED!!!"
+fi
+
