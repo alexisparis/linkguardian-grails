@@ -45,7 +45,7 @@
     <file path="/Tag.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1360760703663" ignored="false" />
     <file path="/StringNormalizerServiceTests.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1360960498185" ignored="false" />
     <file path="/TagException.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1360789451248" ignored="false" />
-    <file path="/links.js" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1362569320810" ignored="false" />
+    <file path="/links.js" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1362809575084" ignored="false" />
     <file path="$PROJECT_DIR$/test/unit/linkguardian/crud/LinkCrudControllerTests.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361230664662" ignored="false" />
     <file path="/LinkCrudController.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361230799673" ignored="false" />
     <file path="$PROJECT_DIR$/test/unit/linkguardian/crud/RoleCrudControllerTests.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1361230727143" ignored="false" />
@@ -150,7 +150,7 @@
       <file leaf-file-name="list.gsp" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/views/link/list.gsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="405" column="20" selection-start="24941" selection-end="24941" vertical-scroll-proportion="0.0">
+            <state line="408" column="33" selection-start="25027" selection-end="25031" vertical-scroll-proportion="-7.4489794">
               <folding>
                 <marker date="1362749715000" expanded="false" signature="2645:2661" placeholder="{...}" />
                 <marker date="1362749715000" expanded="false" signature="8430:8449" placeholder="{...}" />
@@ -163,20 +163,21 @@
                 <marker date="1362749715000" expanded="false" signature="14007:14021" placeholder="{...}" />
                 <marker date="1362749715000" expanded="false" signature="14407:14421" placeholder="{...}" />
                 <marker date="1362749715000" expanded="false" signature="23053:24028" placeholder="{&quot;goto&quot;: ''...}" />
-                <marker date="1362749715000" expanded="false" signature="24234:24856" placeholder="{...}" />
-                <marker date="1362749715000" expanded="false" signature="24367:24841" placeholder="{...}" />
-                <marker date="1362749715000" expanded="false" signature="24460:24646" placeholder="{...}" />
-                <marker date="1362749715000" expanded="false" signature="24530:24620" placeholder="{...}" />
-                <marker date="1362749715000" expanded="false" signature="24745:24819" placeholder="{...}" />
-                <marker date="1362749715000" expanded="false" signature="24941:27843" placeholder="{...}" />
-                <marker date="1362749715000" expanded="false" signature="25198:25869" placeholder="{...}" />
-                <marker date="1362749715000" expanded="false" signature="25248:25792" placeholder="{&quot;itemSelector&quot;: '#listing-part .linkpart'...}" />
-                <marker date="1362749715000" expanded="false" signature="25482:25743" placeholder="{&quot;duration&quot;: 750...}" />
-                <marker date="1362749715000" expanded="false" signature="25925:27819" placeholder="{...}" />
-                <marker date="1362749715000" expanded="false" signature="26015:27432" placeholder="{...}" />
+                <marker date="1362749715000" expanded="true" signature="24234:24856" placeholder="{...}" />
+                <marker date="1362749715000" expanded="true" signature="24367:24841" placeholder="{...}" />
+                <marker date="1362749715000" expanded="true" signature="24460:24646" placeholder="{...}" />
+                <marker date="1362749715000" expanded="true" signature="24530:24620" placeholder="{...}" />
+                <marker date="1362749715000" expanded="true" signature="24745:24819" placeholder="{...}" />
+                <marker date="1362749715000" expanded="true" signature="24941:27843" placeholder="{...}" />
+                <marker date="1362749715000" expanded="true" signature="25198:25869" placeholder="{...}" />
+                <marker date="1362749715000" expanded="true" signature="25248:25792" placeholder="{&quot;itemSelector&quot;: '#listing-part .linkpart'...}" />
+                <marker date="1362749715000" expanded="true" signature="25482:25743" placeholder="{&quot;duration&quot;: 750...}" />
+                <marker date="1362749715000" expanded="true" signature="25925:27819" placeholder="{...}" />
+                <marker date="1362749715000" expanded="true" signature="26015:27432" placeholder="{...}" />
                 <marker date="1362749715000" expanded="false" signature="26827:26997" placeholder="{...}" />
-                <marker date="1362749715000" expanded="false" signature="27081:27332" placeholder="{...}" />
-                <marker date="1362749715000" expanded="false" signature="27512:27767" placeholder="{...}" />
+                <marker date="1362749715000" expanded="true" signature="26827:26997" placeholder="{...}" />
+                <marker date="1362749715000" expanded="true" signature="27081:27332" placeholder="{...}" />
+                <marker date="1362749715000" expanded="true" signature="27512:27767" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -209,10 +210,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="links.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="links.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web-app/js/links.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="521" column="40" selection-start="17237" selection-end="17252" vertical-scroll-proportion="0.0">
+            <state line="47" column="53" selection-start="2734" selection-end="2734" vertical-scroll-proportion="0.6784661">
               <folding />
             </state>
           </provider>
@@ -236,10 +237,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataSource.groovy" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="DataSource.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/conf/DataSource.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="36" selection-start="1379" selection-end="1379" vertical-scroll-proportion="0.684466">
+            <state line="47" column="36" selection-start="1379" selection-end="1379" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -265,12 +266,12 @@
         <option value="$PROJECT_DIR$/grails-app/i18n/messages.properties" />
         <option value="$PROJECT_DIR$/grails-app/i18n/messages_fr.properties" />
         <option value="$PROJECT_DIR$/grails-app/views/link/url-adding-attempt.gsp" />
-        <option value="$PROJECT_DIR$/web-app/js/links.js" />
         <option value="$PROJECT_DIR$/web-app/js/application.js" />
         <option value="$PROJECT_DIR$/grails-app/controllers/linkguardian/LinkController.groovy" />
         <option value="$PROJECT_DIR$/grails-app/views/layouts/main.gsp" />
         <option value="$PROJECT_DIR$/grails-app/views/link/list.gsp" />
         <option value="$PROJECT_DIR$/grails-app/conf/DataSource.groovy" />
+        <option value="$PROJECT_DIR$/web-app/js/links.js" />
       </list>
     </option>
   </component>
@@ -390,6 +391,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LinkGuardian" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LinkGuardian" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="images" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1023,7 +1042,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1916" height="1178" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1047,7 +1066,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32994652" sideWeight="0.7330189" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22941177" sideWeight="0.7372401" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22941177" sideWeight="0.7372401" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26275992" sideWeight="0.47219253" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2448015" sideWeight="0.47005346" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -1212,16 +1231,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web-app/js/links.js">
+    <entry file="file://$PROJECT_DIR$/grails-app/conf/DataSource.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="521" column="40" selection-start="17237" selection-end="17252" vertical-scroll-proportion="0.0">
+        <state line="47" column="36" selection-start="1379" selection-end="1379" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/views/link/list.gsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="405" column="20" selection-start="24941" selection-end="24941" vertical-scroll-proportion="0.0">
+        <state line="408" column="33" selection-start="25027" selection-end="25031" vertical-scroll-proportion="-7.4489794">
           <folding>
             <marker date="1362749715000" expanded="false" signature="2645:2661" placeholder="{...}" />
             <marker date="1362749715000" expanded="false" signature="8430:8449" placeholder="{...}" />
@@ -1234,27 +1253,28 @@
             <marker date="1362749715000" expanded="false" signature="14007:14021" placeholder="{...}" />
             <marker date="1362749715000" expanded="false" signature="14407:14421" placeholder="{...}" />
             <marker date="1362749715000" expanded="false" signature="23053:24028" placeholder="{&quot;goto&quot;: ''...}" />
-            <marker date="1362749715000" expanded="false" signature="24234:24856" placeholder="{...}" />
-            <marker date="1362749715000" expanded="false" signature="24367:24841" placeholder="{...}" />
-            <marker date="1362749715000" expanded="false" signature="24460:24646" placeholder="{...}" />
-            <marker date="1362749715000" expanded="false" signature="24530:24620" placeholder="{...}" />
-            <marker date="1362749715000" expanded="false" signature="24745:24819" placeholder="{...}" />
-            <marker date="1362749715000" expanded="false" signature="24941:27843" placeholder="{...}" />
-            <marker date="1362749715000" expanded="false" signature="25198:25869" placeholder="{...}" />
-            <marker date="1362749715000" expanded="false" signature="25248:25792" placeholder="{&quot;itemSelector&quot;: '#listing-part .linkpart'...}" />
-            <marker date="1362749715000" expanded="false" signature="25482:25743" placeholder="{&quot;duration&quot;: 750...}" />
-            <marker date="1362749715000" expanded="false" signature="25925:27819" placeholder="{...}" />
-            <marker date="1362749715000" expanded="false" signature="26015:27432" placeholder="{...}" />
+            <marker date="1362749715000" expanded="true" signature="24234:24856" placeholder="{...}" />
+            <marker date="1362749715000" expanded="true" signature="24367:24841" placeholder="{...}" />
+            <marker date="1362749715000" expanded="true" signature="24460:24646" placeholder="{...}" />
+            <marker date="1362749715000" expanded="true" signature="24530:24620" placeholder="{...}" />
+            <marker date="1362749715000" expanded="true" signature="24745:24819" placeholder="{...}" />
+            <marker date="1362749715000" expanded="true" signature="24941:27843" placeholder="{...}" />
+            <marker date="1362749715000" expanded="true" signature="25198:25869" placeholder="{...}" />
+            <marker date="1362749715000" expanded="true" signature="25248:25792" placeholder="{&quot;itemSelector&quot;: '#listing-part .linkpart'...}" />
+            <marker date="1362749715000" expanded="true" signature="25482:25743" placeholder="{&quot;duration&quot;: 750...}" />
+            <marker date="1362749715000" expanded="true" signature="25925:27819" placeholder="{...}" />
+            <marker date="1362749715000" expanded="true" signature="26015:27432" placeholder="{...}" />
             <marker date="1362749715000" expanded="false" signature="26827:26997" placeholder="{...}" />
-            <marker date="1362749715000" expanded="false" signature="27081:27332" placeholder="{...}" />
-            <marker date="1362749715000" expanded="false" signature="27512:27767" placeholder="{...}" />
+            <marker date="1362749715000" expanded="true" signature="26827:26997" placeholder="{...}" />
+            <marker date="1362749715000" expanded="true" signature="27081:27332" placeholder="{...}" />
+            <marker date="1362749715000" expanded="true" signature="27512:27767" placeholder="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/conf/DataSource.groovy">
+    <entry file="file://$PROJECT_DIR$/web-app/js/links.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="36" selection-start="1379" selection-end="1379" vertical-scroll-proportion="0.684466">
+        <state line="47" column="53" selection-start="2734" selection-end="2734" vertical-scroll-proportion="0.6784661">
           <folding />
         </state>
       </provider>

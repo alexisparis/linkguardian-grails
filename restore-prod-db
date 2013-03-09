@@ -4,24 +4,34 @@ then
   exit 65
 fi
 
-if [ -f ../backup/backup_$2.tar.gz ]
+if [ -f ../backup/backup_$2.sql.gz ]
 then
     SSH_HOST=513a18605973caceb00000f1@linkguardian-blackdog.rhcloud.com
-    echo restoring database from file backup_$2.tar.gz
-    echo "clearing current db data..."
-    ssh $SSH_HOST "rm -Rf postgresql-8.4/data/*"
-    echo "db data removed"
+    echo restoring database from file backup_$2.sql.gz
+    echo "clearing old restore files..."
+    ssh $SSH_HOST "rm -Rf postgresql-8.4/log/restore.sql*"
+    echo "old restore files removed"
     echo "transfering data to restore..."
-    scp ../backup/backup_$2.tar.gz $SSH_HOST:~/postgresql-8.4/data/backup.tar.gz
+    scp ../backup/backup_$2.sql.gz $SSH_HOST:~/postgresql-8.4/log/restore.sql.gz
     echo "data to restore transfered"
-    rhc app stop -a linkguardian --password $1
-    echo "unzipping file..."
-    ssh $SSH_HOST "cd postgresql-8.4/data && gunzip backup.tar.gz"
-    ssh $SSH_HOST "cd postgresql-8.4/data && tar xf backup.tar"
-    echo "file unzipped"
-    rhc app start -a linkguardian --password $1
+
+    #rhc app stop -a linkguardian --password $1
+
+    #echo "unzipping file..."
+    #ssh $SSH_HOST "cd postgresql-8.4/log && gunzip restore.sql.gz"
+    #echo "file unzipped"
+    echo "executing sql script..."
+    ssh $SSH_HOST "gunzip -c postgresql-8.4/log/restore.sql.gz | psql linkguardian -U admin -h 127.2.98.1 > /dev/null"
+    echo "sql script executed"
+
+    #rhc app start -a linkguardian --password $1
+
     echo "removing temp file"
-    ssh $SSH_HOST "rm -Rf postgresql-8.4/data/backup.tar"
+    #ssh $SSH_HOST "rm -Rf postgresql-8.4/log/restore.sql*"
+
+    echo "restarting application..."
+    rhc app restart -a linkguardian --password $1
+    
     echo "FINISHED!!!"
 else
     echo the file does not exist

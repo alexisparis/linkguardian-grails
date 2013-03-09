@@ -7,19 +7,19 @@ fi
 SSH_HOST=513a18605973caceb00000f1@linkguardian-blackdog.rhcloud.com
 
 echo "clearing remote backup data..."
-ssh $SSH_HOST "rm -Rf postgresql-8.4/log/backup.tar"
-ssh $SSH_HOST "rm -Rf postgresql-8.4/log/backup.tar.gz"
+ssh $SSH_HOST "rm -Rf postgresql-8.4/log/backup.sql*"
 echo "remote backup data cleared"
-rhc app stop -a linkguardian --password  $1
+#rhc app stop -a linkguardian --password  $1
 echo "creating backup archive file..."
-ssh $SSH_HOST "cd postgresql-8.4/data && tar cf ../log/backup.tar *"
+
+ssh $SSH_HOST "pg_dump --clean -U admin -h 127.2.98.1 -w linkguardian | gzip > postgresql-8.4/log/backup.sql.gz"
+
 echo "backup archive file created"
-rhc app start -a linkguardian --password  $1
-echo "zipping data..."
-ssh $SSH_HOST "gzip postgresql-8.4/log/backup.tar"
-echo "data zipped"
-DATE=$(date +"%H%M-%d%m%Y")
+#rhc app start -a linkguardian --password  $1
+DATE=$(date +"%Y%m%d-%H%M")
 echo "tranfering data..."
-scp $SSH_HOST:~/postgresql-8.4/log/backup.tar.gz ../backup/backup_$DATE.tar.gz
+scp $SSH_HOST:~/postgresql-8.4/log/backup.sql.gz ../backup/backup_$DATE.sql.gz
 echo "data transfered"
+echo "removing temp files"
+ssh $SSH_HOST "rm -Rf postgresql-8.4/log/backup.sql*"
 echo "FINISHED!!!"

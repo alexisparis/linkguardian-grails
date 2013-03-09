@@ -45,7 +45,7 @@ function jsonLinksToHtml(model)
                 '</div>' +
                 '<div>' +
                     '<div class="linkUrl with-tooltip" rel="tooltip" data-placement="right" data-original-title="' + templateI18n.goto + ' {{domain}}" style="height: 21px; width: 22px; float: left;">' +
-                        '<img align="left" src="http://www.google.com/s2/favicons?domain={{domain}}" class="linkparticon"' +
+                        '<img align="left" src="https://www.google.com/s2/favicons?domain={{domain}}" class="linkparticon"' +
                         'width="20px" height="20px" border="4px" style="margin-right: 2px; margin-bottom: 1px;"/>' +
                     '</div>' +
                     '{{^readonly}}' +
