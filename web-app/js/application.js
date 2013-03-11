@@ -29,6 +29,12 @@ function displayFailure(XMLHttpRequest,textStatus,errorThrown)
     }
 };
 
+function scrollToTop()
+{
+    // scroll to top
+    $('html, body').animate({scrollTop:0}, 'slow');
+};
+
 var permanentMessage = false;
 
 function displayStdError()
@@ -62,6 +68,8 @@ function displayMessage(data)
 
     if( data )
     {
+        scrollToTop();
+
         jObj.html(data.message);
         jObj.addClass('alert');
         jObj.addClass('alert-' + data.level.name.toLowerCase());
@@ -83,9 +91,9 @@ function displayMessage(data)
 $(document).ready(function()
                   {
                       // key bindings on modal twitter bootstrap dialogs
-                      $('div.modal').on('keydown', function(event)
+                      $('div.modal').bind('keydown', function(event)
                       {
-                          $(this).find('button[data-key|=' + event.which + ']').trigger('click');
+                          $(this).find('button[data-key=' + event.which + ']').trigger('click');
                       });
                   });
 
@@ -108,6 +116,5 @@ function includeTwitterAccountLogo()
                                                              $value.addClass('included');
                                                          });
 };
-
 
 

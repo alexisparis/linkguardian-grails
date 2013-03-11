@@ -68,8 +68,8 @@ function jsonLinksToHtml(model)
                             '{{/_tags}}' +
                         '</span>' +
                         '{{^readonly}}' +
-                            '<span class="btn btn-primary btn-mini add-tag visible-on-hover">' +
-                                '<i class="icon-plus-sign with-tooltip icon-white" rel="tooltip" data-original-title="' + templateI18n.addTag + '" data-placement="top"></i>' +
+                            '<span class="btn btn-primary btn-mini add-tag visible-on-hover with-tooltip" rel="tooltip" data-original-title="' + templateI18n.addTag + '" data-placement="right">' +
+                                '<i class="icon-plus-sign icon-white"></i>' +
                             '</span>' +
                         '{{/readonly}}' +
                     '</div>' +
@@ -101,6 +101,8 @@ function updateLinks(model)
     // http://stackoverflow.com/questions/7936270/jquery-infinite-scroll-reset
     $container.infinitescroll('destroy');
     $container.data('infinitescroll', null);
+
+    scrollToTop();
 
 //    $container.children().remove();
 //    $container.masonry('reload');
@@ -184,6 +186,9 @@ function updateLinks(model)
                   $container.append(appended);
                   appended.animate({ opacity: 1});
                   $container.masonry('appended', appended, true);
+
+                  includeTwitterLogo();
+                  includeTwitterAccountLogo();
               });
           }
     );
@@ -258,6 +263,7 @@ function tagDeletionConfirmed(data)
 
 function addTag()
 {
+    console.log("calling addTag");
     $('#addTagForm input[name="tag"]').val($('#newTagInput').val());
     $('#addTagForm').submit();
 };
@@ -448,9 +454,9 @@ function importDone(data)
    displayMessage(data);
 };
 
-function postTwitterStatus(status)
+function generateTwitterStatusUrl(status)
 {
-    window.open("https://twitter.com/home?status=" + status,'_blank');
+    return "https://twitter.com/home?status=" + encodeURIComponent(status);
 };
 
 $(document).ready(
@@ -491,6 +497,7 @@ $(document).ready(
             href = href + "&token=" + encodeURIComponent($('#filterInput').val());
             href = href + "&page=2";
             href = href + "&linksofuser=" + $('#linksofuser').val();
+            href = href + "&searchType=" + searchType;
 
             anchor.attr('href', href);
         });
@@ -591,7 +598,9 @@ $(document).ready(
 
                 message = message + linkpart.attr('data-url');
 
-                postTwitterStatus(encodeURIComponent(message));
+                message = message + " (via @linkguardian)";
+
+                window.open(generateTwitterStatusUrl(message), '_blank');
             }
         });
         $container.on('click', '.action-toolbar .importLinkButton', function(event)
@@ -666,16 +675,31 @@ $(document).ready(
                             }
                         }
 
-                        var url = "https://linkguardian-blackdog.rhcloud.com/" + $('#linksofuser').val() + (_tags.length == 0 ? "" : "/" + _tags);
+                        var url = rootUrl + $('#linksofuser').val() + (_tags.length == 0 ? "" : "/" + _tags);
 
                         // shorten url
-                        shortenUrl(url, function(data)
-                        {
-                            message = message + " " + data;
-                            message = message + " (via @linkguardian)";
+                        var msg = null;
+                        showBlockUi();
 
-                            postTwitterStatus(encodeURIComponent(message));
-                        });
+                        try
+                        {
+                            shortenUrl(url, function(data)
+                            {
+                                message = message + " " + data;
+                                message = message + " (via @linkguardian)";
+
+                                msg = message;
+                            }, false);
+                        }
+                        catch(err)
+                        {
+                            hideBlockUi();
+                            throw err;
+                        }
+                        if ( msg )
+                        {
+                            window.open(generateTwitterStatusUrl(msg), '_blank');
+                        }
                     }
                 }
             }

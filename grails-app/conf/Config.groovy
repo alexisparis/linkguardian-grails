@@ -97,9 +97,9 @@ log4j = {
     //}
 
     debug "grails.app.controllers.linkguardian.LinkController",
-          "grails.app.controllers.linkguardian.PersonController"/*,
+          "grails.app.controllers.linkguardian.PersonController",
           "grails.app.services.LinkBuilderService",
-          "grails.app.services.StringNormalizerService",
+          "grails.app.services.StringNormalizerService"/*,
           'org.hibernate.SQL',
           'org.hibernate.transaction'*/
 

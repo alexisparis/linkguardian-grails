@@ -86,8 +86,10 @@ class LinkBuilderService {
         tags.each {
             def _tag
             _tag = Tag.findByLabel(it)
+            log.info "tag found for " + it + " ? " + _tag
             if ( _tag == null )
             {
+                log.info "creating new tag"
                 if ( it.length() > Tag.LABEL_MAX_LENGTH )
                 {
                     throw new TagException("the tag '" + it.substring(10) + "...' is too long (" + Tag.LABEL_MAX_LENGTH + " characters maximum)")

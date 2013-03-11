@@ -27,9 +27,13 @@
                 }
             </g:if>
             <g:else>
-                .action-toolbar .read, .action-toolbar .unread, .action-toolbar .deleteLinkButton
+                .action-toolbar .read, .action-toolbar .unread, .action-toolbar .deleteLinkButton, .deleteTagButton
                 {
                     display: none;
+                }
+                span.tag
+                {
+                    padding-right: 5px;
                 }
             </g:else>
         </style>
@@ -97,11 +101,11 @@
 
                             <div class="input-append" id="filterByTgContainer">
                                 <input type="text" value="${tag}" id="filterInput" name="token" title="filter" placeholder='<g:message code="links.forms.search.filterInput.placeholder"/>' class="input-medium" maxlength="50"/>
-                                <span class="button add-on with-tooltip" id="clearFilterTag" rel="tooltip" data-placement="top" data-original-title="<g:message code="links.forms.search.clearFilterTag.tooltip"/>">
+                                <span class="btn button add-on with-tooltip" id="clearFilterTag" rel="tooltip" data-placement="top" data-original-title="<g:message code="links.forms.search.clearFilterTag.tooltip"/>">
                                     <%--img src="${resource(dir: 'images', file: 'delete.png')}" width="14"/--%>
                                     &times;
                                 </span>
-                                <span class="button add-on with-tooltip" id="showTagsCloud" rel="tooltip" data-placement="top" data-original-title="<g:message code="links.forms.search.showTagsCloud.tooltip"/>">
+                                <span class="btn button add-on with-tooltip" id="showTagsCloud" rel="tooltip" data-placement="top" data-original-title="<g:message code="links.forms.search.showTagsCloud.tooltip"/>">
                                     <img src="${resource(dir: 'images', file: 'cloud.png')}" width="22px"/>
                                 </span>
                             </div>
@@ -357,6 +361,7 @@
 
             var showUserInLink = ${isGlobal};
             var showReadUnreadLink = ${!isGlobal && isOwner};
+            var searchType = '${searchType}';
 
             var infiniteScrollLoadImage = '${resource(dir: "images/loading", file: "loading_medium.gif")}';
             var rootUrl = '<g:createLink uri="/" absolute="true"/>';
@@ -383,10 +388,13 @@
 
         <g:javascript>
 
-            function shortenUrl(url, callback)
+            function shortenUrl(url, callback, _async)
             {
+                _async = _async && typeof _async === 'boolean';
+
                 jQuery.ajax('<g:createLink controller="link" action="shortenUrl" absolute="true"/>?url=' +url,
                     {
+                        async:_async,
                         success: function(data, textStatus, jqXHR)
                         {
                             if ( data )

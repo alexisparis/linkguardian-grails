@@ -104,17 +104,53 @@ class BootStrap {
         {
             case Environment.TEST:
 
-                if ( true ) // test de charge de la db
+                if ( false ) // test de charge de la db
                 {
+                    def users = ['Norbert', "Elisa", "Isidore", "Bertrand", "Sophie", "Walter"]
+                    def tags = ['tv', 'sport', 'shopping', 'basket', 'nba', 'vente']
 
+                    Person user
+                    def username
+
+                    def time = System.currentTimeMillis()
+
+                    (1..200).each {
+                        if ( (it % 10) == 0 )
+                        {
+                            println "creating user n°" + it
+                        }
+                        username = users[(int)(Math.random() * users.size())] + "_" + it
+                        user = new Person(username: username, enabled: true, password: 'password')
+                        user.privacyPolicy = LinkPrivacyPolicy.ALL_PUBLIC
+                        user = user.save(flush: true)
+                        PersonRole.create user, userRole, true
+                        PersonRole.create user, twitterRole, true
+
+                        // create links
+                        (1..50).each { i ->
+
+                            def links = []
+
+                            1..(Math.random() * 5).each{ j ->
+                                links.add( tags[ (int)(Math.random() * tags.size()) ] )
+                            }
+
+                            this.createFakeLink(" " + links.join(" ") + " ", Note.Note_0, user, true, "name_" + i, false)
+                        }
+                    }
+
+                    println "initialization made in " + ((System.currentTimeMillis() - time) / 1000) + " secondes"
                 }
                 else
                 {
-                    def user1 = new Person(username: 'OlivierCroisier', enabled: true, password: 'password')
-                    user1.privacyPolicy = LinkPrivacyPolicy.ALL_PUBLIC
-                    user1 = user1.save(flush: true)
-                    PersonRole.create user1, userRole, true
-                    PersonRole.create user1, twitterRole, true
+                    if ( Person.findByUsername('OlivierCroisier') == null )
+                    {
+                        def user1 = new Person(username: 'OlivierCroisier', enabled: true, password: 'password')
+                        user1.privacyPolicy = LinkPrivacyPolicy.ALL_PUBLIC
+                        user1 = user1.save(flush: true)
+                        PersonRole.create user1, userRole, true
+                        PersonRole.create user1, twitterRole, true
+                    }
                 }
 
                 break

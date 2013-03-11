@@ -64,13 +64,37 @@
 		<r:layoutResources />
         <ga:trackPageview />
 
+        <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.blockUI.min.js')}"></script>
         <script type="text/javascript">
             var defaultErrorMessage = '<g:message code="default.errorMessage.label"/>';
             var communicationErrorMessage = '<g:message code="communication.errorMessage.label"/>';
+
+            function hideBlockUi(event){
+                if ( blockUiInhibiter == 0 )
+                {
+                    setTimeout(function(){
+                        $.unblockUI();
+                    }, 200); //TODO : reduce additional times
+                }
+            };
+            function showBlockUi(event){
+                if ( blockUiInhibiter == 0 )
+                {
+                    $.blockUI(
+                            {
+                                message : '<img src="<g:resource dir="images/loading" file="loading_big.gif" absolute="true"/>"/>',
+                                css: {
+                                    border: 'none',
+                                    backgroundColor: 'none',
+                                    opacity:         0.8
+                                }
+                            }
+                    );
+                }
+            };
         </script>
 
         <script type="text/javascript" src="${resource(dir: 'js', file: 'application.js')}"></script>
-        <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.blockUI.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.dd.min.js')}"></script>
 
         <script type="text/javascript">
@@ -162,7 +186,7 @@
                                                 <div class="controls">
                                                     <input type="text" id="searchUsernameInput" name="username" data-provide="typeahead"/>
 
-                                                    <button type="submit" class="btn btn-primary" onclick="setSubmitFilterButtonToNormalState()" id="searchPerson-input"
+                                                    <button type="submit" class="btn btn-primary" id="searchPerson-input"
                                                             style="vertical-align: top;">
                                                         <i class="icon-search icon-white"></i>
                                                     </button>
@@ -238,7 +262,7 @@
             <div class="row">
                 <div class="span12">
                     <g:layoutBody/>
-                    <g:javascript library="application"/>
+                    <%--g:javascript library="application"/--%>
                 </div>
             </div>
         </div>
@@ -394,30 +418,7 @@
                             $('#toolsDialog').modal();
                         });
 
-                        var hideBlockUi = function(event){
-                            if ( blockUiInhibiter == 0 )
-                            {
-                                setTimeout(function(){
-                                    $.unblockUI();
-                                }, 200); //TODO : reduce additional times
-                            }
-                        };
-                        $(document).ajaxStart(function(event){
-                            if ( blockUiInhibiter == 0 )
-                            {
-                                $.blockUI(
-                                        {
-                                            message : '<img src="<g:resource dir="images/loading" file="loading_big.gif" absolute="true"/>"/>',
-                                            css: {
-                                                border: 'none',
-                                                backgroundColor: 'none',
-                                                opacity:         0.8
-                                            }
-                                        }
-                                );
-                            }
-                        })
-                                .ajaxStop(hideBlockUi).ajaxError(hideBlockUi);
+                        $(document).ajaxStart(showBlockUi).ajaxStop(hideBlockUi).ajaxError(hideBlockUi);
 
                         includeTwitterAccountLogo();
 

@@ -118,16 +118,6 @@ class LinkController extends MessageOrientedObject
             unread = true
         }
 
-        log.info "before test query"
-        def q = Link.where {
-            read == true
-        }
-        q = q.where {
-            title == 'toto'
-        }
-        q.list()
-        log.info "after test query"
-
         def policy = LinkPrivacyPolicy.ALL_PUBLIC
 
         if ( read || unread ) // no need to launch the request if ! read && ! unread
@@ -146,7 +136,7 @@ class LinkController extends MessageOrientedObject
             if ( ! isGlobalSearch && ! userAskedIsConnectedUser && policy == LinkPrivacyPolicy.ALL_LOCKED )
             {
                 response.setStatus(500)
-                render this.error(message(code: "service.link.filter.allLinksLocked")) as JSON
+                render this.error(this.message(code: "service.link.filter.allLinksLocked")) as JSON
                 success = false
             }
             else
@@ -199,7 +189,7 @@ class LinkController extends MessageOrientedObject
                     else
                     {
                         response.setStatus(500)
-                        render this.error(message(code: "service.link.filter.oneTagAllowed")) as JSON
+                        render this.error(this.message(code: "service.link.filter.oneTagAllowed")) as JSON
                         success = false
                     }
                 }
@@ -287,7 +277,7 @@ class LinkController extends MessageOrientedObject
         if ( params.url == null || params.url.trim().length() == 0 )
         {
             response.setStatus(500)
-            msg = this.error(message(code: "service.link.addUrl.invalidUrl"))
+            msg = this.error(this.message(code: "service.link.addUrl.invalidUrl"))
         }
         else
         {
@@ -363,7 +353,7 @@ class LinkController extends MessageOrientedObject
                                log.error "found content type " +contentType + " for url " + currentUrl
                                response.setStatus(500)
                                errorCode = 500
-                               msg = this.error(message(code: "service.link.addUrl.invalidContentType"))
+                               msg = this.error(this.message(code: "service.link.addUrl.invalidContentType"))
                                break;
                            }
                        }
@@ -373,7 +363,7 @@ class LinkController extends MessageOrientedObject
                        log.debug "url " + currentUrl + " already visited ==> redirection loop"
                        response.setStatus(500)
                        errorCode = 500
-                       msg = this.error(message(code: "service.link.addUrl.redirectionLoop"))
+                       msg = this.error(this.message(code: "service.link.addUrl.redirectionLoop"))
                        break
                    }
 
@@ -387,7 +377,7 @@ class LinkController extends MessageOrientedObject
                         log.debug "url " + currentUrl + " too many redirections"
                         response.setStatus(500)
                         errorCode = 500
-                        msg = this.error(message(code: "service.link.addUrl.tooMuchRedirections"))
+                        msg = this.error(this.message(code: "service.link.addUrl.tooMuchRedirections"))
                     }
                 }
             }
@@ -429,7 +419,7 @@ class LinkController extends MessageOrientedObject
                     {
                         log.debug "url " + newLink.url + " already exists"
                         response.setStatus(500)
-                        msg = this.error(message(code: "service.link.addUrl.linkAlreadyExists", args: [this.formatUrl(params.url)]))
+                        msg = this.error(this.message(code: "service.link.addUrl.linkAlreadyExists", args: [this.formatUrl(params.url)]))
                     }
                     else
                     {
@@ -437,7 +427,7 @@ class LinkController extends MessageOrientedObject
                         newLink.save(flush: true)
                         log.debug "new link saved"
 
-                        msg = this.success(message(code: "service.link.addUrl.linkCreated"))
+                        msg = this.success(this.message(code: "service.link.addUrl.linkCreated"))
                     }
                 }
                 catch(TagException e)
@@ -453,18 +443,18 @@ class LinkController extends MessageOrientedObject
                     {
                         if ( e.getCause() instanceof MalformedURLException )
                         {
-                            msg = this.error(message(code: "service.link.addUrl.invalidUrlWithCause", args: [this.formatUrl(params.url), e.getCause().getMessage()]))
+                            msg = this.error(this.message(code: "service.link.addUrl.invalidUrlWithCause", args: [this.formatUrl(params.url), e.getCause().getMessage()]))
                         }
                         else if ( e.getCause() instanceof UnknownHostException )
                         {
-                            msg = this.error(message(code: "service.link.addUrl.unknownHost", args: [((UnknownHostException)e.getCause()).getMessage()]))
+                            msg = this.error(this.message(code: "service.link.addUrl.unknownHost", args: [((UnknownHostException)e.getCause()).getMessage()]))
                         }
                     }
 
                     if ( msg == null )
                     {
                         // default message
-                        msg = this.error(message(code: "service.link.addUrl.defaultError", args: [this.formatUrl(params.url)]))
+                        msg = this.error(this.message(code: "service.link.addUrl.defaultError", args: [this.formatUrl(params.url)]))
                     }
                 }
             }
@@ -504,18 +494,18 @@ class LinkController extends MessageOrientedObject
             else
             {
                 response.setStatus(500)
-                render this.error(message(code: "service.link.delete.forbidden")) as JSON
+                render this.error(this.message(code: "service.link.delete.forbidden")) as JSON
             }
         }
 
         if (success)
         {
-            render this.success(message(code: "service.link.delete.success")) as JSON
+            render this.success(this.message(code: "service.link.delete.success")) as JSON
         }
         else
         {
             response.setStatus(500)
-            render this.error(message(code: "service.link.delete.error")) as JSON
+            render this.error(this.message(code: "service.link.delete.error")) as JSON
         }
     }
 
@@ -527,6 +517,7 @@ class LinkController extends MessageOrientedObject
      */
     def addTag(String id, String tag)
     {
+        new Exception().printStackTrace()
         log.info "calling addTag for link " + id + " with tag " + tag
         def msg
         def success = false
@@ -548,7 +539,7 @@ class LinkController extends MessageOrientedObject
                 if ( tagsToAddSize == 0 )
                 {
                     response.setStatus(500)
-                    msg = this.error(message(code: "service.link.addTag.invalidTag"))
+                    msg = this.error(this.message(code: "service.link.addTag.invalidTag"))
                 }
                 else
                 {
@@ -573,7 +564,7 @@ class LinkController extends MessageOrientedObject
                             i18nCode = "service.link.addTag.tagExists"
                         }
 
-                        msg = this.error(message(code: i18nCode))
+                        msg = this.error(this.message(code: i18nCode))
                     }
                     else
                     {
@@ -585,16 +576,16 @@ class LinkController extends MessageOrientedObject
                         {
                             if ( tagsToAdd.size() < tagsToAddSize )
                             {
-                                msg = this.warning(message(code: "service.link.addTag.someTagsAdded"))
+                                msg = this.warning(this.message(code: "service.link.addTag.someTagsAdded"))
                             }
                             else
                             {
-                                msg = this.success(message(code: "service.link.addTag.tagsAdded"))
+                                msg = this.success(this.message(code: "service.link.addTag.tagsAdded"))
                             }
                         }
                         else
                         {
-                            msg = this.success(message(code: "service.link.addTag.tagAdded"))
+                            msg = this.success(this.message(code: "service.link.addTag.tagAdded"))
                         }
                     }
                 }
@@ -602,13 +593,13 @@ class LinkController extends MessageOrientedObject
             else
             {
                 response.setStatus(500)
-                msg = this.error(message(code: "service.link.addTag.forbidden"))
+                msg = this.error(this.message(code: "service.link.addTag.forbidden"))
             }
         }
         else
         {
             response.setStatus(500)
-            msg = this.error(message(code: "service.link.addTag.error"))
+            msg = this.error(this.message(code: "service.link.addTag.error"))
         }
 
         if ( success )
@@ -658,7 +649,7 @@ class LinkController extends MessageOrientedObject
                 if ( tagToDelete == null )
                 {
                     response.setStatus(500)
-                    render this.error(message(code: "service.link.deleteTag.tagDoesNotExist"), args: [tag]) as JSON
+                    render this.error(this.message(code: "service.link.deleteTag.tagDoesNotExist"), args: [tag]) as JSON
                 }
                 else
                 {
@@ -670,18 +661,18 @@ class LinkController extends MessageOrientedObject
             else
             {
                 response.setStatus(500)
-                render this.error(message(code: "service.link.deleteTag.forbidden")) as JSON
+                render this.error(this.message(code: "service.link.deleteTag.forbidden")) as JSON
             }
         }
 
         if (success)
         {
-            render this.success(message(code: "service.link.deleteTag.success"), args: [tag]) as JSON
+            render this.success(this.message(code: "service.link.deleteTag.success"), args: [tag]) as JSON
         }
         else
         {
             response.setStatus(500)
-            render this.error(message(code: "service.link.deleteTag.error")) as JSON
+            render this.error(this.message(code: "service.link.deleteTag.error")) as JSON
         }
     }
 
@@ -721,7 +712,7 @@ class LinkController extends MessageOrientedObject
 
                     link.note = Note.valueOf(Note.class, "Note_" + _score)
                     link.save()
-                    msg = this.success(message(code: "service.link.updateNote.success"))
+                    msg = this.success(this.message(code: "service.link.updateNote.success"))
                     success = true
                 }
                 catch (Exception e)
@@ -732,14 +723,14 @@ class LinkController extends MessageOrientedObject
             else
             {
                 response.setStatus(500)
-                msg =  this.error(message(code: "service.link.updateNote.forbidden"))
+                msg =  this.error(this.message(code: "service.link.updateNote.forbidden"))
             }
         }
 
         if (! success && msg == null)
         {
             response.setStatus(500)
-            msg = this.error(message(code: "service.link.updateNote.error"))
+            msg = this.error(this.message(code: "service.link.updateNote.error"))
         }
 
         render msg as JSON
@@ -792,18 +783,18 @@ class LinkController extends MessageOrientedObject
             {
                 link.read = value
                 link.save()
-                msg = this.success(message(code: "service.link.changeReadAttribute.success", args: [readType]))
+                msg = this.success(this.message(code: "service.link.changeReadAttribute.success", args: [readType]))
                 success = true
             }
             else
             {
-                msg =  this.error(message(code: "service.link.changeReadAttribute.forbidden"))
+                msg =  this.error(this.message(code: "service.link.changeReadAttribute.forbidden"))
             }
         }
         if ( ! success && msg == null )
         {
             response.setStatus(500)
-            msg = this.error(message(code: "service.link.changeReadAttribute.error", args: [readType]))
+            msg = this.error(this.message(code: "service.link.changeReadAttribute.error", args: [readType]))
         }
 
         render msg as JSON
@@ -894,7 +885,7 @@ class LinkController extends MessageOrientedObject
             if ( link.person.username == springSecurityService.principal.username )
             {
                 response.setStatus(500)
-                message = this.error(message(code: "service.link.importLink.linkExistsForConnectedUser"))
+                message = this.error(this.message(code: "service.link.importLink.linkExistsForConnectedUser"))
             }
             else
             {
@@ -903,7 +894,7 @@ class LinkController extends MessageOrientedObject
                 if ( Link.findByUrlAndPerson(link.url, connectedUser) != null )
                 {
                     response.setStatus(500)
-                    message = this.error(message(code: "service.link.importLink.linkExistsForConnectedUser"))
+                    message = this.error(this.message(code: "service.link.importLink.linkExistsForConnectedUser"))
                 }
                 else
                 {
@@ -916,14 +907,14 @@ class LinkController extends MessageOrientedObject
 
                     result.save(flush:  true)
 
-                    message = this.success(message(code: "service.link.importLink.linkImported"))
+                    message = this.success(this.message(code: "service.link.importLink.linkImported"))
                 }
             }
         }
         else
         {
             response.setStatus(500)
-            message = this.error(message(code: "service.link.importLink.linkDoesNotExist"))
+            message = this.error(this.message(code: "service.link.importLink.linkDoesNotExist"))
             message = this.error("Link not found");
         }
 
