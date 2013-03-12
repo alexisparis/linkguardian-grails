@@ -32,7 +32,7 @@ environments {
     }
     test {
         dataSource {
-            dbCreate = "update"//"create-drop"//"update"
+            dbCreate = "create-drop"//"update"
             url = "jdbc:postgresql://127.4.197.1:5432/linkguardianTest"
             username = "admin"
             password = "ldEAHlVMk13d"

@@ -32,17 +32,26 @@ class BootStrap {
         return newLink
     }
 
-    def createFakeLink(String _tags, Note _note, Person _person, Boolean _read = false, String name, boolean locked = false)
+    def createFakeLink(String _tags, Note _note, Person _person, Boolean _read = false, String name, boolean locked, String _desc = null)
     {
         def newLink
         try {
             newLink = new Link(url: "url_" + name, creationDate: new Date(), read:  _read, person: _person,
                                domain: "domain_" + name, title: "title_" + name, locked: locked)
 
-            def desc = (("description_" + name + " ") * ((Math.random() * 25.0) + 1).intValue())
-            if ( desc.length() > 200 )
+            def desc
+
+            if ( _desc )
             {
-                desc = desc.substring(0, 200)
+                desc = _desc
+            }
+            else
+            {
+                desc = (("description_" + name + " ") * ((Math.random() * 25.0) + 1).intValue())
+                if ( desc.length() > 200 )
+                {
+                    desc = desc.substring(0, 200)
+                }
             }
 
             newLink.description = desc
@@ -143,14 +152,34 @@ class BootStrap {
                 }
                 else
                 {
-                    if ( Person.findByUsername('OlivierCroisier') == null )
-                    {
-                        def user1 = new Person(username: 'OlivierCroisier', enabled: true, password: 'password')
-                        user1.privacyPolicy = LinkPrivacyPolicy.ALL_PUBLIC
-                        user1 = user1.save(flush: true)
-                        PersonRole.create user1, userRole, true
-                        PersonRole.create user1, twitterRole, true
-                    }
+                    this.createFakeLink(" a ", Note.Note_2, admin, false, "unread_link", false, "unread description")
+                    this.createFakeLink(" b c ", Note.Note_2, admin, false, "unread_link_2", false, "unread description 2")
+                    this.createFakeLink(" a c ", Note.Note_4, admin, true, "read_link", false, "read description")
+                    this.createFakeLink(" c ", Note.Note_5, admin, true, "read_link_2", false, "read description 2")
+
+                    def user1 = new Person(username: 'OlivierCroisier', enabled: true, password: 'password')
+                    user1.privacyPolicy = LinkPrivacyPolicy.ALL_PUBLIC
+                    user1 = user1.save(flush: true)
+                    PersonRole.create user1, userRole, true
+                    PersonRole.create user1, twitterRole, true
+                    this.createFakeLink(" 1 ", Note.Note_1, user1, true, "read_from_olivier", false, "desc")
+                    this.createFakeLink(" 2 ", Note.Note_1, user1, false, "unread_from_olivier", false, "desc")
+
+                    def user2 = new Person(username: 'fonfec_57', enabled: true, password: 'password')
+                    user2.privacyPolicy = LinkPrivacyPolicy.ALL_LOCKED
+                    user2 = user2.save(flush: true)
+                    PersonRole.create user2, userRole, true
+                    PersonRole.create user2, twitterRole, true
+                    this.createFakeLink(" 1 ", Note.Note_1, user2, true, "read_from_fonfec", false, "desc")
+                    this.createFakeLink(" 2 ", Note.Note_1, user2, false, "unread_from_fonfec", false, "desc")
+
+                    def user3 = new Person(username: 'totor', enabled: true, password: 'password')
+                    user3.privacyPolicy = LinkPrivacyPolicy.ALL_PUBLIC
+                    user3 = user3.save(flush: true)
+                    PersonRole.create user3, userRole, true
+                    PersonRole.create user3, twitterRole, true
+                    this.createFakeLink(" 1 ", Note.Note_1, user3, true, "read_from_totor", false, "desc")
+                    this.createFakeLink(" 2 ", Note.Note_1, user3, false, "unread_from_totor", false, "desc")
                 }
 
                 break

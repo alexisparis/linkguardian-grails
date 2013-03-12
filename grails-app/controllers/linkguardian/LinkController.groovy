@@ -337,7 +337,7 @@ class LinkController extends MessageOrientedObject
                                    }
                                }
                                else{
-                                   realUrl = currentUrl
+                                   realUrl =  _httpConnection.getURL().toString() // could be different from currentUrl !!!!
                                    type = "html"
                                    log.debug "setting real url to " + currentUrl
                                }
@@ -381,11 +381,18 @@ class LinkController extends MessageOrientedObject
                     }
                 }
             }
+            catch(UnknownHostException e)
+            {
+                response.setStatus(500)
+                errorCode = 500
+                msg = this.error(this.message(code: "service.link.addUrl.unknownHost", args: [e.getMessage()]))
+                log.error("unknown host exception", e)
+            }
             catch(Exception e)
             {
                 response.setStatus(500)
                 errorCode = 500
-                log.error("error while trying to resolve redirections", e)
+                log.error(e.getClass().name + " with cause : " + e.getCause()?.getClass()?.name + " :: error while trying to resolve redirections", e)
             }
 
             if ( errorCode == 500 && msg == null )
@@ -437,7 +444,7 @@ class LinkController extends MessageOrientedObject
                 }
                 catch(Exception e)
                 {
-                    log.error(e.getClass().name + " :: error while trying to save new link with url : " + params.url, e)
+                    log.error(e.getClass().name + " with cause : " + e.getCause()?.getClass().name + " :: error while trying to save new link with url : " + params.url, e)
                     response.setStatus(500)
                     if ( e.getCause() != null )
                     {

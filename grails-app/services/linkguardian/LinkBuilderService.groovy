@@ -67,6 +67,9 @@ class LinkBuilderService {
 
         // shorten url with google service
         def urlResource = shortenerService.shorten(link.url)
+
+        log.info "url shortening for : " + link.url + " returns " + urlResource.shortUrl
+
         link.url = urlResource.shortUrl
 
         if ( link.title && link.title.length() > Link.TITLE_MAX_LENGTH )
