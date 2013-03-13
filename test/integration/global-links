@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="https://linkguardiantest-blackdog.rhcloud.com/" />
+<title>global-links</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">global-links</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/profile/totor?lang=en</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=span.lg.big</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=latest links</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>5000</td>
+</tr>
+<tr>
+	<td>assertXpathCount</td>
+	<td>//div[contains(@class, 'linkpart')]</td>
+	<td>4</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>title_unread_from_totor</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>title_read_from_totor</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>title_unread_from_olivier</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>title_read_from_olivier</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=filterInput</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=filter-input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>5000</td>
+</tr>
+<tr>
+	<td>assertXpathCount</td>
+	<td>//div[contains(@class, 'linkpart')]</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>title_unread_from_totor</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>title_unread_from_olivier</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=filterInput</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=filter-input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>5000</td>
+</tr>
+<tr>
+	<td>assertXpathCount</td>
+	<td>//div[contains(@class, 'linkpart')]</td>
+	<td>0</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>No result</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#showTagsCloud &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>5000</td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextPresent</td>
+	<td>2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#tagsCloudDialog &gt; div.modal-header &gt; button.close</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

@@ -188,7 +188,7 @@ class BootStrap {
                 // links for admin
                 for (i in 1..200)
                 {
-                    this.createFakeLink("", Note.valueOf("Note_" + (i % 6)), admin, Math.random() > 0.5, i.toString())
+                    this.createFakeLink("", Note.valueOf("Note_" + (i % 6)), admin, Math.random() > 0.5, i.toString(), false)
                 }
 
                 // fake user 1

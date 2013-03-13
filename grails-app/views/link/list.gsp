@@ -9,17 +9,6 @@
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'links.css')}" type="text/css">
 
         <style type="text/css">
-            /*#infscr-loading
-            {
-                margin-right: auto;
-                margin-left: auto;
-                text-align: center;
-            }
-            #infscr-loading > img
-            {
-                margin-right: auto;
-                margin-left: auto;
-            }*/
             <g:if test="${isOwner}">
                 .action-toolbar .importLinkButton
                 {
@@ -46,13 +35,13 @@
 
                 <g:if test="${!isOwner}">
                     <g:if test="${isGlobal}">
-                        <div class="span4">
+                        <div class="span2">
                             <legend>&nbsp;<g:message code="links.recent.label"/></legend>
                             <img style="margin-left: 10px; margin-bottom: 5px;" width="60px" src="${resource(dir: 'images', file: 'world2.png')}"/>
                         </div>
                     </g:if>
                     <g:else>
-                        <div class="span4">
+                        <div class="span3" style="overflow: hidden;">
                             <legend>&nbsp;<g:message code="links.linksOf.label"/></legend>
 
                             &nbsp;<a class="text twitter-account" data-twitter-name="${linksOfUser}" target="_blank" style="margin-left: 20px;">
@@ -65,7 +54,11 @@
                     </g:else>
                 </g:if>
 
-                <div class="<g:if test='${isOwner}'>span5</g:if><g:else>span8</g:else>">
+                <div class="<g:if test='${isOwner}'>span5</g:if>
+                    <g:else>
+                        <g:if test="${isGlobal}">span10</g:if>
+                        <g:else>span9</g:else>
+                    </g:else>">
 
                     <g:formRemote id="filterLinkForm" class="form-inline" name="addUrlForm" url="[controller: 'link', action: 'filter']"
                                   method="POST" style="display: inline;"

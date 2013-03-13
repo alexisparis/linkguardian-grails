@@ -4,17 +4,27 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="https://linkguardiantest-blackdog.rhcloud.com/" />
-<title>test-add-url</title>
+<title>my-links</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">test-add-url</td></tr>
+<tr><td rowspan="1" colspan="3">my-links</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/?lang=en</td>
+	<td>?lang=en/</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
+	<td>5000</td>
+</tr>
+<tr>
+	<td>assertXpathCount</td>
+	<td>//div[contains(@class, 'linkpart')]</td>
+	<td>4</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -27,9 +37,9 @@
 	<td>5000</td>
 </tr>
 <tr>
-	<td>verifyText</td>
-	<td>id=message</td>
+	<td>assertTextPresent</td>
 	<td>provide a valid url</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -47,9 +57,9 @@
 	<td>5000</td>
 </tr>
 <tr>
-	<td>verifyText</td>
-	<td>id=message</td>
+	<td>assertTextPresent</td>
 	<td>The url httpa://www.m6.fr is invalid ==&gt; unknown protocol: httpa</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -67,38 +77,8 @@
 	<td>5000</td>
 </tr>
 <tr>
-	<td>verifyText</td>
-	<td>id=message</td>
+	<td>assertTextPresent</td>
 	<td>the link has been created</td>
-</tr>
-<tr>
-	<td>assertXpathCount</td>
-	<td>//div[contains(@class, 'linkpart')]</td>
-	<td>5</td>
-</tr>
-<tr>
-	<td>verifyTextPresent</td>
-	<td>www.m6.fr</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//div[@id='listing-part']/div/div/a[5]/i</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>2000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>css=div.modal-footer &gt; button.btn</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>2000</td>
 	<td></td>
 </tr>
 <tr>
@@ -122,9 +102,9 @@
 	<td>5000</td>
 </tr>
 <tr>
-	<td>verifyText</td>
-	<td>id=message</td>
+	<td>assertTextPresent</td>
 	<td>the link m6.fr already exists</td>
+	<td></td>
 </tr>
 <tr>
 	<td>click</td>
@@ -142,11 +122,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>2000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForCondition</td>
 	<td>selenium.browserbot.getCurrentWindow().jQuery.active == 0</td>
 	<td>5000</td>
@@ -156,7 +131,6 @@
 	<td>//div[contains(@class, 'linkpart')]</td>
 	<td>4</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
