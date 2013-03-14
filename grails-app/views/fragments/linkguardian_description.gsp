@@ -1,3 +1,4 @@
+<%@ page import="org.codehaus.groovy.grails.commons.ConfigurationHolder" %>
 
 <script type="text/javascript">
 
@@ -40,7 +41,7 @@
 
         <div class="section">
             <span class="section-title"><h4><g:message code="about.contact.title"/></h4></span>
-            <g:message code="about.contact.paragraph" args="['linkguardian@blackdog-project.org']"/>
+            <g:message code="about.contact.paragraph" args="${[ConfigurationHolder.getConfig().contact.mail]}"/>
         </div>
 
     </div>

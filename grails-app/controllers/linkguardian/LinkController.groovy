@@ -324,7 +324,14 @@ class LinkController extends MessageOrientedObject
                         newLink.save(flush: true)
                         log.debug "new link saved"
 
-                        msg = this.success(this.message(code: "service.link.addUrl.linkCreated"))
+                        if ( target.isClientError() || target.isServerError() )
+                        {
+                            msg = this.warning(this.message(code: "service.link.addUrl.linkCreatedWithoutAccess"))
+                        }
+                        else
+                        {
+                            msg = this.success(this.message(code: "service.link.addUrl.linkCreated"))
+                        }
                     }
                 }
                 catch(TagException e)
@@ -572,7 +579,7 @@ class LinkController extends MessageOrientedObject
                 if ( tagToDelete == null )
                 {
                     response.setStatus(500)
-                    render this.error(this.message(code: "service.link.deleteTag.tagDoesNotExist"), args: [tag]) as JSON
+                    render this.error(this.message(code: "service.link.deleteTag.tagDoesNotExist", args: [tag])) as JSON
                 }
                 else
                 {
@@ -590,7 +597,7 @@ class LinkController extends MessageOrientedObject
 
         if (success)
         {
-            render this.success(this.message(code: "service.link.deleteTag.success"), args: [tag]) as JSON
+            render this.success(this.message(code: "service.link.deleteTag.success", args: [tag])) as JSON
         }
         else
         {

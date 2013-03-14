@@ -271,8 +271,11 @@
         <footer>
             <div class="container wrapper">
                 <div class="row">
-                    <div class="span12 copyright" style="text-align: left;">
+                    <div class="span8 copyright" style="text-align: left;">
                         <g:message code="app.copyright"/>
+                    </div>
+                    <div class="span4 contact" style="text-align: right;">
+                        <a target="_blank" href="mailto:<lg:contactMail/>"><g:message code="contact.label"/></a>
                     </div>
                 </div>
             </div>

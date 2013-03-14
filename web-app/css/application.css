@@ -34,7 +34,7 @@ div.header
     font-size: 20px;
     font-style: italic;
 }
-.copyright
+.copyright, .contact
 {
     margin-top: 15px;
     color: #777777;

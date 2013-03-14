@@ -49,7 +49,7 @@ function jsonLinksToHtml(model)
                         'width="20px" height="20px" border="4px" style="margin-right: 2px; margin-bottom: 1px;"/>' +
                     '</div>' +
                     '{{^readonly}}' +
-                    '<div class="rateAndOperations" style="width: 116; height: 16px;">' +
+                    '<div class="rateAndOperations" style="width: 116px; height: 16px;">' +
                         '<span class="rate"></span>' +
                     '</div>' +
                     '{{/readonly}}' +
@@ -709,11 +709,14 @@ $(document).ready(
 
         // when return on linkguardian, if no input has focus, then set focus to txtUrl
         $(window).focus(function() {
-            var element = document.querySelector(":focus");
+            /*var element = document.querySelector(":focus");
             if ( ! element )
             {
                 $('#txtUrl').focus();
-            }
+            }*/
+
+            // always put the focus on txtUrl
+            $('#txtUrl').focus();
         });
 
         $('#txtUrl').focus();

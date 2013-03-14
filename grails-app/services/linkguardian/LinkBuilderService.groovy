@@ -230,15 +230,15 @@ class LinkBuilderService {
        COMMON
        ############################## */
 
-    private def extractFilenameFrom(URL url)
+    def extractFilenameFrom(URL url)
     {
         def result = null
 
         if ( url )
         {
             result = url.getFile()
-            def lastSlashIndex = result.lastIndexOf('/')
 
+            def lastSlashIndex = result.lastIndexOf('/')
             if ( lastSlashIndex > -1 )
             {
                 result = result.substring(lastSlashIndex + 1)
@@ -246,6 +246,12 @@ class LinkBuilderService {
                 ['-', '_'].each {
                     result = result.replace(it, ' ')
                 }
+            }
+
+            def lastPointIndex = result.lastIndexOf('.')
+            if ( lastPointIndex > -1 )
+            {
+                result = result.substring(0, lastPointIndex)
             }
         }
 

@@ -12,8 +12,14 @@ import org.junit.*
 class LinkBuilderServiceTests
 {
 
-  void testSomething()
-  {
-    fail "Implement me"
-  }
+    def linkBuilderService = new LinkBuilderService()
+
+    void testExtractFilenameFrom()
+    {
+        def url = "http://www.dzone.com/links/r/10_object_oriented_design_principles_java_program.html"
+
+        assertEquals("10 object oriented design principles java program", linkBuilderService.extractFilenameFrom(new URL(url)))
+
+
+    }
 }

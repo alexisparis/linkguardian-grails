@@ -161,3 +161,5 @@ security {
 
 google.shortener.api.key='AIzaSyCngRB7vyyCtY4B1ACOYyUt5pDEtLnhkzo'
 //grails.plugins.springsecurity.twitter.bean.dao='linkguardian.LgTwitterAuthDao'
+
+contact.mail='linkguardian@blackdog-project.org'
