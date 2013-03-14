@@ -268,14 +268,14 @@
         </div>
         <r:layoutResources />
 
-        <footer>
+        <footer style="margin-bottom: 20px;">
             <div class="container wrapper">
                 <div class="row">
                     <div class="span8 copyright" style="text-align: left;">
                         <g:message code="app.copyright"/>
                     </div>
                     <div class="span4 contact" style="text-align: right;">
-                        <a target="_blank" href="mailto:<lg:contactMail/>"><g:message code="contact.label"/></a>
+                        <a class="text-dark btn" target="_blank" href="mailto:<lg:contactMail/>"><g:message code="contact.label"/></a>
                     </div>
                 </div>
             </div>

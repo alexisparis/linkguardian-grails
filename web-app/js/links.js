@@ -427,6 +427,19 @@ function markSelectedLinkAsRead()
     }
 };
 
+function clickOnDeleteOfSelectedLink()
+{
+    var id = $('div.linkpart.selected').attr('data-id');
+    if ( id )
+    {
+        $('div.linkpart.selected .deleteLinkButton').trigger('click');
+    }
+    else
+    {
+        displayStdError();
+    }
+};
+
 function changeRead(read)
 {
     var formName = null;
@@ -561,9 +574,9 @@ $(document).ready(
 
             if ( jThis.attr("data-readonly") === 'false' && !jThis.hasClass('read') )  // not readonly and not already read
             {
-                var modalMarker = $('#markAsReadDialog');
+                var modalMarker = $('#markAsReadOrDeleteDialog');
                 modalMarker.find('span.img').html(jThis.find('span.linkUrl').html());
-                modalMarker.find('.question').html(markAsReadMessage + "<br/><b>" + jThis.find('.title').html() + "</b><br/>" + markAsReadFromMessage + " " + jThis.find('.domain').html() + " ?");
+                modalMarker.find('.question').html("<b>" + jThis.find('.title').html() + "</b><br/>" + modifyLinkFromMessage + " " + jThis.find('.domain').html() + " ?");
                 modalMarker.modal();
             }
 

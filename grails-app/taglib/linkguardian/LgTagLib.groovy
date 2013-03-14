@@ -24,6 +24,6 @@ class LgTagLib {
         out << link.replace('http://','https://')
     }
 
-    def contactMail = { attrs, body -> out << ConfigurationHolder.getConfig().contact.mail // 'linkguardian@blackdog-project.org'
+    def contactMail = { attrs, body -> out << ConfigurationHolder.getConfig().contact.mail
     }
 }

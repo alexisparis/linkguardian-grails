@@ -300,6 +300,23 @@
                 <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="markSelectedLinkAsRead();"><g:message code="links.dialogs.result.yes"/></button>
             </div>
         </div>
+        <div id="markAsReadOrDeleteDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3>
+                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> <g:message code="links.dialogs.markAsReadOrDeleteDialog.title"/></h3>
+            </div>
+            <div class="modal-body">
+                <p class="question">
+                    <g:message code="links.dialog.markAsReadOrDeleteDialog.paragraph"/>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true"><g:message code="links.dialogs.markAsReadOrDeleteDialog.result.conserve"/></button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true" onclick="clickOnDeleteOfSelectedLink();"><g:message code="links.dialogs.markAsReadOrDeleteDialog.result.delete"/></button>
+                <button class="btn btn-primary" data-key="13" data-dismiss="modal" aria-hidden="true" onclick="markSelectedLinkAsRead();"><g:message code="links.dialogs.markAsReadOrDeleteDialog.result.markAsRead"/></button>
+            </div>
+        </div>
         <div id="tagsCloudDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -359,8 +376,7 @@
             var infiniteScrollLoadImage = '${resource(dir: "images/loading", file: "loading_medium.gif")}';
             var rootUrl = '<g:createLink uri="/" absolute="true"/>';
             var noTagsFoundError  = '<g:message code="links.cloudtags.noTagsFoundError.label"/>';
-            var markAsReadMessage = '<g:message code="links.dialogs.markAsReadDialog.label"/>';
-            var markAsReadFromMessage = '<g:message code="links.dialogs.markAsReadDialog.from.label"/>';
+            var modifyLinkFromMessage = '<g:message code="links.dialogs.markAsReadOrDeleteDialog.from.label"/>';
             var infinitescrollFinishedMsg = '<g:message code="infinitescroll.links.finishedMsg"/>';
             var infinitescrollMsgText = '<g:message code="infinitescroll.links.msgText"/>';
             var templateI18n = {
