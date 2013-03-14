@@ -141,36 +141,42 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="list.gsp" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="list.gsp" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/grails-app/views/link/list.gsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="378" column="58" selection-start="24104" selection-end="24153" vertical-scroll-proportion="-2.1836734">
+            <state line="478" column="87" selection-start="30313" selection-end="30313" vertical-scroll-proportion="0.8598131">
               <folding>
-                <marker date="1363298368000" expanded="true" signature="2637:2653" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="8430:8449" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="11610:11624" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="11993:12007" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="12403:12417" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="12826:12840" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="13321:13335" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="13662:13676" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="14007:14021" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="14407:14421" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="24382:25357" placeholder="{&quot;goto&quot;: ''...}" />
-                <marker date="1363298368000" expanded="true" signature="25571:26296" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="25769:26281" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="25900:26086" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="25970:26060" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="26185:26259" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="26381:29283" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="26638:27309" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="26688:27232" placeholder="{&quot;itemSelector&quot;: '#listing-part .linkpart'...}" />
-                <marker date="1363298368000" expanded="true" signature="26922:27183" placeholder="{&quot;duration&quot;: 750...}" />
-                <marker date="1363298368000" expanded="true" signature="27365:29259" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="27455:28872" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="28267:28437" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="28521:28772" placeholder="{...}" />
-                <marker date="1363298368000" expanded="true" signature="28952:29207" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="2637:2653" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="8430:8449" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="11610:11624" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="11993:12007" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="12403:12417" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="12826:12840" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="13321:13335" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="13662:13676" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="14007:14021" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="14407:14421" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="24382:25357" placeholder="{&quot;goto&quot;: ''...}" />
+                <marker date="1363298824000" expanded="true" signature="25571:26296" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="25769:26281" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="25900:26086" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="25970:26060" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="26185:26259" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="26381:31235" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="26638:27309" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="26688:27232" placeholder="{&quot;itemSelector&quot;: '#listing-part .linkpart'...}" />
+                <marker date="1363298824000" expanded="true" signature="26922:27183" placeholder="{&quot;duration&quot;: 750...}" />
+                <marker date="1363298824000" expanded="true" signature="27365:29259" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="27455:28872" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="28267:28437" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="28267:28437" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="28521:28772" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="28952:29207" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="29310:31211" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="29400:30824" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="30224:30389" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="30473:30724" placeholder="{...}" />
+                <marker date="1363298824000" expanded="true" signature="30904:31159" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -200,10 +206,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.gsp" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="main.gsp" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/main.gsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="277" column="44" selection-start="17920" selection-end="17920" vertical-scroll-proportion="0.8736842">
+            <state line="277" column="44" selection-start="17920" selection-end="17920" vertical-scroll-proportion="-7.7466664">
               <folding>
                 <marker date="1363298588000" expanded="true" signature="10628:10663" placeholder="{...}" />
               </folding>
@@ -223,7 +229,7 @@
       <file leaf-file-name="links.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web-app/js/links.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="578" column="124" selection-start="19267" selection-end="19267" vertical-scroll-proportion="-5.0784316">
+            <state line="174" column="22" selection-start="8267" selection-end="8271" vertical-scroll-proportion="-4.490196">
               <folding>
                 <marker date="1363298353000" expanded="true" signature="3052:3079" placeholder="..." />
                 <marker date="1363298353000" expanded="true" signature="3265:3302" placeholder="..." />
@@ -258,10 +264,10 @@
         <option value="$PROJECT_DIR$/grails-app/taglib/linkguardian/LgTagLib.groovy" />
         <option value="$PROJECT_DIR$/web-app/css/application.css" />
         <option value="$PROJECT_DIR$/web-app/js/links.js" />
-        <option value="$PROJECT_DIR$/grails-app/views/link/list.gsp" />
         <option value="$PROJECT_DIR$/grails-app/i18n/messages.properties" />
         <option value="$PROJECT_DIR$/grails-app/i18n/messages_fr.properties" />
         <option value="$PROJECT_DIR$/grails-app/views/layouts/main.gsp" />
+        <option value="$PROJECT_DIR$/grails-app/views/link/list.gsp" />
       </list>
     </option>
   </component>
@@ -1077,53 +1083,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web-app/js/links.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="578" column="124" selection-start="19267" selection-end="19267" vertical-scroll-proportion="-5.0784316">
-          <folding>
-            <marker date="1363298353000" expanded="true" signature="3052:3079" placeholder="..." />
-            <marker date="1363298353000" expanded="true" signature="3265:3302" placeholder="..." />
-            <marker date="1363298353000" expanded="true" signature="3525:3543" placeholder="..." />
-            <marker date="1363298353000" expanded="true" signature="3747:3763" placeholder="..." />
-            <marker date="1363298353000" expanded="true" signature="3933:3969" placeholder="..." />
-            <marker date="1363298353000" expanded="true" signature="4734:4761" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/views/link/list.gsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="378" column="58" selection-start="24104" selection-end="24153" vertical-scroll-proportion="-2.1836734">
-          <folding>
-            <marker date="1363298368000" expanded="true" signature="2637:2653" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="8430:8449" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="11610:11624" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="11993:12007" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="12403:12417" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="12826:12840" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="13321:13335" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="13662:13676" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="14007:14021" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="14407:14421" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="24382:25357" placeholder="{&quot;goto&quot;: ''...}" />
-            <marker date="1363298368000" expanded="true" signature="25571:26296" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="25769:26281" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="25900:26086" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="25970:26060" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="26185:26259" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="26381:29283" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="26638:27309" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="26688:27232" placeholder="{&quot;itemSelector&quot;: '#listing-part .linkpart'...}" />
-            <marker date="1363298368000" expanded="true" signature="26922:27183" placeholder="{&quot;duration&quot;: 750...}" />
-            <marker date="1363298368000" expanded="true" signature="27365:29259" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="27455:28872" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="28267:28437" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="28521:28772" placeholder="{...}" />
-            <marker date="1363298368000" expanded="true" signature="28952:29207" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/i18n/messages.properties">
       <provider editor-type-id="ResourceBundle">
         <state />
@@ -1146,9 +1105,62 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/main.gsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="277" column="44" selection-start="17920" selection-end="17920" vertical-scroll-proportion="0.8736842">
+        <state line="277" column="44" selection-start="17920" selection-end="17920" vertical-scroll-proportion="-7.7466664">
           <folding>
             <marker date="1363298588000" expanded="true" signature="10628:10663" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web-app/js/links.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="174" column="22" selection-start="8267" selection-end="8271" vertical-scroll-proportion="-4.490196">
+          <folding>
+            <marker date="1363298353000" expanded="true" signature="3052:3079" placeholder="..." />
+            <marker date="1363298353000" expanded="true" signature="3265:3302" placeholder="..." />
+            <marker date="1363298353000" expanded="true" signature="3525:3543" placeholder="..." />
+            <marker date="1363298353000" expanded="true" signature="3747:3763" placeholder="..." />
+            <marker date="1363298353000" expanded="true" signature="3933:3969" placeholder="..." />
+            <marker date="1363298353000" expanded="true" signature="4734:4761" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/views/link/list.gsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="478" column="87" selection-start="30313" selection-end="30313" vertical-scroll-proportion="0.8598131">
+          <folding>
+            <marker date="1363298824000" expanded="true" signature="2637:2653" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="8430:8449" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="11610:11624" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="11993:12007" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="12403:12417" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="12826:12840" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="13321:13335" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="13662:13676" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="14007:14021" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="14407:14421" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="24382:25357" placeholder="{&quot;goto&quot;: ''...}" />
+            <marker date="1363298824000" expanded="true" signature="25571:26296" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="25769:26281" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="25900:26086" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="25970:26060" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="26185:26259" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="26381:31235" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="26638:27309" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="26688:27232" placeholder="{&quot;itemSelector&quot;: '#listing-part .linkpart'...}" />
+            <marker date="1363298824000" expanded="true" signature="26922:27183" placeholder="{&quot;duration&quot;: 750...}" />
+            <marker date="1363298824000" expanded="true" signature="27365:29259" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="27455:28872" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="28267:28437" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="28267:28437" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="28521:28772" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="28952:29207" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="29310:31211" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="29400:30824" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="30224:30389" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="30473:30724" placeholder="{...}" />
+            <marker date="1363298824000" expanded="true" signature="30904:31159" placeholder="{...}" />
           </folding>
         </state>
       </provider>
