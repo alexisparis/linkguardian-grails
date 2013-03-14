@@ -2,6 +2,8 @@ package linkguardian
 
 import linkguardian.exception.TagException
 import linkguardian.exception.UnsupportedTypeException
+import linkguardian.link.LinkTarget
+import linkguardian.link.TargetDeterminationError
 import net.htmlparser.jericho.*
 
 class LinkBuilderService {
@@ -34,23 +36,18 @@ class LinkBuilderService {
         return result
     }
 
-    def complete(Link link, String type) {
+    def complete(Link link, LinkTarget target) {
 
-        log.info "completing link with url : " + link.url + " and type : " + type
+        log.info "completing link with url : " + link.url + " and target : " + target
 
-        java.net.URL url = new java.net.URL(link.url)
-
-        if ( "html"==type )
+        //java.net.URL url = new java.net.URL(link.url)
+        if ( target.isHtml() && ! target.isClientError() && ! target.isServerError() )
         {
-            this.completeHtml(link, url)
-        }
-        else if ( "pdf"==type )
-        {
-            this.completePdf(link, url)
+            this.completeHtml(link, target)
         }
         else
         {
-             throw new UnsupportedTypeException("type '" + type + "' not supported")
+            this.completeDefault(link, target)
         }
 
         if ( link.title == null )
@@ -62,7 +59,7 @@ class LinkBuilderService {
             link.description = ""
         }
 
-        link.domain = url.getHost()
+        link.domain = target.url.getHost()
         log.info "setting domain to " + link.domain
 
         // shorten url with google service
@@ -115,6 +112,121 @@ class LinkBuilderService {
     }
 
     /* ##############################
+       TARGET DETERMINATION
+       ############################## */
+
+    def determineTarget(String url)
+    {
+        def target = new LinkTarget()
+
+        // manage redirect url
+        def urls = new HashSet<String>()
+        def redirectLimitCount = 10
+        def redirectCount = 0
+        def currentUrl = url
+
+        boolean stopLoop = false
+
+        try
+        {
+            while(!stopLoop)
+            {
+                if ( urls.add(currentUrl) )
+                {
+                    target.stringUrl = currentUrl
+                    target.url = new URL(currentUrl)
+                    target.connection = target.url.openConnection()
+                    target.contentType = null
+                    target.responseCode = 0
+
+                    if ( target.connection instanceof HttpURLConnection )
+                    {
+                        def _httpConnection = (HttpURLConnection)target.connection
+                        _httpConnection.setInstanceFollowRedirects(true)
+
+                        target.responseCode = _httpConnection.getResponseCode()
+                        log.debug "getting http code " + target.responseCode +" for url " + target.stringUrl
+                        log.debug "connection url : " + target.connection.getURL()
+
+                        target.contentType = _httpConnection.getHeaderField("content-type")
+                        log.debug "content type : " + target.contentType
+
+                        if ( log.isDebugEnabled() )
+                        {   _httpConnection.headerFields.each {
+                                log.debug "   " + it.key + " ==> " + it.value
+                            }
+                        }
+
+                        if( target.isRedirection() )
+                        {
+                            log.debug "it's a redirection"
+                            currentUrl = null
+
+                            def location = target.getHeaderLocation()
+                            if ( location != null ){
+                                currentUrl = location
+                                log.debug "setting current url to " + location
+                            }
+                        }
+                        else if ( target.isClientError() || target.isServerError() )
+                        {
+                            // the host seems to exist because no UnknwonHostException thrown
+                            // but for some reason, access to this url from openshift server provoke errors
+                            // we won't be able to parse the real page but we will try to extract a title from the url
+                            stopLoop = true
+                        }
+                        else
+                        {
+                            target.stringUrl =  _httpConnection.getURL().toString() // could be different from currentUrl !!!!
+                            stopLoop = true
+                        }
+                    }
+                    else
+                    {
+                        log.error("don't know what to do with a connection of type : " + _connection.getClass())
+                        target.error = TargetDeterminationError.INVALID_CONNECTION_TYPE
+                        stopLoop = true
+                    }
+                }
+                else
+                {
+                    log.debug "url " + currentUrl + " already visited ==> redirection loop"
+                    target.error = TargetDeterminationError.INFINITE_LOOP
+                    stopLoop = true
+                }
+
+                redirectCount++
+
+                if ( ! stopLoop && redirectCount >= redirectLimitCount )
+                {
+                    target.error = TargetDeterminationError.TOO_MANY_LOOP
+                    stopLoop = true
+                }
+            }
+        }
+        catch(UnknownHostException e)
+        {
+            target.error = TargetDeterminationError.UNKNOWN_HOST_EXCEPTION
+            target.exception = e
+            log.error("unknown host exception", e)
+        }
+        catch(MalformedURLException e)
+        {
+            target.error = TargetDeterminationError.MALFORMED_URL
+            target.exception = e
+            log.error("malformed url : " + url, e)
+        }
+        catch(Exception e)
+        {
+            target.error = TargetDeterminationError.EXCEPTION
+            target.exception = e
+            log.error(e.getClass().name + " with cause : " + e.getCause()?.getClass()?.name + " :: error while trying to resolve redirections", e)
+        }
+
+        target
+    }
+
+    /* ##############################
        COMMON
        ############################## */
 
@@ -130,6 +242,10 @@ class LinkBuilderService {
             if ( lastSlashIndex > -1 )
             {
                 result = result.substring(lastSlashIndex + 1)
+
+                ['-', '_'].each {
+                    result = result.replace(it, ' ')
+                }
             }
         }
 
@@ -137,19 +253,19 @@ class LinkBuilderService {
     }
 
     /* ##############################
-       PDF
+       DEFAULT
        ############################## */
 
-    private def completePdf(Link link, java.net.URL url)
+    private def completeDefault(Link link, LinkTarget target)
     {
-        link.title = this.extractFilenameFrom(url)
+        link.title = this.extractFilenameFrom(target.url)
     }
 
     /* ##############################
        HTML
        ############################## */
 
-    private def completeHtml(Link link, java.net.URL url)
+    private def completeHtml(Link link, LinkTarget target)
     {
         // make an http request to get the header of the web site
 
@@ -159,7 +275,7 @@ class LinkBuilderService {
         PHPTagTypes.PHP_SHORT.deregister() // remove PHP short tags for this example otherwise they override processing instructions
         MasonTagTypes.register()
 
-        Source source=new Source(url)
+        Source source=new Source(target.connection)
 
         // Call fullSequentialParse manually as most of the source will be parsed.
         source.fullSequentialParse()

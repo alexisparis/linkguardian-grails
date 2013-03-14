@@ -4,6 +4,7 @@ import grails.converters.JSON
 import grails.gorm.DetachedCriteria
 import grails.plugins.springsecurity.Secured
 import linkguardian.exception.TagException
+import linkguardian.link.TargetDeterminationError
 import org.springframework.web.servlet.ModelAndView
 
 /**
@@ -281,141 +282,30 @@ class LinkController extends MessageOrientedObject
         }
         else
         {
-            def realUrl = null
-
-            // manage redirect url
-            def urls = new HashSet<String>()
-            def redirectLimitCount = 10
-            def redirectCount = 0
-            def currentUrl = params.url
+            def url = params.url
 
             // if params.url does not contains ://, then add http://
-            if ( currentUrl.indexOf("://") == -1 )
+            if ( url.indexOf("://") == -1 )
             {
-                log.warn("adding http:// to url without protocol : " +currentUrl)
-                currentUrl = "http://" + currentUrl
+                log.warn("adding http:// to url without protocol : " + url)
+                url = "http://" + url
             }
 
-            def type = null
-            def errorCode = -1
+            def target = linkBuilderService.determineTarget(url)
 
-            try  {
-                while(redirectCount < redirectLimitCount && realUrl == null && currentUrl != null)  {
-                   if ( urls.add(currentUrl) )
-                   {
-                       def _url = new URL(currentUrl)
-                       def _connection = _url.openConnection()
-                       if ( _connection instanceof HttpURLConnection )
-                       {
-                           def _httpConnection = (HttpURLConnection)_connection
-                           _httpConnection.setInstanceFollowRedirects(true)
-                           def code = _httpConnection.getResponseCode()
-                           log.debug "getting http code " +code +" for url " + currentUrl
-                           log.debug "connection url : " + _httpConnection.getURL()
-
-                           def contentType = _httpConnection.getHeaderField("content-type")
-                           log.debug "content type : " + contentType
-
-                           if ( contentType.startsWith("text/html") )
-                           {
-                               if ( log.isDebugEnabled() )
-                               {
-                                   log.debug "headers are : "
-                                   _httpConnection.headerFields.each {
-                                       log.debug "   " + it.key + " ==> " + it.value
-                                   }
-                               }
-
-                               if( code >= 300 && code < 400 ){ // redirection
-                                   log.debug "it's a redirection"
-                                   currentUrl = null
-
-                                   def location = _httpConnection.getHeaderField("location")
-                                   if ( location != null ){
-                                       currentUrl = location
-                                       log.debug "setting current url to " + location
-                                   }
-                               }
-                               else{
-                                   realUrl =  _httpConnection.getURL().toString() // could be different from currentUrl !!!!
-                                   type = "html"
-                                   log.debug "setting real url to " + currentUrl
-                               }
-                           }
-                           else if ( contentType.startsWith("application/pdf") )
-                           {
-                               realUrl = currentUrl
-                               type = "pdf"
-                               log.debug "setting real url to " + currentUrl
-                           }
-                           else
-                           {
-                               log.error "found content type " +contentType + " for url " + currentUrl
-                               response.setStatus(500)
-                               errorCode = 500
-                               msg = this.error(this.message(code: "service.link.addUrl.invalidContentType"))
-                               break;
-                           }
-                       }
-                   }
-                   else
-                   {
-                       log.debug "url " + currentUrl + " already visited ==> redirection loop"
-                       response.setStatus(500)
-                       errorCode = 500
-                       msg = this.error(this.message(code: "service.link.addUrl.redirectionLoop"))
-                       break
-                   }
-
-                   redirectCount++
-                }
-
-                if ( realUrl == null )
-                {
-                    if ( msg != null && redirectCount >= redirectLimitCount )
-                    {
-                        log.debug "url " + currentUrl + " too many redirections"
-                        response.setStatus(500)
-                        errorCode = 500
-                        msg = this.error(this.message(code: "service.link.addUrl.tooMuchRedirections"))
-                    }
-                }
-            }
-            catch(UnknownHostException e)
-            {
-                response.setStatus(500)
-                errorCode = 500
-                msg = this.error(this.message(code: "service.link.addUrl.unknownHost", args: [e.getMessage()]))
-                log.error("unknown host exception", e)
-            }
-            catch(Exception e)
-            {
-                response.setStatus(500)
-                errorCode = 500
-                log.error(e.getClass().name + " with cause : " + e.getCause()?.getClass()?.name + " :: error while trying to resolve redirections", e)
-            }
-
-            if ( errorCode == 500 && msg == null )
-            {
-                // if no error detected before
-                // use url given by user to use default error handling
-                realUrl = params.url
-            }
-
-            if ( realUrl != null )
+            if ( target.error == null )
             {
                 def connectedPerson = Person.findByUsername(springSecurityService.getPrincipal().username)
 
-                // desactivated since we use url shortener
                 try {
 
                     def _tag = (params.tag == null ? "" : params.tag.toLowerCase())
 
-                    log.debug "creating detached link..."
-                    def newLink = new Link(url: realUrl, fusionedTags: " " + _tag + " ", creationDate: new Date(), person: connectedPerson)
+                    log.debug "creating detached link... with url : " + target.stringUrl
+                    def newLink = new Link(url: target.stringUrl, fusionedTags: " " + _tag + " ", creationDate: new Date(), person: connectedPerson)
                     log.debug "detached link created"
 
-                    linkBuilderService.complete(newLink, type)
+                    linkBuilderService.complete(newLink, target)
                     log.debug "link completed"
 
                     linkBuilderService.addTags(newLink, params.tag)
@@ -448,11 +338,11 @@ class LinkController extends MessageOrientedObject
                     response.setStatus(500)
                     if ( e.getCause() != null )
                     {
-                        if ( e.getCause() instanceof MalformedURLException )
+                        /*if ( e.getCause() instanceof MalformedURLException )
                         {
                             msg = this.error(this.message(code: "service.link.addUrl.invalidUrlWithCause", args: [this.formatUrl(params.url), e.getCause().getMessage()]))
                         }
-                        else if ( e.getCause() instanceof UnknownHostException )
+                        else */if ( e.getCause() instanceof UnknownHostException )
                         {
                             msg = this.error(this.message(code: "service.link.addUrl.unknownHost", args: [((UnknownHostException)e.getCause()).getMessage()]))
                         }
@@ -463,6 +353,32 @@ class LinkController extends MessageOrientedObject
                         // default message
                         msg = this.error(this.message(code: "service.link.addUrl.defaultError", args: [this.formatUrl(params.url)]))
                     }
+                }
+            }
+            else
+            {
+                response.setStatus(500)
+
+                switch (target.error)
+                {
+                    case TargetDeterminationError.INVALID_CONNECTION_TYPE :
+                        msg = this.error(this.message(code: "service.link.addUrl.invalidConnectionType"))
+                        break;
+                    case TargetDeterminationError.EXCEPTION :
+                        msg = this.error(this.message(code: "service.link.addUrl.defaultError", args: [this.formatUrl(params.url)]))
+                        break;
+                    case TargetDeterminationError.INFINITE_LOOP :
+                        msg = this.error(this.message(code: "service.link.addUrl.redirectionLoop"))
+                        break;
+                    case TargetDeterminationError.TOO_MANY_LOOP :
+                        msg = this.error(this.message(code: "service.link.addUrl.tooMuchRedirections"))
+                        break;
+                    case TargetDeterminationError.UNKNOWN_HOST_EXCEPTION :
+                        msg = this.error(this.message(code: "service.link.addUrl.unknownHost", args: [((UnknownHostException)target.exception).getMessage()]))
+                        break;
+                    case TargetDeterminationError.MALFORMED_URL :
+                        msg = this.error(this.message(code: "service.link.addUrl.invalidUrlWithCause", args: [this.formatUrl(params.url), target.exception.getMessage()]))
+                        break;
                 }
             }
         }

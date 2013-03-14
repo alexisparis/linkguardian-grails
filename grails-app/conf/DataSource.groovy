@@ -43,9 +43,17 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
+
+            // openshift
             url = "jdbc:postgresql://127.2.98.1:5432/linkguardian"
             username = "admin"
             password = "tEmNIv7xfwlL"
+
+            // heroku
+            //url = "jdbc:postgresql://ec2-23-21-204-86.compute-1.amazonaws.com:5432/dalt15otdi6uot"
+            //username = "axkummniocergu"
+            //password = "ENR24IfseFkt5ayVB2emg6_URv"
+
             driverClassName = "org.postgresql.Driver"
             dialect = org.hibernate.dialect.PostgreSQLDialect
         }

@@ -1,0 +1,23 @@
+
+#git add .
+#git add -u
+#git commit -m "$1"
+#git push origin master
+
+grails clean
+
+grails prod war
+rm -Rf ../deployment-heroku-prod/src/main/webapp/*
+cp target/*.war ../deployment-heroku-prod/src/main/webapp
+cd ../deployment-heroku-prod/src/main/webapp/
+unzip *.war > /dev/null
+rm *.war
+
+cd ../../..
+
+git add .
+git add -u
+git commit -m "deployment in production on heroku"
+git push heroku master
+
+cd ../Linkguardian
