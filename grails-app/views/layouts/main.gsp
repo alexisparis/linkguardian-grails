@@ -117,7 +117,7 @@
                                     <span class="lg big" style="display: inline-block; padding-top: 16px;"></span>
 
                                     <%-- TODO : remove when no beta anymore --%>
-                                    <sup style="color: #bd362f; font-size: larger; margin-left: 5px; font-size: large;">BÊTA</sup>
+                                    <sup class="beta">Béta</sup>
 
                                     <span class="lgDescription" style="margin-left: 40px; width: 183px; "><g:message code="lg.description.small"/></span>
                                 </a>

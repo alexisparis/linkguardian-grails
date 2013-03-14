@@ -40,3 +40,13 @@ div.header
     color: #777777;
     font-style: italic;
 }
+
+.beta
+{
+    font-family: 'Clicker Script', cursive;
+    font-size: 24px;
+    color: #fbcb09;
+    font-weight: bolder;
+    /*font-size: large;*/
+    margin-left: 5px;
+}
