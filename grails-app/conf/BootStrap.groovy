@@ -198,8 +198,8 @@ class BootStrap {
                 PersonRole.create user1, userRole, true
                 PersonRole.create user1, twitterRole, true
 
-                this.createFakeLink(" a b ", Note.Note_0, user1, false, "not_locked_1", false)
-                this.createFakeLink(" a c ", Note.Note_0, user1, false, "not_locked_2", false)
+                this.createFakeLink(" a b ", Note.Note_3, user1, false, "not_locked_1", false)
+                this.createFakeLink(" a c ", Note.Note_4, user1, false, "not_locked_2", false)
 
                 // fake user 2
                 def user2 = new Person(username: 'fonfec78', enabled: true, password: 'password')
@@ -208,8 +208,8 @@ class BootStrap {
                 PersonRole.create user2, userRole, true
                 PersonRole.create user2, twitterRole, true
 
-                this.createFakeLink(" saucisson ", Note.Note_0, user2, false, "not_locked", false)
-                this.createFakeLink(" cochon ", Note.Note_0, user2, false, "locked", true)
+                this.createFakeLink(" saucisson ", Note.Note_1, user2, false, "not_locked", false)
+                this.createFakeLink(" cochon ", Note.Note_3, user2, false, "locked", true)
 
                 // fake user 3
                 def user3 = new Person(username: 'nodejs', enabled: true, password: 'password')
@@ -218,8 +218,8 @@ class BootStrap {
                 PersonRole.create user3, userRole, true
                 PersonRole.create user3, twitterRole, true
 
-                this.createFakeLink(" toto ", Note.Note_0, user3, true, "not_locked_1", false)
-                this.createFakeLink(" a ", Note.Note_0, user3, true, "not_locked_2", false)
+                this.createFakeLink(" toto ", Note.Note_5, user3, true, "not_locked_1", false)
+                this.createFakeLink(" a ", Note.Note_1, user3, true, "not_locked_2", false)
 
                 def twitterUsers = ['jaraparilla', 'glaforge', 'mathof1', 'wernerkeil', 'drenoux', 'xavroy',
                                     'nfs_lu', 'vincent_germain', 'LahautXavier', 'caroline_simon', 'renox57',

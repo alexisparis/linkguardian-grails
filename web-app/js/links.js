@@ -48,11 +48,11 @@ function jsonLinksToHtml(model)
                         '<img align="left" src="https://www.google.com/s2/favicons?domain={{domain}}" class="linkparticon"' +
                         'width="20px" height="20px" border="4px" style="margin-right: 2px; margin-bottom: 1px;"/>' +
                     '</div>' +
-                    '{{^readonly}}' +
+                    //'{{^readonly}}' +
                     '<div class="rateAndOperations" style="width: 116px; height: 16px;">' +
                         '<span class="rate"></span>' +
                     '</div>' +
-                    '{{/readonly}}' +
+                    //'{{/readonly}}' +
                 '</div>' +
                 '<div style="margin-top: 1px;word-wrap:break-word;">' +
                     '<div class="content with-tooltip" rel="tooltip" data-placement="right" data-original-title="' + templateI18n.goto + ' {{domain}}">' +
@@ -141,9 +141,11 @@ function updateLinks(model)
                             var jValue = $(value);
                             var jLinkPart = jValue.parents('div.linkpart').eq(0);
                             var currentScore = parseInt(jLinkPart.attr('data-note'));
+                            var readonly = jLinkPart.attr('data-readonly') === 'true';
 
                             jValue.raty({
-                                            cancel: true,
+                                            readOnly : readonly,
+                                            cancel: !readonly,
                                             size : 10,
                                             score: currentScore,
                                             click : function(score, evt) {
