@@ -263,7 +263,6 @@ function tagDeletionConfirmed(data)
 
 function addTag()
 {
-    console.log("calling addTag");
     $('#addTagForm input[name="tag"]').val($('#newTagInput').val());
     $('#addTagForm').submit();
 };

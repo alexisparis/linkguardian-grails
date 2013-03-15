@@ -18,10 +18,15 @@ div.header
 {
     font-weight: bolder;
 }
-.lg.big
+.lg.big_old
 {
     font-family: 'Clicker Script', cursive;
     font-size: 30px;
+}
+.lg.big
+{
+    font-size: 24px;
+    font-family: 'Comic Sans';
 }
 .lg.medium
 {
@@ -30,9 +35,17 @@ div.header
 
 .lgDescription
 {
+    font-style: italic;
+}
+.lgDescription
+{
+    font-family: 'Comic Sans';
+    font-size: 16px;
+}
+.lgDescription_old
+{
     font-family: 'Clicker Script', cursive;
     font-size: 20px;
-    font-style: italic;
 }
 .copyright, .contact
 {
@@ -43,9 +56,17 @@ div.header
 
 .beta
 {
-    font-family: 'Clicker Script', cursive;
-    font-size: 24px;
     color: #fbcb09;
     font-weight: bolder;
     margin-left: 5px;
+}
+.beta
+{
+    font-family: 'Comic Sans';
+    font-size: 14px;
+}
+.beta_old
+{
+    font-family: 'Clicker Script', cursive;
+    font-size: 24px;
 }

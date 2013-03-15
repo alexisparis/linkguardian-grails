@@ -100,6 +100,11 @@
         <script type="text/javascript">
             var displayDevModeWarning = false;
             var blockUiInhibiter = 0;
+
+            $(document).ready(function()
+                              {
+
+                              });
         </script>
 
     </head>
@@ -113,8 +118,11 @@
                         <div id="guardianLogo" role="banner" style="padding-top: 5px; padding-bottom: 8px;">
                             <div style="float: left;">
                                 <a class="text" href="<g:createLink controller="link" action="list" absolute="true"/>">
-                                    <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50" style="margin-top: -10px;"/>
-                                    <span class="lg big" style="display: inline-block; padding-top: 16px;"></span>
+
+                                    <div style="display: inline-block; width: 50px; height: 50px;">
+                                        <img src="${resource(dir: 'images', file: 'shield_blue_small.png')}" alt="LinkGuardian" width="50" height="50" style="margin-top: -10px; "/>
+                                    </div>
+                                    <span class="lg big" style="display: inline-block; padding-top: 16px; height: 36px; width: 163px;"></span>
 
                                     <%-- TODO : remove when no beta anymore --%>
                                     <sup class="beta">Béta</sup>
@@ -130,7 +138,7 @@
                                         <span style="margin-right: 30px;">
                                             <sec:ifAllGranted roles="ROLE_ADMIN">
                                                 <div class="btn-group" style="margin-right: 20px; ">
-                                                    <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown"><g:message code="menu.admin.label"/> <span class="caret"></span></button>
+                                                    <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown"><g:message code="menu.admin.label"/> <span class="caret"></span></button>
                                                     <ul class="dropdown-menu">
                                                         <li><g:link controller="userCrud"><g:message code="menu.admin.users.label"/></g:link></li>
                                                         <li><g:link controller="roleCrud"><g:message code="menu.admin.roles.label"/></g:link></li>
@@ -139,9 +147,9 @@
                                                 </div>
                                             </sec:ifAllGranted>
 
-                                            <g:link controller="link" action="list" class="btn btn-primary text"><g:message code="links.mylinks.label"/></g:link>
+                                            <g:link controller="link" action="list" class="btn btn-info text"><g:message code="links.mylinks.label"/></g:link>
 
-                                            <g:link controller="link" action="recentsLinks" class="btn btn-primary text"><g:message code="links.recent.button.label"/></g:link>
+                                            <g:link controller="link" action="recentsLinks" class="btn btn-info text"><g:message code="links.recent.button.label"/></g:link>
 
                                             <!--div class="btn-group" style="margin-right: 20px; ">
                                                 <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Recherche <span class="caret"></span></button>
@@ -163,7 +171,9 @@
                                         <span style="margin-right: 5px;">
 
                                             <a class="text twitter-account" data-twitter-name="<sec:username/>" target="_blank">
-                                                <img class="twitter-account" data-twitter-name="<sec:username/>"/>
+                                                <div style="display: inline-block; width: 24px; height: 24px;">
+                                                    <img class="twitter-account" data-twitter-name="<sec:username/>"/>
+                                                </div>
                                                 <span>
                                                     <sec:username/>
                                                 </span>
@@ -239,7 +249,7 @@
                                     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
                                     <%-- twitter recommend --%>
-                                    <a href="https://twitter.com/share" class="twitter-share-button" data-text="online bookmarks manager" data-via="linkguardian" data-related="linkguardian" data-hashtags="linkguardian">Tweet</a>
+                                    <a href="https://twitter.com/share" class="twitter-share-button" data-text="bookmark and share with" data-via="linkguardian" data-related="linkguardian" data-hashtags="linkguardian">Tweet</a>
                                     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
                                 </div>
                             </sec:ifLoggedIn>

@@ -25,7 +25,17 @@
                     padding-right: 5px;
                 }
             </g:else>
+
+            ul.typeahead.dropdown-menu, ul.typeahead.dropdown-menu > li
+            {
+                z-index: 1;
+            }
         </style>
+
+        <!--ul class="typeahead dropdown-menu" style="top: 85px; left: 202px; display: none;">
+            <li data-value="scala" class=""><a href="#"><strong>sc</strong>ala</a></li>
+            <li data-value="javascript" class="active"><a href="#">java<strong>sc</strong>ript</a></li>
+        </ul-->
 
 	</head>
 	<body>
