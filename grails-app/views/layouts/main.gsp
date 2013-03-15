@@ -69,6 +69,9 @@
             var defaultErrorMessage = '<g:message code="default.errorMessage.label"/>';
             var communicationErrorMessage = '<g:message code="communication.errorMessage.label"/>';
 
+            var displayDevModeWarning = false;
+            var blockUiInhibiter = 0;
+
             function hideBlockUi(event){
                 if ( blockUiInhibiter == 0 )
                 {
@@ -92,20 +95,12 @@
                     );
                 }
             };
+
+            $(document).ajaxStart(showBlockUi).ajaxStop(hideBlockUi).ajaxError(hideBlockUi);
         </script>
 
         <script type="text/javascript" src="${resource(dir: 'js', file: 'application.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.dd.min.js')}"></script>
-
-        <script type="text/javascript">
-            var displayDevModeWarning = false;
-            var blockUiInhibiter = 0;
-
-            $(document).ready(function()
-                              {
-
-                              });
-        </script>
 
     </head>
 
@@ -430,8 +425,6 @@
                         {
                             $('#toolsDialog').modal();
                         });
-
-                        $(document).ajaxStart(showBlockUi).ajaxStop(hideBlockUi).ajaxError(hideBlockUi);
 
                         includeTwitterAccountLogo();
 
