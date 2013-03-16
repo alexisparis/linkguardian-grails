@@ -294,7 +294,8 @@
                 <h3>
                     <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> <g:message code="links.dialogs.addTagDialog.title"/></h3>
             </div>
-            <div class="modal-body" style="text-align: center;">
+            <%--  add overflow visible to allow to display the typeahead combo correctly --%>
+            <div class="modal-body" style="text-align: center; overflow-y: visible;">
                 <g:textField id="newTagInput" name="name" class="input-xlarge"/>
             </div>
             <div class="modal-footer">
