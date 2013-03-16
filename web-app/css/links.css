@@ -188,7 +188,7 @@ div.jqcloud > span
 {
     cursor: pointer;
 }
-#filterByTgContainer *
+#filterByTgContainer span, #filterByTgContainer input
 {
     height: 24px;
     /*padding-top: 0px;*/

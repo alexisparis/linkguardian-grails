@@ -26,10 +26,16 @@
                 }
             </g:else>
 
-            ul.typeahead.dropdown-menu, ul.typeahead.dropdown-menu > li
-            {
-                z-index: 1;
-            }
+            /*ul.typeahead {
+                width: 250px;
+                position: fixed;
+            } */
+
+
+                ul.typeahead, ul.typeahead > li, ul.typeahead > li *
+                {
+                    z-index: 5000;
+                }
         </style>
 
         <!--ul class="typeahead dropdown-menu" style="top: 85px; left: 202px; display: none;">
@@ -103,7 +109,7 @@
                             </select>
 
                             <div class="input-append" id="filterByTgContainer">
-                                <input type="text" value="${tag}" id="filterInput" name="token" title="filter" placeholder='<g:message code="links.forms.search.filterInput.placeholder"/>' class="input-medium" maxlength="50"/>
+                                <input class="input-medium" type="text" value="${tag}" id="filterInput" name="token" title="filter" placeholder='<g:message code="links.forms.search.filterInput.placeholder"/>' maxlength="50"/>
                                 <span class="btn button add-on with-tooltip" id="clearFilterTag" rel="tooltip" data-placement="top" data-original-title="<g:message code="links.forms.search.clearFilterTag.tooltip"/>">
                                     <%--img src="${resource(dir: 'images', file: 'delete.png')}" width="14"/--%>
                                     &times;
@@ -428,6 +434,15 @@
                     })
             };
 
+            function elPos(element){
+                var position = { x:element.offsetLeft, y:element.offsetTop };
+                while(element = element.offsetParent){
+                    position.x += element.offsetLeft;
+                    position.y += element.offsetTop;
+                };
+                return position;
+            };
+
             $(document).ready(
                     function()
                     {
@@ -475,6 +490,13 @@
                                                       }
                                                   });
 
+                        var fixPersonTypeaheadPos = function(){
+                            var box = $("#txtTag")[0];
+                            var newPos = elPos(box);
+
+                            $(box).parent().find("ul.typeahead").css({top: newPos.y+32, left: newPos.x});
+                        };
+
                         $('#txtTag').typeahead({
                                                       source: function (query, process) {
                                                           blockUiInhibiter++;
@@ -494,10 +516,37 @@
                                                                   }).error(function() { blockUiInhibiter--; });
                                                       },
                                                       matcher: function(item) {
+                                                         //fixPersonTypeaheadPos();
                                                          // to force typehead not to ignore items returned by the source method
                                                          return true;
                                                       }
                                                   });
+
+
+                        $('#newTagInput').typeahead({
+                                                      source: function (query, process) {
+                                                          blockUiInhibiter++;
+                                                          return $.getJSON(
+                                                                    <g:if env="development">
+                                                                        '<g:createLink controller="link" action="tags" absolute="true"/>'
+                                                                    </g:if>
+                                                                    <g:else>
+                                                                        '<lg:secureLink controller="link" action="tags" absolute="true"/>'
+                                                                    </g:else>,
+                                                                  {
+                                                                      value: $('#newTagInput').val()
+                                                                  },
+                                                                  function (data) {
+                                                                      blockUiInhibiter--;
+                                                                      return process(data);
+                                                                  }).error(function() { blockUiInhibiter--; });
+                                                      },
+                                                      matcher: function(item) {
+                                                         // to force typehead not to ignore items returned by the source method
+                                                         return true;
+                                                      }
+                                                  });
+
                     });
         </g:javascript>
 
