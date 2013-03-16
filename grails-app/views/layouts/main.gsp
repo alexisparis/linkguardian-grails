@@ -115,14 +115,20 @@
                                 <a class="text" href="<g:createLink controller="link" action="list" absolute="true"/>">
 
                                     <div style="display: inline-block; width: 50px; height: 50px;">
-                                        <img src="${resource(dir: 'images', file: 'shield_blue_small.png')}" alt="LinkGuardian" width="50" height="50" style="margin-top: -10px; "/>
+                                        <img src="${resource(dir: 'images', file: 'shield_blue_small.png')}" alt="LinkGuardian" width="50" height="50"/>
                                     </div>
-                                    <span class="lg big" style="display: inline-block; padding-top: 16px; height: 36px; width: 163px;"></span>
+                                    <div style="display: inline-block; width: 163px; height: 36px;">
+                                        <img src="${resource(dir: 'images', file: 'title.png')}" alt="LinkGuardian"/>
+                                    </div>
 
                                     <%-- TODO : remove when no beta anymore --%>
-                                    <sup class="beta">Béta</sup>
+                                    <sup class="beta" style="display: inline-block; width: 44px; height: 30px;">
+                                        <img src="${resource(dir: 'images', file: 'beta.png')}" alt="Beta version"/>
+                                    </sup>
 
-                                    <span class="lgDescription" style="margin-left: 40px; width: 183px; "><g:message code="lg.description.small"/></span>
+                                    <div class="beta" style="display: inline-block; width: 170px; height: 25px;">
+                                        <img src="${resource(dir: 'images', file: 'description.png')}" alt="description"/>
+                                    </div>
                                 </a>
                             </div>
 
@@ -154,11 +160,13 @@
                                                 </ul>
                                             </div-->
 
-                                            <button class="btn btn-inverse with-tooltip" id="tools" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'menu.tools.label')}">
+                                            <button class="btn btn-inverse with-tooltip" id="tools"
+                                                    rel="tooltip" data-placement="bottom" data-original-title="${message(code:'menu.tools.label')}">
                                                 <i class="icon-wrench icon-white"></i>
                                             </button>
 
-                                            <button class="btn btn-inverse with-tooltip" id="about" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'menu.about.label')}">
+                                            <button class="btn btn-inverse with-tooltip" id="about"
+                                                    rel="tooltip" data-placement="bottom" data-original-title="${message(code:'menu.about.label')}">
                                                 <i class="icon-info-sign icon-white"></i>
                                             </button>
                                         </span>
@@ -175,7 +183,7 @@
                                             </a>
                                         </span>
                                         <a id="configurationButton" class="with-tooltip" rel="tooltip" data-placement="bottom" data-original-title="${message(code:'configuration.button.tooltip')}">
-                                            <span class="btn btn-inverse btn-mini">
+                                            <span class="btn btn-inverse btn-mini" style="width: 16px; heighta: 22px;">
                                                 <img src="${resource(dir: 'images', file: 'configuration.png')}"/>
                                             </span>
                                         </a>

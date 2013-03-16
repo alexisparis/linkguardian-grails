@@ -2,7 +2,6 @@
 div.header
 {
     color: white;
-
     background-repeat: no-repeat;
     background: #0c4d99; /* Old browsers */
     background: -moz-linear-gradient(top, #0c4d99 0%, #0075d6 49%, #006ec9 50%, #0d88e5 100%); /* FF3.6+ */
@@ -18,12 +17,12 @@ div.header
 {
     font-weight: bolder;
 }
-.lg.big_old
+.lg.big
 {
     font-family: 'Clicker Script', cursive;
     font-size: 30px;
 }
-.lg.big
+.lg.big_old
 {
     font-size: 24px;
     font-family: 'Comic Sans';
@@ -37,12 +36,12 @@ div.header
 {
     font-style: italic;
 }
-.lgDescription
+.lgDescription_old
 {
     font-family: 'Comic Sans';
     font-size: 16px;
 }
-.lgDescription_old
+.lgDescription
 {
     font-family: 'Clicker Script', cursive;
     font-size: 20px;
@@ -60,12 +59,12 @@ div.header
     font-weight: bolder;
     margin-left: 5px;
 }
-.beta
+.beta_old
 {
     font-family: 'Comic Sans';
     font-size: 14px;
 }
-.beta_old
+.beta
 {
     font-family: 'Clicker Script', cursive;
     font-size: 24px;
