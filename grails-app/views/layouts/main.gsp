@@ -6,8 +6,8 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
 	<head>
         <!-- todo : i18n + more keywords and description -->
-        <meta name="keywords" content="bookmark, favorite, browser, tools, links, computer, search">
-        <meta name="description" content="MyBookmarks - access your bookmarks anytime, anywhere.  Free productivity tool for business, student or personal use.">
+        <meta name="keywords" content="bookmark, favorite, browser, tools, link, computer, search, share, sharing, URL, twitter">
+        <meta name="description" content="Link Guardian, free online bookmark and share tool with Twitter integration. Get access to your bookmarks anywhere and see the links shared by the persons you follow on Twitter.">
 
         <g:if env="dev">
             <META http-equiv="Cache-Control" content="no-cache">
