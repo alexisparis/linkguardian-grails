@@ -33,7 +33,7 @@
     </style>
 </head>
 
-<body>
+<body style="visibility: hidden;">
 
     <div id="login">
         <p>
@@ -53,13 +53,13 @@
 
     <g:javascript>
         var body = $('body');
-        body.hide();
 
+        body.hide();
         $(document).ready(function()
         {
             body.imagesLoaded(function()
             {
-                body.fadeIn();
+                body.fadeIn(1000);
             });
         });
     </g:javascript>
