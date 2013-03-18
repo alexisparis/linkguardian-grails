@@ -831,7 +831,7 @@ class LinkController extends MessageOrientedObject
                     // clone link
                     Link result = linkBuilderService.clone(link)
                     result.creationDate = new Date()
-                    result.locked = Boolean.TRUE
+                    result.locked = Boolean.FALSE
                     result.read = Boolean.FALSE
                     result.person = connectedUser
 
