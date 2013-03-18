@@ -12,7 +12,7 @@
     <file path="/fragment.java" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1363258120944" ignored="false" />
     <file path="/index.gsp" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1358108888633" ignored="false" />
     <file path="/list.gsp" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1363415120784" ignored="false" />
-    <file path="/main.gsp" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1363535038181" ignored="false" />
+    <file path="/main.gsp" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1363645271714" ignored="false" />
     <file path="/index.html" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1358628914273" ignored="false" />
     <file path="/main.css" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1362087155663" ignored="false" />
     <file path="/BuildConfig.groovy" changelist="a606b105-5a0b-4244-9d8a-e7137c673cbe" time="1358845509287" ignored="false" />
@@ -145,18 +145,18 @@
       <file leaf-file-name="list.gsp" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/views/link/list.gsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="290" column="29" selection-start="17281" selection-end="17293" vertical-scroll-proportion="0.0">
+            <state line="290" column="29" selection-start="17281" selection-end="17293" vertical-scroll-proportion="-0.31914893">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.gsp" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="main.gsp" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/main.gsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="28" selection-start="1013" selection-end="1013" vertical-scroll-proportion="0.0">
+            <state line="86" column="29" selection-start="4065" selection-end="4065" vertical-scroll-proportion="0.6066946">
               <folding>
-                <marker date="1363535040000" expanded="false" signature="11693:11728" placeholder="{...}" />
+                <marker date="1363645325000" expanded="true" signature="11832:11867" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -169,15 +169,6 @@
               <folding>
                 <marker date="1363641813000" expanded="true" signature="815:908" placeholder="{...}" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Config.groovy" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/grails-app/conf/Config.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="65" column="56" selection-start="2841" selection-end="2841" vertical-scroll-proportion="0.1591512">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -240,11 +231,11 @@
         <option value="$PROJECT_DIR$/grails-app/views/link/list.gsp" />
         <option value="$PROJECT_DIR$/web-app/css/application.css" />
         <option value="$PROJECT_DIR$/grails-app/i18n/messages_fr.properties" />
-        <option value="$PROJECT_DIR$/grails-app/views/layouts/main.gsp" />
         <option value="$PROJECT_DIR$/grails-app/controllers/linkguardian/LinkController.groovy" />
         <option value="$PROJECT_DIR$/web-app/js/links.js" />
         <option value="$PROJECT_DIR$/grails-app/views/login/auth.gsp" />
         <option value="$PROJECT_DIR$/grails-app/conf/Config.groovy" />
+        <option value="$PROJECT_DIR$/grails-app/views/layouts/main.gsp" />
       </list>
     </option>
   </component>
@@ -1048,7 +1039,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/views/link/list.gsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="290" column="29" selection-start="17281" selection-end="17293" vertical-scroll-proportion="0.0">
+        <state line="290" column="29" selection-start="17281" selection-end="17293" vertical-scroll-proportion="-0.31914893">
           <folding />
         </state>
       </provider>
@@ -1104,15 +1095,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/main.gsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="28" selection-start="1013" selection-end="1013" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1363535040000" expanded="false" signature="11693:11728" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/grails-app/i18n/messages.properties">
       <provider editor-type-id="ResourceBundle">
         <state />
@@ -1155,6 +1137,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="65" column="56" selection-start="2841" selection-end="2841" vertical-scroll-proportion="0.1591512">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/views/layouts/main.gsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="86" column="29" selection-start="4065" selection-end="4065" vertical-scroll-proportion="0.6066946">
+          <folding>
+            <marker date="1363645325000" expanded="true" signature="11832:11867" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>

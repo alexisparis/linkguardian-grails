@@ -77,7 +77,7 @@
                 {
                     setTimeout(function(){
                         $.unblockUI();
-                    }, 200); //TODO : reduce additional times
+                    }, 2000); //TODO : reduce additional times
                 }
             };
             function showBlockUi(event){
@@ -85,11 +85,14 @@
                 {
                     $.blockUI(
                             {
-                                message : '<img src="<g:resource dir="images/loading" file="loading_big.gif" absolute="true"/>"/>',
+                                message : '<img src="<g:resource dir="images/loading" file="waiting.gif" absolute="true"/>"/>',
                                 css: {
                                     border: 'none',
-                                    backgroundColor: 'none',
-                                    opacity:         0.8
+                                    backgroundColor: 'none'
+                                },
+                                overlayCSS:  {
+                                    backgroundColor: '#444',
+                                    opacity:         0.6
                                 }
                             }
                     );
