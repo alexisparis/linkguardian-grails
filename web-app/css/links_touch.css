@@ -1,0 +1,40 @@
+
+.action-toolbar.tablet
+{
+    display: block;
+}
+.linkpart .add-tag
+{
+    visibility: inherit;
+}
+
+div.linkpart:not(hover) img.raty-cancel,
+div.linkpart:not(hover) .visible-on-hover
+{
+    visibility: inherit;
+}
+div.linkpart:hover img.raty-cancel,
+div.linkpart:hover .visible-on-hover
+{
+    visibility: inherit;
+}
+
+div.linkpart[data-note="0"] span.rate
+{
+    visibility: inherit;
+}
+
+span.tag:not(hover) button.deleteTagButton
+{
+    visibility: inherit;
+}
+
+.deleteTagButton
+{
+    width: 30px;
+}
+
+.linkpart:hover .action-toolbar.desktop
+{
+    display: none;
+}

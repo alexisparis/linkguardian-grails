@@ -4,6 +4,7 @@
 		<meta name="layout" content="main"/>
 		<title><g:message code="links.title"/></title>
         <r:require modules="mustache"/>
+        <r:require module="modernizr"/>
 
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'jqcloud.css')}" type="text/css">
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'links.css')}" type="text/css">
@@ -16,7 +17,7 @@
                 }
             </g:if>
             <g:else>
-                .action-toolbar .read, .action-toolbar .unread, .action-toolbar .deleteLinkButton, .deleteTagButton
+                .action-toolbar.desktop .read, .action-toolbar .unread, .action-toolbar .deleteLinkButton, .deleteTagButton
                 {
                     display: none;
                 }
@@ -25,26 +26,19 @@
                     padding-right: 5px;
                 }
             </g:else>
-
-            /*ul.typeahead {
-                width: 250px;
-                position: fixed;
-            } */
-
-
-                ul.typeahead, ul.typeahead > li, ul.typeahead > li *
-                {
-                    z-index: 5000;
-                }
         </style>
-
-        <!--ul class="typeahead dropdown-menu" style="top: 85px; left: 202px; display: none;">
-            <li data-value="scala" class=""><a href="#"><strong>sc</strong>ala</a></li>
-            <li data-value="javascript" class="active"><a href="#">java<strong>sc</strong>ript</a></li>
-        </ul-->
 
 	</head>
 	<body>
+
+        <script type="text/javascript">
+            //if (Modernizr.touch){
+            if ( true ){
+                // import links_touch.css
+                console.log("import links_touch.css");
+                $('body').append('<link rel="stylesheet" href="${resource(dir: 'css', file: 'links_touch.css')}" type="text/css">');
+            }
+        </script>
 
         <div class="container forms">
             <div class="row">
@@ -154,7 +148,7 @@
 
                                 <div class="input-prepend input-append" style="margin-bottom: 3px;">
                                     <span class="add-on"><g:message code="links.forms.add.url.title"/></span>
-                                    <input type="text" id="txtUrl" name="url" class="input-xxlarge" placeholder="<g:message code="links.forms.add.txtUrl.placeholder"/>" maxlength="200"/> <%-- required="" --%>
+                                    <input type="text" id="txtUrl" name="url" style="width: 70%;" placeholder="<g:message code="links.forms.add.txtUrl.placeholder"/>" maxlength="200"/> <%-- required="" --%>
 
                                     <button type="submit" class="btn btn-primary">
                                         <i class="icon-plus icon-white"></i>
@@ -166,8 +160,8 @@
                                     <span>
                                         <input type="text"
                                                id="txtTag" name="tag"
-                                               style="font-size: 13px; margin-bottom: 0px;"
-                                               class="input-xlarge with-tooltip" placeholder="<g:message code="links.forms.add.txtTag.placeholder"/>" maxlength="100"
+                                               style="font-size: 13px; margin-bottom: 0px; width: 30%;"
+                                               class="with-tooltip" placeholder="<g:message code="links.forms.add.txtTag.placeholder"/>" maxlength="100"
                                                rel="tooltip" data-placement="top" data-original-title="<g:message code="links.forms.add.txtTag.tooltip"/>"/>
                                     </span>
                                 </div>

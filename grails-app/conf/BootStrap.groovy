@@ -89,24 +89,27 @@ class BootStrap {
 
         def admin = Person.findByUsername('paris_alex')
 
-        if ( admin == null )
+        if ( Environment.current != Environment.PRODUCTION )
         {
-            admin = new Person(username: 'paris_alex', enabled: false, password: '88f56921aa7f1a9372c9ae0e1f221f2e1c6dac7c8c6676d6ce521852bd06781b')
-            admin.accountExpired = false
-            admin.accountLocked = false
-            admin.passwordExpired = false
-            admin = admin.save(flush: true)
+            if ( admin == null )
+            {
+                admin = new Person(username: 'paris_alex', enabled: false, password: '88f56921aa7f1a9372c9ae0e1f221f2e1c6dac7c8c6676d6ce521852bd06781b')
+                admin.accountExpired = false
+                admin.accountLocked = false
+                admin.passwordExpired = false
+                admin = admin.save(flush: true)
 
-            PersonRole.create admin, adminRole, true
-            PersonRole.create admin, userRole, true
-            PersonRole.create admin, twitterRole, true
+                PersonRole.create admin, adminRole, true
+                PersonRole.create admin, userRole, true
+                PersonRole.create admin, twitterRole, true
 
-            TwitterUser adminTwitted = new TwitterUser()
-            adminTwitted.screenName = admin.username
-            adminTwitted.token = "55181004-xY4Auj3gdik5GbwUS4JNuJbRRkvnybPdw0MCx7V61"
-            adminTwitted.tokenSecret = "l95f3RDrEeGVJtyiWUxy1gOAbPUH4oG1sGwC3dDWiU"
-            adminTwitted.user = admin
-            adminTwitted.save(flush: true)
+                TwitterUser adminTwitted = new TwitterUser()
+                adminTwitted.screenName = admin.username
+                adminTwitted.token = "55181004-xY4Auj3gdik5GbwUS4JNuJbRRkvnybPdw0MCx7V61"
+                adminTwitted.tokenSecret = "l95f3RDrEeGVJtyiWUxy1gOAbPUH4oG1sGwC3dDWiU"
+                adminTwitted.user = admin
+                adminTwitted.save(flush: true)
+            }
         }
 
         switch (Environment.current)
@@ -155,7 +158,7 @@ class BootStrap {
                     this.createFakeLink(" a ", Note.Note_2, admin, false, "unread_link", false, "unread description")
                     this.createFakeLink(" b c ", Note.Note_2, admin, false, "unread_link_2", false, "unread description 2")
                     this.createFakeLink(" a c ", Note.Note_4, admin, true, "read_link", false, "read description")
-                    this.createFakeLink(" c ", Note.Note_5, admin, true, "read_link_2", false, "read description 2")
+                    this.createFakeLink(" c ", Note.Note_0, admin, true, "read_link_2", false, "read description 2")
 
                     def user1 = new Person(username: 'OlivierCroisier', enabled: true, password: 'password')
                     user1.privacyPolicy = LinkPrivacyPolicy.ALL_PUBLIC

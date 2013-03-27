@@ -4,15 +4,35 @@
     cursor: pointer;
 }
 
-.linkpart .action-toolbar
+.linkpart .action-toolbar.desktop
 {
     display: none;
 }
-.linkpart:hover .action-toolbar
+.linkpart:hover .action-toolbar.desktop
 {
     display: block;
 }
-.action-toolbar
+.linkpart .add-tag
+{
+    visibility: hidden;
+}
+.linkpart:hover .add-tag
+{
+    visibility: inherit;
+}
+
+.action-toolbar.tablet
+{
+    float: right;
+    display: none;
+}
+.action-toolbar.tablet a
+{
+    margin-right: 8px;
+    margin-left: 8px;
+}
+
+.action-toolbar.desktop
 {
     padding-left: 10px;
     padding-right: 10px;
@@ -27,7 +47,8 @@
     -moz-border-radius-bottomleft: 0px !important;
     -moz-border-radius-bottomright: 0px !important;
 }
-.action-toolbar a
+
+.action-toolbar.desktop a
 {
     margin-right: 5px;
 }
@@ -98,7 +119,6 @@ span.tag
 span.description
 {
     font-size: smaller;
-    line-heighta: 4px;
 }
 button.close
 {
@@ -122,15 +142,8 @@ button.deleteTagButton
     margin-top: -3px;
     opacity: 0.6;
 }
-div.linkpart:not(hover) .displayed-on-hover
-{
-    display: none;
-}
-div.linkpart:hover .displayed-on-hover
-{
-    display: inline-block;
-}
-div.tags /* used to isplay tags with a scroll if a tag name is too long */
+
+div.tags /* used to display tags with a scroll if a tag name is too long */
 {
     overflow:auto;
 }
@@ -150,6 +163,7 @@ div.linkpart:hover span.rate
 {
     visibility: visible;
 }
+
 div.linkpart.read .read
 {
     display: none;

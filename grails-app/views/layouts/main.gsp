@@ -26,7 +26,7 @@
 
         <r:require modules="bootstrap"/>
 
-        <%--link rel="stylesheet" href="${resource(dir: 'css', file: 'normalize.css')}" type="text/css"--%>
+        <link rel="stylesheet" href="${resource(dir: 'css', file: 'normalize.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'application.css')}" type="text/css">
@@ -77,7 +77,7 @@
                 {
                     setTimeout(function(){
                         $.unblockUI();
-                    }, 2000); //TODO : reduce additional times
+                    }, 200); //TODO : reduce additional times
                 }
             };
             function showBlockUi(event){

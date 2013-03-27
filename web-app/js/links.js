@@ -23,12 +23,14 @@ function jsonLinksToHtml(model)
     var template =
         '{{#links}}' +
             '<div class="linkpart ' + (showReadUnreadLink ? '{{#read}}read{{/read}}' : '') + '" data-url="{{url}}" data-id="{{id}}" data-note="{{note}}" data-readonly="{{readonly}}">' +
-                '<div class="action-toolbar btn btn-primary btn-mini">' +
+
+                // toolbar for desktop
+                '<div class="action-toolbar desktop btn btn-primary btn-mini">' +
                     '<a class="with-tooltip unread" rel="tooltip" data-placement="bottom"' +
-                        'data-original-title="marquer comme non lu">' +
+                        'data-original-title="' + templateI18n.markAsUnread + '">' +
                         '<i class="icon icon-eye-close icon-white"></i>' +
                     '</a>' +
-                    '<a class="with-tooltip read" rel="tooltip" data-placement="bottom" data-original-title="marquer comme lu">' +
+                    '<a class="with-tooltip read" rel="tooltip" data-placement="bottom" data-original-title="' + templateI18n.markAsRead + '">' +
                         '<i class="icon icon-eye-open icon-white"></i>' +
                     '</a>' +
                     '<a class="importLinkButton with-tooltip" ' +
@@ -68,7 +70,7 @@ function jsonLinksToHtml(model)
                             '{{/_tags}}' +
                         '</span>' +
                         '{{^readonly}}' +
-                            '<span class="btn btn-primary btn-mini add-tag visible-on-hover with-tooltip" rel="tooltip" data-original-title="' + templateI18n.addTag + '" data-placement="right">' +
+                            '<span class="btn btn-primary btn-mini add-tag with-tooltip" rel="tooltip" data-original-title="' + templateI18n.addTag + '" data-placement="right">' +
                                 '<i class="icon-plus-sign icon-white"></i>' +
                             '</span>' +
                         '{{/readonly}}' +
@@ -84,6 +86,28 @@ function jsonLinksToHtml(model)
                     '</a>' +
                  '</div>'
                  : '') +
+
+                // toolbar for tablet and phone
+                '<div class="action-toolbar tablet btn btn-primary">' +
+                    '<a class="with-tooltip unread" rel="tooltip" data-placement="bottom"' +
+                        'data-original-title="' + templateI18n.markAsUnread + '">' +
+                        '<i class="icon icon-eye-close icon-white"></i>' +
+                    '</a>' +
+                    '<a class="with-tooltip read" rel="tooltip" data-placement="bottom" data-original-title="' +templateI18n.markAsRead + '">' +
+                        '<i class="icon icon-eye-open icon-white"></i>' +
+                    '</a>' +
+                        '<a class="importLinkButton with-tooltip" ' +
+                        'rel="tooltip" data-placement="bottom" data-original-title="' + templateI18n.importLink +'">' +
+                        '<i class="icon icon-plus icon-white"></i>' +
+                    '</a>' +
+                    '<a class="twitter with-tooltip" ' +
+                        'rel="tooltip" data-placement="bottom" data-original-title="' + templateI18n.tweetLink +'">' +
+                        '<img class="twitter-white" width="20px" height="20px">' +
+                    '</a>' +
+                    '<a class="deleteLinkButton with-tooltip" ' +
+                        'rel="tooltip" data-placement="bottom" data-original-title="' + templateI18n.deleteLink +'"><i class="icon icon-remove icon-white"></i>' +
+                    '</a>' +
+                '</div>' +
 
             '</div>' +
         '{{/links}}';
