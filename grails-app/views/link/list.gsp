@@ -32,8 +32,8 @@
 	<body>
 
         <script type="text/javascript">
-            //if (Modernizr.touch){
-            if ( true ){
+            if (Modernizr.touch){
+            //if ( true ){
                 // import links_touch.css
                 console.log("import links_touch.css");
                 $('body').append('<link rel="stylesheet" href="${resource(dir: 'css', file: 'links_touch.css')}" type="text/css">');

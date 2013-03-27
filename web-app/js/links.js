@@ -88,7 +88,7 @@ function jsonLinksToHtml(model)
                  : '') +
 
                 // toolbar for tablet and phone
-                '<div class="action-toolbar tablet btn btn-primary">' +
+                '<div class="action-toolbar tablet btn btn-primary" style="clear: both;">' +
                     '<a class="with-tooltip unread" rel="tooltip" data-placement="bottom"' +
                         'data-original-title="' + templateI18n.markAsUnread + '">' +
                         '<i class="icon icon-eye-close icon-white"></i>' +
