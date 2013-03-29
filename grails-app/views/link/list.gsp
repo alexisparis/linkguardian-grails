@@ -32,7 +32,18 @@
 	<body>
 
         <script type="text/javascript">
-            if (Modernizr.touch){
+
+            var ua = navigator.userAgent;
+
+            var isTouchScreen = 'createTouch' in document ||
+                                ua.match(/(iPhone|iPod|iPad)/) || ua.match(/BlackBerry/) ||
+                                ua.match(/Android/);
+
+            $('#debug').html('isTouchScreen : ' + isTouchScreen + '<br/>' +
+                             'Modernizr.touch : ' + Modernizr.touch + '<br/>' +
+                             'condition : ' + (Modernizr.touch || isTouchScreen));
+
+            if (Modernizr.touch || isTouchScreen){
             //if ( true ){
                 // import links_touch.css
                 console.log("import links_touch.css");

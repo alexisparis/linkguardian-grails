@@ -268,8 +268,9 @@
         <div class="container wrapper">
 
             <g:if env="test">
+                <div id="debug"></div>
                 <div class="row" style="padding-top: 5px; padding-bottom: 5px;">
-                    <strong span="12" style="color: red; font-size: x-large;">This is an application used to make test integration.<br/>
+                    <strong class="span12" style="color: red; font-size: x-large;">This is an application used to make test integration.<br/>
                         To use the real application, go to <a href="https://linkguardian-blackdog.rhcloud.com/" class="text btn btn-primary">Link Guardian</a>
                     </strong>
                 </div>
