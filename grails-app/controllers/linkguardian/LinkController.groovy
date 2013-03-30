@@ -69,8 +69,7 @@ class LinkController extends MessageOrientedObject
                                  searchType : "global",
                                  isGlobal : true])
     }
-
-    /**
+        /**
      * filter the links and returns them as JSON result
      * @param token
      * @param read_status : all, read or unread

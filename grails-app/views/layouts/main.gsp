@@ -34,7 +34,7 @@
         <link rel="stylesheet" href="${resource(dir: 'css', file: 'dd.css')}" type="text/css"/>
 
         <style type="text/css">
-            #dragTool
+            #dragTool, .tweetTool
             {
                 cursor: move;
             }
@@ -323,7 +323,8 @@
                     <img src="${resource(dir: 'images', file: 'shield_blue.png')}" alt="LinkGuardian" width="50"/> <g:message code="dialog.tools.title"/></h3>
             </div>
             <div class="modal-body">
-                <g:message code="dialogs.tools.paragraph"/>
+                <g:message code="dialogs.tools.tweet.paragraph"/><br/>
+                <g:message code="dialogs.tools.addToLg.paragraph"/>
                 <p>
                     <img src="<g:resource dir="images" file="dragTool-final-reduced.png"/>"/>
                 </p>
@@ -432,6 +433,20 @@
                                 '})();';
 
                         $('#dragTool').attr('href', dragHref);
+
+                        // complete the href of tweetTool
+                        var tweetHref =
+                                'javascript:(function(){' +
+                                'var u="<g:createLink controller="tweeter" action="tweetLink" absolute="true"/>?url="+escape(document.location.href);' +
+                                'var a=function(){' +
+                                'if(!window.open(u))location.href=u;' +
+                                '};' +
+                                'if(/Firefox/.test(navigator.userAgent))' +
+                                'setTimeout(a,0);' +
+                                'else a();' +
+                                '})();';
+
+                        $('.tweetTool').attr('href', tweetHref);
 
                         $('#tools').on('click', function(event)
                         {

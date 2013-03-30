@@ -21,6 +21,10 @@
             <span class="section-title"><h4><g:message code="about.generalities.title"/></h4></span>
             <g:message code="about.generalities.paragraph"/>
         </div>
+        <div class="section">
+            <span class="section-title"><h4><g:message code="about.contact.title"/></h4></span>
+            <g:message code="about.contact.paragraph" args="${[ConfigurationHolder.getConfig().contact.mail]}"/>
+        </div>
     </div>
     <div class="span4">
         <div class="section">
@@ -35,14 +39,12 @@
     </div>
     <div class="span4">
         <div class="section">
+            <span class="section-title"><h4><g:message code="about.tools.title"/></h4></span>
+            <g:message code="dialogs.tools.tweet.paragraph"/>
+        </div>
+        <div class="section">
             <span class="section-title"><h4><g:message code="about.technology.title"/></h4></span>
             <g:message code="about.technology.paragraph"/>
         </div>
-
-        <div class="section">
-            <span class="section-title"><h4><g:message code="about.contact.title"/></h4></span>
-            <g:message code="about.contact.paragraph" args="${[ConfigurationHolder.getConfig().contact.mail]}"/>
-        </div>
-
     </div>
 </div>
