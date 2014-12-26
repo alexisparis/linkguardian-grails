@@ -112,8 +112,43 @@ function includeTwitterAccountLogo()
                                                              {
                                                                 size = sizeAttr;
                                                              }
-                                                             $value.attr('src', 'https://api.twitter.com/1/users/profile_image?screen_name=' + $value.attr('data-twitter-name') + '&size=' +size);
+
+                                                             var success = function(data, textStatus, jqXHR)
+                                                             {
+                                                                 if ( data )
+                                                                 {
+                                                                     var profileImageUrl = data.profile_image_url;
+                                                                     $value.attr('src', profileImageUrl);
+                                                                     //$value.attr('src', 'https://api.twitter.com/1/users/profile_image?screen_name=' + $value.attr('data-twitter-name') + '&size=' +size);
+                                                                 }
+                                                             };
+
                                                              $value.addClass('included');
+
+
+                                                             $.jsonp({
+                                                                 "url":'https://api.twitter.com/1.1/users/show.json?' +
+                                                                     'callback=_jqjsp' +
+                                                                     '&screen_name=' + $value.attr('data-twitter-name'),
+                                                                 "success": success,
+                                                                 "error": function(d,msg) {
+                                                                     console.error("Could not load the twitter profile of " + accounts.twitter + " (rejected ? " + d.isRejected() + ")");
+
+                                                                     // show error
+                                                                     setTimeout(showTwitterThresholdMessage, 100);
+                                                                 }
+                                                             });
+
+                                                             /*$.ajax({
+                                                                 dataType: "jsonp",
+                                                                 url: 'https://api.twitter.com/1.1/users/show.json?screen_name=' + $value.attr('data-twitter-name'),
+                                                                 data: '',
+                                                                 success: success
+                                                             });*/
+
+                                                             // https://dev.twitter.com/docs/user-profile-images-and-banners
+                                                             // https://dev.twitter.com/docs/api/1.1/get/users/show
+                                                             //https://api.twitter.com/1.1/users/show.json?screen_name=paris_alex
                                                          });
 };
 

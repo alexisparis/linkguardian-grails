@@ -9,11 +9,9 @@
         <meta name="keywords" content="bookmark, favorite, browser, tools, link, computer, search, share, sharing, URL, twitter, alexis PARIS">
         <meta name="description" content="Link Guardian, free online bookmark and share tool with Twitter integration. Get access to your bookmarks anywhere and see the links shared by the persons you follow on Twitter.">
 
-        <g:if env="dev">
-            <META http-equiv="Cache-Control" content="no-cache">
-            <META http-equiv="Pragma" content="no-cache">
-            <META http-equiv="Expires" content="0">
-        </g:if>
+        <META http-equiv="Cache-Control" content="no-cache">
+        <META http-equiv="Pragma" content="no-cache">
+        <META http-equiv="Expires" content="0">
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -102,6 +100,7 @@
             $(document).ajaxStart(showBlockUi).ajaxStop(hideBlockUi).ajaxError(hideBlockUi);
         </script>
 
+        <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.jsonp-2.3.0-min.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'application.js')}"></script>
         <script type="text/javascript" src="${resource(dir: 'js', file: 'jquery.dd.min.js')}"></script>
 
