@@ -7,17 +7,18 @@
 grails clean
 
 grails prod war
+mkdir -p ../deployment-prod/src/main/webapp
 rm -Rf ../deployment-prod/src/main/webapp/*
 cp target/*.war ../deployment-prod/src/main/webapp
 cd ../deployment-prod/src/main/webapp/
 unzip *.war
 rm *.war
 
-cd ../../..
+cd ../../../
 
 git add .
 git add -u
 git commit -m "deployment in production"
 git push origin master
 
-cd ../Linkguardian
+#cd ../linkguardian
